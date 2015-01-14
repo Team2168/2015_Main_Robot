@@ -7,7 +7,6 @@
 *.ear
 
 # IDE specific #
-*.classpath
 *.settings
 .metadata
 .launch
