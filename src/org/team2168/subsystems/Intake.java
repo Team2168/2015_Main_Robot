@@ -29,24 +29,39 @@ public class Intake extends Subsystem {
 		
 	}
 	
+	/**
+	 * Releases the intake from intaking position
+	 */
 	public void releaseIntake() {
 		rightIntake.set(Value.kReverse);
 		leftIntake.set(Value.kReverse);
 	}
 	
+	/**
+	 * Actuates the intake into intaking position
+	 */
 	public void actuateIntake() {
 		rightIntake.set(Value.kForward);
 		leftIntake.set(Value.kForward);
 	}
 	
+	/**
+	 * runs the intake motors in, making the tote move in toward the lift
+	 */
 	public void runIntakeIn() {
 		setIntakeSpeed(-1);
 	}
 	
+	/**
+	 * stops the intake motors
+	 */
 	public void stopIntake() {
 		setIntakeSpeed(0);
 	}
 	
+	/**
+	 * runs the intake motors out, making the tote move out of the intake.
+	 */
 	public void runIntakeOut() {
 		setIntakeSpeed(1);
 	}
