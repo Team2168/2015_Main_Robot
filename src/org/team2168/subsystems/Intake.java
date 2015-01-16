@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Talon;
 
 /**
- *
+ * @author Vittorio Papandrea
  */
 public class Intake extends Subsystem {
 	
