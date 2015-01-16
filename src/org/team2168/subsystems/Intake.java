@@ -8,24 +8,19 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Talon;
 
 /**
+ * 
  * @author Vittorio Papandrea
  */
 public class Intake extends Subsystem {
 	
-	DoubleSolenoid leftIntake;
-	DoubleSolenoid rightIntake;
-	
-	Talon leftMotor;
-	Talon rightMotor;
+	DoubleSolenoid rightLeftIntake;
+
+	Talon rightLeftMotor;
 	
 	public Intake() {
-		rightIntake 	= new DoubleSolenoid(RobotMap.RIGHT_INTAKE_DOUBLE_SOLENOID_FORWARD, 
-										 	 RobotMap.RIGHT_INTAKE_DOUBLE_SOLENOID_REVERSE);
-		leftIntake 		= new DoubleSolenoid(RobotMap.LEFT_INTAKE_DOUBLE_SOLENOID_FORWARD,
-											 RobotMap.LEFT_INTAKE_DOUBLE_SOLENOID_REVERSE);
-		
-		rightMotor = new Talon(RobotMap.RIGHT_INTAKE_MOTOR);
-		leftMotor = new Talon(RobotMap.LEFT_INTAKE_MOTOR);
+		rightLeftIntake = new DoubleSolenoid(RobotMap.INTAKE_DOUBLE_SOLENOID_FORWARD, 
+										 	 	RobotMap.INTAKE_DOUBLE_SOLENOID_REVERSE);
+		rightLeftMotor 	= new Talon(RobotMap.INTAKE_MOTORS);
 		
 	}
 	
@@ -33,23 +28,21 @@ public class Intake extends Subsystem {
 	 * Releases the intake from intaking position
 	 */
 	public void releaseIntake() {
-		rightIntake.set(Value.kReverse);
-		leftIntake.set(Value.kReverse);
+		rightLeftIntake.set(Value.kReverse);
 	}
 	
 	/**
 	 * Actuates the intake into intaking position
 	 */
 	public void actuateIntake() {
-		rightIntake.set(Value.kForward);
-		leftIntake.set(Value.kForward);
+		rightLeftIntake.set(Value.kForward);
 	}
 	
 	/**
 	 * runs the intake motors in, making the tote move in toward the lift
 	 */
 	public void runIntakeIn() {
-		setIntakeSpeed(-1);
+		setIntakeSpeed(1);
 	}
 	
 	/**
@@ -63,16 +56,15 @@ public class Intake extends Subsystem {
 	 * runs the intake motors out, making the tote move out of the intake.
 	 */
 	public void runIntakeOut() {
-		setIntakeSpeed(1);
+		setIntakeSpeed(-1);
 	}
 	
 	/**
 	 * Sets the intake Speed of the motors. 
-	 * @param speed -1 to 0 Reverse Motors. 0 - 1 Forward Motors
+	 * @param speed 1 to 0 Tote In. 0 - -1 Tote Out
 	 */
 	public void setIntakeSpeed(double speed) {	
-		rightMotor.set(speed);
-		leftMotor.set(speed);
+		rightLeftMotor.set(speed);
 	}
 	
     public void initDefaultCommand() {
