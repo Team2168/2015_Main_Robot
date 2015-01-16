@@ -39,17 +39,23 @@ public class Intake extends Subsystem {
 		leftIntake.set(Value.kForward);
 	}
 	
-	public void runIntake() {
-		rightMotor.set(1);
-		leftMotor.set(1);
+	public void runIntakeIn() {
+		setIntakeSpeed(-1);
 	}
 	
 	public void stopIntake() {
-		rightMotor.set(0);
-		leftMotor.set(0);
+		setIntakeSpeed(0);
 	}
 	
-	public void setIntakeSpeed(double speed) {
+	public void runIntakeOut() {
+		setIntakeSpeed(1);
+	}
+	
+	/**
+	 * Sets the intake Speed of the motors. 
+	 * @param speed -1 to 0 Reverse Motors. 0 - 1 Forward Motors
+	 */
+	public void setIntakeSpeed(double speed) {	
 		rightMotor.set(speed);
 		leftMotor.set(speed);
 	}
