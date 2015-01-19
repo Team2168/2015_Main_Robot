@@ -9,39 +9,40 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.DigitalInput;
 
 /**
- * Intake subystem controlls the intake motors and solenoids. 
+ * The intake subsytem controls the intake motors and solenoids. 
  * @author Vittorio Papandrea
  */
 public class Intake extends Subsystem {
 	
-	DoubleSolenoid rightLeftIntake;
-
-	Talon rightLeftMotor;
+	private static Intake instance = null;
+	private DoubleSolenoid rightLeftIntake;
+	private Talon rightLeftMotor;
 	
-	DigitalInput leftLimitSwitch;
-	DigitalInput rightLimitSwitch;
+	private static DigitalInput leftLimitSwitch;
+	private static DigitalInput rightLimitSwitch;
 	
-	public Intake() {
+	/**
+	 * A private constructor to prevent multiple instances of the subsystem
+	 * from being created.
+	 */
+	private Intake() {
 		rightLeftIntake = new DoubleSolenoid(RobotMap.INTAKE_DOUBLE_SOLENOID_FORWARD, 
-										 	 	RobotMap.INTAKE_DOUBLE_SOLENOID_REVERSE);
+												RobotMap.INTAKE_DOUBLE_SOLENOID_REVERSE);
 		rightLeftMotor 	= new Talon(RobotMap.INTAKE_MOTORS);
-		
-		leftLimitSwitch 	= new DigitalInput(RobotMap.LEFT_TOTE_SWITCH);
-		rightLimitSwitch 	= new DigitalInput(RobotMap.RIGHT_TOTE_SWITCH);
 	}
 	
 	/**
-	 * Gets the values both limit switches. Only one has to be active to return true
-	 * @return True if a tote is present
+	 * @return the instance of the subsystem
 	 */
-	public boolean totePresent() {
-		if (leftLimitSwitch.get() || rightLimitSwitch.get()) {
-			return true;
-		}else{
-			return false;
+	public static Intake getInstance() {
+		if(instance == null) {
+			instance = new Intake();
 		}
-	}
-	
+		
+		leftLimitSwitch 	= new DigitalInput(RobotMap.LEFT_TOTE_SWITCH);
+		rightLimitSwitch 	= new DigitalInput(RobotMap.RIGHT_TOTE_SWITCH);
+		return instance;
+	}	
 	/**
 	 * Releases the intake from intaking position
 	 */
@@ -52,7 +53,7 @@ public class Intake extends Subsystem {
 	/**
 	 * Actuates the intake into intaking position
 	 */
-	public void actuateIntake() {
+	public void engageIntake() {
 		rightLeftIntake.set(Value.kForward);
 	}
 	
@@ -78,15 +79,30 @@ public class Intake extends Subsystem {
 	}
 	
 	/**
-	 * Sets the intake Speed of the motors. 
+	 * Sets the intake Speed of the motors.
 	 * @param speed 1 to 0 Tote In. 0 - -1 Tote Out
 	 */
 	public void setIntakeSpeed(double speed) {	
 		rightLeftMotor.set(speed);
 	}
+
+	/**
+	 * Check if there's soemthing in the intake.
+	 * @return true when an object is in the intake.
+	 */
+	public Boolean isTotePresent() {
+		if (leftLimitSwitch.get() || rightLimitSwitch.get()) {
+			return true;
+		}else{
+			return false;
+		}
+
+	}
 	
+	/**
+	 * Set the default command for the subsystem
+	 */
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
     

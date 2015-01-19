@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class IntakeIn extends Command {
 
-	Intake intake = new Intake();
+	Intake intake = Intake.getInstance();
 	
     public IntakeIn() {
     	requires(intake);
@@ -16,7 +16,7 @@ public class IntakeIn extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	intake.actuateIntake();
+    	intake.engageIntake();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -26,7 +26,7 @@ public class IntakeIn extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        if (intake.totePresent()) {
+        if (intake.isTotePresent()) {
         	return true;
         }else{
         	return false;
