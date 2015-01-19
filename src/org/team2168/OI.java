@@ -1,6 +1,8 @@
 package org.team2168;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
+
 import org.team2168.commands.ExampleCommand;
 
 /**
@@ -26,6 +28,15 @@ public class OI {
     // Start the command when the button is pressed and let it run the command
     // until it is finished as determined by it's isFinished method.
     // button.whenPressed(new ExampleCommand());
+	
+	public static Joystick driverJoystick;
+	public static Joystick operatorJoystick;
+	
+	public OI(){
+		driverJoystick = new Joystick(RobotMap.DRIVER_JOYSTICK);
+		operatorJoystick = new Joystick(RobotMap.OPERATOR_JOYSTICK);
+	
+	}
     
     // Run the command while the button is being held down and interrupt it once
     // the button is released.
