@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 /**
  * The intake subsytem controls the intake motors and solenoids. 
@@ -16,7 +17,9 @@ public class Intake extends Subsystem {
 	private static Intake instance = null;
 	private DoubleSolenoid rightLeftIntake;
 	private Talon rightLeftMotor;
-	
+	private static DigitalInput leftLimitSwitch;
+	private static DigitalInput rightLimitSwitch;
+
 	/**
 	 * A private constructor to prevent multiple instances of the subsystem
 	 * from being created.
@@ -25,6 +28,10 @@ public class Intake extends Subsystem {
 		rightLeftIntake = new DoubleSolenoid(RobotMap.INTAKE_DOUBLE_SOLENOID_FORWARD, 
 												RobotMap.INTAKE_DOUBLE_SOLENOID_REVERSE);
 		rightLeftMotor 	= new Talon(RobotMap.INTAKE_MOTORS);
+
+		leftLimitSwitch 	= new DigitalInput(RobotMap.LEFT_TOTE_SWITCH);
+		rightLimitSwitch 	= new DigitalInput(RobotMap.RIGHT_TOTE_SWITCH);
+		
 	}
 	
 	/**
@@ -86,8 +93,11 @@ public class Intake extends Subsystem {
 	 * @return true when an object is in the intake.
 	 */
 	public Boolean isTotePresent() {
-		//TODO: tie this to sensors within the intake.
-		return false;
+		if (leftLimitSwitch.get() || rightLimitSwitch.get()) {
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
 	/**
