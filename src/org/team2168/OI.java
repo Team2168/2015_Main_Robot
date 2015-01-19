@@ -33,7 +33,6 @@ public class OI {
 	public static Joystick operatorJoystick;
 	
 	public OI(){
-		
 		driverJoystick = new Joystick(RobotMap.DRIVER_JOYSTICK);
 		operatorJoystick = new Joystick(RobotMap.OPERATOR_JOYSTICK);
 	
