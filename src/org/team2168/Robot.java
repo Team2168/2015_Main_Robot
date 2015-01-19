@@ -6,9 +6,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-import org.team2168.commands.ExampleCommand;
-import org.team2168.subsystems.Drivetrain;
-import org.team2168.subsystems.ExampleSubsystem;
+import org.team2168.commands.*;
+import org.team2168.subsystems.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -19,10 +18,13 @@ import org.team2168.subsystems.ExampleSubsystem;
  */
 public class Robot extends IterativeRobot {
 
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
-	public static  Drivetrain drivetrain = new Drivetrain();
-
+	
+	//Subsystem objects
+	public static final Drivetrain drivetrain = Drivetrain.getInstance();
+	public static final Intake intake = Intake.getInstance();
+	
+	//Auto command objects
     Command autonomousCommand;
 
     /**
@@ -31,9 +33,8 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
 		oi = new OI();
-		drivetrain = new Drivetrain();
         // instantiate the command used for the autonomous period
-        autonomousCommand = new ExampleCommand();
+        //autonomousCommand = new ExampleCommand();
     }
 	
     /**
