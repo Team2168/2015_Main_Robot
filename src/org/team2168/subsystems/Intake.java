@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 /**
  * Intake subystem controlls the intake motors and solenoids. 
@@ -17,11 +18,28 @@ public class Intake extends Subsystem {
 
 	Talon rightLeftMotor;
 	
+	DigitalInput leftLimitSwitch;
+	DigitalInput rightLimitSwitch;
+	
 	public Intake() {
 		rightLeftIntake = new DoubleSolenoid(RobotMap.INTAKE_DOUBLE_SOLENOID_FORWARD, 
 										 	 	RobotMap.INTAKE_DOUBLE_SOLENOID_REVERSE);
 		rightLeftMotor 	= new Talon(RobotMap.INTAKE_MOTORS);
 		
+		leftLimitSwitch 	= new DigitalInput(RobotMap.LEFT_TOTE_SWITCH);
+		rightLimitSwitch 	= new DigitalInput(RobotMap.RIGHT_TOTE_SWITCH);
+	}
+	
+	/**
+	 * Gets the values both limit switches. Only one has to be active to return true
+	 * @return True if a tote is present
+	 */
+	public boolean totePresent() {
+		if (leftLimitSwitch.get() || rightLimitSwitch.get()) {
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
 	/**
