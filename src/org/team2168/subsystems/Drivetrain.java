@@ -22,8 +22,8 @@ public class Drivetrain extends Subsystem {
 	 */
 	public Drivetrain(){
 		
-		leftMotor = new Talon(RobotMap.drivetrainLeftMotor);
-		rightMotor = new Talon(RobotMap.drivetrainLeftMotor);
+		leftMotor = new Talon(RobotMap.DRIVETRAIN_LEFT_MOTORS);
+		rightMotor = new Talon(RobotMap.DRIVETRAIN_LEFT_MOTORS);
 		
 	}
 

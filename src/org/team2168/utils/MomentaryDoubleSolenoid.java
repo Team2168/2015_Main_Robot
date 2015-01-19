@@ -77,7 +77,9 @@ public class MomentaryDoubleSolenoid extends DoubleSolenoid{
 	}
 	
 	/**
+	 * Sets the state of the solenoid.
 	 * 
+	 * @param value
 	 */
 	public void set(final DoubleSolenoid.Value value) {
 		//If there is currently an active timerTask, kill it

@@ -34,8 +34,8 @@ public class OI {
 	
 	public OI(){
 		
-		driverJoystick = new Joystick(RobotMap.driverJoystick);
-		operatorJoystick = new Joystick(RobotMap.operatorJoystick);
+		driverJoystick = new Joystick(RobotMap.DRIVER_JOYSTICK);
+		operatorJoystick = new Joystick(RobotMap.OPERATOR_JOYSTICK);
 	
 	}
     
