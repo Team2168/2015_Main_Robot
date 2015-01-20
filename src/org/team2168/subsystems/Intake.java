@@ -2,11 +2,11 @@ package org.team2168.subsystems;
 
 import org.team2168.RobotMap;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  * The intake subsytem controls the intake motors and solenoids.
@@ -29,9 +29,8 @@ public class Intake extends Subsystem {
 				RobotMap.INTAKE_DOUBLE_SOLENOID_REVERSE);
 		rightLeftMotor 	= new Talon(RobotMap.INTAKE_MOTORS);
 
-		leftLimitSwitch 	= new DigitalInput(RobotMap.LEFT_TOTE_SWITCH);
+		leftLimitSwitch		= new DigitalInput(RobotMap.LEFT_TOTE_SWITCH);
 		rightLimitSwitch 	= new DigitalInput(RobotMap.RIGHT_TOTE_SWITCH);
-		
 	}
 
 	/**
