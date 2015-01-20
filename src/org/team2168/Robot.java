@@ -5,6 +5,7 @@ import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.Gripper;
 import org.team2168.subsystems.Intake;
 import org.team2168.subsystems.Lift;
+import org.team2168.subsystems.Pneumatics;
 import org.team2168.subsystems.Winch;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -29,6 +30,7 @@ public class Robot extends IterativeRobot {
 	public static final Lift lift = Lift.getInstance();
 	public static final Winch winch = Winch.getInstance();
 	public static final Gripper gripper = Gripper.getInstance();
+	public static final Pneumatics pneumatics = Pneumatics.getInstance();
 
 	//Auto command objects
 	Command autonomousCommand;
@@ -93,6 +95,8 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+
+		System.out.println("  " + pneumatics.getRawPressure() + "V  = " + pneumatics.getPressure());
 	}
 
 	/**
