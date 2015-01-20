@@ -15,6 +15,7 @@ public class RobotMap {
 	public final static int INTAKE_MOTORS = 0;
 	public final static int DRIVETRAIN_LEFT_MOTORS = 1;
 	public final static int DRIVETRAIN_RIGHT_MOTORS = 2;
+	public final static int LIFT_MOTOR = 3;
 
 
 	//Solenoid Channels////////////////////////////////////////////////////////
@@ -22,11 +23,14 @@ public class RobotMap {
 	public final static int INTAKE_DOUBLE_SOLENOID_REVERSE = 1;
 	public final static int GRIPPER_DOUBLE_SOLENOID_FORWARD = 2;
 	public final static int GRIPPER_DOUBLE_SOLENOID_REVERSE = 3;
+	public final static int LIFT_SOLENOID = 4;
 
 
 	//Digital IO Channels//////////////////////////////////////////////////////
 	public final static int LEFT_TOTE_SWITCH = 0;
 	public final static int RIGHT_TOTE_SWITCH = 1;
+	public final static int WINCH_ENCODER_A = 2;
+	public final static int WINCH_ENCODER_B = 3;
 
 
 	//Analog Input Channels////////////////////////////////////////////////////

@@ -1,6 +1,9 @@
 package org.team2168.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import org.team2168.RobotMap;
+import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Encoder;;
 
 /**
  * The lift subsystem.
@@ -8,12 +11,17 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Lift extends Subsystem {
 
 	private static Lift instance = null;
+	private Talon IntakeMotor;
+	private Encoder WinchEncoder;
 
 	/**
 	 * A private constructor to prevent multiple instances of the subsystem
 	 * from being created.
 	 */
 	private Lift() {
+		IntakeMotor = new Talon(RobotMap.LIFT_MOTOR);
+		WinchEncoder = new Encoder(RobotMap.WINCH_ENCODER_A, 
+								   RobotMap.WINCH_ENCODER_B);
 
 	}
 
@@ -39,8 +47,8 @@ public class Lift extends Subsystem {
 	 * Drive the lift in open loop mode.
 	 * @param speed value from -1.0 to 1.0, positive drive the lift up.
 	 */
-	public void drive(double speed) {
-		//TODO: drive the lift motors
+	public void drive(double speed) {		
+		IntakeMotor.set(speed);
 	}
 
 	/**
@@ -48,8 +56,7 @@ public class Lift extends Subsystem {
 	 * @return position in inches
 	 */
 	public double getPosition() {
-		//TODO: get the position from the winch encoder
-		return 0.0;
+		return WinchEncoder.getDistance();
 	}
 
 	/**
@@ -66,7 +73,7 @@ public class Lift extends Subsystem {
 	 */
 	public void setPositionDelta(double delta) {
 		//TODO: drive the lift to a new position ()
-		//setPosition(current position + delta);
+		setPosition(this.getPosition() + delta);
 	}
 
 	/**
