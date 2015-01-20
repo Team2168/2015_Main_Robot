@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -96,7 +97,8 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 
-		System.out.println("  " + pneumatics.getRawPressure() + "V  = " + pneumatics.getPressure());
+		SmartDashboard.putNumber("System Pressure (PSI)", pneumatics.getPressure());
+		SmartDashboard.putNumber("System Pressure (VDC)", pneumatics.getRawPressure());
 	}
 
 	/**
