@@ -1,6 +1,7 @@
 package org.team2168.subsystems;
 
 import org.team2168.RobotMap;
+import org.team2168.utils.Debouncer;
 import org.team2168.utils.Util;
 
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -15,6 +16,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Pneumatics extends Subsystem {
 	private static Pneumatics instance = null;
 	private AnalogInput systemPressure;
+	private Debouncer systemPressureSensorFailed;
 	private Compressor compressor;
 
 	/**
@@ -23,6 +25,7 @@ public class Pneumatics extends Subsystem {
 	private Pneumatics(){
 		systemPressure = new AnalogInput(RobotMap.SYSTEM_PRESSURE);
 		compressor = new Compressor();
+		systemPressureSensorFailed = new Debouncer(1);
 	}
 
 	/**
@@ -46,19 +49,36 @@ public class Pneumatics extends Subsystem {
 	 * @return A value from 0 - 5
 	 */
 	public double getRawPressure() {
-		//TODO: Add code to verify that the sensor is returning valid data.
-		//      Values shouldn't be less than 0.5V or greater than 4.5V.
-		return systemPressure.getVoltage();
+		double voltage = systemPressure.getVoltage();
+
+		//If sensor is returning invalid values, flag as bad
+		systemPressureSensorFailed.update(voltage < RobotMap.PRESS_SENSOR_LOW_VOLTAGE
+				|| voltage > RobotMap.PRESS_SENSOR_HIGH_VOLTAGE);
+
+		return voltage;
 	}
 
+
+	/**
+	 * Check if the pressure sensor is returning valid data.
+	 * @return true if failed.
+	 */
+	public boolean isPressureSensorFailed() {
+		return systemPressureSensorFailed.getStatus();
+	}
 
 	/**
 	 * Get the system pressure.
 	 * @return value between 0 and 150 psi
 	 */
 	public double getPressure() {
-		double slope = Util.slope(0.5, 0, 4.5, 150);
-		double intercept = Util.intercept(slope, 4.5, 150);
+		double slope = Util.slope(RobotMap.PRESS_SENSOR_LOW_VOLTAGE,
+				RobotMap.PRESS_SENSOR_LOW_PRESSURE,
+				RobotMap.PRESS_SENSOR_HIGH_VOLTAGE,
+				RobotMap.PRESS_SENSOR_HIGH_PRESSURE);
+		double intercept = Util.intercept(slope,
+				RobotMap.PRESS_SENSOR_HIGH_VOLTAGE,
+				RobotMap.PRESS_SENSOR_HIGH_PRESSURE);
 		return slope * getRawPressure() + intercept;
 	}
 }
