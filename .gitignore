@@ -17,6 +17,7 @@
 *.tmp
 tmp/
 .gradle
+/dist/
 
 
 #FRC Specific
@@ -29,3 +30,4 @@ tmp/
 /resources
 build.xml
 build.properties
+sysProps.xml
