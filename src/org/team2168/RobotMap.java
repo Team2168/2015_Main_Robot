@@ -20,6 +20,8 @@ public class RobotMap {
 	//Solenoid Channels////////////////////////////////////////////////////////
 	public final static int INTAKE_DOUBLE_SOLENOID_FORWARD = 0;
 	public final static int INTAKE_DOUBLE_SOLENOID_REVERSE = 1;
+	public final static int GRIPPER_DOUBLE_SOLENOID_FORWARD = 2;
+	public final static int GRIPPER_DOUBLE_SOLENOID_REVERSE = 3;
 
 
 	//Digital IO Channels//////////////////////////////////////////////////////
