@@ -1,4 +1,4 @@
-package org.team2168.commands;
+package org.team2168.commands.intake;
 import org.team2168.subsystems.Intake;
 
 import edu.wpi.first.wpilibj.command.Command;
