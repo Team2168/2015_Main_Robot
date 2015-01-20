@@ -1,6 +1,7 @@
 package org.team2168.subsystems;
 
 import org.team2168.RobotMap;
+import org.team2168.commands.ReleaseGripper;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -38,7 +39,7 @@ public class Gripper extends Subsystem {
 	/**
 	 * Engages the gripper to grab
 	 */
-	public void EngageGripper(){
+	public void engageGripper(){
 	
 		gripper.set(Value.kForward);
 		
@@ -47,7 +48,7 @@ public class Gripper extends Subsystem {
 	/**
 	 * Disengages the gripper to release
 	 */
-	public void ReleaseGripper(){
+	public void releaseGripper(){
 		
 		gripper.set(Value.kReverse);
 		
@@ -56,6 +57,6 @@ public class Gripper extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
+    	setDefaultCommand(new ReleaseGripper());
     }
 }
-

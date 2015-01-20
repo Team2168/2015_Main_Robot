@@ -2,6 +2,7 @@
 package org.team2168;
 
 import org.team2168.subsystems.Drivetrain;
+import org.team2168.subsystems.Gripper;
 import org.team2168.subsystems.Intake;
 import org.team2168.subsystems.Lift;
 import org.team2168.subsystems.Winch;
@@ -27,6 +28,7 @@ public class Robot extends IterativeRobot {
 	public static final Intake intake = Intake.getInstance();
 	public static final Lift lift = Lift.getInstance();
 	public static final Winch winch = Winch.getInstance();
+	public static final Gripper gripper = Gripper.getInstance();
 
 	//Auto command objects
 	Command autonomousCommand;
