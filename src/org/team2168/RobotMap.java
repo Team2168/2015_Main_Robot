@@ -41,4 +41,13 @@ public class RobotMap {
 	/*************************************************************************
 	 *                         DRIVETRAIN PARAMETERS
 	 *************************************************************************/
+
+
+	/*************************************************************************
+	 *                            MISC PARAMETERS
+	 *************************************************************************/
+	public final static double PRESS_SENSOR_LOW_VOLTAGE = 0.5;
+	public final static double PRESS_SENSOR_LOW_PRESSURE = 0.0;
+	public final static double PRESS_SENSOR_HIGH_VOLTAGE = 4.5;
+	public final static double PRESS_SENSOR_HIGH_PRESSURE = 150.0;
 }
