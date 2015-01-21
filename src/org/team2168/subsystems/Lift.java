@@ -14,6 +14,8 @@ public class Lift extends Subsystem {
 	private Talon IntakeMotor;
 	private Encoder WinchEncoder;
 
+	double currentPosition;
+	
 	/**
 	 * A private constructor to prevent multiple instances of the subsystem
 	 * from being created.
@@ -22,7 +24,6 @@ public class Lift extends Subsystem {
 		IntakeMotor = new Talon(RobotMap.LIFT_MOTOR);
 		WinchEncoder = new Encoder(RobotMap.WINCH_ENCODER_A, 
 								   RobotMap.WINCH_ENCODER_B);
-
 	}
 
 	/**
@@ -64,16 +65,32 @@ public class Lift extends Subsystem {
 	 * @param position in inches.
 	 */
 	public void setPosition(double position) {
-		//TODO: drive the lift to the setpoint using closed loop control
+		double distanceToDrive = position - getPosition();
+		double ABSvalue = Math.abs(distanceToDrive);
+		
+		if (distanceToDrive > 0) {
+			setPositionDelta(ABSvalue, true);
+		}else{
+			setPositionDelta(ABSvalue, false);
+		}
 	}
 
 	/**
 	 * Drive the lift to a position relative to where it currently is.
 	 * @param delta distance to travel in inches, positive is up
+	 * @param direction True for up, False for down
 	 */
-	public void setPositionDelta(double delta) {
+	public void setPositionDelta(double delta, boolean direction) {
 		//TODO: drive the lift to a new position ()
-		setPosition(this.getPosition() + delta);
+		
+		if (delta > 1) {		
+			if (direction) {
+				IntakeMotor.set(1);
+			}else {
+				IntakeMotor.set(-1);
+			}
+		}
+		
 	}
 
 	/**
