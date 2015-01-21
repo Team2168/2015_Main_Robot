@@ -81,8 +81,6 @@ public class Lift extends Subsystem {
 	 * @param direction True for up, False for down
 	 */
 	public void setPositionDelta(double delta, boolean direction) {
-		//TODO: drive the lift to a new position ()
-		
 		if (delta > 1) {		
 			if (direction) {
 				IntakeMotor.set(1);
@@ -98,6 +96,7 @@ public class Lift extends Subsystem {
 	 */
 	public void zeroPosition() {
 		//TODO: reset the lift position
+		setPosition(0);
 	}
 
 	/**
