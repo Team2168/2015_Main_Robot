@@ -24,8 +24,11 @@ public class Pneumatics extends Subsystem {
 	 */
 	private Pneumatics(){
 		systemPressure = new AnalogInput(RobotMap.SYSTEM_PRESSURE);
-		compressor = new Compressor();
+		compressor = new Compressor(2);
 		systemPressureSensorFailed = new Debouncer(1);
+		
+		//TODO fix this to run with commands
+		compressor.setClosedLoopControl(true);
 	}
 
 	/**
@@ -39,6 +42,28 @@ public class Pneumatics extends Subsystem {
 		return instance;
 	}
 
+	/**
+	 * Starts the compressor
+	 */
+	public void startPneumatics() {
+		compressor.start();
+	}
+	
+	/**
+	 * Stops the compressor
+	 */
+	public void stopPneumatics() {
+		compressor.stop();
+	}
+	
+	/**
+	 * Checks if the compressor is running
+	 * @return true if compressor is running, false if not running
+	 */
+	public boolean isEnabled() {
+		return compressor.enabled();
+	}
+	
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		//setDefaultCommand(new MySpecialCommand());
