@@ -1,9 +1,12 @@
 package org.team2168.subsystems;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
 import org.team2168.RobotMap;
+
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.Encoder;;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  * The lift subsystem.
@@ -11,18 +14,21 @@ import edu.wpi.first.wpilibj.Encoder;;
 public class Lift extends Subsystem {
 
 	private static Lift instance = null;
-	private Talon IntakeMotor;
-	private Encoder WinchEncoder;
+	private Talon intakeMotor;
+	private Encoder liftEncoder;
+	private DoubleSolenoid liftBreak;
+	double currentPosition;
 
 	/**
 	 * A private constructor to prevent multiple instances of the subsystem
 	 * from being created.
 	 */
 	private Lift() {
-		IntakeMotor = new Talon(RobotMap.LIFT_MOTOR);
-		WinchEncoder = new Encoder(RobotMap.WINCH_ENCODER_A, 
-								   RobotMap.WINCH_ENCODER_B);
-
+		intakeMotor = new Talon(RobotMap.LIFT_MOTOR);
+		liftEncoder = new Encoder(RobotMap.LIFT_ENCODER_A,
+				RobotMap.LIFT_ENCODER_B);
+		liftBreak = new DoubleSolenoid(RobotMap.LIFT_DOUBLE_SOLENOID_FORWARD,
+				RobotMap.LIFT_DOUBLE_SOLENOID_REVERSE);
 	}
 
 	/**
@@ -45,10 +51,10 @@ public class Lift extends Subsystem {
 
 	/**
 	 * Drive the lift in open loop mode.
-	 * @param speed value from -1.0 to 1.0, positive drive the lift up.
+	 * @param speed value from -1.0 to 1.0, positive drives the lift up.
 	 */
-	public void drive(double speed) {		
-		IntakeMotor.set(speed);
+	public void drive(double speed) {
+		intakeMotor.set(speed);
 	}
 
 	/**
@@ -56,7 +62,7 @@ public class Lift extends Subsystem {
 	 * @return position in inches
 	 */
 	public double getPosition() {
-		return WinchEncoder.getDistance();
+		return liftEncoder.getDistance();
 	}
 
 	/**
@@ -64,23 +70,48 @@ public class Lift extends Subsystem {
 	 * @param position in inches.
 	 */
 	public void setPosition(double position) {
-		//TODO: drive the lift to the setpoint using closed loop control
+		//TODO: establish minimum and maximum distances the lift can travel. Put them in RobotMap.
+		//TODO: If someone inputs values which are outside the min/max, coerce them to be within range.
+
+		double distanceToDrive = position - getPosition();
+		double ABSvalue = Math.abs(distanceToDrive);
+
+		if (distanceToDrive > 0) {
+			setPositionDelta(ABSvalue, true);
+		}else{
+			setPositionDelta(ABSvalue, false);
+		}
 	}
 
 	/**
 	 * Drive the lift to a position relative to where it currently is.
 	 * @param delta distance to travel in inches, positive is up
+	 * @param direction True for up, False for down
 	 */
-	public void setPositionDelta(double delta) {
-		//TODO: drive the lift to a new position ()
-		setPosition(this.getPosition() + delta);
+	private void setPositionDelta(double delta, boolean direction) {
+		if (delta > 1) {
+			//TODO: Make separate commands to dis/engage the brake.
+			//TODO: Then sequence the evolution in a CommandGroup.
+			disableBreak();
+
+			//TODO: determine a safe speed to operate this at.
+			//TODO: Full speed (+/-1) is likely going to be (and overshoot your destination).
+			if (direction) {
+				intakeMotor.set(1);
+			}else {
+				intakeMotor.set(-1);
+			}
+		}else{
+			enableBreak();
+		}
+
 	}
 
 	/**
 	 * Mark the current position of the lift as zero inches.
 	 */
 	public void zeroPosition() {
-		//TODO: reset the lift position
+		liftEncoder.reset();
 	}
 
 	/**
@@ -99,6 +130,32 @@ public class Lift extends Subsystem {
 	public boolean lowerHardStop() {
 		//TODO: use sensor value
 		return false;
+	}
+
+	/**
+	 * Gets the sate of the current pneumatic break
+	 * @return True when break is enabled, False when break is disabled
+	 */
+	public boolean isBreakEnabled() {
+		if (liftBreak.get() == Value.kForward) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Enables the pneumatic break
+	 */
+	public void enableBreak() {
+		liftBreak.set(Value.kForward);
+	}
+
+	/**
+	 * Disables the pneumatic break
+	 */
+	public void disableBreak() {
+		liftBreak.set(Value.kReverse);
 	}
 }
 

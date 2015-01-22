@@ -16,6 +16,7 @@ public class RobotMap {
 	public final static int DRIVETRAIN_LEFT_MOTORS = 1;
 	public final static int DRIVETRAIN_RIGHT_MOTORS = 2;
 	public final static int LIFT_MOTOR = 3;
+	public final static int WINCH_MOTOR = 4;
 
 
 	//Solenoid Channels////////////////////////////////////////////////////////
@@ -23,19 +24,27 @@ public class RobotMap {
 	public final static int INTAKE_DOUBLE_SOLENOID_REVERSE = 1;
 	public final static int GRIPPER_DOUBLE_SOLENOID_FORWARD = 2;
 	public final static int GRIPPER_DOUBLE_SOLENOID_REVERSE = 3;
-	public final static int LIFT_SOLENOID = 4;
+	public final static int LIFT_DOUBLE_SOLENOID_FORWARD = 4;
+	public final static int LIFT_DOUBLE_SOLENOID_REVERSE = 5;
 
 
 	//Digital IO Channels//////////////////////////////////////////////////////
 	public final static int LEFT_TOTE_SWITCH = 0;
 	public final static int RIGHT_TOTE_SWITCH = 1;
-	public final static int WINCH_ENCODER_A = 2;
-	public final static int WINCH_ENCODER_B = 3;
-	public final static int DRIVE_GYRO = 4;
+	public final static int LIFT_ENCODER_A = 2;
+	public final static int LIFT_ENCODER_B = 3;
+	public final static int WINCH_ENCODER_A = 4;
+	public final static int WINCH_ENCODER_B = 5;
 
 
 	//Analog Input Channels////////////////////////////////////////////////////
 	public final static int SYSTEM_PRESSURE = 0;
+	public final static int DRIVE_GYRO = 1;
+
+
+	//CAN Device IDs///////////////////////////////////////////////////////////
+	public final static int PDP_CAN_ID = 1;
+	public final static int PCM_CAN_ID = 2;
 
 
 	//Joysticks////////////////////////////////////////////////////////////////
