@@ -5,6 +5,7 @@ import org.team2168.commands.drivetrain.DriveWithJoysticks;
 
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.Encoder;
 
 /**
  * The drivetrain subsystem.
@@ -14,6 +15,8 @@ public class Drivetrain extends Subsystem {
 	private static Drivetrain instance = null;
 	private Talon leftMotor;
 	private Talon rightMotor;
+	private Encoder drivetrainLeftEncoder;
+	private Encoder drivetrainRightEncoder;
 
 	/**
 	 * This method instantiates the motors.
@@ -22,6 +25,10 @@ public class Drivetrain extends Subsystem {
 	private Drivetrain() {
 		leftMotor = new Talon(RobotMap.DRIVETRAIN_LEFT_MOTORS);
 		rightMotor = new Talon(RobotMap.DRIVETRAIN_RIGHT_MOTORS);
+		drivetrainLeftEncoder = new Encoder(RobotMap.DRIVETRAIN_LEFT_ENCODER_A, 
+											RobotMap.DRIVETRAIN_LEFT_ENCODER_B);
+		drivetrainRightEncoder = new Encoder(RobotMap.DRIVETRAIN_RIGHT_ENCODER_A, 
+											RobotMap.DRIVETRAIN_RIGHT_ENCODER_B);
 	}
 
 	/**
@@ -123,6 +130,14 @@ public class Drivetrain extends Subsystem {
 	 */
 	public void resetGyro() {
 		//TODO: reset t he gyro heading to zero
+	}
+	
+	public double rightEncoderDistance(){
+		return drivetrainRightEncoder.getDistance();
+	}
+	
+	public double leftEncoderDistance(){
+		return drivetrainLeftEncoder.getDistance();
 	}
 }
 

@@ -31,6 +31,10 @@ public class RobotMap {
 	public final static int RIGHT_TOTE_SWITCH = 1;
 	public final static int WINCH_ENCODER_A = 2;
 	public final static int WINCH_ENCODER_B = 3;
+	public final static int DRIVETRAIN_LEFT_ENCODER_A = 4;
+	public final static int DRIVETRAIN_LEFT_ENCODER_B = 5;
+	public final static int DRIVETRAIN_RIGHT_ENCODER_A = 6;
+	public final static int DRIVETRAIN_RIGHT_ENCODER_B = 7;
 
 
 	//Analog Input Channels////////////////////////////////////////////////////
