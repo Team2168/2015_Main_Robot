@@ -30,8 +30,10 @@ public class RobotMap {
 	//Digital IO Channels//////////////////////////////////////////////////////
 	public final static int LEFT_TOTE_SWITCH = 0;
 	public final static int RIGHT_TOTE_SWITCH = 1;
-	public final static int WINCH_ENCODER_A = 2;
-	public final static int WINCH_ENCODER_B = 3;
+	public final static int LIFT_ENCODER_A = 2;
+	public final static int LIFT_ENCODER_B = 3;
+	public final static int WINCH_ENCODER_A = 4;
+	public final static int WINCH_ENCODER_B = 5;
 
 
 	//Analog Input Channels////////////////////////////////////////////////////
