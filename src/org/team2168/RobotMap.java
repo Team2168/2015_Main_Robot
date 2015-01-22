@@ -31,6 +31,7 @@ public class RobotMap {
 	public final static int RIGHT_TOTE_SWITCH = 1;
 	public final static int WINCH_ENCODER_A = 2;
 	public final static int WINCH_ENCODER_B = 3;
+	public final static int DRIVE_GYRO = 4;
 
 
 	//Analog Input Channels////////////////////////////////////////////////////

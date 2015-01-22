@@ -3,6 +3,7 @@ package org.team2168.subsystems;
 import org.team2168.RobotMap;
 import org.team2168.commands.drivetrain.DriveWithJoysticks;
 
+import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -14,6 +15,7 @@ public class Drivetrain extends Subsystem {
 	private static Drivetrain instance = null;
 	private Talon leftMotor;
 	private Talon rightMotor;
+	private Gyro drivetrainGyro;
 
 	/**
 	 * This method instantiates the motors.
@@ -22,6 +24,7 @@ public class Drivetrain extends Subsystem {
 	private Drivetrain() {
 		leftMotor = new Talon(RobotMap.DRIVETRAIN_LEFT_MOTORS);
 		rightMotor = new Talon(RobotMap.DRIVETRAIN_RIGHT_MOTORS);
+		drivetrainGyro = new Gyro(RobotMap.DRIVE_GYRO);
 	}
 
 	/**
@@ -114,15 +117,14 @@ public class Drivetrain extends Subsystem {
 	 * @return heading in degrees.
 	 */
 	public double getHeading() {
-		//TODO: return current heading from gyro
-		return 0.0;
+		return drivetrainGyro.getAngle();
 	}
 
 	/**
 	 * Reset robot heading to zero.
 	 */
 	public void resetGyro() {
-		//TODO: reset t he gyro heading to zero
+		drivetrainGyro.reset();
 	}
 }
 
