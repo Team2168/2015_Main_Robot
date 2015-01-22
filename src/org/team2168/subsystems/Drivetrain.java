@@ -132,10 +132,18 @@ public class Drivetrain extends Subsystem {
 		//TODO: reset t he gyro heading to zero
 	}
 	
+	/**
+	 * gets distance of the right encoder
+	 * @return returns right encoder distance value.
+	 */
 	public double rightEncoderDistance(){
 		return drivetrainRightEncoder.getDistance();
 	}
 	
+	/**
+	 * gets distance of the left encoder
+	 * @return returns left encoder distance value.
+	 */
 	public double leftEncoderDistance(){
 		return drivetrainLeftEncoder.getDistance();
 	}
