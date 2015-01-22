@@ -2,6 +2,7 @@ package org.team2168.subsystems;
 
 import org.team2168.RobotMap;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -19,6 +20,7 @@ public class Intake extends Subsystem {
 	private Talon rightLeftMotor;
 	private static DigitalInput leftLimitSwitch;
 	private static DigitalInput rightLimitSwitch;
+	private static AnalogInput toteDistanceSensor;
 
 	/**
 	 * A private constructor to prevent multiple instances of the subsystem
@@ -31,6 +33,7 @@ public class Intake extends Subsystem {
 
 		leftLimitSwitch		= new DigitalInput(RobotMap.LEFT_TOTE_SWITCH);
 		rightLimitSwitch 	= new DigitalInput(RobotMap.RIGHT_TOTE_SWITCH);
+		toteDistanceSensor = new AnalogInput(RobotMap.INTAKE_SENSOR);
 	}
 
 	/**
@@ -97,6 +100,15 @@ public class Intake extends Subsystem {
 		}else{
 			return false;
 		}
+	}
+	
+	/**
+	 * Returns the voltage of the distance sensor
+	 * @return voltage of distance sensor
+	 */
+	public double getToteDistance() {
+		return toteDistanceSensor.getVoltage();
+		//TODO Make conversion for voltage to inches
 	}
 
 	/**

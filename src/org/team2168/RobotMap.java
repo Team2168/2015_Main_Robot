@@ -44,6 +44,7 @@ public class RobotMap {
 	//Analog Input Channels////////////////////////////////////////////////////
 	public final static int SYSTEM_PRESSURE = 0;
 	public final static int DRIVE_GYRO = 1;
+	public final static int INTAKE_SENSOR = 2;
 
 
 	//CAN Device IDs///////////////////////////////////////////////////////////
