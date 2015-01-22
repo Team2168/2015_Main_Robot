@@ -122,7 +122,7 @@ public class Drivetrain extends Subsystem {
 	 * Reset robot heading to zero.
 	 */
 	public void resetGyro() {
-		//TODO: resett he gyro heading to zero
+		//TODO: reset the gyro heading to zero
 	}
 }
 
