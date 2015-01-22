@@ -16,7 +16,8 @@ public class RobotMap {
 	public final static int DRIVETRAIN_LEFT_MOTORS = 1;
 	public final static int DRIVETRAIN_RIGHT_MOTORS = 2;
 	public final static int LIFT_MOTOR = 3;
-
+	public final static int WINCH_MOTOR = 4;
+	
 
 	//Solenoid Channels////////////////////////////////////////////////////////
 	public final static int INTAKE_DOUBLE_SOLENOID_FORWARD = 0;
@@ -38,6 +39,11 @@ public class RobotMap {
 
 	//Analog Input Channels////////////////////////////////////////////////////
 	public final static int SYSTEM_PRESSURE = 0;
+
+
+	//CAN Device IDs///////////////////////////////////////////////////////////
+	public final static int PDP_CAN_ID = 1;
+	public final static int PCM_CAN_ID = 2;
 
 
 	//Joysticks////////////////////////////////////////////////////////////////
