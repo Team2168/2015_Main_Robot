@@ -1,7 +1,11 @@
 package org.team2168.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+
 import org.team2168.RobotMap;
+
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Encoder;;
 
@@ -13,7 +17,9 @@ public class Lift extends Subsystem {
 	private static Lift instance = null;
 	private Talon IntakeMotor;
 	private Encoder WinchEncoder;
-
+	private DoubleSolenoid LiftBreak;
+	
+	
 	double currentPosition;
 	
 	/**
@@ -24,6 +30,8 @@ public class Lift extends Subsystem {
 		IntakeMotor = new Talon(RobotMap.LIFT_MOTOR);
 		WinchEncoder = new Encoder(RobotMap.WINCH_ENCODER_A, 
 								   RobotMap.WINCH_ENCODER_B);
+		LiftBreak = new DoubleSolenoid(RobotMap.LIFT_DOUBLE_SOLENOID_FORWARD,
+									   RobotMap.LIFT_DOUBLE_SOLENOID_REVERSE);
 	}
 
 	/**
@@ -74,19 +82,48 @@ public class Lift extends Subsystem {
 			setPositionDelta(ABSvalue, false);
 		}
 	}
-
+	
+	/**
+	 * Gets the sate of the current pneumatic break
+	 * @return True when break is enabled, False when break is disabled
+	 */
+	public boolean isBreakEnabled() {
+		if (LiftBreak.get() == Value.kForward) {
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	/**
+	 * Enables the pneumatic break
+	 */
+	public void enableBreak() {
+		LiftBreak.set(Value.kForward);
+	}
+	
+	/**
+	 * Disables the pneumatic break 
+	 */
+	public void disableBreak() {
+		LiftBreak.set(Value.kReverse);
+	}
+	
 	/**
 	 * Drive the lift to a position relative to where it currently is.
 	 * @param delta distance to travel in inches, positive is up
 	 * @param direction True for up, False for down
 	 */
 	public void setPositionDelta(double delta, boolean direction) {
-		if (delta > 1) {		
+		if (delta > 1) {	
+			disableBreak();
 			if (direction) {
 				IntakeMotor.set(1);
 			}else {
 				IntakeMotor.set(-1);
 			}
+		}else{
+			enableBreak();
 		}
 		
 	}
