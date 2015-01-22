@@ -2,6 +2,7 @@ package org.team2168.subsystems;
 
 import org.team2168.RobotMap;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -12,6 +13,7 @@ public class Winch extends Subsystem {
 
 	private static Winch instance = null;
 	private static Talon winchMotor;
+	private static Encoder winchEncoder;
 
 	/**
 	 * A private constructor to prevent multiple instances of the subsystem
@@ -19,6 +21,8 @@ public class Winch extends Subsystem {
 	 */
 	private Winch() {
 		winchMotor = new Talon(RobotMap.WINCH_MOTOR);
+		winchEncoder = new Encoder(RobotMap.WINCH_ENCODER_A,
+								   RobotMap.WINCH_ENCODER_B);
 	}
 
 	/**
@@ -45,6 +49,20 @@ public class Winch extends Subsystem {
 	 */
 	public void drive(double speed) {
 		winchMotor.set(speed);
+	}
+	
+	/**
+	 * Get the distance the winch motor has turned since the last reset
+	 * @return distance 
+	 */
+	public double getDistance() {
+		return winchEncoder.getDistance();
+	}
+	/**
+	 * Reset the encoder
+	 */
+	public void resetEncoder() {
+		winchEncoder.reset();
 	}
 }
 
