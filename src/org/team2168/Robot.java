@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -26,12 +25,12 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 
 	//Subsystem objects
-	public static final Drivetrain drivetrain = Drivetrain.getInstance();
-	public static final Intake intake = Intake.getInstance();
-	public static final Lift lift = Lift.getInstance();
-	public static final Winch winch = Winch.getInstance();
-	public static final Gripper gripper = Gripper.getInstance();
-	public static final Pneumatics pneumatics = Pneumatics.getInstance();
+	public static Drivetrain drivetrain;
+	public static Intake intake;
+	public static Lift lift;
+	public static Winch winch;
+	public static Gripper gripper;
+	public static Pneumatics pneumatics;
 
 	//Auto command objects
 	Command autonomousCommand;
@@ -41,6 +40,13 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
+		drivetrain = Drivetrain.getInstance();
+		intake = Intake.getInstance();
+		lift = Lift.getInstance();
+		winch = Winch.getInstance();
+		gripper = Gripper.getInstance();
+		pneumatics = Pneumatics.getInstance();
+
 		oi = new OI();
 		// instantiate the command used for the autonomous period
 		//autonomousCommand = new ExampleCommand();
@@ -96,9 +102,6 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-
-		SmartDashboard.putNumber("System Pressure (PSI)", pneumatics.getPressure());
-		SmartDashboard.putNumber("System Pressure (VDC)", pneumatics.getRawPressure());
 	}
 
 	/**
