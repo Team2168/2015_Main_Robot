@@ -3,6 +3,7 @@ package org.team2168.subsystems;
 import org.team2168.RobotMap;
 import org.team2168.commands.drivetrain.DriveWithJoysticks;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -15,6 +16,8 @@ public class Drivetrain extends Subsystem {
 	private static Drivetrain instance = null;
 	private Talon leftMotor;
 	private Talon rightMotor;
+	private Encoder drivetrainLeftEncoder;
+	private Encoder drivetrainRightEncoder;
 	private Gyro drivetrainGyro;
 
 	/**
@@ -24,6 +27,10 @@ public class Drivetrain extends Subsystem {
 	private Drivetrain() {
 		leftMotor = new Talon(RobotMap.DRIVETRAIN_LEFT_MOTORS);
 		rightMotor = new Talon(RobotMap.DRIVETRAIN_RIGHT_MOTORS);
+		drivetrainLeftEncoder = new Encoder(RobotMap.DRIVETRAIN_LEFT_ENCODER_A,
+				RobotMap.DRIVETRAIN_LEFT_ENCODER_B);
+		drivetrainRightEncoder = new Encoder(RobotMap.DRIVETRAIN_RIGHT_ENCODER_A,
+				RobotMap.DRIVETRAIN_RIGHT_ENCODER_B);
 		drivetrainGyro = new Gyro(RobotMap.DRIVE_GYRO);
 	}
 
@@ -67,8 +74,8 @@ public class Drivetrain extends Subsystem {
 	 * @param rightSpeed the speed to drive the right motor
 	 */
 	public void tankDrive(double leftSpeed, double rightSpeed) {
-		//leftMotor.set(leftSpeed);
-		//rightMotor.set(rightSpeed);
+		driveLeft(leftSpeed);
+		driveRight(rightSpeed);
 	}
 
 	/**
@@ -84,8 +91,7 @@ public class Drivetrain extends Subsystem {
 	 * @return distance traveled in inches.
 	 */
 	public double getLeftPosition() {
-		//TODO: return position of left wheels from encoders
-		return 0.0;
+		return drivetrainLeftEncoder.getDistance();
 	}
 
 	/**
@@ -93,8 +99,7 @@ public class Drivetrain extends Subsystem {
 	 * @return distance traveled in inches
 	 */
 	public double getRightPosition() {
-		//TODO: return position of right wheels from encoders
-		return 0.0;
+		return drivetrainRightEncoder.getDistance();
 	}
 
 	/**

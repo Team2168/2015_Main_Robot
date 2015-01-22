@@ -35,6 +35,10 @@ public class RobotMap {
 	public final static int LIFT_ENCODER_B = 3;
 	public final static int WINCH_ENCODER_A = 4;
 	public final static int WINCH_ENCODER_B = 5;
+	public final static int DRIVETRAIN_LEFT_ENCODER_A = 5;
+	public final static int DRIVETRAIN_LEFT_ENCODER_B = 6;
+	public final static int DRIVETRAIN_RIGHT_ENCODER_A = 7;
+	public final static int DRIVETRAIN_RIGHT_ENCODER_B = 8;
 
 
 	//Analog Input Channels////////////////////////////////////////////////////
