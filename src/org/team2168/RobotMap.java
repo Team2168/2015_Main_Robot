@@ -37,6 +37,11 @@ public class RobotMap {
 	public final static int SYSTEM_PRESSURE = 0;
 
 
+	//CAN Device IDs///////////////////////////////////////////////////////////
+	public final static int PDP_CAN_ID = 1;
+	public final static int PCM_CAN_ID = 2;
+
+
 	//Joysticks////////////////////////////////////////////////////////////////
 	public final static int DRIVER_JOYSTICK = 1;
 	public final static int OPERATOR_JOYSTICK = 2;

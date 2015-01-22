@@ -7,12 +7,10 @@ import org.team2168.utils.Util;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.command.Subsystem;
-//start and stop compressor
-//get system pressure
-/**
- *
- */
 
+/**
+ * This subsystem handles statuses and controls for the pneumatic components.
+ */
 public class Pneumatics extends Subsystem {
 	private static Pneumatics instance = null;
 	private AnalogInput systemPressure;
@@ -24,10 +22,10 @@ public class Pneumatics extends Subsystem {
 	 */
 	private Pneumatics(){
 		systemPressure = new AnalogInput(RobotMap.SYSTEM_PRESSURE);
-		compressor = new Compressor(2);
+		compressor = new Compressor(RobotMap.PCM_CAN_ID);
 		systemPressureSensorFailed = new Debouncer(1);
-		
-		//TODO fix this to run with commands
+
+		//TODO: fix this to run with commands
 		compressor.setClosedLoopControl(true);
 	}
 
@@ -45,17 +43,17 @@ public class Pneumatics extends Subsystem {
 	/**
 	 * Starts the compressor
 	 */
-	public void startPneumatics() {
+	public void startCompressor() {
 		compressor.start();
 	}
-	
+
 	/**
 	 * Stops the compressor
 	 */
-	public void stopPneumatics() {
+	public void stopCompressor() {
 		compressor.stop();
 	}
-	
+
 	/**
 	 * Checks if the compressor is running
 	 * @return true if compressor is running, false if not running
@@ -63,7 +61,7 @@ public class Pneumatics extends Subsystem {
 	public boolean isEnabled() {
 		return compressor.enabled();
 	}
-	
+
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		//setDefaultCommand(new MySpecialCommand());
