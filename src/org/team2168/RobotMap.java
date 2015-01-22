@@ -16,7 +16,8 @@ public class RobotMap {
 	public final static int DRIVETRAIN_LEFT_MOTORS = 1;
 	public final static int DRIVETRAIN_RIGHT_MOTORS = 2;
 	public final static int LIFT_MOTOR = 3;
-
+	public final static int WINCH_MOTOR = 4;
+	
 
 	//Solenoid Channels////////////////////////////////////////////////////////
 	public final static int INTAKE_DOUBLE_SOLENOID_FORWARD = 0;
