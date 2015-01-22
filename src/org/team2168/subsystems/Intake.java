@@ -91,7 +91,7 @@ public class Intake extends Subsystem {
 	 * Check if there's soemthing in the intake.
 	 * @return true when an object is in the intake.
 	 */
-	public Boolean isTotePresent() {
+	public boolean isTotePresent() {
 		if (leftLimitSwitch.get() || rightLimitSwitch.get()) {
 			return true;
 		}else{
