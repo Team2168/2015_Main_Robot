@@ -14,7 +14,7 @@ public class RobotMap {
 	/*************************************************************************
 	 *                              WIRING MAP
 	 *************************************************************************/
-
+    
 	//PWM Channels/////////////////////////////////////////////////////////////
 	public final static int INTAKE_MOTORS = 0;
 	public final static int DRIVETRAIN_LEFT_MOTORS = 1;
