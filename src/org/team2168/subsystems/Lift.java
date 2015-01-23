@@ -93,22 +93,27 @@ public class Lift extends Subsystem {
 	 * @param direction True for up, False for down
 	 */
 	private void setPositionDelta(double delta, boolean direction) {
-		if (delta > 1) {
-			//TODO: Make separate commands to dis/engage the brake.
-			//TODO: Then sequence the evolution in a CommandGroup.
-			disableBreak();
-			
+		if (delta > 1) {		
 			if (direction) {
 				intakeMotor.set(RobotMap.LIFT_MOVING_SPEED);
 			}else {
 				intakeMotor.set(-RobotMap.LIFT_MOVING_SPEED);
 			}
-		}else{
-			enableBreak();
 		}
-
 	}
 
+	/**
+	 * Decides weather the break need to be actuated
+	 * @return True when break needs to enabled
+	 */
+	public boolean isBreakNeeded(double position) {
+		if (Math.abs(position - getPosition()) > 1) {
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
 	/**
 	 * Mark the current position of the lift as zero inches.
 	 */

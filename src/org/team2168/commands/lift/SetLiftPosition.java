@@ -1,14 +1,15 @@
 package org.team2168.commands.lift;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.team2168.subsystems.Lift;
+import org.team2168.Robot;
+
 /**
  *
  */
 public class SetLiftPosition extends Command {
 	
     public SetLiftPosition() {
-    	requires(Lift);
+    	requires(Robot.lift);
     }
 
     // Called just before this Command runs the first time
@@ -17,6 +18,7 @@ public class SetLiftPosition extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
