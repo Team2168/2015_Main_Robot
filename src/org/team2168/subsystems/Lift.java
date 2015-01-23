@@ -93,13 +93,11 @@ public class Lift extends Subsystem {
 			//TODO: Make separate commands to dis/engage the brake.
 			//TODO: Then sequence the evolution in a CommandGroup.
 			disableBreak();
-
-			//TODO: determine a safe speed to operate this at.
-			//TODO: Full speed (+/-1) is likely going to be (and overshoot your destination).
+			
 			if (direction) {
-				intakeMotor.set(1);
+				intakeMotor.set(RobotMap.LIFT_MOVING_SPEED);
 			}else {
-				intakeMotor.set(-1);
+				intakeMotor.set(-RobotMap.LIFT_MOVING_SPEED);
 			}
 		}else{
 			enableBreak();
