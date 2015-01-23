@@ -1,18 +1,20 @@
 package org.team2168.commands.lift;
 
-import edu.wpi.first.wpilibj.command.Command;
 import org.team2168.Robot;
+
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class SetLiftPosition extends Command {
-	
+public class AcuateBreak extends Command {
+
 	double position;
 	
-    public SetLiftPosition(double position) {
+    public AcuateBreak(double position) {
+        // Use requires() here to declare subsystem dependencies
     	this.position = position;
-    	requires(Robot.lift);
+        requires(Robot.lift);
     }
 
     // Called just before this Command runs the first time
@@ -21,7 +23,11 @@ public class SetLiftPosition extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.lift.setPosition(position);
+    	if (Robot.lift.isBreakNeeded(position)) {
+    		Robot.lift.enableBreak();
+    	}else {
+    		Robot.lift.disableBreak();
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
