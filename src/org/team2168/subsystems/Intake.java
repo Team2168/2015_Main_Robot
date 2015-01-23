@@ -91,7 +91,7 @@ public class Intake extends Subsystem {
 	}
 
 	/**
-	 * Check if there's soemthing in the intake.
+	 * Check if there's something in the intake.
 	 * @return true when an object is in the intake.
 	 */
 	public boolean isTotePresent() {
@@ -108,7 +108,7 @@ public class Intake extends Subsystem {
 	 */
 	public double getToteDistance() {
 		return toteDistanceSensor.getVoltage();
-		//TODO Make conversion for voltage to inches
+		//TODO: Make conversion for voltage to inches
 	}
 
 	/**
