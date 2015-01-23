@@ -1,5 +1,9 @@
 package org.team2168;
 
+import org.team2168.PIDController.sensors.AverageEncoder;
+
+import edu.wpi.first.wpilibj.CounterBase;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -10,7 +14,7 @@ public class RobotMap {
 	/*************************************************************************
 	 *                              WIRING MAP
 	 *************************************************************************/
-
+    
 	//PWM Channels/////////////////////////////////////////////////////////////
 	public final static int INTAKE_MOTORS = 0;
 	public final static int DRIVETRAIN_LEFT_MOTORS = 1;
@@ -35,15 +39,16 @@ public class RobotMap {
 	public final static int LIFT_ENCODER_B = 3;
 	public final static int WINCH_ENCODER_A = 4;
 	public final static int WINCH_ENCODER_B = 5;
-	public final static int DRIVETRAIN_LEFT_ENCODER_A = 5;
-	public final static int DRIVETRAIN_LEFT_ENCODER_B = 6;
-	public final static int DRIVETRAIN_RIGHT_ENCODER_A = 7;
-	public final static int DRIVETRAIN_RIGHT_ENCODER_B = 8;
+	public final static int DRIVETRAIN_LEFT_ENCODER_A = 6;
+	public final static int DRIVETRAIN_LEFT_ENCODER_B = 7;
+	public final static int DRIVETRAIN_RIGHT_ENCODER_A = 8;
+	public final static int DRIVETRAIN_RIGHT_ENCODER_B = 9;
 
 
 	//Analog Input Channels////////////////////////////////////////////////////
 	public final static int SYSTEM_PRESSURE = 0;
 	public final static int DRIVE_GYRO = 1;
+	public final static int INTAKE_SENSOR = 2;
 
 
 	//CAN Device IDs///////////////////////////////////////////////////////////
@@ -60,7 +65,21 @@ public class RobotMap {
 	 *                         DRIVETRAIN PARAMETERS
 	 *************************************************************************/
 
-
+	//TODO Verify gear ratio
+	private static final int drivePulsePerRotation = 256; //encoder ticks per rotation
+	private static final double driveGearRatio = 24.0/27.0; //ratio between wheel over encoder
+	private static final double driveWheelDiameter = 6;
+	public static final int driveEncoderPulsePerRot = (int) (drivePulsePerRotation*driveGearRatio); //pulse per rotation * gear ratio
+	public static final double driveEncoderDistPerTick = (Math.PI * driveWheelDiameter/driveEncoderPulsePerRot);
+	public static final CounterBase.EncodingType driveEncodingType = CounterBase.EncodingType.k4X; //count rising and falling edges on both channels
+	public static final AverageEncoder.PositionReturnType drivePosReturnType = AverageEncoder.PositionReturnType.INCH;
+	public static final AverageEncoder.SpeedReturnType driveSpeedReturnType = AverageEncoder.SpeedReturnType.RPM;
+	public static final int driveEncoderMinRate = 10;
+	public static final int driveEncoderMinPeriod = 10;
+	public static final boolean leftDriveTrainEncoderReverse = false;
+	public static final boolean rightDriveTrainEncoderReverse = true;
+	public static final int driveAvgEncoderVal = 5;
+	
 	/*************************************************************************
 	 *                            MISC PARAMETERS
 	 *************************************************************************/
