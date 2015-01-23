@@ -1,5 +1,9 @@
 package org.team2168;
 
+import org.team2168.PIDController.sensors.AverageEncoder;
+
+import edu.wpi.first.wpilibj.CounterBase;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -61,7 +65,21 @@ public class RobotMap {
 	 *                         DRIVETRAIN PARAMETERS
 	 *************************************************************************/
 
-
+	//TODO Verify gear ratio
+	private static final int drivePulsePerRotation = 256; //encoder ticks per rotation
+	private static final double driveGearRatio = 24.0/27.0; //ratio between wheel over encoder
+	private static final double driveWheelDiameter = 6;
+	public static final int driveEncoderPulsePerRot = (int) (drivePulsePerRotation*driveGearRatio); //pulse per rotation * gear ratio
+	public static final double driveEncoderDistPerTick = (Math.PI * driveWheelDiameter/driveEncoderPulsePerRot);
+	public static final CounterBase.EncodingType driveEncodingType = CounterBase.EncodingType.k4X; //count rising and falling edges on both channels
+	public static final AverageEncoder.PositionReturnType drivePosReturnType = AverageEncoder.PositionReturnType.INCH;
+	public static final AverageEncoder.SpeedReturnType driveSpeedReturnType = AverageEncoder.SpeedReturnType.RPM;
+	public static final int driveEncoderMinRate = 10;
+	public static final int driveEncoderMinPeriod = 10;
+	public static final boolean leftDriveTrainEncoderReverse = false;
+	public static final boolean rightDriveTrainEncoderReverse = true;
+	public static final int driveAvgEncoderVal = 5;
+	
 	/*************************************************************************
 	 *                            MISC PARAMETERS
 	 *************************************************************************/

@@ -1,6 +1,7 @@
 package org.team2168.subsystems;
 
 import org.team2168.RobotMap;
+import org.team2168.PIDController.sensors.AverageEncoder;
 import org.team2168.commands.drivetrain.DriveWithJoysticks;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -16,8 +17,8 @@ public class Drivetrain extends Subsystem {
 	private static Drivetrain instance = null;
 	private Talon leftMotor;
 	private Talon rightMotor;
-	private Encoder drivetrainLeftEncoder;
-	private Encoder drivetrainRightEncoder;
+	private AverageEncoder drivetrainLeftEncoder;
+	private AverageEncoder drivetrainRightEncoder;
 	private Gyro drivetrainGyro;
 
 	/**
@@ -27,10 +28,22 @@ public class Drivetrain extends Subsystem {
 	private Drivetrain() {
 		leftMotor = new Talon(RobotMap.DRIVETRAIN_LEFT_MOTORS);
 		rightMotor = new Talon(RobotMap.DRIVETRAIN_RIGHT_MOTORS);
-		drivetrainLeftEncoder = new Encoder(RobotMap.DRIVETRAIN_LEFT_ENCODER_A,
-				RobotMap.DRIVETRAIN_LEFT_ENCODER_B);
-		drivetrainRightEncoder = new Encoder(RobotMap.DRIVETRAIN_RIGHT_ENCODER_A,
-				RobotMap.DRIVETRAIN_RIGHT_ENCODER_B);
+		drivetrainRightEncoder = new AverageEncoder(
+				RobotMap.DRIVETRAIN_RIGHT_ENCODER_A,
+				RobotMap.DRIVETRAIN_RIGHT_ENCODER_B,
+				RobotMap.driveEncoderPulsePerRot,
+				RobotMap.driveEncoderDistPerTick,
+				RobotMap.rightDriveTrainEncoderReverse,
+				RobotMap.driveEncodingType, RobotMap.driveSpeedReturnType,
+				RobotMap.drivePosReturnType, RobotMap.driveAvgEncoderVal);
+		drivetrainLeftEncoder = new AverageEncoder(	
+				RobotMap.DRIVETRAIN_LEFT_ENCODER_A,
+				RobotMap.DRIVETRAIN_LEFT_ENCODER_B,
+				RobotMap.driveEncoderPulsePerRot,
+				RobotMap.driveEncoderDistPerTick,
+				RobotMap.leftDriveTrainEncoderReverse,
+				RobotMap.driveEncodingType, RobotMap.driveSpeedReturnType,
+				RobotMap.drivePosReturnType, RobotMap.driveAvgEncoderVal);
 		drivetrainGyro = new Gyro(RobotMap.DRIVE_GYRO);
 	}
 
