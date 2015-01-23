@@ -29,6 +29,10 @@ public class Lift extends Subsystem {
 				RobotMap.LIFT_ENCODER_B);
 		liftBreak = new DoubleSolenoid(RobotMap.LIFT_DOUBLE_SOLENOID_FORWARD,
 				RobotMap.LIFT_DOUBLE_SOLENOID_REVERSE);
+		
+		liftEncoder.setDistancePerPulse(RobotMap.LIFT_ENCODER_DISTANCE_PER_PULSE);
+		
+		
 	}
 
 	/**

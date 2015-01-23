@@ -68,5 +68,8 @@ public class RobotMap {
 	public final static double PRESS_SENSOR_LOW_PRESSURE = 0.0;
 	public final static double PRESS_SENSOR_HIGH_VOLTAGE = 4.5;
 	public final static double PRESS_SENSOR_HIGH_PRESSURE = 150.0;
+	
 	public final static double LIFT_MOVING_SPEED = 0.5;
+	public final static double LIFT_ENCODER_DISTANCE_PER_PULSE = 1/256;
+	
 }
