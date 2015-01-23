@@ -1,4 +1,4 @@
-package org.team2168.commands;
+package org.team2168.commands.lift;
 
 import org.team2168.OI;
 import org.team2168.Robot;
