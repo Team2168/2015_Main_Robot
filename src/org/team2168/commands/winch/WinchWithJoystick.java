@@ -1,4 +1,4 @@
-package org.team2168.commands.lift;
+package org.team2168.commands.winch;
 
 import org.team2168.OI;
 import org.team2168.Robot;
@@ -6,12 +6,12 @@ import org.team2168.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Drives the lift with a joystick.
+ * Drives the winch with a joystick
  */
-public class LiftWithJoystick extends Command {
+public class WinchWithJoystick extends Command {
 
-    public LiftWithJoystick() {
-        requires(Robot.lift);
+    public WinchWithJoystick() {
+        requires(Robot.winch);
     }
 
     /**
@@ -24,7 +24,7 @@ public class LiftWithJoystick extends Command {
      * Called repeatedly when this Command is scheduled to run
      */
     protected void execute() {
-        Robot.lift.drive(OI.operatorJoystick.getLeftStickRaw_Y());
+        Robot.winch.drive(OI.operatorJoystick.getRightStickRaw_Y());
     }
 
     /**
