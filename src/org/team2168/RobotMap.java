@@ -72,4 +72,7 @@ public class RobotMap {
 	public final static double LIFT_MOVING_SPEED = 0.5;
 	public final static double LIFT_ENCODER_DISTANCE_PER_PULSE = 1/256;
 	
+	public final static int MAX_LIFT_HEIGHT = 76;
+	public final static int MIN_LIFT_HEIGHT = 0;
+	
 }

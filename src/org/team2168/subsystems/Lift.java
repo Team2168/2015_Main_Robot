@@ -77,14 +77,40 @@ public class Lift extends Subsystem {
 		//TODO: establish minimum and maximum distances the lift can travel. Put them in RobotMap.
 		//TODO: If someone inputs values which are outside the min/max, coerce them to be within range.
 
-		double distanceToDrive = position - getPosition();
-		double ABSvalue = Math.abs(distanceToDrive);
-
-		if (distanceToDrive > 0) {
-			setPositionDelta(ABSvalue, true);
-		}else{
-			setPositionDelta(ABSvalue, false);
+		if (position > RobotMap.MIN_LIFT_HEIGHT && position < RobotMap.MAX_LIFT_HEIGHT) {
+			double distanceToDrive = position - getPosition();
+			double ABSvalue = Math.abs(distanceToDrive);
+		
+			if (distanceToDrive > 0) {
+				setPositionDelta(ABSvalue, true);
+			}else{
+				setPositionDelta(ABSvalue, false);
+			}
+		}else {
+			
+			if (position > RobotMap.MAX_LIFT_HEIGHT) {
+				double distanceToDrive = 76 - getPosition();
+				double ABSvalue = Math.abs(distanceToDrive);
+			
+				if (distanceToDrive > 0) {
+					setPositionDelta(ABSvalue, true);
+				}else{
+					setPositionDelta(ABSvalue, false);
+				}
+			}
+			
+			if (position < RobotMap.MIN_LIFT_HEIGHT) {
+				double distanceToDrive = 0 - getPosition();
+				double ABSvalue = Math.abs(distanceToDrive);
+			
+				if (distanceToDrive > 0) {
+					setPositionDelta(ABSvalue, true);
+				}else{
+					setPositionDelta(ABSvalue, false);
+				}
+			}
 		}
+
 	}
 
 	/**
