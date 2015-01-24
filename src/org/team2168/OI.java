@@ -1,6 +1,13 @@
 package org.team2168;
 
+import org.team2168.commands.gripper.EngageGripper;
+import org.team2168.commands.gripper.ReleaseGripper;
+import org.team2168.commands.intake.IntakeIn;
+import org.team2168.commands.intake.IntakeOff;
 import org.team2168.utils.F310;
+
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -32,10 +39,17 @@ public class OI {
     public static F310 testJoystick;
     
     public OI() {
+    	//Joysticks////////////////////////////////////////////////////////////////
         driverJoystick = new F310(RobotMap.DRIVER_JOYSTICK);
         operatorJoystick = new F310(RobotMap.OPERATOR_JOYSTICK);
         testJoystick = new F310(RobotMap.TEST_JOYSTICK);
+        //TEST CONTROLLER BUTTON MAP///////////////////////////////////////////////
+        testJoystick.ButtonA().whenPressed(new EngageGripper());
+        testJoystick.ButtonA().whenReleased(new ReleaseGripper());
+        testJoystick.ButtonB().whenPressed(new IntakeIn());
+        testJoystick.ButtonB().whenReleased(new IntakeOff());
     }
+    
 
     // Run the command while the button is being held down and interrupt it once
     // the button is released.

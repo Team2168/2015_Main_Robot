@@ -3,6 +3,8 @@ package org.team2168;
 import org.team2168.PIDController.sensors.AverageEncoder;
 
 import edu.wpi.first.wpilibj.CounterBase;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -60,7 +62,6 @@ public class RobotMap {
 	public final static int DRIVER_JOYSTICK = 1;
 	public final static int OPERATOR_JOYSTICK = 2;
 	public final static int TEST_JOYSTICK = 2;
-	
 
 
 	/*************************************************************************
