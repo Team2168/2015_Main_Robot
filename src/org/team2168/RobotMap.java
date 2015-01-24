@@ -16,11 +16,16 @@ public class RobotMap {
 	 *************************************************************************/
     
 	//PWM Channels/////////////////////////////////////////////////////////////
-	public final static int INTAKE_MOTORS = 0;
-	public final static int DRIVETRAIN_LEFT_MOTORS = 1;
-	public final static int DRIVETRAIN_RIGHT_MOTORS = 2;
-	public final static int LIFT_MOTOR = 3;
-	public final static int WINCH_MOTOR = 4;
+	public final static int INTAKE_LEFT_MOTOR = 0;
+	public final static int INTAKE_RIGHT_MOTOR = 1;
+	public final static int DRIVETRAIN_LEFT_MOTOR_1 = 2;
+	public final static int DRIVETRAIN_RIGHT_MOTOR_1 = 3;
+	public final static int DRIVETRAIN_LEFT_MOTOR_2 = 4;
+	public final static int DRIVETRAIN_RIGHT_MOTOR_2 = 5;
+	public final static int DRIVETRAIN_LEFT_MOTOR_3 = 6;
+	public final static int DRIVETRAIN_RIGHT_MOTOR_3 = 7;
+	public final static int LIFT_MOTOR = 8;
+	public final static int WINCH_MOTOR = 9;
 
 
 	//Solenoid Channels////////////////////////////////////////////////////////
