@@ -61,7 +61,7 @@ public class RobotMap {
 	//Joysticks////////////////////////////////////////////////////////////////
 	public final static int DRIVER_JOYSTICK = 1;
 	public final static int OPERATOR_JOYSTICK = 2;
-	public final static int TEST_JOYSTICK = 2;
+	public final static int TEST_JOYSTICK = 3;
 
 
 	/*************************************************************************

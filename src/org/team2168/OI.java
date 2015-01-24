@@ -48,6 +48,7 @@ public class OI {
         testJoystick.ButtonA().whenReleased(new ReleaseGripper());
         testJoystick.ButtonB().whenPressed(new IntakeIn());
         testJoystick.ButtonB().whenReleased(new IntakeOff());
+        
     }
     
 
