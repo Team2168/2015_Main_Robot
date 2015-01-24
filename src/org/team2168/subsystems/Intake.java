@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- * The intake subsytem controls the intake motors and solenoids.
+ * The intake subsytem controls the intake motors and solenoids. 
  * @author Vittorio Papandrea
  */
 public class Intake extends Subsystem {
