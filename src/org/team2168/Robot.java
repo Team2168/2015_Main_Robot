@@ -57,7 +57,7 @@ public class Robot extends IterativeRobot {
      */
     public void disabledPeriodic() {
         Scheduler.getInstance().run();
-        SmartDashboard.putNumber("Tote Distance", Robot.intake.getToteDistance());
+        SmartDashboard.putNumber("Tote Distance(inches)", Robot.intake.getToteDistance());
     }
 
     /**

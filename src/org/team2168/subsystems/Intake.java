@@ -21,6 +21,7 @@ public class Intake extends Subsystem {
 	private static DigitalInput leftLimitSwitch;
 	private static DigitalInput rightLimitSwitch;
 	private static AnalogInput toteDistanceSensor;
+	private static final double CM_TO_INCH =  0.393701;
 
 	/**
 	 * A private constructor to prevent multiple instances of the subsystem
@@ -106,9 +107,19 @@ public class Intake extends Subsystem {
 	 * Returns the voltage of the distance sensor
 	 * @return voltage of distance sensor
 	 */
-	public double getToteDistance() {
+	public double getRawToteDistance() {
 		return toteDistanceSensor.getVoltage();
-		//TODO: Make conversion for voltage to inches
+	}
+	
+	/**
+	 * @return uses the voltage to return a value in inches
+	 */
+	//y = 0.512x^2 - 0.8656x + 6.1888
+	//R² = 0.9985
+
+	public double getToteDistance(){
+		double toteDistance = getRawToteDistance();
+		return ((0.512 * Math.pow(toteDistance, 2) - 0.8656 * toteDistance + 6.1888) * CM_TO_INCH);
 	}
 
 	/**
@@ -119,4 +130,3 @@ public class Intake extends Subsystem {
 	}
 
 }
-
