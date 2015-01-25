@@ -4,7 +4,6 @@ import org.team2168.RobotMap;
 import org.team2168.PIDController.sensors.AverageEncoder;
 import org.team2168.commands.drivetrain.DriveWithJoysticks;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -44,7 +43,7 @@ public class Drivetrain extends Subsystem {
 				RobotMap.rightDriveTrainEncoderReverse,
 				RobotMap.driveEncodingType, RobotMap.driveSpeedReturnType,
 				RobotMap.drivePosReturnType, RobotMap.driveAvgEncoderVal);
-		drivetrainLeftEncoder = new AverageEncoder(	
+		drivetrainLeftEncoder = new AverageEncoder(
 				RobotMap.DRIVETRAIN_LEFT_ENCODER_A,
 				RobotMap.DRIVETRAIN_LEFT_ENCODER_B,
 				RobotMap.driveEncoderPulsePerRot,
@@ -80,31 +79,31 @@ public class Drivetrain extends Subsystem {
 	public void driveLeft1(double speed) {
 		leftMotor1.set(speed);
 	}
-	
+
 	/**
 	 * Drive the second left motor in the chassis.
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveLeft2(double speed) {
-		leftMotor1.set(speed);
+		leftMotor2.set(speed);
 	}
-	
+
 	/**
 	 * Drive the third left motor in the chassis.
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveLeft3(double speed) {
-		leftMotor1.set(speed);
+		leftMotor3.set(speed);
 	}
-	
+
 	/**
-	 * Drive the third motors in the chassis.
-	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
+	 * Drive the motors on the left side of the chassis.
+	 * @param speed the speed to drive the motors (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveLeft(double speed) {
-		leftMotor1.set(speed);
-		leftMotor2.set(speed);
-		leftMotor3.set(speed);
+		driveLeft1(speed);
+		driveLeft2(speed);
+		driveLeft3(speed);
 	}
 
 	/**
@@ -114,7 +113,7 @@ public class Drivetrain extends Subsystem {
 	public void driveRight1(double speed) {
 		rightMotor1.set(speed);
 	}
-	
+
 	/**
 	 * Drive the second right motor in the chassis.
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
@@ -122,7 +121,7 @@ public class Drivetrain extends Subsystem {
 	public void driveRight2(double speed) {
 		rightMotor2.set(speed);
 	}
-	
+
 	/**
 	 * Drive the third right motor in the chassis.
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
@@ -130,21 +129,21 @@ public class Drivetrain extends Subsystem {
 	public void driveRight3(double speed) {
 		rightMotor3.set(speed);
 	}
-	
+
 	/**
-	 * Drive the right motors in the chassis.
-	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
+	 * Drive the motors on the left right side of the chassis.
+	 * @param speed the speed to drive the motors (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveRight(double speed) {
-		rightMotor1.set(speed);
-		rightMotor2.set(speed);
-		rightMotor3.set(speed);
+		driveRight1(speed);
+		driveRight2(speed);
+		driveRight3(speed);
 	}
 
 	/**
 	 * Drive both motors in the chassis. (-1 to 1, positive is forward, negative is backwards)
-	 * @param speed the speed to drive the left motor
-	 * @param speed the speed to drive the right motor
+	 * @param speed the speed to drive the left motors
+	 * @param speed the speed to drive the right motors
 	 */
 	public void tankDrive(double leftSpeed, double rightSpeed) {
 		driveLeft(leftSpeed);
@@ -152,7 +151,7 @@ public class Drivetrain extends Subsystem {
 	}
 
 	/**
-	 * Stop driving the wheels.
+	 * Stop driving the wheels on both sides of the chassis.
 	 */
 	public void stop() {
 		leftMotor1.set(0);
@@ -188,11 +187,27 @@ public class Drivetrain extends Subsystem {
 	}
 
 	/**
+	 * Zero the distance traveled by the left wheels of the chassis.
+	 */
+	public void resetLeftPosition() {
+		drivetrainLeftEncoder.reset();
+	}
+
+	/**
+	 * Zero the distance traveled by the right wheels of the chassis.
+	 */
+	public void resetRightPosition() {
+		drivetrainRightEncoder.reset();
+	}
+
+	/**
 	 * Zero the distance traveled by the chassis
 	 */
 	public void resetPosition() {
-		//TODO: reset distance traveled by the wheels to zero
+		resetLeftPosition();
+		resetRightPosition();
 	}
+
 
 	/**
 	 * Get the direction the chassis is heading.

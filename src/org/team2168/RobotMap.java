@@ -14,7 +14,7 @@ public class RobotMap {
 	/*************************************************************************
 	 *                              WIRING MAP
 	 *************************************************************************/
-    
+
 	//PWM Channels/////////////////////////////////////////////////////////////
 	public final static int INTAKE_LEFT_MOTOR = 0;
 	public final static int INTAKE_RIGHT_MOTOR = 1;
@@ -70,7 +70,7 @@ public class RobotMap {
 	 *                         DRIVETRAIN PARAMETERS
 	 *************************************************************************/
 
-	//TODO Verify gear ratio
+	//TODO: Verify gear ratio
 	private static final int drivePulsePerRotation = 256; //encoder ticks per rotation
 	private static final double driveGearRatio = 24.0/27.0; //ratio between wheel over encoder
 	private static final double driveWheelDiameter = 6;
@@ -84,7 +84,7 @@ public class RobotMap {
 	public static final boolean leftDriveTrainEncoderReverse = false;
 	public static final boolean rightDriveTrainEncoderReverse = true;
 	public static final int driveAvgEncoderVal = 5;
-	
+
 	/*************************************************************************
 	 *                            MISC PARAMETERS
 	 *************************************************************************/
