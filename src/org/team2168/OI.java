@@ -29,10 +29,12 @@ public class OI {
 
     public static F310 driverJoystick;
     public static F310 operatorJoystick;
-
+    public static F310 testJoystick;
+    
     public OI() {
         driverJoystick = new F310(RobotMap.DRIVER_JOYSTICK);
         operatorJoystick = new F310(RobotMap.OPERATOR_JOYSTICK);
+        testJoystick = new F310(RobotMap.TEST_JOYSTICK);
     }
 
     // Run the command while the button is being held down and interrupt it once
