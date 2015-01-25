@@ -10,14 +10,15 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- * The intake subsytem controls the intake motors and solenoids.
+ * The intake subsytem controls the intake motors and solenoids. 
  * @author Vittorio Papandrea
  */
 public class Intake extends Subsystem {
 
 	private static Intake instance = null;
 	private DoubleSolenoid rightLeftIntake;
-	private Talon rightLeftMotor;
+	private Talon leftMotor;
+	private Talon rightMotor;
 	private static DigitalInput leftLimitSwitch;
 	private static DigitalInput rightLimitSwitch;
 	private static AnalogInput toteDistanceSensor;
@@ -29,7 +30,8 @@ public class Intake extends Subsystem {
 	private Intake() {
 		rightLeftIntake = new DoubleSolenoid(RobotMap.INTAKE_DOUBLE_SOLENOID_FORWARD,
 				RobotMap.INTAKE_DOUBLE_SOLENOID_REVERSE);
-		rightLeftMotor 	= new Talon(RobotMap.INTAKE_MOTORS);
+		rightMotor 	= new Talon(RobotMap.INTAKE_LEFT_MOTOR);
+		leftMotor 	= new Talon(RobotMap.INTAKE_RIGHT_MOTOR);
 
 		leftLimitSwitch		= new DigitalInput(RobotMap.LEFT_TOTE_SWITCH);
 		rightLimitSwitch 	= new DigitalInput(RobotMap.RIGHT_TOTE_SWITCH);
@@ -83,11 +85,27 @@ public class Intake extends Subsystem {
 	}
 
 	/**
-	 * Sets the intake Speed of the motors.
-	 * @param speed 1 to 0 Tote In. 0 - -1 Tote Out
+	 * Sets the left intake motor speed.
+	 * @param speed 1 to 0 (Tote In) 0 to -1 (Tote Out)
+	 */
+	public void setLeftIntakeSpeed(double speed) {
+		leftMotor.set(speed);
+	}
+	
+	/**
+	 * Sets the right intake motor speed.
+	 * @param speed 1 to 0 (Tote In) 0 to -1 (Tote Out)
+	 */
+	public void setRightIntakeSpeed(double speed) {
+		rightMotor.set(speed);
+	}
+	/**
+	 * Sets both intake motors to the same speed
+	 * @param speed 1 to 0 (Tote In) 0 to -1 (Tote Out)
 	 */
 	public void setIntakeSpeed(double speed) {
-		rightLeftMotor.set(speed);
+		setLeftIntakeSpeed(speed);
+		setRightIntakeSpeed(speed);
 	}
 
 	/**

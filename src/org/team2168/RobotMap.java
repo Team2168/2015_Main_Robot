@@ -14,13 +14,18 @@ public class RobotMap {
 	/*************************************************************************
 	 *                              WIRING MAP
 	 *************************************************************************/
-    
+
 	//PWM Channels/////////////////////////////////////////////////////////////
-	public final static int INTAKE_MOTORS = 0;
-	public final static int DRIVETRAIN_LEFT_MOTORS = 1;
-	public final static int DRIVETRAIN_RIGHT_MOTORS = 2;
-	public final static int LIFT_MOTOR = 3;
-	public final static int WINCH_MOTOR = 4;
+	public final static int INTAKE_LEFT_MOTOR = 0;
+	public final static int INTAKE_RIGHT_MOTOR = 1;
+	public final static int DRIVETRAIN_LEFT_MOTOR_1 = 2;
+	public final static int DRIVETRAIN_RIGHT_MOTOR_1 = 3;
+	public final static int DRIVETRAIN_LEFT_MOTOR_2 = 4;
+	public final static int DRIVETRAIN_RIGHT_MOTOR_2 = 5;
+	public final static int DRIVETRAIN_LEFT_MOTOR_3 = 6;
+	public final static int DRIVETRAIN_RIGHT_MOTOR_3 = 7;
+	public final static int LIFT_MOTOR = 8;
+	public final static int WINCH_MOTOR = 9;
 
 
 	//Solenoid Channels////////////////////////////////////////////////////////
@@ -65,7 +70,7 @@ public class RobotMap {
 	 *                         DRIVETRAIN PARAMETERS
 	 *************************************************************************/
 
-	//TODO Verify gear ratio
+	//TODO: Verify gear ratio
 	private static final int drivePulsePerRotation = 256; //encoder ticks per rotation
 	private static final double driveGearRatio = 24.0/27.0; //ratio between wheel over encoder
 	private static final double driveWheelDiameter = 6;
@@ -79,7 +84,7 @@ public class RobotMap {
 	public static final boolean leftDriveTrainEncoderReverse = false;
 	public static final boolean rightDriveTrainEncoderReverse = true;
 	public static final int driveAvgEncoderVal = 5;
-	
+
 	/*************************************************************************
 	 *                            MISC PARAMETERS
 	 *************************************************************************/
