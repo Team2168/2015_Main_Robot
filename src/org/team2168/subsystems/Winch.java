@@ -53,6 +53,14 @@ public class Winch extends Subsystem {
     public void drive(double speed) {
         winchMotor.set(speed);
     }
+    
+    public void winchStart(){
+    	winchMotor.set(1);
+    }
+    
+    public void winchStop(){
+    	winchMotor.set(0);
+    }
 
     /**
      * Get the distance the winch motor has turned since the last reset

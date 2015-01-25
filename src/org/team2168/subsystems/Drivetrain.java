@@ -94,7 +94,13 @@ public class Drivetrain extends Subsystem {
 	/**
 	 * Stop driving the wheels.
 	 */
-	public void stop() {
+	
+	public void drivtrainStart(){
+		leftMotor.set(1);
+		rightMotor.set(1);
+	}
+	
+	public void drivetrainStop() {
 		leftMotor.set(0);
 		rightMotor.set(0);
 	}

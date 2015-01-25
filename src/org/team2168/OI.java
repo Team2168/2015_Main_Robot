@@ -1,13 +1,15 @@
 package org.team2168;
 
+import org.team2168.commands.drivetrain.DisengageDrivetrain;
+import org.team2168.commands.drivetrain.EngageDrivetrain;
 import org.team2168.commands.gripper.EngageGripper;
 import org.team2168.commands.gripper.ReleaseGripper;
+import org.team2168.commands.intake.DisengageIntake;
+import org.team2168.commands.intake.EngageIntake;
 import org.team2168.commands.intake.IntakeIn;
-import org.team2168.commands.intake.IntakeOff;
+import org.team2168.commands.winch.DisengageWinch;
+import org.team2168.commands.winch.EngageWinch;
 import org.team2168.utils.F310;
-
-import edu.wpi.first.wpilibj.buttons.Button;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -45,10 +47,14 @@ public class OI {
         testJoystick = new F310(RobotMap.TEST_JOYSTICK);
         //TEST CONTROLLER BUTTON MAP///////////////////////////////////////////////
         testJoystick.ButtonA().whenPressed(new EngageGripper());
-        testJoystick.ButtonA().whenReleased(new ReleaseGripper());
-        testJoystick.ButtonB().whenPressed(new IntakeIn());
-        testJoystick.ButtonB().whenReleased(new IntakeOff());
-        
+        testJoystick.ButtonB().whenPressed(new ReleaseGripper());
+        testJoystick.ButtonX().whenPressed(new EngageIntake());
+        testJoystick.ButtonY().whenPressed(new DisengageIntake());
+        testJoystick.ButtonLeftStick().whenPressed(new IntakeIn());
+        testJoystick.ButtonLeftBumper().whenPressed(new EngageWinch());
+        testJoystick.ButtonRightBumper().whenPressed(new DisengageWinch());
+        testJoystick.ButtonLeftTrigger().whenPressed(new EngageDrivetrain());
+        testJoystick.ButtonRightTrigger().whenPressed(new DisengageDrivetrain());
     }
     
 
