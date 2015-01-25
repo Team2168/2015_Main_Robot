@@ -30,10 +30,9 @@ public class Intake extends Subsystem {
 	private Intake() {
 		rightLeftIntake = new DoubleSolenoid(RobotMap.INTAKE_DOUBLE_SOLENOID_FORWARD,
 				RobotMap.INTAKE_DOUBLE_SOLENOID_REVERSE);
-		rightLeftMotor 	= new Talon(RobotMap.INTAKE_MOTORS);
-
-		leftLimitSwitch		= new DigitalInput(RobotMap.LEFT_TOTE_SWITCH);
-		rightLimitSwitch 	= new DigitalInput(RobotMap.RIGHT_TOTE_SWITCH);
+		rightLeftMotor = new Talon(RobotMap.INTAKE_MOTORS);
+		leftLimitSwitch = new DigitalInput(RobotMap.LEFT_TOTE_SWITCH);
+		rightLimitSwitch = new DigitalInput(RobotMap.RIGHT_TOTE_SWITCH);
 		toteDistanceSensor = new AnalogInput(RobotMap.INTAKE_SENSOR);
 	}
 
@@ -102,23 +101,24 @@ public class Intake extends Subsystem {
 			return false;
 		}
 	}
-	
+
 	/**
-	 * Returns the voltage of the distance sensor
-	 * @return voltage of distance sensor
+	 * Returns the raw voltage from the intake distance sensor
+	 * @return the sensed voltage from the distance sensor
 	 */
 	public double getRawToteDistance() {
 		return toteDistanceSensor.getVoltage();
 	}
-	
-	/**
-	 * @return uses the voltage to return a value in inches
-	 */
-	//y = 0.512x^2 - 0.8656x + 6.1888
-	//R² = 0.9985
 
-	public double getToteDistance(){
+	/**
+	 * Gets the distance to the nearest object from the back of the intake.
+	 * @return the distance in inches
+	 */
+	public double getToteDistance() {
 		double toteDistance = getRawToteDistance();
+
+		//y = 0.512x^2 - 0.8656x + 6.1888
+		//R² = 0.9985
 		return ((0.512 * Math.pow(toteDistance, 2) - 0.8656 * toteDistance + 6.1888) * CM_TO_INCH);
 	}
 
