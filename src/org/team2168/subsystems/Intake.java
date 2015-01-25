@@ -124,7 +124,7 @@ public class Intake extends Subsystem {
 		double toteDistance = getRawToteDistance();
 
 		//y = 0.512x^2 - 0.8656x + 6.1888
-		//R² = 0.9985
+		//R^2 = 0.9985
 		return ((0.512 * Math.pow(toteDistance, 2) - 0.8656 * toteDistance + 6.1888) * CM_TO_INCH);
 	}
 

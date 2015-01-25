@@ -17,8 +17,9 @@ public class Lift extends Subsystem {
 	private static Lift instance = null;
 	private Talon intakeMotor;
 	private AverageEncoder liftEncoder;
-	private DoubleSolenoid liftBreak;
-	double currentPosition;
+	private DoubleSolenoid liftBrake;
+	private double currentPosition;
+	private static final double DESTINATION_TOL = 1.0; //inches
 
 	/**
 	 * A private constructor to prevent multiple instances of the subsystem from
@@ -27,13 +28,13 @@ public class Lift extends Subsystem {
 	private Lift() {
 		intakeMotor = new Talon(RobotMap.LIFT_MOTOR);
 		liftEncoder = new AverageEncoder(RobotMap.LIFT_ENCODER_A,
-				RobotMap.LIFT_ENCODER_B, RobotMap.driveEncoderPulsePerRot,
-				RobotMap.driveEncoderDistPerTick,
-				RobotMap.leftDriveTrainEncoderReverse,
-				RobotMap.driveEncodingType, RobotMap.driveSpeedReturnType,
-				RobotMap.drivePosReturnType, RobotMap.driveAvgEncoderVal);
-		liftBreak = new DoubleSolenoid(RobotMap.LIFT_DOUBLE_SOLENOID_FORWARD,
-				RobotMap.LIFT_DOUBLE_SOLENOID_REVERSE);
+				RobotMap.LIFT_ENCODER_B, RobotMap.liftEncoderPulsePerRot,
+				RobotMap.liftEncoderDistPerTick,
+				RobotMap.liftEncoderReverse,
+				RobotMap.liftEncodingType, RobotMap.liftSpeedReturnType,
+				RobotMap.liftPosReturnType, RobotMap.liftAvgEncoderVal);
+		liftBrake = new DoubleSolenoid(RobotMap.LIFT_BRAKE_DOUBLE_SOLENOID_FORWARD,
+				RobotMap.LIFT_BRAKE_DOUBLE_SOLENOID_REVERSE);
 	}
 
 	/**
@@ -85,42 +86,68 @@ public class Lift extends Subsystem {
 		// TODO: If someone inputs values which are outside the min/max, coerce
 		// them to be within range.
 
-		double distanceToDrive = position - getPosition();
-		double ABSvalue = Math.abs(distanceToDrive);
+		if (position > RobotMap.MIN_LIFT_HEIGHT && position < RobotMap.MAX_LIFT_HEIGHT) {
+			double distanceToDrive = position - getPosition();
+			double ABSvalue = Math.abs(distanceToDrive);
 
-		if (distanceToDrive > 0) {
-			setPositionDelta(ABSvalue, true);
+			if (distanceToDrive > 0) {
+				setPositionDelta(ABSvalue, true);
+			} else {
+				setPositionDelta(ABSvalue, false);
+			}
 		} else {
-			setPositionDelta(ABSvalue, false);
+
+			if (position > RobotMap.MAX_LIFT_HEIGHT) {
+				double distanceToDrive = 76 - getPosition();
+				double ABSvalue = Math.abs(distanceToDrive);
+
+				if (distanceToDrive > 0) {
+					setPositionDelta(ABSvalue, true);
+				} else {
+					setPositionDelta(ABSvalue, false);
+				}
+			}
+
+			if (position < RobotMap.MIN_LIFT_HEIGHT) {
+				double distanceToDrive = 0 - getPosition();
+				double ABSvalue = Math.abs(distanceToDrive);
+
+				if (distanceToDrive > 0) {
+					setPositionDelta(ABSvalue, true);
+				} else {
+					setPositionDelta(ABSvalue, false);
+				}
+			}
 		}
+
 	}
 
 	/**
 	 * Drive the lift to a position relative to where it currently is.
 	 *
-	 * @param delta
-	 *            distance to travel in inches, positive is up
-	 * @param direction
-	 *            True for up, False for down
+	 * @param delta distance to travel in inches, positive is up
+	 * @param direction True for up, False for down
 	 */
 	private void setPositionDelta(double delta, boolean direction) {
 		if (delta > 1) {
-			// TODO: Make separate commands to dis/engage the brake.
-			// TODO: Then sequence the evolution in a CommandGroup.
-			disableBreak();
-
-			// TODO: determine a safe speed to operate this at.
-			// TODO: Full speed (+/-1) is likely going to be (and overshoot your
-			// destination).
 			if (direction) {
-				intakeMotor.set(1);
-			} else {
-				intakeMotor.set(-1);
+				intakeMotor.set(RobotMap.LIFT_MOVING_SPEED);
+			}else {
+				intakeMotor.set(-RobotMap.LIFT_MOVING_SPEED);
 			}
-		} else {
-			enableBreak();
 		}
+	}
 
+	/**
+	 * @return true when the lift is within the destination tolerance of the
+	 *         last commanded destination position
+	 */
+	public boolean isWithinDestiantionTolerance(double position) {
+		if (Math.abs(position - getPosition()) < DESTINATION_TOL) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 	/**
@@ -151,12 +178,12 @@ public class Lift extends Subsystem {
 	}
 
 	/**
-	 * Gets the sate of the current pneumatic break
+	 * Gets the sate of the current pneumatic brake
 	 *
-	 * @return True when break is enabled, False when break is disabled
+	 * @return True when brake is enabled, False when disabled
 	 */
-	public boolean isBreakEnabled() {
-		if (liftBreak.get() == Value.kForward) {
+	public boolean isBrakeEnabled() {
+		if (liftBrake.get() == Value.kForward) {
 			return true;
 		} else {
 			return false;
@@ -164,16 +191,16 @@ public class Lift extends Subsystem {
 	}
 
 	/**
-	 * Enables the pneumatic break
+	 * Enables the pneumatic brake
 	 */
-	public void enableBreak() {
-		liftBreak.set(Value.kForward);
+	public void enableBrake() {
+		liftBrake.set(Value.kForward);
 	}
 
 	/**
-	 * Disables the pneumatic break
+	 * Disables the pneumatic brake
 	 */
-	public void disableBreak() {
-		liftBreak.set(Value.kReverse);
+	public void disableBrake() {
+		liftBrake.set(Value.kReverse);
 	}
 }
