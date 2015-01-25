@@ -1,40 +1,42 @@
 package org.team2168.commands.lift;
 
-import edu.wpi.first.wpilibj.command.Command;
 import org.team2168.Robot;
+
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
 public class SetLiftPosition extends Command {
-	
+
 	double position;
-	
-    public SetLiftPosition(double position) {
-    	this.position = position;
-    	requires(Robot.lift);
-    }
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    }
+	public SetLiftPosition(double position) {
+		this.position = position;
+		requires(Robot.lift);
+	}
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	Robot.lift.setPosition(position);
-    }
+	// Called just before this Command runs the first time
+	protected void initialize() {
+	}
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return true;
-    }
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
+		Robot.lift.setPosition(position);
+	}
 
-    // Called once after isFinished returns true
-    protected void end() {
-    }
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		return true;
+	}
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
+	// Called once after isFinished returns true
+	protected void end() {
+		Robot.lift.isWithinDestiantionTolerance(position);
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+	}
 }
