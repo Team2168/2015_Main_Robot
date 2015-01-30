@@ -17,11 +17,11 @@ public class EngageIntake extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        Robot.intake.runIntakeIn();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.intake.runIntakeIn();
     	Robot.intake.engageIntake();
     }
 
