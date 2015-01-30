@@ -35,6 +35,7 @@ public class MotorCalibrationDrivetrainLeft extends Command {
     	oscillatingValue = oscillatingValue + (.05 * valueSign);
     	if (completeOscillations > 2) {
     		isFinished = true;
+    		Robot.drivetrain.driveLeft(0);
     	}
     	if (oscillatingValue == 1) {
     		valueSign = -1;
