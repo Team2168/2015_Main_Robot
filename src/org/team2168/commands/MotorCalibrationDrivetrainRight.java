@@ -11,7 +11,9 @@ public class MotorCalibrationDrivetrainRight extends Command {
 
 	private double oscillatingValue;
 	private double valueSign;
-	
+	private double completeOscillations;
+	private boolean isFinished;
+
     public MotorCalibrationDrivetrainRight() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -21,20 +23,25 @@ public class MotorCalibrationDrivetrainRight extends Command {
     protected void initialize() {
     	oscillatingValue = -1;
     	valueSign = 1;
+    	completeOscillations = 0;
+    	isFinished = false;
     }
 
     /**
-     * Oscillates the motors back and forth for calibration
+     * Oscillates the motors back and forth 3 times for calibration
      */
-    //TODO Make this not infinite
     protected void execute() {
-    	Robot.drivetrain.driveRight(oscillatingValue);
+    	Robot.drivetrain.driveLeft(oscillatingValue);
     	oscillatingValue = oscillatingValue + (.05 * valueSign);
+    	if (completeOscillations > 2) {
+    		isFinished = true;
+    	}
     	if (oscillatingValue == 1) {
     		valueSign = -1;
     	}
     	if (oscillatingValue == -1) {
     		valueSign = 1;
+    		completeOscillations = completeOscillations + 1;
     	}
     }
 
