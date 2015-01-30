@@ -4,8 +4,8 @@ import org.team2168.commands.drivetrain.DisengageDrivetrain;
 import org.team2168.commands.drivetrain.EngageDrivetrain;
 import org.team2168.commands.gripper.EngageGripper;
 import org.team2168.commands.gripper.ReleaseGripper;
-import org.team2168.commands.intake.DisengageIntake;
-import org.team2168.commands.intake.EngageIntake;
+import org.team2168.commands.intake.DisengageIntakePneumatics;
+import org.team2168.commands.intake.EngageIntakePneumatics;
 import org.team2168.commands.intake.IntakeIn;
 import org.team2168.commands.winch.DisengageWinch;
 import org.team2168.commands.winch.EngageWinch;
@@ -48,8 +48,8 @@ public class OI {
         //TEST CONTROLLER BUTTON MAP///////////////////////////////////////////////
         testJoystick.ButtonA().whenPressed(new EngageGripper());
         testJoystick.ButtonB().whenPressed(new ReleaseGripper());
-        testJoystick.ButtonX().whenPressed(new EngageIntake());
-        testJoystick.ButtonY().whenPressed(new DisengageIntake());
+        testJoystick.ButtonX().whenPressed(new EngageIntakePneumatics());
+        testJoystick.ButtonY().whenPressed(new DisengageIntakePneumatics());
         testJoystick.ButtonLeftStick().whenPressed(new IntakeIn());
         testJoystick.ButtonLeftBumper().whenPressed(new EngageWinch());
         testJoystick.ButtonRightBumper().whenPressed(new DisengageWinch());
