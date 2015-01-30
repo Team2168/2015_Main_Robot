@@ -30,16 +30,16 @@ A pnumatically actuated brake is attached to the gearbox to stop its rotation (a
 The gripper assembly mounts onto the linear lift. It is what grips totes and canister.
 There are a number of spring loaded fingers on the gripper which will engage on the lip of a tote. These fingers will passivley actuate (software doesn't control their position).
 The gripper can be actuated pneumatically to open/close (horizontally).
-*One double solenoid
+* One double solenoid
 
 ###Intake
 The intake consists of two arms with wheels at the end of them. Each wheel is driven by one RS775 motor. Each motor is connected to one Victor motor controller.
-*Two Victor motor controllers
+* Two Victor motor controllers
 
 ###Tote Pusher
 The tote pusher is a flat plate at the front of the robot which can push a tote stack away from the robot.
 Two pneumatic actuators move the assembly. This is controlled by a single double solenoid.
-*One double solenoid
+* One double solenoid
 
 ###Winch
 [details to come]
