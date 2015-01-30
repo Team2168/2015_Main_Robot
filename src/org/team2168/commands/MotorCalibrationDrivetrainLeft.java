@@ -23,7 +23,10 @@ public class MotorCalibrationDrivetrainLeft extends Command {
     	valueSign = 1;
     }
 
-    // Called repeatedly when this Command is scheduled to run
+    /**
+     * Oscillates the motors back and forth for calibration
+     */
+    //TODO Make this not infinite
     protected void execute() {
     	Robot.drivetrain.driveLeft(oscillatingValue);
     	oscillatingValue = oscillatingValue + (.05 * valueSign);
