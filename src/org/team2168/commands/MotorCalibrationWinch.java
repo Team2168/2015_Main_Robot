@@ -26,7 +26,9 @@ public class MotorCalibrationWinch extends Command {
     	valueSign = 1;
     }
 
-    // Called repeatedly when this Command is scheduled to run
+    /**
+     * Oscillates the motors back and forth for calibration
+     */
     protected void execute() {
     	Robot.winch.drive(oscillatingValue);
     	oscillatingValue = oscillatingValue + (.05 * valueSign);
