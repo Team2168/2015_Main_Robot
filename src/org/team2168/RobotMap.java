@@ -15,6 +15,8 @@ public class RobotMap {
 	/*************************************************************************
 	 *                              WIRING MAP
 	 *************************************************************************/
+	
+	public final static int debug = 1;
 
 	//PWM Channels/////////////////////////////////////////////////////////////
 	public final static int DRIVETRAIN_RIGHT_MOTOR_1 = 0;
@@ -41,21 +43,20 @@ public class RobotMap {
 
 
 	//Digital IO Channels//////////////////////////////////////////////////////
-	public final static int LEFT_TOTE_SWITCH = 0;
-	public final static int RIGHT_TOTE_SWITCH = 1;
-	public final static int LIFT_ENCODER_A = 2;
-	public final static int LIFT_ENCODER_B = 3;
-	public final static int WINCH_ENCODER_A = 4;
-	public final static int WINCH_ENCODER_B = 5;
-	public final static int DRIVETRAIN_LEFT_ENCODER_A = 6;
-	public final static int DRIVETRAIN_LEFT_ENCODER_B = 7;
-	public final static int DRIVETRAIN_RIGHT_ENCODER_A = 8;
-	public final static int DRIVETRAIN_RIGHT_ENCODER_B = 9;
-
+	public final static int DRIVETRAIN_LEFT_ENCODER_A = 0;
+	public final static int DRIVETRAIN_LEFT_ENCODER_B = 1;
+	public final static int DRIVETRAIN_RIGHT_ENCODER_A = 2;
+	public final static int DRIVETRAIN_RIGHT_ENCODER_B = 3;
+	public final static int LIFT_ENCODER_A = 4;
+	public final static int LIFT_ENCODER_B = 5;
+	public final static int WINCH_ENCODER_A = 6;
+	public final static int WINCH_ENCODER_B = 7;
+	public final static int LEFT_TOTE_SWITCH = 8;
+	public final static int RIGHT_TOTE_SWITCH = 9;
 
 	//Analog Input Channels////////////////////////////////////////////////////
-	public final static int SYSTEM_PRESSURE = 0;
-	public final static int DRIVE_GYRO = 1;
+	public final static int DRIVE_GYRO = 0;
+	public final static int SYSTEM_PRESSURE = 1;
 	public final static int INTAKE_SENSOR = 2;
 
 
@@ -75,7 +76,7 @@ public class RobotMap {
 	 *************************************************************************/
 	//TODO: Verify gear ratio
 	private static final int drivePulsePerRotation = 256; //encoder ticks per rotation
-	private static final double driveGearRatio = 24.0/27.0; //ratio between wheel over encoder
+	private static final double driveGearRatio = 22.0/15.0; //ratio between wheel over encoder
 	private static final double driveWheelDiameter = 6;
 	public static final int driveEncoderPulsePerRot = (int) (drivePulsePerRotation * driveGearRatio); //pulse per rotation * gear ratio
 	public static final double driveEncoderDistPerTick = (Math.PI * driveWheelDiameter/driveEncoderPulsePerRot);

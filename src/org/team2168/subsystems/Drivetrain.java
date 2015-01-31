@@ -21,8 +21,9 @@ public class Drivetrain extends Subsystem {
 	private Victor rightMotor2;
 	private Victor leftMotor3;
 	private Victor rightMotor3;
-	private AverageEncoder drivetrainLeftEncoder;
-	private AverageEncoder drivetrainRightEncoder;
+	
+	public AverageEncoder drivetrainLeftEncoder;
+	public AverageEncoder drivetrainRightEncoder;
 	private Gyro drivetrainGyro;
 
 	/**
@@ -168,7 +169,7 @@ public class Drivetrain extends Subsystem {
 	 * @return distance traveled in inches.
 	 */
 	public double getLeftPosition() {
-		return drivetrainLeftEncoder.getDistance();
+		return drivetrainLeftEncoder.getPos();
 	}
 
 	/**
@@ -176,7 +177,7 @@ public class Drivetrain extends Subsystem {
 	 * @return distance traveled in inches
 	 */
 	public double getRightPosition() {
-		return drivetrainRightEncoder.getDistance();
+		return drivetrainRightEncoder.getPos();
 	}
 
 	/**
