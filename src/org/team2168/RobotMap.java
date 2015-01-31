@@ -2,6 +2,7 @@ package org.team2168;
 
 import org.team2168.PIDController.sensors.AverageEncoder;
 
+
 import edu.wpi.first.wpilibj.CounterBase;
 
 /**
@@ -16,14 +17,16 @@ public class RobotMap {
 	 *************************************************************************/
 
 	//PWM Channels/////////////////////////////////////////////////////////////
-	public final static int INTAKE_LEFT_MOTOR = 0;
-	public final static int INTAKE_RIGHT_MOTOR = 1;
-	public final static int DRIVETRAIN_LEFT_MOTOR_1 = 2;
-	public final static int DRIVETRAIN_RIGHT_MOTOR_1 = 3;
+	public final static int DRIVETRAIN_RIGHT_MOTOR_1 = 0;
+	public final static int DRIVETRAIN_RIGHT_MOTOR_2 = 1;
+	public final static int DRIVETRAIN_RIGHT_MOTOR_3 = 2;
+	public final static int DRIVETRAIN_LEFT_MOTOR_1 = 3;
 	public final static int DRIVETRAIN_LEFT_MOTOR_2 = 4;
-	public final static int DRIVETRAIN_RIGHT_MOTOR_2 = 5;
-	public final static int DRIVETRAIN_LEFT_MOTOR_3 = 6;
-	public final static int DRIVETRAIN_RIGHT_MOTOR_3 = 7;
+	public final static int DRIVETRAIN_LEFT_MOTOR_3 = 5;
+
+
+	public final static int INTAKE_LEFT_MOTOR = 6;
+	public final static int INTAKE_RIGHT_MOTOR = 7;
 	public final static int LIFT_MOTOR = 8;
 	public final static int WINCH_MOTOR = 9;
 
@@ -62,8 +65,8 @@ public class RobotMap {
 
 
 	//Joysticks////////////////////////////////////////////////////////////////
-	public final static int DRIVER_JOYSTICK = 1;
-	public final static int OPERATOR_JOYSTICK = 2;
+	public final static int DRIVER_JOYSTICK = 0;
+	public final static int OPERATOR_JOYSTICK = 1;
 	public final static int TEST_JOYSTICK = 2;
 
 
@@ -84,6 +87,7 @@ public class RobotMap {
 	public static final boolean leftDriveTrainEncoderReverse = false;
 	public static final boolean rightDriveTrainEncoderReverse = true;
 	public static final int driveAvgEncoderVal = 5;
+	public static final double minDriveSpeed =  0.2;
 
 
 	/*************************************************************************

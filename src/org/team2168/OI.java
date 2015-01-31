@@ -1,6 +1,7 @@
 package org.team2168;
 
-import org.team2168.utils.F310;
+import org.team2168.gamepads.F310;
+
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -29,12 +30,16 @@ public class OI {
 
     public static F310 driverJoystick;
     public static F310 operatorJoystick;
-    public static F310 testJoystick;
+    public static F310 testJoystickLeft;
+    public static F310 testJoystickRight;
     
     public OI() {
         driverJoystick = new F310(RobotMap.DRIVER_JOYSTICK);
         operatorJoystick = new F310(RobotMap.OPERATOR_JOYSTICK);
-        testJoystick = new F310(RobotMap.TEST_JOYSTICK);
+        testJoystickLeft = new F310(RobotMap.TEST_JOYSTICK);
+        
+
+        
     }
 
     // Run the command while the button is being held down and interrupt it once

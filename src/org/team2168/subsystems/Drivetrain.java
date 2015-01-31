@@ -6,6 +6,7 @@ import org.team2168.commands.drivetrain.DriveWithJoysticks;
 
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -14,12 +15,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Drivetrain extends Subsystem {
 
 	private static Drivetrain instance = null;
-	private Talon leftMotor1;
-	private Talon rightMotor1;
-	private Talon leftMotor2;
-	private Talon rightMotor2;
-	private Talon leftMotor3;
-	private Talon rightMotor3;
+	private Victor leftMotor1;
+	private Victor rightMotor1;
+	private Victor leftMotor2;
+	private Victor rightMotor2;
+	private Victor leftMotor3;
+	private Victor rightMotor3;
 	private AverageEncoder drivetrainLeftEncoder;
 	private AverageEncoder drivetrainRightEncoder;
 	private Gyro drivetrainGyro;
@@ -29,12 +30,12 @@ public class Drivetrain extends Subsystem {
 	 * Private to prevent creating more than one instance of this subsystem.
 	 */
 	private Drivetrain() {
-		leftMotor1 = new Talon(RobotMap.DRIVETRAIN_LEFT_MOTOR_1);
-		rightMotor1 = new Talon(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1);
-		leftMotor2 = new Talon(RobotMap.DRIVETRAIN_LEFT_MOTOR_2);
-		rightMotor2 = new Talon(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2);
-		leftMotor3 = new Talon(RobotMap.DRIVETRAIN_LEFT_MOTOR_3);
-		rightMotor3 = new Talon(RobotMap.DRIVETRAIN_RIGHT_MOTOR_3);
+		leftMotor1 = new Victor(RobotMap.DRIVETRAIN_LEFT_MOTOR_1);
+		rightMotor1 = new Victor(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1);
+		leftMotor2 = new Victor(RobotMap.DRIVETRAIN_LEFT_MOTOR_2);
+		rightMotor2 = new Victor(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2);
+		leftMotor3 = new Victor(RobotMap.DRIVETRAIN_LEFT_MOTOR_3);
+		rightMotor3 = new Victor(RobotMap.DRIVETRAIN_RIGHT_MOTOR_3);
 		drivetrainRightEncoder = new AverageEncoder(
 				RobotMap.DRIVETRAIN_RIGHT_ENCODER_A,
 				RobotMap.DRIVETRAIN_RIGHT_ENCODER_B,
@@ -146,8 +147,8 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the right motors
 	 */
 	public void tankDrive(double leftSpeed, double rightSpeed) {
-		driveLeft(leftSpeed);
-		driveRight(leftSpeed);
+		driveLeft(-leftSpeed);
+		driveRight(rightSpeed);
 	}
 
 	/**
