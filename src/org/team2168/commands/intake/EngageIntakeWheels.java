@@ -1,4 +1,4 @@
-package org.team2168.commands.winch;
+package org.team2168.commands.intake;
 
 import org.team2168.Robot;
 
@@ -7,10 +7,10 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DisengageWinch extends Command {
+public class EngageIntakeWheels extends Command {
 
-    public DisengageWinch() {
-    	requires(Robot.winch);
+    public EngageIntakeWheels() {
+    	requires(Robot.intake);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -21,12 +21,12 @@ public class DisengageWinch extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.winch.winchStop();
+    		Robot.intake.runIntakeIn();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     // Called once after isFinished returns true

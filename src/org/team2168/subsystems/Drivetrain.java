@@ -80,7 +80,7 @@ public class Drivetrain extends Subsystem {
 	public void driveRight(double rightSpeed) {
 		rightMotor.set(rightSpeed);
 	}
-
+	
 	/**
 	 * Drive both motors in the chassis. (-1 to 1, positive is forward, negative is backwards)
 	 * @param leftSpeed the speed to drive the left motor
@@ -94,11 +94,6 @@ public class Drivetrain extends Subsystem {
 	/**
 	 * Stop driving the wheels.
 	 */
-	
-	public void drivtrainStart(){
-		leftMotor.set(1);
-		rightMotor.set(1);
-	}
 	
 	public void drivetrainStop() {
 		leftMotor.set(0);

@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DisengageIntake extends Command {
+public class DisengageIntakePneumatics extends Command {
 
-    public DisengageIntake() {
+    public DisengageIntakePneumatics() {
     	requires(Robot.intake);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);

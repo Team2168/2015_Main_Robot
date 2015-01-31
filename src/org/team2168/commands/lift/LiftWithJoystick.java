@@ -25,7 +25,7 @@ public class LiftWithJoystick extends Command {
      */
     protected void execute() {
         Robot.lift.drive(OI.operatorJoystick.getLeftStickRaw_Y());
-        Robot.lift.drive(OI.testJoystick.getLeftStickRaw_Y());
+        Robot.lift.drive(OI.testJoystick.getLeftStickRaw_X());
     }
 
     /**
