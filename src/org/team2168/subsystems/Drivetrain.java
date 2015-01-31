@@ -147,7 +147,7 @@ public class Drivetrain extends Subsystem {
 	 */
 	public void tankDrive(double leftSpeed, double rightSpeed) {
 		driveLeft(leftSpeed);
-		driveRight(leftSpeed);
+		driveRight(rightSpeed);
 	}
 
 	/**
