@@ -1,36 +1,39 @@
-package org.team2168.commands;
+package org.team2168.commands.calibration;
 
 import org.team2168.Robot;
-import org.team2168.RobotMap;
-import org.team2168.subsystems.Winch;
 
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class MotorCalibrationWinch extends Command {
-
+public class MotorCalibrationIntake extends Command {
+	
 	private double oscillatingValue;
 	private double valueSign;
-	
-    public MotorCalibrationWinch() {
+
+    public MotorCalibrationIntake() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
+    /**
+     * Gives oscillatingValue and valueSign beginning values for the calibration command.
+     */
     protected void initialize() {
     	oscillatingValue = -1;
     	valueSign = 1;
+    	
     }
 
+    // Called repeatedly when this Command is scheduled to run
     /**
-     * Oscillates the motors back and forth for calibration
+     * Oscillates the value of the speed of the lift to its maximum and minimum repeatedly.
+     * Increases to one before decreasing to -1, then going back to 1, back -1 etc.
      */
     protected void execute() {
-    	Robot.winch.drive(oscillatingValue);
+    	Robot.intake.setIntakeSpeed(oscillatingValue);
     	oscillatingValue = oscillatingValue + (.05 * valueSign);
     	if (oscillatingValue == 1) {
     		valueSign = -1;

@@ -1,4 +1,4 @@
-package org.team2168.commands;
+package org.team2168.commands.calibration;
 
 import org.team2168.Robot;
 
@@ -7,39 +7,42 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class MotorCalibrationIntake extends Command {
-	
+public class MotorCalibrationDrivetrainRight extends Command {
+
 	private double oscillatingValue;
 	private double valueSign;
+	private double completeOscillations;
+	private boolean isFinished;
 
-    public MotorCalibrationIntake() {
+    public MotorCalibrationDrivetrainRight() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
-    /**
-     * Gives oscillatingValue and valueSign beginning values for the calibration command.
-     */
     protected void initialize() {
     	oscillatingValue = -1;
     	valueSign = 1;
-    	
+    	completeOscillations = 0;
+    	isFinished = false;
     }
 
-    // Called repeatedly when this Command is scheduled to run
     /**
-     * Oscillates the value of the speed of the lift to its maximum and minimum repeatedly.
-     * Increases to one before decreasing to -1, then going back to 1, back -1 etc.
+     * Oscillates the motors back and forth 3 times for calibration
      */
     protected void execute() {
-    	Robot.intake.setIntakeSpeed(oscillatingValue);
+    	Robot.drivetrain.driveLeft(oscillatingValue);
     	oscillatingValue = oscillatingValue + (.05 * valueSign);
+    	if (completeOscillations > 2) {
+    		isFinished = true;
+    		Robot.drivetrain.driveRight(0);
+    	}
     	if (oscillatingValue == 1) {
     		valueSign = -1;
     	}
     	if (oscillatingValue == -1) {
     		valueSign = 1;
+    		completeOscillations = completeOscillations + 1;
     	}
     }
 

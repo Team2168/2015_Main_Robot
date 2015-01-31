@@ -1,4 +1,4 @@
-package org.team2168.commands;
+package org.team2168.commands.calibration;
 
 import org.team2168.Robot;
 

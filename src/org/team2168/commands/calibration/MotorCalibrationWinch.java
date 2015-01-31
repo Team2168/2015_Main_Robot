@@ -1,20 +1,21 @@
-package org.team2168.commands;
+package org.team2168.commands.calibration;
 
 import org.team2168.Robot;
+import org.team2168.RobotMap;
+import org.team2168.subsystems.Winch;
 
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class MotorCalibrationDrivetrainRight extends Command {
+public class MotorCalibrationWinch extends Command {
 
 	private double oscillatingValue;
 	private double valueSign;
-	private double completeOscillations;
-	private boolean isFinished;
-
-    public MotorCalibrationDrivetrainRight() {
+	
+    public MotorCalibrationWinch() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -23,26 +24,19 @@ public class MotorCalibrationDrivetrainRight extends Command {
     protected void initialize() {
     	oscillatingValue = -1;
     	valueSign = 1;
-    	completeOscillations = 0;
-    	isFinished = false;
     }
 
     /**
-     * Oscillates the motors back and forth 3 times for calibration
+     * Oscillates the motors back and forth for calibration
      */
     protected void execute() {
-    	Robot.drivetrain.driveLeft(oscillatingValue);
+    	Robot.winch.drive(oscillatingValue);
     	oscillatingValue = oscillatingValue + (.05 * valueSign);
-    	if (completeOscillations > 2) {
-    		isFinished = true;
-    		Robot.drivetrain.driveRight(0);
-    	}
     	if (oscillatingValue == 1) {
     		valueSign = -1;
     	}
     	if (oscillatingValue == -1) {
     		valueSign = 1;
-    		completeOscillations = completeOscillations + 1;
     	}
     }
 
