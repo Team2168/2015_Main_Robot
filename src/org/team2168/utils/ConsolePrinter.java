@@ -30,14 +30,14 @@ public class ConsolePrinter {
 		if(RobotMap.debug == 1)
 		{
 
-    	SmartDashboard.putNumber("Left Encoder Distance",Drivetrain.getInstance().getLeftPosition());
-    	SmartDashboard.putNumber("Right Encoder Distance:",Drivetrain.getInstance().getRightPosition());
-    	
-    	
-    	
-    	SmartDashboard.putNumber("Accel X:", Robot.accel.getX());
-    	SmartDashboard.putNumber("Accel Y:", Robot.accel.getY());
-    	SmartDashboard.putNumber("Accel Z:", Robot.accel.getZ());
+	    	SmartDashboard.putNumber("Left Encoder Distance",Drivetrain.getInstance().getLeftPosition());
+	    	SmartDashboard.putNumber("Right Encoder Distance:",Drivetrain.getInstance().getRightPosition());
+	    	SmartDashboard.putBoolean("isPracticeBot", Drivetrain.getInstance().isPracticeBot());
+	    	
+	    	
+	    	SmartDashboard.putNumber("Accel X:", Robot.accel.getX());
+	    	SmartDashboard.putNumber("Accel Y:", Robot.accel.getY());
+	    	SmartDashboard.putNumber("Accel Z:", Robot.accel.getZ());
 
 		
 		}

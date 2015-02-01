@@ -43,6 +43,7 @@ public class RobotMap {
 
 
 	//Digital IO Channels//////////////////////////////////////////////////////
+	//0-9 on RoboRio 10-25 on MXP
 	public final static int DRIVETRAIN_LEFT_ENCODER_A = 0;
 	public final static int DRIVETRAIN_LEFT_ENCODER_B = 1;
 	public final static int DRIVETRAIN_RIGHT_ENCODER_A = 2;
@@ -53,6 +54,8 @@ public class RobotMap {
 	public final static int WINCH_ENCODER_B = 7;
 	public final static int LEFT_TOTE_SWITCH = 8;
 	public final static int RIGHT_TOTE_SWITCH = 9;
+	
+	public static final int PracticeBotJumper = 24; //on MXP
 
 	//Analog Input Channels////////////////////////////////////////////////////
 	public final static int DRIVE_GYRO = 0;
@@ -121,5 +124,7 @@ public class RobotMap {
 
 	public final static int MAX_LIFT_HEIGHT = 76;
 	public final static int MIN_LIFT_HEIGHT = 0;
+
+	
 
 }

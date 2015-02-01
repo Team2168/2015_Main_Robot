@@ -9,6 +9,7 @@ import org.team2168.subsystems.Winch;
 import org.team2168.utils.ConsolePrinter;
 
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -34,10 +35,11 @@ public class Robot extends IterativeRobot {
     public static Gripper gripper;
     public static Pneumatics pneumatics;
 
+    //SmartDash printer
 	ConsolePrinter printer;
     
     public static BuiltInAccelerometer accel;
-    
+
     // Auto command objects
     Command autonomousCommand;
 
@@ -54,6 +56,7 @@ public class Robot extends IterativeRobot {
         pneumatics = Pneumatics.getInstance();
         
         accel = new BuiltInAccelerometer();
+
 		
         //create thread to write dashboard variables
 		printer = new ConsolePrinter(20);
@@ -124,4 +127,5 @@ public class Robot extends IterativeRobot {
     public void testPeriodic() {
         LiveWindow.run();
     }
+
 }

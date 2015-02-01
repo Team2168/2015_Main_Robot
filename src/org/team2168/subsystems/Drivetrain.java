@@ -2,9 +2,12 @@ package org.team2168.subsystems;
 
 import org.team2168.RobotMap;
 import org.team2168.PIDController.sensors.AverageEncoder;
+import org.team2168.PIDController.sensors.FalconGyro;
 import org.team2168.commands.drivetrain.DriveWithJoysticks;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Gyro;
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -14,29 +17,52 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Drivetrain extends Subsystem {
 
+
 	private static Drivetrain instance = null;
-	private Victor leftMotor1;
-	private Victor rightMotor1;
-	private Victor leftMotor2;
-	private Victor rightMotor2;
-	private Victor leftMotor3;
-	private Victor rightMotor3;
+	private SpeedController leftMotor1;
+	private SpeedController rightMotor1;
+	private SpeedController leftMotor2;
+	private SpeedController rightMotor2;
+	private SpeedController leftMotor3;
+	private SpeedController rightMotor3;
 	
 	public AverageEncoder drivetrainLeftEncoder;
 	public AverageEncoder drivetrainRightEncoder;
-	private Gyro drivetrainGyro;
+	public FalconGyro drivetrainGyro;
+	
+	public static DigitalInput practiceBot;
+	
+	
 
 	/**
 	 * This method instantiates the motors.
 	 * Private to prevent creating more than one instance of this subsystem.
 	 */
 	private Drivetrain() {
-		leftMotor1 = new Victor(RobotMap.DRIVETRAIN_LEFT_MOTOR_1);
-		rightMotor1 = new Victor(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1);
-		leftMotor2 = new Victor(RobotMap.DRIVETRAIN_LEFT_MOTOR_2);
-		rightMotor2 = new Victor(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2);
-		leftMotor3 = new Victor(RobotMap.DRIVETRAIN_LEFT_MOTOR_3);
-		rightMotor3 = new Victor(RobotMap.DRIVETRAIN_RIGHT_MOTOR_3);
+		
+        practiceBot = new DigitalInput(RobotMap.PracticeBotJumper);
+        
+        
+		if(isPracticeBot())
+		{
+			leftMotor1 = new Victor(RobotMap.DRIVETRAIN_LEFT_MOTOR_1);
+			rightMotor1 = new Victor(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1);
+			leftMotor2 = new Victor(RobotMap.DRIVETRAIN_LEFT_MOTOR_2);
+			rightMotor2 = new Victor(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2);
+			leftMotor3 = new Victor(RobotMap.DRIVETRAIN_LEFT_MOTOR_3);
+			rightMotor3 = new Victor(RobotMap.DRIVETRAIN_RIGHT_MOTOR_3);
+		}
+		else
+		{
+			leftMotor1 = new Talon(RobotMap.DRIVETRAIN_LEFT_MOTOR_1);
+			rightMotor1 = new Talon(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1);
+			leftMotor2 = new Talon(RobotMap.DRIVETRAIN_LEFT_MOTOR_2);
+			rightMotor2 = new Talon(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2);
+			leftMotor3 = new Talon(RobotMap.DRIVETRAIN_LEFT_MOTOR_3);
+			rightMotor3 = new Talon(RobotMap.DRIVETRAIN_RIGHT_MOTOR_3);
+		}
+		
+		
 		drivetrainRightEncoder = new AverageEncoder(
 				RobotMap.DRIVETRAIN_RIGHT_ENCODER_A,
 				RobotMap.DRIVETRAIN_RIGHT_ENCODER_B,
@@ -53,7 +79,7 @@ public class Drivetrain extends Subsystem {
 				RobotMap.leftDriveTrainEncoderReverse,
 				RobotMap.driveEncodingType, RobotMap.driveSpeedReturnType,
 				RobotMap.drivePosReturnType, RobotMap.driveAvgEncoderVal);
-		drivetrainGyro = new Gyro(RobotMap.DRIVE_GYRO);
+		drivetrainGyro = new FalconGyro(RobotMap.DRIVE_GYRO);
 	}
 
 	/**
@@ -225,5 +251,18 @@ public class Drivetrain extends Subsystem {
 	public void resetGyro() {
 		drivetrainGyro.reset();
 	}
+	
+    
+    /**
+     * Returns the status of DIO pin 24 on the MXP
+     * Place a jumper between pin pin 32 and 30 on the
+     * MXP to indicate this RoboRio is installed on the
+     * practice bot. 
+     * @return
+     */
+    public boolean isPracticeBot()
+    {
+    	return !practiceBot.get();
+    }
 }
 
