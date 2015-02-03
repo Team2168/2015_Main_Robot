@@ -5,10 +5,11 @@ import java.util.Vector;
 /**
  * Contains basic functions that are used often.
  *
- * Initial revision from 254's 2013 robot code:
+ * Some methods originally from 254's 2013 robot code:
  * https://github.com/Team254/FRC-2013
  * /blob/master/src/com/team254/lib/util/Util.java
  *
+ * @author james@team2168.org (James Corcoran)
  * @author richard@team254.com (Richard Lin)
  * @author brandon.gonzalez.451@gmail.com (Brandon Gonzalez)
  */
@@ -18,13 +19,42 @@ public class Util {
 	}
 
 	/**
-	 * Limits the given input to the given magnitude.
-	 * @param v the value to limit
-	 * @param limit a positive value defining the allowable magnitude of the
-	 * @return the limited value
+	 * Find the minimum of two values.
+	 * @param x
+	 * @param y
+	 * @return the smaller of the two values
 	 */
-	public static double limit(double v, double limit) {
-		return (Math.abs(v) < limit) ? v : limit * (v < 0 ? -1 : 1);
+	public static double min(double x, double y) {
+		if (x > y) {
+			return y;
+		} else {
+			return x;
+		}
+	}
+
+	/**
+	 * Find the maximum of two values.
+	 * @param x
+	 * @param y
+	 * @return the larger of the two values
+	 */
+	public static double max(double x, double y) {
+		if (x > y) {
+			return x;
+		} else {
+			return y;
+		}
+	}
+
+	/**
+	 * Coerce a number within a defined range.
+	 * @param value the number to constrain within the defined limit
+	 * @param upperLimit number supplied value must not exceed
+	 * @param lowerLimit number supplied value must not be less than
+	 * @return the supplied value limited to within the defined range
+	 */
+	public static double limit(double value, double lowerLimit, double upperLimit) {
+		return min(max(value, lowerLimit), upperLimit);
 	}
 
 	/**

@@ -11,8 +11,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * @author kevin@team2168.org
  *
  */
-public class F310 extends Joystick
-{
+public class F310 extends Joystick {
 	// Gamepad axis ports
 	private static final int AXIS_LEFT_X = 1;
 	private static final int AXIS_LEFT_Y = 2;
@@ -33,12 +32,14 @@ public class F310 extends Joystick
 	private static final int BUTTON_LEFT_STICK = 9;
 	private static final int BUTTON_RIGHT_STICK = 10;
 
-	private static final int BUTTON_MODE = -1;
-	private static final int BUTTON_LOGITECH = -1;
+	// private static final int BUTTON_MODE = -1;
+	// private static final int BUTTON_LOGITECH = -1;
 
 	/**
 	 * Default constructor
-	 * @param port the port the joystick is plugged into on the DS.
+	 *
+	 * @param port
+	 *            the port the joystick is plugged into on the DS.
 	 */
 	public F310(int port) {
 		super(port);
@@ -85,7 +86,6 @@ public class F310 extends Joystick
 	public double getDAxisRaw_X() {
 		return getRawAxis(AXIS_DPAD_X);
 	}
-
 
 	/**
 	 * Checks whether Button A is being pressed and returns true if it is.
@@ -140,8 +140,8 @@ public class F310 extends Joystick
 	}
 
 	/**
-	 * DPad Left and Right only
-	 * WPILIB cannot access the vertical axis of the Logitech Game Controller Dpad
+	 * DPad Left and Right only WPILIB cannot access the vertical axis of the
+	 * Logitech Game Controller Dpad
 	 */
 
 	public boolean isPressedButtonDPadLeft() {
@@ -194,14 +194,16 @@ public class F310 extends Joystick
 
 	/**
 	 * Gets Start button object
+	 *
 	 * @return the Start button
 	 */
-	public JoystickButton ButtonStart(){
+	public JoystickButton ButtonStart() {
 		return new JoystickButton(this, BUTTON_START);
 	}
 
 	/**
 	 * Gets the Back button object
+	 *
 	 * @return the Back button
 	 */
 	public JoystickButton ButtonBack() {
@@ -210,6 +212,7 @@ public class F310 extends Joystick
 
 	/**
 	 * Gets the state of the left shoulder
+	 *
 	 * @return the state of the left shoulder
 	 */
 	public JoystickButton ButtonLeftBumper() {
@@ -218,6 +221,7 @@ public class F310 extends Joystick
 
 	/**
 	 * Gets the state of the right shoulder
+	 *
 	 * @return the state of the right shoulder
 	 */
 	public JoystickButton ButtonRightBumper() {
@@ -247,74 +251,4 @@ public class F310 extends Joystick
 	public JoystickAnalogButton ButtonRightDPad() {
 		return new JoystickAnalogButton(this, AXIS_DPAD_X, 0.5);
 	}
-
-	/**
-	 * Electronic braking - aka "Falcon Claw"
-	 * The more the "brake" is pulled, the slower output speed
-	 *
-	 * @param inputSpeed The input value to scale back based on brake input. (1 to -1)
-	 * @param brake The brake input value. (0 to -1)
-	 * @return The adjusted value.
-	 */
-	private double falconClaw(double inputSpeed, double brake) {
-		//TODO: Move out to its own class
-		//return ((1 - ((-RobotMap.minDriveSpeed.getDouble() + 1) * Math.abs(brake))) * inputSpeed);
-		return 0.0;
-	}
-
-	/**
-	 * A function to modify the joystick values using linear interpolation.
-	 * The objective is augment the joystick value going to the motor controllers
-	 *   to widen the region of "fine" control while still allowing full speed.
-	 *
-	 * @param input The value to augment.
-	 * @return The adjusted value.
-	 */
-	private double interpolate(double input) {
-		//TODO: Modify this to take in the set of points as a parameter, then move out to utils package.
-		double retVal = 0.0;
-		boolean done = false;
-		double m, b;
-
-		//make sure input is between 1.0 and -1.0
-		if (input > 1.0) {
-			input = 1.0;
-		} else if (input < -1.0) {
-			input = -1.0;
-		}
-
-		//Find the two points in our array, between which the input falls.
-		//We will start at i = 1 since we can't have a point fall outside our array.
-		for (int i = 1; !done && i < joystickScale.length; i++) {
-			if (input >= joystickScale[i][0]) {
-				//We found where the point falls in out array, between index i and i-1
-				//Calculate the equation for the line. y=mx+b
-				m = Util.slope(joystickScale[i-1][0],
-						joystickScale[i-1][1],
-						joystickScale[i][0],
-						joystickScale[i][1]);
-				b = Util.intercept(m, joystickScale[i][0], joystickScale[i][1]);
-				retVal = m * input + b;
-
-				//we're finished, don't continue to loop
-				done = true;
-			}
-		}
-
-		return retVal;
-	}
-
-	// minSpeed needs to be tweaked based on the particular drivetrain.
-	// It is the speed at which the drivetrain barely starts moving
-	static double joystickScale[][] = {
-		/* Joystick Input, Scaled Output */
-		{ 1.00, 1.00 },
-		{ 0.90, 0.68 },
-		{ 0.06, 0.2}, //minSpeed
-		{ 0.06, 0.00 },
-		{ 0.00, 0.00 },
-		{ -0.06, 0.00 },
-		{ -0.06, -0.2}, //minSpeed
-		{ -0.90, -0.68 },
-		{ -1.00, -1.00 } };
 }
