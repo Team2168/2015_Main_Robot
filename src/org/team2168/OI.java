@@ -4,7 +4,7 @@ import org.team2168.commands.gripper.EngageGripper;
 import org.team2168.commands.gripper.ReleaseGripper;
 import org.team2168.commands.intake.DisengageIntakePneumatics;
 import org.team2168.commands.intake.DisengageIntakeWheels;
-import org.team2168.commands.intake.EngageIntakePneumatics;
+import org.team2168.commands.intake.EngageIntake;
 import org.team2168.commands.intake.EngageIntakeWheels;
 import org.team2168.utils.F310;
 
@@ -45,7 +45,7 @@ public class OI {
         //TEST CONTROLLER BUTTON MAP///////////////////////////////////////////////
         testJoystick.ButtonA().whenPressed(new EngageGripper());
         testJoystick.ButtonB().whenPressed(new ReleaseGripper());
-        testJoystick.ButtonLeftBumper().whenPressed(new EngageIntakePneumatics());
+        testJoystick.ButtonLeftBumper().whenPressed(new EngageIntake());
         testJoystick.ButtonRightBumper().whenPressed(new DisengageIntakePneumatics());
         testJoystick.ButtonLeftTrigger().whenPressed(new EngageIntakeWheels());
         testJoystick.ButtonRightTrigger().whenPressed(new DisengageIntakeWheels());
