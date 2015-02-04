@@ -50,17 +50,17 @@ public class Intake extends Subsystem {
 	}
 
 	/**
-	 * Releases the intake from intaking position
-	 */
-	public void releaseIntake() {
-		rightLeftIntake.set(Value.kReverse);
-	}
-
-	/**
 	 * Actuates the intake into intaking position
 	 */
 	public void engageIntake() {
 		rightLeftIntake.set(Value.kForward);
+	}
+	
+	/**
+	 * Releases the intake from intaking position
+	 */
+	public void releaseIntake() {
+		rightLeftIntake.set(Value.kReverse);
 	}
 
 	/**
