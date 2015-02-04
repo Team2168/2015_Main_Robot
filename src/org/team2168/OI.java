@@ -2,7 +2,7 @@ package org.team2168;
 
 import org.team2168.commands.gripper.EngageGripper;
 import org.team2168.commands.gripper.ReleaseGripper;
-import org.team2168.commands.intake.DisengageIntakePneumatics;
+import org.team2168.commands.intake.DisengageIntake;
 import org.team2168.commands.intake.DisengageIntakeWheels;
 import org.team2168.commands.intake.EngageIntake;
 import org.team2168.commands.intake.EngageIntakeWheels;
@@ -46,9 +46,7 @@ public class OI {
         testJoystick.ButtonA().whenPressed(new EngageGripper());
         testJoystick.ButtonB().whenPressed(new ReleaseGripper());
         testJoystick.ButtonLeftBumper().whenPressed(new EngageIntake());
-        testJoystick.ButtonRightBumper().whenPressed(new DisengageIntakePneumatics());
-        testJoystick.ButtonLeftTrigger().whenPressed(new EngageIntakeWheels());
-        testJoystick.ButtonRightTrigger().whenPressed(new DisengageIntakeWheels());
+        testJoystick.ButtonRightBumper().whenPressed(new DisengageIntake());
         
     }
     
