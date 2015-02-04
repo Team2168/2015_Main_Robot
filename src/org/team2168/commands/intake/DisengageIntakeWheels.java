@@ -1,5 +1,8 @@
 package org.team2168.commands.intake;
 
+import org.team2168.OI;
+import org.team2168.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -18,6 +21,7 @@ public class DisengageIntakeWheels extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.intake.setIntakeSpeed(-1 * (OI.testJoystick.getRightTriggerAxisRaw()));
     }
 
     // Make this return true when this Command no longer needs to run execute()

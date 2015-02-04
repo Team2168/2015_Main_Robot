@@ -6,7 +6,7 @@ import org.team2168.commands.intake.DisengageIntake;
 import org.team2168.commands.intake.DisengageIntakeWheels;
 import org.team2168.commands.intake.EngageIntake;
 import org.team2168.commands.intake.EngageIntakeWheels;
-import org.team2168.utils.F310;
+import org.team2168.gamepads.F310;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -35,19 +35,21 @@ public class OI {
 
     public static F310 driverJoystick;
     public static F310 operatorJoystick;
+    public static F310 testJoystickLeft;
+    public static F310 testJoystickRight;
     public static F310 testJoystick;
     
     public OI() {
     	//Joysticks////////////////////////////////////////////////////////////////
         driverJoystick = new F310(RobotMap.DRIVER_JOYSTICK);
         operatorJoystick = new F310(RobotMap.OPERATOR_JOYSTICK);
+        testJoystickLeft = new F310(RobotMap.TEST_JOYSTICK);
         testJoystick = new F310(RobotMap.TEST_JOYSTICK);
         //TEST CONTROLLER BUTTON MAP///////////////////////////////////////////////
         testJoystick.ButtonA().whenPressed(new EngageGripper());
         testJoystick.ButtonB().whenPressed(new ReleaseGripper());
         testJoystick.ButtonLeftBumper().whenPressed(new EngageIntake());
         testJoystick.ButtonRightBumper().whenPressed(new DisengageIntake());
-        
     }
     
 

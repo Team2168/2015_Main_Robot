@@ -17,10 +17,12 @@ public class Intake extends Subsystem {
 
 	private static Intake instance = null;
 	private DoubleSolenoid rightLeftIntake;
-	private Talon rightLeftMotor;
+	private Talon leftMotor;
+	private Talon rightMotor;
 	private static DigitalInput leftLimitSwitch;
 	private static DigitalInput rightLimitSwitch;
 	private static AnalogInput toteDistanceSensor;
+	private static final double CM_TO_INCH =  0.393701;
 
 	/**
 	 * A private constructor to prevent multiple instances of the subsystem
@@ -29,10 +31,10 @@ public class Intake extends Subsystem {
 	private Intake() {
 		rightLeftIntake = new DoubleSolenoid(RobotMap.INTAKE_DOUBLE_SOLENOID_FORWARD,
 				RobotMap.INTAKE_DOUBLE_SOLENOID_REVERSE);
-		rightLeftMotor 	= new Talon(RobotMap.INTAKE_MOTORS);
-
-		leftLimitSwitch		= new DigitalInput(RobotMap.LEFT_TOTE_SWITCH);
-		rightLimitSwitch 	= new DigitalInput(RobotMap.RIGHT_TOTE_SWITCH);
+		rightMotor 	= new Talon(RobotMap.INTAKE_LEFT_MOTOR);
+		leftMotor 	= new Talon(RobotMap.INTAKE_RIGHT_MOTOR);
+		leftLimitSwitch = new DigitalInput(RobotMap.LEFT_TOTE_SWITCH);
+		rightLimitSwitch = new DigitalInput(RobotMap.RIGHT_TOTE_SWITCH);
 		toteDistanceSensor = new AnalogInput(RobotMap.INTAKE_SENSOR);
 	}
 
@@ -62,32 +64,36 @@ public class Intake extends Subsystem {
 	}
 
 	/**
-	 * runs the intake motors in, making the tote move in toward the lift
+	 * Sets the left intake motor speed.
+	 * @param speed 1 to 0 (Tote In) 0 to -1 (Tote Out)
 	 */
-	public void runIntakeIn() {
-		setIntakeSpeed(1);
+	public void setLeftIntakeSpeed(double speed) {
+		leftMotor.set(speed);
 	}
 
 	/**
-	 * stops the intake motors
+	 * Sets the right intake motor speed.
+	 * @param speed 1 to 0 (Tote In) 0 to -1 (Tote Out)
+	 */
+	public void setRightIntakeSpeed(double speed) {
+		rightMotor.set(speed);
+	}
+
+	/**
+	 * Sets both intake motors to the same speed
+	 * @param speed 1 to 0 (Tote In) 0 to -1 (Tote Out)
+	 */
+	public void setIntakeSpeed(double speed) {
+		setLeftIntakeSpeed(speed);
+		setRightIntakeSpeed(speed);
+	}
+
+
+	/**
+	 * Stops the intake motors
 	 */
 	public void stopIntake() {
 		setIntakeSpeed(0);
-	}
-
-	/**
-	 * runs the intake motors out, making the tote move out of the intake.
-	 */
-	public void runIntakeOut() {
-		setIntakeSpeed(-1);
-	}
-
-	/**
-	 * Sets the intake Speed of the motors.
-	 * @param speed 1 to 0 Tote In. 0 - -1 Tote Out
-	 */
-	public void setIntakeSpeed(double speed) {
-		rightLeftMotor.set(speed);
 	}
 
 	/**
@@ -101,14 +107,25 @@ public class Intake extends Subsystem {
 			return false;
 		}
 	}
-	
+
 	/**
-	 * Returns the voltage of the distance sensor
-	 * @return voltage of distance sensor
+	 * Returns the raw voltage from the intake distance sensor
+	 * @return the sensed voltage from the distance sensor
+	 */
+	public double getRawToteDistance() {
+		return toteDistanceSensor.getVoltage();
+	}
+
+	/**
+	 * Gets the distance to the nearest object from the back of the intake.
+	 * @return the distance in inches
 	 */
 	public double getToteDistance() {
-		return toteDistanceSensor.getVoltage();
-		//TODO: Make conversion for voltage to inches
+		double toteDistance = getRawToteDistance();
+
+		//y = 0.512x^2 - 0.8656x + 6.1888
+		//R^2 = 0.9985
+		return ((0.512 * Math.pow(toteDistance, 2) - 0.8656 * toteDistance + 6.1888) * CM_TO_INCH);
 	}
 
 	/**
@@ -119,4 +136,3 @@ public class Intake extends Subsystem {
 	}
 
 }
-

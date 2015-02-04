@@ -1,28 +1,43 @@
-package org.team2168.commands.intake;
+package org.team2168.commands.calibration;
 
-import org.team2168.OI;
 import org.team2168.Robot;
+import org.team2168.RobotMap;
+import org.team2168.subsystems.Winch;
 
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class EngageIntakeWheels extends Command {
+public class MotorCalibrationWinch extends Command {
 
-    public EngageIntakeWheels() {
-    	requires(Robot.intake);
+	private double oscillatingValue;
+	private double valueSign;
+	
+    public MotorCalibrationWinch() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	oscillatingValue = -1;
+    	valueSign = 1;
     }
 
-    // Called repeatedly when this Command is scheduled to run
+    /**
+     * Oscillates the motors back and forth for calibration
+     */
     protected void execute() {
-    		Robot.intake.setIntakeSpeed(OI.testJoystick.getLeftTriggerAxisRaw());
+    	Robot.winch.drive(oscillatingValue);
+    	oscillatingValue = oscillatingValue + (.05 * valueSign);
+    	if (oscillatingValue == 1) {
+    		valueSign = -1;
+    	}
+    	if (oscillatingValue == -1) {
+    		valueSign = 1;
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -21,14 +21,15 @@ public class IntakeIn extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	intake.runIntakeIn();
+    	intake.setIntakeSpeed(1);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         if (intake.isTotePresent()) {
         	return true;
-        }else{
+        }
+        else {
         	return false;
         }
     }
