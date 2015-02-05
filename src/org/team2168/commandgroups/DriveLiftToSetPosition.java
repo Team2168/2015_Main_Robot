@@ -1,6 +1,9 @@
-package org.team2168.commands.lift;
+package org.team2168.commandgroups;
 
 import org.team2168.Robot;
+import org.team2168.commands.lift.DisableBrake;
+import org.team2168.commands.lift.EnableBrake;
+import org.team2168.commands.lift.SetLiftPosition;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -26,8 +29,6 @@ public class DriveLiftToSetPosition extends CommandGroup {
 		// e.g. if Command1 requires chassis, and Command2 requires arm,
 		// a CommandGroup containing them would require both the chassis and the
 		// arm.
-
-		requires(Robot.lift);
 
 		addSequential(new DisableBrake());
 		addSequential(new SetLiftPosition(position));

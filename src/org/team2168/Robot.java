@@ -48,7 +48,7 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-        drivetrain = Drivetrain.getInstance();
+       // drivetrain = Drivetrain.getInstance();
         intake = Intake.getInstance();
         lift = Lift.getInstance();
         winch = Winch.getInstance();
