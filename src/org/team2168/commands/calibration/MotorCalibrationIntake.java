@@ -11,6 +11,8 @@ public class MotorCalibrationIntake extends Command {
 	
 	private double oscillatingValue;
 	private double valueSign;
+	private double completeOscillations;
+	private boolean isFinished;
 
     public MotorCalibrationIntake() {
         // Use requires() here to declare subsystem dependencies
@@ -24,28 +26,34 @@ public class MotorCalibrationIntake extends Command {
     protected void initialize() {
     	oscillatingValue = -1;
     	valueSign = 1;
+    	completeOscillations = 0;
+    	isFinished = false;
     	
     }
 
     // Called repeatedly when this Command is scheduled to run
     /**
-     * Oscillates the value of the speed of the lift to its maximum and minimum repeatedly.
-     * Increases to one before decreasing to -1, then going back to 1, back -1 etc.
+     * Oscillates the value of the speed of the lift to its maximum and minimum 3 times
      */
     protected void execute() {
     	Robot.intake.setIntakeSpeed(oscillatingValue);
     	oscillatingValue = oscillatingValue + (.05 * valueSign);
+    	if (completeOscillations > 2) {
+    		isFinished = true;
+    		Robot.intake.setIntakeSpeed(0);
+    	}
     	if (oscillatingValue == 1) {
     		valueSign = -1;
     	}
     	if (oscillatingValue == -1) {
     		valueSign = 1;
+    		completeOscillations = completeOscillations + 1;
     	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return isFinished;
     }
 
     // Called once after isFinished returns true
