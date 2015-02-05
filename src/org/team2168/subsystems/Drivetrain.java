@@ -98,7 +98,9 @@ public class Drivetrain extends Subsystem {
 	 * This method sets the default command so it always drives with the joysticks
 	 */
 	public void initDefaultCommand() {
-		setDefaultCommand(new DriveWithJoysticks(OI.driverJoystick.getLeftStickRaw_Y(), OI.driverJoystick.getRightStickRaw_Y()));
+		//setDefaultCommand(new DriveWithJoysticks(OI.driverJoystick.getLeftStickRaw_Y(),
+		//		OI.driverJoystick.getRightStickRaw_Y()));
+		setDefaultCommand(new DriveWithJoysticks(-1.0, 0.0));
 	}
 
 	/**
@@ -168,7 +170,7 @@ public class Drivetrain extends Subsystem {
 		driveRight2(speed);
 		driveRight3(speed);
 	}
-	
+
 	/**
 	 * Drive both motors in the chassis. (-1 to 1, positive is forward, negative is backwards)
 	 * @param speed the speed to drive the left motors
@@ -266,4 +268,3 @@ public class Drivetrain extends Subsystem {
     	return !practiceBot.get();
     }
 }
-

@@ -10,28 +10,51 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DriveWithJoysticks extends Command {
 
-	Double leftSpeed;
-	Double rightSpeed;
+	Double leftStick;
+	Double rightStick;
 	
-	public DriveWithJoysticks(Double leftSpeed, Double rightSpeed) {
+	boolean driveWithJoystick;
+	
+	/**
+	 * Call the command with this constructor to run it with Joysticks
+	 */
+	public DriveWithJoysticks() {
 		requires(Robot.drivetrain);
-		this.rightSpeed = rightSpeed;
-		this.leftSpeed = leftSpeed;
+		this.driveWithJoystick = true;
+	}
+	
+	/**
+	 * Call the command with this constructor to run it without joysticks
+	 * @param leftStick
+	 * @param rightStick
+	 */
+	public DriveWithJoysticks(Double leftStick, Double rightStick) {
+		requires(Robot.drivetrain);
+		this.leftStick = leftStick;
+		this.rightStick = rightStick;
+		
+		this.driveWithJoystick = false;
 	}
 
 	/**
 	 * This method runs the first time the command is run
 	 */
 	protected void initialize() {
-
 	}
 
 	/**
 	 * Called repeatedly when this Command is scheduled to run
 	 */
 	protected void execute() {
-		Robot.drivetrain.tankDrive(leftSpeed, rightSpeed);
-		System.out.println(leftSpeed + "," + rightSpeed);
+		if (!(driveWithJoystick)) {
+			Robot.drivetrain.tankDrive(this.leftStick, this.rightStick);
+		}else {
+			Robot.drivetrain.tankDrive(OI.driverJoystick.getLeftStickRaw_Y(), OI.driverJoystick.getRightStickRaw_Y());
+		}
+		//System.out.println("(" + leftStick + "," + rightStick + ")");
+		//System.out.println("(" + OI.driverJoystick.getLeftStickRaw_Y() + "," + OI.driverJoystick.getRightStickRaw_Y());
+		//Robot.drivetrain.tankDrive(-1.0,
+		//		1.9);
 	}
 
 	/**
