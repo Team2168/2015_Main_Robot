@@ -30,6 +30,7 @@ public class DriveWithJoysticks extends Command {
 	 */
 	protected void execute() {
 		Robot.drivetrain.tankDrive(leftSpeed, rightSpeed);
+		System.out.println(leftSpeed + "," + rightSpeed);
 	}
 
 	/**
