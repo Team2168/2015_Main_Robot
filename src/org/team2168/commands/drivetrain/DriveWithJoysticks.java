@@ -10,8 +10,22 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DriveWithJoysticks extends Command {
 
+	Double leftStick;
+	Double rightStick;
+	
+	boolean driveWithJoystick;
+	
 	public DriveWithJoysticks() {
 		requires(Robot.drivetrain);
+		this.driveWithJoystick = true;
+	}
+	
+	public DriveWithJoysticks(Double leftStick, Double rightStick) {
+		requires(Robot.drivetrain);
+		this.leftStick = leftStick;
+		this.rightStick = rightStick;
+		
+		this.driveWithJoystick = false;
 	}
 
 	/**
@@ -24,8 +38,15 @@ public class DriveWithJoysticks extends Command {
 	 * Called repeatedly when this Command is scheduled to run
 	 */
 	protected void execute() {
-		Robot.drivetrain.tankDrive(OI.driverJoystick.getLeftStickRaw_Y(),
-				OI.driverJoystick.getRightStickRaw_Y());
+		if (!(driveWithJoystick)) {
+			Robot.drivetrain.tankDrive(this.leftStick, this.rightStick);
+		}else {
+			Robot.drivetrain.tankDrive(OI.driverJoystick.getLeftStickRaw_Y(), OI.driverJoystick.getRightStickRaw_Y());
+		}
+		//System.out.println("(" + leftStick + "," + rightStick + ")");
+		//System.out.println("(" + OI.driverJoystick.getLeftStickRaw_Y() + "," + OI.driverJoystick.getRightStickRaw_Y());
+		//Robot.drivetrain.tankDrive(-1.0,
+		//		1.9);
 	}
 
 	/**
