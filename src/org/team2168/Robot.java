@@ -43,12 +43,15 @@ public class Robot extends IterativeRobot {
     // Auto command objects
     Command autonomousCommand;
 
+    Command driveWithJoystick;
+    
+    
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
-       // drivetrain = Drivetrain.getInstance();
+        drivetrain = Drivetrain.getInstance();
         intake = Intake.getInstance();
         lift = Lift.getInstance();
         winch = Winch.getInstance();
@@ -103,6 +106,7 @@ public class Robot extends IterativeRobot {
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
         }
+        
     }
 
     /**

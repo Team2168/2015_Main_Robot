@@ -23,6 +23,7 @@ public class DriveWithJoysticks extends Command {
 	 * This method runs the first time the command is run
 	 */
 	protected void initialize() {
+
 	}
 
 	/**
