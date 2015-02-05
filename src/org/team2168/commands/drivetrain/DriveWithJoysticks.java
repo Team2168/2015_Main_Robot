@@ -15,11 +15,19 @@ public class DriveWithJoysticks extends Command {
 	
 	boolean driveWithJoystick;
 	
+	/**
+	 * Call the command with this constructor to run it with Joysticks
+	 */
 	public DriveWithJoysticks() {
 		requires(Robot.drivetrain);
 		this.driveWithJoystick = true;
 	}
 	
+	/**
+	 * Call the command with this constructor to run it without joysticks
+	 * @param leftStick
+	 * @param rightStick
+	 */
 	public DriveWithJoysticks(Double leftStick, Double rightStick) {
 		requires(Robot.drivetrain);
 		this.leftStick = leftStick;
