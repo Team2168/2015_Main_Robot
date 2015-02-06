@@ -11,6 +11,7 @@ public class SetLiftPosition extends Command {
 
 	double position;
 
+	
 	public SetLiftPosition(double position) {
 		this.position = position;
 		requires(Robot.lift);

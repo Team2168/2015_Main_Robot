@@ -1,6 +1,7 @@
 package org.team2168.commandgroups;
 
 import org.team2168.RobotMap;
+import org.team2168.commands.gripper.ReleaseGripper;
 import org.team2168.commands.intake.DisengageIntakeWheels;
 import org.team2168.commands.intake.EngageIntake;
 import org.team2168.commands.intake.EngageIntakeWheels;
@@ -35,7 +36,8 @@ public class IntakeTote extends CommandGroup {
         // arm.
 
     	addSequential(new DisableBrake());
-    	addSequential(new SetLiftPosition(RobotMap.LIFT_TOTE_COLLECT_HEIGHT));
+    	addSequential(new ReleaseGripper());
+    	addSequential(new SetLiftPosition(RobotMap.LIFT_ABOVE_TOTE_HEIGHT));
     	addSequential(new EnableBrake());
     	addSequential(new EngageIntake());
     	addSequential(new Intake1Tote());

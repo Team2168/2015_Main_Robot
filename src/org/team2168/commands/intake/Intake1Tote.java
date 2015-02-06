@@ -21,17 +21,12 @@ public class Intake1Tote extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(Robot.intake.isTotePresent()){
-    		Robot.intake.setIntakeSpeed(0);
-    	}
-    	else{
     		Robot.intake.setIntakeSpeed(1);
-    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return !Robot.intake.isTotePresent();
+        return Robot.intake.isTotePresent();
     }
 
     // Called once after isFinished returns true
