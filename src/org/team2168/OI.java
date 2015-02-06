@@ -6,6 +6,8 @@ import org.team2168.commands.intake.DisengageIntake;
 import org.team2168.commands.intake.DisengageIntakeWheels;
 import org.team2168.commands.intake.EngageIntake;
 import org.team2168.commands.intake.EngageIntakeWheels;
+import org.team2168.commands.lift.DisableBrake;
+import org.team2168.commands.lift.EnableBrake;
 import org.team2168.gamepads.F310;
 
 /**
@@ -48,6 +50,8 @@ public class OI {
         //TEST CONTROLLER BUTTON MAP///////////////////////////////////////////////
         testJoystick.ButtonA().whenPressed(new EngageGripper());
         testJoystick.ButtonB().whenPressed(new ReleaseGripper());
+        testJoystick.ButtonX().whenPressed(new EnableBrake());
+        testJoystick.ButtonY().whenPressed(new DisableBrake());
         testJoystick.ButtonLeftBumper().whenPressed(new EngageIntake());
         testJoystick.ButtonRightBumper().whenPressed(new DisengageIntake());
     }
