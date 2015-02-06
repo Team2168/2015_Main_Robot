@@ -98,7 +98,7 @@ public class RobotMap {
 	/*************************************************************************
 	 *                              LIFT PARAMETERS
 	 *************************************************************************/
-	//TODO: UPDTE THESE WITH CORRECT VALUES
+	//TODO: UPDATE THESE WITH CORRECT VALUES
 	private static final int liftPulsePerRotation = 256; //encoder ticks per rotation
 	private static final double liftGearRatio = 24.0/27.0; //ratio between wheel over encoder
 	private static final double liftWheelDiameter = 6;
@@ -111,7 +111,17 @@ public class RobotMap {
 	public static final int liftEncoderMinPeriod = 10;
 	public static final boolean liftEncoderReverse = false;
 	public static final int liftAvgEncoderVal = 5;
-
+	
+	//TODO Find correct potato height for the lift at the following positions:
+	//Height of lift where it is above the tote ready to lower onto it
+	public static final double LIFT_ABOVE_TOTE_HEIGHT = 5;
+	//Height of lift where it can engage potato to grab tote
+	public static final double LIFT_TOTE_ENGAGE_HEIGHT = 5;
+	//Height of lift where it can carry a tote and drive up to another one for pickup
+	public static final double LIFT_CARRYING_TOTE_HEIGHT = 5;
+	
+	
+	
 	public static final double LIFT_MOVING_SPEED = 0.5;
 
 

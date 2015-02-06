@@ -42,11 +42,18 @@ public class OI {
     public static F310 testJoystick;
     
     public OI() {
-    	//Joysticks////////////////////////////////////////////////////////////////
         driverJoystick = new F310(RobotMap.DRIVER_JOYSTICK);
         operatorJoystick = new F310(RobotMap.OPERATOR_JOYSTICK);
         testJoystickLeft = new F310(RobotMap.TEST_JOYSTICK);
         testJoystick = new F310(RobotMap.TEST_JOYSTICK);
+        
+        //DRIVER JOYSTICK BUTTON MAP///////////////////////////////////////////////
+        
+        
+        
+        
+        
+        
         //TEST CONTROLLER BUTTON MAP///////////////////////////////////////////////
         testJoystick.ButtonA().whenPressed(new EngageGripper());
         testJoystick.ButtonB().whenPressed(new ReleaseGripper());
