@@ -1,7 +1,13 @@
 package org.team2168.commandgroups;
 
+import org.team2168.RobotMap;
+import org.team2168.commands.intake.DisengageIntakeWheels;
 import org.team2168.commands.intake.EngageIntake;
 import org.team2168.commands.intake.EngageIntakeWheels;
+import org.team2168.commands.intake.Intake1Tote;
+import org.team2168.commands.lift.DisableBrake;
+import org.team2168.commands.lift.EnableBrake;
+import org.team2168.commands.lift.SetLiftPosition;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -28,6 +34,12 @@ public class IntakeTote extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
 
+    	addSequential(new DisableBrake());
+    	addSequential(new SetLiftPosition(RobotMap.LIFT_TOTE_COLLECT_HEIGHT));
+    	addSequential(new EnableBrake());
+    	addSequential(new EngageIntake());
+    	addSequential(new Intake1Tote());
+    	addSequential(new DisengageIntakeWheels());
     	
     }
 }

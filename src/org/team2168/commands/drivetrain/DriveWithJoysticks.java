@@ -51,10 +51,6 @@ public class DriveWithJoysticks extends Command {
 		}else {
 			Robot.drivetrain.tankDrive(OI.driverJoystick.getLeftStickRaw_Y(), OI.driverJoystick.getRightStickRaw_Y());
 		}
-		//System.out.println("(" + leftStick + "," + rightStick + ")");
-		//System.out.println("(" + OI.driverJoystick.getLeftStickRaw_Y() + "," + OI.driverJoystick.getRightStickRaw_Y());
-		//Robot.drivetrain.tankDrive(-1.0,
-		//		1.9);
 	}
 
 	/**
