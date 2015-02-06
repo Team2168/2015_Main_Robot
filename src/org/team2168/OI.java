@@ -1,5 +1,7 @@
 package org.team2168;
 
+import org.team2168.commandgroups.IntakeTote;
+import org.team2168.commandgroups.LiftTote;
 import org.team2168.commands.gripper.EngageGripper;
 import org.team2168.commands.gripper.ReleaseGripper;
 import org.team2168.commands.intake.DisengageIntake;
@@ -61,6 +63,8 @@ public class OI {
         testJoystick.ButtonY().whenPressed(new DisableBrake());
         testJoystick.ButtonLeftBumper().whenPressed(new EngageIntake());
         testJoystick.ButtonRightBumper().whenPressed(new DisengageIntake());
+        testJoystick.ButtonLeftStick().whenPressed(new IntakeTote());
+        testJoystick.ButtonRightStick().whenPressed(new LiftTote());
     }
     
 
