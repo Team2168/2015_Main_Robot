@@ -112,10 +112,10 @@ public class RobotMap {
 	public static final boolean liftEncoderReverse = false;
 	public static final int liftAvgEncoderVal = 5;
 	
-	//TODO Find correct potato height for the lift at the following positions:
+	//TODO Find correct height for the lift at the following positions:
 	//Height of lift where it is above the tote ready to lower onto it
 	public static final double LIFT_ABOVE_TOTE_HEIGHT = 5;
-	//Height of lift where it can engage potato to grab tote
+	//Height of lift where it can engage to grab tote
 	public static final double LIFT_TOTE_ENGAGE_HEIGHT = 5;
 	//Height of lift where it can carry a tote and drive up to another one for pickup
 	public static final double LIFT_CARRYING_TOTE_HEIGHT = 5;
