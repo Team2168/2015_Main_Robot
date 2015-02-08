@@ -1,5 +1,6 @@
 package org.team2168;
 
+import org.team2168.replay.Replay;
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.Gripper;
 import org.team2168.subsystems.Intake;
@@ -27,6 +28,10 @@ public class Robot extends IterativeRobot {
 
     public static OI oi;
 
+    //Replay file data
+    public static boolean endWrite;
+    public static boolean writeComplete;
+    
     // Subsystem objects
     public static Drivetrain drivetrain;
     public static Intake intake;
@@ -35,6 +40,9 @@ public class Robot extends IterativeRobot {
     public static Gripper gripper;
     public static Pneumatics pneumatics;
 
+    //Replay object
+    public static Replay replay;
+    
     //SmartDash printer
 	ConsolePrinter printer;
     
@@ -42,7 +50,7 @@ public class Robot extends IterativeRobot {
 
     // Auto command objects
     Command autonomousCommand;
-
+    
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -57,7 +65,9 @@ public class Robot extends IterativeRobot {
         
         accel = new BuiltInAccelerometer();
 
-		
+		//Create instance of replay object
+        replay = new Replay();
+        
         //create thread to write dashboard variables
 		printer = new ConsolePrinter(20);
 		printer.startThread();
@@ -74,7 +84,6 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().run();
         SmartDashboard.putNumber("Tote Distance(inches)", Robot.intake.getToteDistance());
     }
-
     /**
      * This method initializes the autonomous commands
      */
@@ -103,6 +112,7 @@ public class Robot extends IterativeRobot {
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
         }
+        endWrite = true;
     }
 
     /**
@@ -110,7 +120,10 @@ public class Robot extends IterativeRobot {
      * to reset subsystems before shutting down.
      */
     public void disabledInit() {
-    	
+    	if (endWrite && !writeComplete) {
+    		replay.end();
+    		writeComplete = true;
+    	}
     }
 
     /**
@@ -118,7 +131,8 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        //smartdashboard.putnumber
+        replay.flushDataToFile(drivetrain.getMotorData(), drivetrain.getEncodersData(),
+        		drivetrain.getHeading());
     }
 
     /**

@@ -26,6 +26,8 @@ public class Drivetrain extends Subsystem {
 	private SpeedController leftMotor3;
 	private SpeedController rightMotor3;
 	
+	private int motorCount = 6;	//This is zero based
+	
 	public AverageEncoder drivetrainLeftEncoder;
 	public AverageEncoder drivetrainRightEncoder;
 	public FalconGyro drivetrainGyro;
@@ -244,7 +246,6 @@ public class Drivetrain extends Subsystem {
 	public double getHeading() {
 		return drivetrainGyro.getAngle();
 	}
-
 	/**
 	 * Reset robot heading to zero.
 	 */
@@ -264,5 +265,24 @@ public class Drivetrain extends Subsystem {
     {
     	return !practiceBot.get();
     }
+    
+    public double[] getMotorData() {
+    	double[] retValue = new double[motorCount];
+    	retValue[0] = rightMotor1.get();
+    	retValue[1] = rightMotor2.get();
+    	retValue[2] = rightMotor3.get();
+    	retValue[3] = leftMotor1.get();
+    	retValue[4] = leftMotor2.get();
+    	retValue[5] = leftMotor3.get();
+    	return retValue;
+    }
+    
+    public double[] getEncodersData() {
+    	double[] retValue = new double[2];
+    	retValue[0] = drivetrainLeftEncoder.getPos();
+    	retValue[1] = drivetrainRightEncoder.getPos();
+    	return retValue;
+    }
+    
 }
 
