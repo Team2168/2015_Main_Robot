@@ -1,5 +1,7 @@
 package org.team2168;
 
+import org.team2168.commands.gripper.EngageGripper;
+import org.team2168.commands.lift.DriveLiftToSetPosition;
 import org.team2168.gamepads.F310;
 
 
@@ -38,8 +40,13 @@ public class OI {
         operatorJoystick = new F310(RobotMap.OPERATOR_JOYSTICK);
         testJoystickLeft = new F310(RobotMap.TEST_JOYSTICK);
         
-
- 
+    	/*************************************************************************
+    	 *                      OPERATOR POTATO BUTTON LAYOUT
+    	 *************************************************************************/
+        operatorJoystick.ButtonA().whenPressed(new DriveLiftToSetPosition(RobotMap.MIN_LIFT_HEIGHT));
+        operatorJoystick.ButtonY().whenPressed(new DriveLiftToSetPosition(RobotMap.LIFT_ABOVE_TOTE));
+        operatorJoystick.ButtonRightDPad().whenPressed(new EngageGripper());
+        operatorJoystick.ButtonLeftDPad().whenPressed(new ReleaseGripper());
     }
 
     // Run the command while the button is being held down and interrupt it once

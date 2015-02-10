@@ -112,6 +112,9 @@ public class RobotMap {
 	public static final int liftAvgEncoderVal = 5;
 
 	public static final double LIFT_MOVING_SPEED = 0.5;
+	
+	//TODO find height of lift in order to be above a tote with another being carried
+	public static final double LIFT_ABOVE_TOTE = 1;
 
 
 	/*************************************************************************
