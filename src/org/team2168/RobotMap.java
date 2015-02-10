@@ -1,6 +1,8 @@
 package org.team2168;
 
 import org.team2168.PIDController.sensors.AverageEncoder;
+import org.team2168.PIDControllers.PIDPosition;
+
 
 import edu.wpi.first.wpilibj.CounterBase;
 
@@ -106,6 +108,7 @@ public class RobotMap {
 	public static final boolean liftEncoderReverse = false;
 	public static final int liftAvgEncoderVal = 5;
 
+
 	//TODO Find correct height for the lift at the following positions:
 	//Height of lift where it is above the tote ready to lower onto it
 	public static final double LIFT_ABOVE_TOTE_HEIGHT = 5;
@@ -120,6 +123,8 @@ public class RobotMap {
 
 	//TODO: find height of lift in order to be above a tote with another being carried
 	public static final double LIFT_ABOVE_TOTE = 20.0; //inches
+
+	
 
 	/*************************************************************************
 	 *                            MISC PARAMETERS
@@ -157,6 +162,16 @@ public class RobotMap {
 	public static final double driveTrainRightPositionP = 0.002;
 	public static final double driveTrainRightPositionI = 0.0001412646174233; 
 	public static final double driveTrainRightPositionD = 0.0074778888124088;
+	
+	public static final double liftPUp = 0.002;
+	public static final double liftIUp = 0.0001;
+	public static final double liftDUp = 0.0001;
+	
+	public static final double liftPDw = 0.002;
+	public static final double liftIDw = 0.0001;
+	public static final double liftDDw = 0.0001;
+	
+	public static final long liftPIDPeriod = 100; //100ms
 	
 	/****************************************************************
 	 *                TCP Servers  (ONLY FOR DEBUGGING)             *

@@ -2,6 +2,7 @@ package org.team2168.subsystems;
 
 import org.team2168.RobotMap;
 import org.team2168.PIDController.sensors.AverageEncoder;
+import org.team2168.PIDControllers.PIDPosition;
 import org.team2168.commands.lift.LiftWithJoystick;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -16,11 +17,13 @@ public class Lift extends Subsystem {
 
 	private static Lift instance = null;
 	private Talon intakeMotor;
-	private AverageEncoder liftEncoder;
 	private DoubleSolenoid liftBrake;
 	private double currentPosition;
 	private static final double DESTINATION_TOL = 1.0; //inches
 
+	public AverageEncoder liftEncoder;
+	public static PIDPosition liftController;
+	
 	/**
 	 * A private constructor to prevent multiple instances of the subsystem from
 	 * being created.
@@ -33,8 +36,16 @@ public class Lift extends Subsystem {
 				RobotMap.liftEncoderReverse,
 				RobotMap.liftEncodingType, RobotMap.liftSpeedReturnType,
 				RobotMap.liftPosReturnType, RobotMap.liftAvgEncoderVal);
+		
 		liftBrake = new DoubleSolenoid(RobotMap.LIFT_BRAKE_DOUBLE_SOLENOID_FORWARD,
 				RobotMap.LIFT_BRAKE_DOUBLE_SOLENOID_REVERSE);
+		
+		liftController = new PIDPosition("LiftPID", RobotMap.liftPUp, 
+				RobotMap.liftIUp, RobotMap.liftDUp, 
+				RobotMap.liftPDw, RobotMap.liftIDw, 
+				RobotMap.liftDDw, liftEncoder,
+    			RobotMap.liftPIDPeriod);
+		
 	}
 
 	/**
