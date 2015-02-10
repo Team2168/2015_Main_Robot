@@ -1,6 +1,8 @@
 package org.team2168;
 
 import org.team2168.commands.gripper.EngageGripper;
+import org.team2168.commands.gripper.ReleaseGripper;
+import org.team2168.commands.intake.EngageIntake;
 import org.team2168.commands.lift.DriveLiftToSetPosition;
 import org.team2168.gamepads.F310;
 
@@ -47,6 +49,7 @@ public class OI {
         operatorJoystick.ButtonY().whenPressed(new DriveLiftToSetPosition(RobotMap.LIFT_ABOVE_TOTE));
         operatorJoystick.ButtonRightDPad().whenPressed(new EngageGripper());
         operatorJoystick.ButtonLeftDPad().whenPressed(new ReleaseGripper());
+        operatorJoystick.ButtonRightTrigger().whenPressed(new EngageIntake());
     }
 
     // Run the command while the button is being held down and interrupt it once
