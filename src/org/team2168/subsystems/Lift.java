@@ -22,7 +22,7 @@ public class Lift extends Subsystem {
 	private static final double DESTINATION_TOL = 1.0; //inches
 
 	public AverageEncoder liftEncoder;
-	public static PIDPosition liftController;
+	public PIDPosition liftController;
 	
 	/**
 	 * A private constructor to prevent multiple instances of the subsystem from
