@@ -1033,7 +1033,7 @@ public class PIDPosition implements TCPMessageInterface {
 			// if current value is within exceptable range make control,
 			// we stop integrating error
 			if (Math.abs(err) <= acceptErrorDiff) {
-				co = 0; // stops wheel at position, assumes no mechanical load
+//				co = 0; // stops wheel at position, assumes no mechanical load
 				olderrsum = 0; // stop accumulating error
 
 				 //System.out.println("three");
