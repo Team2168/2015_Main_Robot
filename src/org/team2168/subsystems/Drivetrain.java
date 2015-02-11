@@ -112,9 +112,9 @@ public class Drivetrain extends Subsystem {
 		//DriveStraight Controller
 				rotateController = new PIDPosition(
 		    			"RotationController", 
-		    			RobotMap.driveTrainLeftPositionP,
-		    			RobotMap.driveTrainLeftPositionI, 
-		    			RobotMap.driveTrainLeftPositionD, 
+		    			RobotMap.rotatePositionP,
+		    			RobotMap.rotatePositionI, 
+		    			RobotMap.rotatePositionD, 
 		    			gyroSPI,
 		    			RobotMap.driveTrainPIDPeriod);
 				

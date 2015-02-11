@@ -58,8 +58,9 @@ public class Robot extends IterativeRobot {
 
 		accel = new BuiltInAccelerometer();
 
-		//create thread to write dashboard variables
-		printer = new ConsolePrinter(20);
+
+        //create thread to write dashboard variables
+		printer = new ConsolePrinter(100);
 		printer.startThread();
 
 		oi = new OI();
@@ -104,13 +105,15 @@ public class Robot extends IterativeRobot {
 		}
 	}
 
-	/**
-	 * This function is called when the disabled button is hit. You can use it
-	 * to reset subsystems before shutting down.
-	 */
-	public void disabledInit() {
 
-	}
+    /**
+     * This function is called when the disabled button is hit. You can use it
+     * to reset subsystems before shutting down.
+     */
+    public void disabledInit() {
+    	Robot.drivetrain.gyroSPI.calibrate();
+    	Robot.drivetrain.gyroAnalog.reInitGyro();
+    }
 
 	/**
 	 * This function is called periodically during operator control
