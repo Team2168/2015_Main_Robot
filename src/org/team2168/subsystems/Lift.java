@@ -178,12 +178,25 @@ public class Lift extends Subsystem {
 	}
 
 	/**
-	 * Gets the sate of the current pneumatic brake
+	 * Gets the state of the current pneumatic brake
 	 *
 	 * @return True when brake is enabled, False when disabled
 	 */
 	public boolean isBrakeEnabled() {
 		if (liftBrake.get() == Value.kForward) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	/**
+	 * Gets the state of the current pneumatic brake
+	 *
+	 * @return True when potato brake is disabled, False when enabled
+	 */
+	public boolean isBrakeDisabled() {
+		if (liftBrake.get() == Value.kReverse) {
 			return true;
 		} else {
 			return false;
