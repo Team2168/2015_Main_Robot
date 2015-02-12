@@ -10,7 +10,7 @@ import org.team2168.commands.intake.EngageIntake;
 import org.team2168.commands.intake.EngageIntakeWheels;
 import org.team2168.commands.lift.DisableBrake;
 import org.team2168.commands.lift.EnableBrake;
-import org.team2168.gamepads.F310;
+import org.team2168.utils.F310;
 
 /**
  * This class is the glue that binds the controls on the physical operator

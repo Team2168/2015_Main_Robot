@@ -2,10 +2,7 @@ package org.team2168;
 
 import org.team2168.PIDController.sensors.AverageEncoder;
 
-
 import edu.wpi.first.wpilibj.CounterBase;
-import edu.wpi.first.wpilibj.buttons.Button;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -17,8 +14,6 @@ public class RobotMap {
 	/*************************************************************************
 	 *                              WIRING MAP
 	 *************************************************************************/
-	
-	public final static int debug = 1;
 
 	//PWM Channels/////////////////////////////////////////////////////////////
 	public final static int DRIVETRAIN_RIGHT_MOTOR_1 = 0;
@@ -27,8 +22,6 @@ public class RobotMap {
 	public final static int DRIVETRAIN_LEFT_MOTOR_1 = 3;
 	public final static int DRIVETRAIN_LEFT_MOTOR_2 = 4;
 	public final static int DRIVETRAIN_LEFT_MOTOR_3 = 5;
-
-
 	public final static int INTAKE_LEFT_MOTOR = 6;
 	public final static int INTAKE_RIGHT_MOTOR = 7;
 	public final static int LIFT_MOTOR = 8;
@@ -56,8 +49,8 @@ public class RobotMap {
 	public final static int WINCH_ENCODER_B = 7;
 	public final static int LEFT_TOTE_SWITCH = 8;
 	public final static int RIGHT_TOTE_SWITCH = 9;
-	
 	public static final int PracticeBotJumper = 24; //on MXP
+
 
 	//Analog Input Channels////////////////////////////////////////////////////
 	public final static int DRIVE_GYRO = 0;
@@ -111,7 +104,7 @@ public class RobotMap {
 	public static final int liftEncoderMinPeriod = 10;
 	public static final boolean liftEncoderReverse = false;
 	public static final int liftAvgEncoderVal = 5;
-	
+
 	//TODO Find correct height for the lift at the following positions:
 	//Height of lift where it is above the tote ready to lower onto it
 	public static final double LIFT_ABOVE_TOTE_HEIGHT = 5;
@@ -119,10 +112,10 @@ public class RobotMap {
 	public static final double LIFT_TOTE_ENGAGE_HEIGHT = 5;
 	//Height of lift where it can carry a tote and drive up to another one for pickup
 	public static final double LIFT_CARRYING_TOTE_HEIGHT = 5;
-	
-	
-	
+
 	public static final double LIFT_MOVING_SPEED = 0.5;
+	public static final int MAX_LIFT_HEIGHT = 76;
+	public static final int MIN_LIFT_HEIGHT = 0;
 
 
 	/*************************************************************************
@@ -133,6 +126,7 @@ public class RobotMap {
 	public final static double PRESS_SENSOR_HIGH_VOLTAGE = 4.5;
 	public final static double PRESS_SENSOR_HIGH_PRESSURE = 150.0;
 
-	public final static int MAX_LIFT_HEIGHT = 76;
-	public final static int MIN_LIFT_HEIGHT = 0;
+	public final static double INTAKE_WHEEL_SPEED = 0.5;
+
+	public final static boolean PRINT_SD_DEBUG_DATA = true;
 }
