@@ -6,7 +6,7 @@ import org.team2168.RobotMap;
 import edu.wpi.first.wpilibj.command.Command;
 
 
-public class AutoDrivePIDXDistance extends Command{
+public class DriveXDistance extends Command{
 	private double distanceGoal;
 	private double speed;
 	private double endDistance;
@@ -36,19 +36,19 @@ public class AutoDrivePIDXDistance extends Command{
 	 * Move the drivetrain forward the specified distance.
 	 * @param distance in inches
 	 */
-	public AutoDrivePIDXDistance(double distance) {
+	public DriveXDistance(double distance) {
 		requires(Robot.drivetrain);
 		this.distanceGoal = distance;
 		this.speed = RobotMap.autoNormalSpeed;
 		this.powerShift = 1;
 	}
 	
-	public AutoDrivePIDXDistance(double distance, double speed) {
+	public DriveXDistance(double distance, double speed) {
 		this(distance);
 		this.speed = speed;
 	}
 	
-	public AutoDrivePIDXDistance(double distance, double speed, double powerShift) {
+	public DriveXDistance(double distance, double speed, double powerShift) {
 		this(distance, speed);
 		this.powerShift = powerShift;
 	}

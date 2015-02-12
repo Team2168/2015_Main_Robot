@@ -11,7 +11,7 @@ import org.team2168.commands.intake.EngageIntake;
 import org.team2168.commands.lift.DisableBrake;
 import org.team2168.commands.lift.EnableBrake;
 import org.team2168.utils.F310;
-import org.team2168.commands.drivetrain.AutoDrivePIDXDistance;
+import org.team2168.commands.drivetrain.DriveXDistance;
 
 
 /**
@@ -48,7 +48,7 @@ public class OI {
 
 
  
-        testJoystickLeft.ButtonRightBumper().whenPressed(new AutoDrivePIDXDistance(180,0.3,-1.20));
+        testJoystickLeft.ButtonRightBumper().whenPressed(new DriveXDistance(180,0.3,-1.20));
     
 
 
