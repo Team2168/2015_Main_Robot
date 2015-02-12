@@ -51,13 +51,7 @@ public class ConsolePrinter {
 	    	SmartDashboard.putNumber("Right Encoder Distance:",Drivetrain.getInstance().getRightPosition());
 	    	SmartDashboard.putBoolean("isPracticeBot", Drivetrain.getInstance().isPracticeBot());
 	    	
-	    	
-	    	SmartDashboard.putNumber("Accel X:", Robot.accel.getX());
-	    	SmartDashboard.putNumber("Accel Y:", Robot.accel.getY());
-	    	SmartDashboard.putNumber("Accel Z:", Robot.accel.getZ());
-	    	
-	    	log.println(Robot.drivetrain.gyroSPI.getDeltatime() + "\t" + Robot.drivetrain.gyroSPI.getRate() + "\t" + Robot.drivetrain.gyroSPI.getAngle() );
-	    	log.flush();
+	    	log.println(Robot.drivetrain.gyroSPI.getDeltatime() + "\t" + Robot.drivetrain.gyroSPI.getRate() + "\t" + Robot.drivetrain.gyroSPI.getAngle() );	    	log.flush();
 	    	SmartDashboard.putNumber("GYRO DeltTime:", Robot.drivetrain.gyroSPI.getDeltatime());
 	    	SmartDashboard.putNumber("GYRO Rate:", Robot.drivetrain.gyroSPI.getRate());
 	    	SmartDashboard.putNumber("GYRO Angle SPI:", Robot.drivetrain.gyroSPI.getAngle());
