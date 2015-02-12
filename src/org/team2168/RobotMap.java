@@ -86,6 +86,7 @@ public class RobotMap {
 	public static final boolean rightDriveTrainEncoderReverse = true;
 	public static final int driveAvgEncoderVal = 5;
 	public static final double minDriveSpeed =  0.2;
+	public static final double autoNormalSpeed = 0.5;
 
 
 	/*************************************************************************
@@ -129,6 +130,45 @@ public class RobotMap {
 	public final static double PRESS_SENSOR_HIGH_PRESSURE = 150.0;
 
 	public final static double INTAKE_WHEEL_SPEED = 0.5;
-
 	public final static boolean PRINT_SD_DEBUG_DATA = true;
+	
+	/*************************************************************************
+	 *                            PID Parameters 
+	 *************************************************************************/
+	//period to run PID loops on drive train
+	public static final long driveTrainPIDPeriod = 100;//100ms loop
+	public static final int drivetrainPIDArraySize = 50;
+
+	//PID Gains for Left & Right Speed and Position
+	//Bandwidth =
+	//Phase Margin = 
+	public static final double driveTrainLeftSpeedP =  0.002;
+	public static final double driveTrainLeftSpeedI =  0.0001; 
+	public static final double driveTrainLeftSpeedD =  0.0001;
+
+	public static final double driveTrainRightSpeedP = 0.002;
+	public static final double driveTrainRightSpeedI = 0.0001;  
+	public static final double driveTrainRightSpeedD = 0.0001;
+
+	public static final double driveTrainLeftPositionP = 0.002;
+	public static final double driveTrainLeftPositionI = 0.0001412646174233;  
+	public static final double driveTrainLeftPositionD = 0.0074778888124088;
+
+	public static final double driveTrainRightPositionP = 0.002;
+	public static final double driveTrainRightPositionI = 0.0001412646174233; 
+	public static final double driveTrainRightPositionD = 0.0074778888124088;
+	
+	/****************************************************************
+	 *                TCP Servers  (ONLY FOR DEBUGGING)             *
+	 ****************************************************************/
+	public static final int TCPServerRightDrivetrainPos = 1180;
+	public static final int TCPServerRightDrivetrainSpeed = 1181;
+	public static final int TCPServerLeftDrivetrainPos = 1182;
+	public static final int TCPServerLeftDrivetrainSpeed = 1183;
+	public static final int TCPServerRotateController = 1184;
+	public static final int TCPServerShooterSpeedAft = 1185;
+	public static final int TCPServerShooterSpeedFwd = 1186;
+	public static final int TCPServerArmPos = 1187;
+	
+
 }

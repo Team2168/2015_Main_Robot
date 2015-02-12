@@ -1,5 +1,6 @@
 package org.team2168;
 
+
 import org.team2168.commandgroups.DriveLiftToSetPosition;
 import org.team2168.commandgroups.IntakeTote;
 import org.team2168.commandgroups.LiftTote;
@@ -10,6 +11,8 @@ import org.team2168.commands.intake.EngageIntake;
 import org.team2168.commands.lift.DisableBrake;
 import org.team2168.commands.lift.EnableBrake;
 import org.team2168.utils.F310;
+import org.team2168.commands.drivetrain.AutoDrivePIDXDistance;
+
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -42,6 +45,11 @@ public class OI {
 		// drive the intake at variable speeds send a variable speed to the intake wheels.
 		//operatorJoystick.ButtonRightTrigger().whileHeld(new ReverseIntakeWheels());
 		//operatorJoystick.ButtonLeftTrigger().whileHeld(new ForwardIntakeWheels());
+
+
+ 
+        testJoystickLeft.ButtonRightBumper().whenPressed(new AutoDrivePIDXDistance(180,0.3,-1.20));
+    
 
 
 		//TEST CONTROLLER BUTTON MAP///////////////////////////////////////////////
