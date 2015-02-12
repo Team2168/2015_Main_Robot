@@ -51,7 +51,8 @@ public class ConsolePrinter {
 	    	SmartDashboard.putNumber("Right Encoder Distance:",Drivetrain.getInstance().getRightPosition());
 	    	SmartDashboard.putBoolean("isPracticeBot", Drivetrain.getInstance().isPracticeBot());
 	    	
-	    	log.println(Robot.drivetrain.gyroSPI.getDeltatime() + "\t" + Robot.drivetrain.gyroSPI.getRate() + "\t" + Robot.drivetrain.gyroSPI.getAngle() );	    	log.flush();
+	    	log.println(Robot.drivetrain.gyroSPI.getDeltatime() + "\t" + Robot.drivetrain.gyroSPI.getRate() + "\t" + Robot.drivetrain.gyroSPI.getAngle() );
+	    	log.flush();
 	    	SmartDashboard.putNumber("GYRO DeltTime:", Robot.drivetrain.gyroSPI.getDeltatime());
 	    	SmartDashboard.putNumber("GYRO Rate:", Robot.drivetrain.gyroSPI.getRate());
 	    	SmartDashboard.putNumber("GYRO Angle SPI:", Robot.drivetrain.gyroSPI.getAngle());
@@ -67,6 +68,14 @@ public class ConsolePrinter {
 	    	SmartDashboard.putNumber("Accel X:", Robot.accel.getX());
 	    	SmartDashboard.putNumber("Accel Y:", Robot.accel.getY());
 	    	SmartDashboard.putNumber("Accel Z:", Robot.accel.getZ());
+	    	
+	    	SmartDashboard.putNumber("DTRight1MotorVoltage", Robot.drivetrain.getRight1MotorVoltage());
+	    	SmartDashboard.putNumber("DTRight2MotorVoltage", Robot.drivetrain.getRight2MotorVoltage());
+	    	SmartDashboard.putNumber("DTRight3MotorVoltage", Robot.drivetrain.getRight3MotorVoltage());
+	    	
+	    	SmartDashboard.putNumber("DTLeft1MotorVoltage", Robot.drivetrain.getLeft1MotorVoltage());
+	    	SmartDashboard.putNumber("DTLeft2MotorVoltage", Robot.drivetrain.getLeft2MotorVoltage());
+	    	SmartDashboard.putNumber("DTLeft3MotorVoltage", Robot.drivetrain.getLeft3MotorVoltage());
 
 		}
 	}

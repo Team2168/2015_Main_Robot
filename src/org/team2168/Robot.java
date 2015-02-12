@@ -8,6 +8,7 @@ import org.team2168.subsystems.Lift;
 import org.team2168.subsystems.Pneumatics;
 import org.team2168.subsystems.Winch;
 import org.team2168.utils.ConsolePrinter;
+import org.team2168.utils.PowerDistribution;
 
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -34,9 +35,12 @@ public class Robot extends IterativeRobot {
 	public static Gripper gripper;
 	public static Pneumatics pneumatics;
 
+	//Power Monitor
+	public static PowerDistribution pdp;
+	
 	//SmartDash printer
 	ConsolePrinter printer;
-
+	
 	public static BuiltInAccelerometer accel;
 
 	// Auto command objects
@@ -57,10 +61,12 @@ public class Robot extends IterativeRobot {
 		pneumatics = Pneumatics.getInstance();
 
 		accel = new BuiltInAccelerometer();
-
+		
+		pdp = new PowerDistribution(RobotMap.PDPThreadPeriod);
+		pdp.startThread();
 
         //create thread to write dashboard variables
-		printer = new ConsolePrinter(100);
+		printer = new ConsolePrinter(RobotMap.SmartDashThreadPeriod);
 		printer.startThread();
 
 		oi = new OI();

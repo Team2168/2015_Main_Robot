@@ -27,6 +27,18 @@ public class RobotMap {
 	public final static int INTAKE_RIGHT_MOTOR = 7;
 	public final static int LIFT_MOTOR = 8;
 	public final static int WINCH_MOTOR = 9;
+	
+	//PDP Channels/////////////////////////////////////////////////////////////
+	public final static int DRIVETRAIN_RIGHT_MOTOR_1_PDP = 0;
+	public final static int DRIVETRAIN_RIGHT_MOTOR_2_PDP = 1;
+	public final static int DRIVETRAIN_RIGHT_MOTOR_3_PDP = 2;
+	public final static int DRIVETRAIN_LEFT_MOTOR_1_PDP = 13;
+	public final static int DRIVETRAIN_LEFT_MOTOR_2_PDP = 14;
+	public final static int DRIVETRAIN_LEFT_MOTOR_3_PDP = 15;
+	public final static int INTAKE_LEFT_MOTOR_PDP = 6;
+	public final static int INTAKE_RIGHT_MOTOR_PDP = 7;
+	public final static int LIFT_MOTOR_PDP = 8;
+	public final static int WINCH_MOTOR_PDP = 9;
 
 
 	//Solenoid Channels////////////////////////////////////////////////////////
@@ -139,10 +151,12 @@ public class RobotMap {
 
 	public final static double INTAKE_WHEEL_SPEED = 0.5;
 	public final static boolean PRINT_SD_DEBUG_DATA = true;
+	public final static long SmartDashThreadPeriod = 100; //ms
 	
 	/*************************************************************************
 	 *                            Electrical Parameters 
 	 *************************************************************************/
+	public final static long PDPThreadPeriod = 50; //ms
 	public final static double WARNING_CURRENT_LIMIT = 35;  //amps
 	public final static double STALL_CURRENT_LIMIT = 80;  //amps
 	public final static double MAIN_BREAKER_TRIP_TEMP = 150;  //farenheit

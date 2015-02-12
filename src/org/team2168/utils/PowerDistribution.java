@@ -67,10 +67,10 @@ public class PowerDistribution {
 		}
 		
 		
-		totalCurrent = pdp.getTotalCurrent();
-		totalEnergy = pdp.getTotalEnergy();
-		temp = pdp.getTemperature();
-		totalPower = pdp.getTotalPower();
+//		totalCurrent = pdp.getTotalCurrent();
+//		totalEnergy = pdp.getTotalEnergy();
+//		temp = pdp.getTemperature();
+//		totalPower = pdp.getTotalPower();
 		
 	}
 

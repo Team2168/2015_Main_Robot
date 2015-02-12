@@ -1,6 +1,9 @@
 package org.team2168.subsystems;
 
+
+
 import org.team2168.OI;
+import org.team2168.Robot;
 import org.team2168.RobotMap;
 import org.team2168.PIDController.sensors.ADXRS453Gyro;
 import org.team2168.PIDController.sensors.AverageEncoder;
@@ -49,6 +52,14 @@ public class Drivetrain extends Subsystem {
 	//declare speed controllers
 	public PIDSpeed rightSpeedController;
 	public PIDSpeed leftSpeedController;
+	
+	//output voltage...ONLY FOR DEBUGGING PURPOSES, SHOULD BE REMOVED FOR COMPITITION
+	private volatile double leftMotor1Voltage;
+	private volatile double leftMotor2Voltage;
+	private volatile double leftMotor3Voltage;
+	private volatile double rightMotor1Voltage;
+	private volatile double rightMotor2Voltage;
+	private volatile double rightMotor3Voltage;
 	
 	//declare TCP severs...ONLY FOR DEBUGGING PURPOSES, SHOULD BE REMOVED FOR COMPITITION
 	TCPSocketSender TCPrightPosController;
@@ -183,6 +194,13 @@ public class Drivetrain extends Subsystem {
 		    	TCProtateController.start();
 		    	
 
+		    	leftMotor1Voltage = 0;
+		    	leftMotor2Voltage = 0;
+		    	leftMotor3Voltage = 0;
+		    	rightMotor1Voltage = 0;
+		    	rightMotor2Voltage = 0;
+		    	rightMotor3Voltage = 0;
+		    	
 		
 		
 	}
@@ -206,6 +224,62 @@ public class Drivetrain extends Subsystem {
 		//		OI.driverJoystick.getRightStickRaw_Y()));
 		setDefaultCommand(new DriveWithJoysticks(-1.0, 0.0));
 	}
+	
+	/**
+	 * Returns the last commanded voltage to the motor
+	 * @return double in volts representing last commanded voltage to motor
+	 */
+	public double getLeft1MotorVoltage()
+	{
+		return leftMotor1Voltage;
+	}
+	
+	/**
+	 * Returns the last commanded voltage to the motor
+	 * @return double in volts representing last commanded voltage to motor
+	 */
+	public double getLeft2MotorVoltage()
+	{
+		return leftMotor2Voltage;
+	}
+	
+	/**
+	 * Returns the last commanded voltage to the motor
+	 * @return double in volts representing last commanded voltage to motor
+	 */
+	public double getLeft3MotorVoltage()
+	{
+		return leftMotor3Voltage;
+	}
+	
+	/**
+	 * Returns the last commanded voltage to the motor
+	 * @return double in volts representing last commanded voltage to motor
+	 */
+	public double getRight1MotorVoltage()
+	{
+		return rightMotor1Voltage;
+	}
+	
+	/**
+	 * Returns the last commanded voltage to the motor
+	 * @return double in volts representing last commanded voltage to motor
+	 */
+	public double getRight2MotorVoltage()
+	{
+		return rightMotor2Voltage;
+	}
+	
+	/**
+	 * Returns the last commanded voltage to the motor
+	 * @return double in volts representing last commanded voltage to motor
+	 */
+	public double getRight3MotorVoltage()
+	{
+		return rightMotor3Voltage;
+	}
+	
+	
 
 	/**
 	 * Drive the first left motor in the chassis.
@@ -213,6 +287,7 @@ public class Drivetrain extends Subsystem {
 	 */
 	public void driveLeft1(double speed) {
 		leftMotor1.set(speed);
+		leftMotor1Voltage = Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP) * speed;
 	}
 
 	/**
@@ -221,6 +296,7 @@ public class Drivetrain extends Subsystem {
 	 */
 	public void driveLeft2(double speed) {
 		leftMotor2.set(speed);
+		leftMotor2Voltage = Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP) * speed;
 	}
 
 	/**
@@ -229,6 +305,7 @@ public class Drivetrain extends Subsystem {
 	 */
 	public void driveLeft3(double speed) {
 		leftMotor3.set(speed);
+		leftMotor3Voltage = Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_3_PDP) * speed;
 	}
 
 	/**
@@ -247,6 +324,7 @@ public class Drivetrain extends Subsystem {
 	 */
 	public void driveRight1(double speed) {
 		rightMotor1.set(speed);
+		rightMotor1Voltage = Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP) * speed;
 	}
 
 	/**
@@ -255,6 +333,7 @@ public class Drivetrain extends Subsystem {
 	 */
 	public void driveRight2(double speed) {
 		rightMotor2.set(speed);
+		rightMotor2Voltage = Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP) * speed;
 	}
 
 	/**
@@ -263,6 +342,7 @@ public class Drivetrain extends Subsystem {
 	 */
 	public void driveRight3(double speed) {
 		rightMotor3.set(speed);
+		rightMotor3Voltage = Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_3_PDP) * speed;
 	}
 
 	/**
