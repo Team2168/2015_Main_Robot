@@ -43,7 +43,6 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		oi = new OI();
 		// instantiate the command used for the autonomous period
-		//autonomousCommand = new ExampleCommand();
 	}
 
 	/**
