@@ -27,7 +27,8 @@ public class WinchWithJoystick extends Command {
         Robot.winch.drive(OI.operatorJoystick.getRightStickRaw_Y());
     }
 
-    /**
+    
+   /**
      * Make this return true when this Command no longer needs to run execute()
      */
     protected boolean isFinished() {
