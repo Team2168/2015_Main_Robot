@@ -3,7 +3,6 @@ package org.team2168;
 import org.team2168.PIDController.sensors.AverageEncoder;
 import org.team2168.PIDControllers.PIDPosition;
 
-
 import edu.wpi.first.wpilibj.CounterBase;
 
 /**
@@ -140,6 +139,14 @@ public class RobotMap {
 
 	public final static double INTAKE_WHEEL_SPEED = 0.5;
 	public final static boolean PRINT_SD_DEBUG_DATA = true;
+	
+	/*************************************************************************
+	 *                            Electrical Parameters 
+	 *************************************************************************/
+	public final static double WARNING_CURRENT_LIMIT = 35;  //amps
+	public final static double STALL_CURRENT_LIMIT = 80;  //amps
+	public final static double MAIN_BREAKER_TRIP_TEMP = 150;  //farenheit
+
 	
 	/*************************************************************************
 	 *                            PID Parameters 
