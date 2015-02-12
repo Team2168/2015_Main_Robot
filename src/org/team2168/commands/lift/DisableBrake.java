@@ -29,7 +29,7 @@ public class DisableBrake extends Command {
 	 * Returns true when this Command no longer needs to run execute()
 	 */
 	protected boolean isFinished() {
-		return !Robot.lift.isBrakeEnabled();
+		return Robot.lift.isBrakeDisabled();
 	}
 
 	/**
