@@ -1,5 +1,6 @@
 package org.team2168;
 
+
 import org.team2168.commandgroups.DriveLiftToSetPosition;
 import org.team2168.commandgroups.IntakeTote;
 import org.team2168.commandgroups.LiftTote;
@@ -10,6 +11,8 @@ import org.team2168.commands.intake.EngageIntake;
 import org.team2168.commands.lift.DisableBrake;
 import org.team2168.commands.lift.EnableBrake;
 import org.team2168.utils.F310;
+import org.team2168.commands.drivetrain.DriveXDistance;
+
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -18,15 +21,20 @@ import org.team2168.utils.F310;
 public class OI {
 	public static F310 driverJoystick;
 	public static F310 operatorJoystick;
-	public static F310 testJoystickLeft;
-	public static F310 testJoystickRight;
-	public static F310 testJoystick;
+	public static F310 motorsTestJoystick;
+	public static F310 pnuematicTestJoystick;
+	public static F310 commandsTestJoystick;
+	public static F310 autoTestJoystick;
+
 
 	public OI() {
 		driverJoystick = new F310(RobotMap.DRIVER_JOYSTICK);
 		operatorJoystick = new F310(RobotMap.OPERATOR_JOYSTICK);
-		testJoystickLeft = new F310(RobotMap.TEST_JOYSTICK);
-		testJoystick = new F310(RobotMap.TEST_JOYSTICK);
+		motorsTestJoystick = new F310(RobotMap.MOTORS_TEST_JOYSTICK);
+		pnuematicTestJoystick = new F310(RobotMap.PNUEMATICS_TEST_JOYSTICK);
+		commandsTestJoystick = new F310(RobotMap.COMMANDS_TEST_JOYSTICK);
+		autoTestJoystick = new F310(RobotMap.AUTO_TEST_JOYSTICK);
+
 
 		//DRIVER JOYSTICK BUTTON MAP///////////////////////////////////////////////
 
@@ -44,14 +52,21 @@ public class OI {
 		//operatorJoystick.ButtonLeftTrigger().whileHeld(new ForwardIntakeWheels());
 
 
+    
+
+
 		//TEST CONTROLLER BUTTON MAP///////////////////////////////////////////////
-		testJoystick.ButtonA().whenPressed(new EngageGripper());
-		testJoystick.ButtonB().whenPressed(new ReleaseGripper());
-		testJoystick.ButtonX().whenPressed(new EnableBrake());
-		testJoystick.ButtonY().whenPressed(new DisableBrake());
-		testJoystick.ButtonLeftBumper().whenPressed(new EngageIntake());
-		testJoystick.ButtonRightBumper().whenPressed(new DisengageIntake());
-		testJoystick.ButtonLeftStick().whenPressed(new IntakeTote());
-		testJoystick.ButtonRightStick().whenPressed(new LiftTote());
+        pnuematicTestJoystick.ButtonA().whenPressed(new EngageGripper());
+        pnuematicTestJoystick.ButtonB().whenPressed(new ReleaseGripper());
+        pnuematicTestJoystick.ButtonX().whenPressed(new EnableBrake());
+        pnuematicTestJoystick.ButtonY().whenPressed(new DisableBrake());
+        pnuematicTestJoystick.ButtonLeftBumper().whenPressed(new EngageIntake());
+        pnuematicTestJoystick.ButtonRightBumper().whenPressed(new DisengageIntake());
+        
+        commandsTestJoystick.ButtonA().whenPressed(new IntakeTote());
+        commandsTestJoystick.ButtonB().whenPressed(new LiftTote());
+        commandsTestJoystick.ButtonRightBumper().whenPressed(new DriveXDistance(180,0.3,-1.20));
+        
+        
 	}
 }

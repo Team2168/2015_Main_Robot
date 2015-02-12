@@ -1,6 +1,7 @@
 package org.team2168;
 
 import org.team2168.PIDController.sensors.AverageEncoder;
+import org.team2168.PIDControllers.PIDPosition;
 
 import edu.wpi.first.wpilibj.CounterBase;
 
@@ -66,7 +67,11 @@ public class RobotMap {
 	//Joysticks////////////////////////////////////////////////////////////////
 	public final static int DRIVER_JOYSTICK = 0;
 	public final static int OPERATOR_JOYSTICK = 1;
-	public final static int TEST_JOYSTICK = 2;
+	public final static int MOTORS_TEST_JOYSTICK = 2;
+	public final static int PNUEMATICS_TEST_JOYSTICK = 3;
+	public final static int COMMANDS_TEST_JOYSTICK = 4;
+	public final static int AUTO_TEST_JOYSTICK = 5;
+	
 
 	/*************************************************************************
 	 *                         DRIVETRAIN PARAMETERS
@@ -86,6 +91,7 @@ public class RobotMap {
 	public static final boolean rightDriveTrainEncoderReverse = true;
 	public static final int driveAvgEncoderVal = 5;
 	public static final double minDriveSpeed =  0.2;
+	public static final double autoNormalSpeed = 0.5;
 
 
 	/*************************************************************************
@@ -105,6 +111,7 @@ public class RobotMap {
 	public static final boolean liftEncoderReverse = false;
 	public static final int liftAvgEncoderVal = 5;
 
+
 	//TODO Find correct height for the lift at the following positions:
 	//Height of lift where it is above the tote ready to lower onto it
 	public static final double LIFT_ABOVE_TOTE_HEIGHT = 5;
@@ -119,6 +126,8 @@ public class RobotMap {
 
 	//TODO: find height of lift in order to be above a tote with another being carried
 	public static final double LIFT_ABOVE_TOTE = 20.0; //inches
+	public static final double LIFT_MIN_SPEED = 0.2; //pwm signal
+	
 
 	/*************************************************************************
 	 *                            MISC PARAMETERS
@@ -129,6 +138,71 @@ public class RobotMap {
 	public final static double PRESS_SENSOR_HIGH_PRESSURE = 150.0;
 
 	public final static double INTAKE_WHEEL_SPEED = 0.5;
-
 	public final static boolean PRINT_SD_DEBUG_DATA = true;
+	
+	/*************************************************************************
+	 *                            Electrical Parameters 
+	 *************************************************************************/
+	public final static double WARNING_CURRENT_LIMIT = 35;  //amps
+	public final static double STALL_CURRENT_LIMIT = 80;  //amps
+	public final static double MAIN_BREAKER_TRIP_TEMP = 150;  //farenheit
+
+	
+	/*************************************************************************
+	 *                            PID Parameters 
+	 *************************************************************************/
+	//period to run PID loops on drive train
+	public static final long driveTrainPIDPeriod = 100;//100ms loop
+	public static final int drivetrainPIDArraySize = 50;
+
+	//PID Gains for Left & Right Speed and Position
+	//Bandwidth =
+	//Phase Margin = 
+	public static final double driveTrainLeftSpeedP =  0.002;
+	public static final double driveTrainLeftSpeedI =  0.0001; 
+	public static final double driveTrainLeftSpeedD =  0.0001;
+
+	public static final double driveTrainRightSpeedP = 0.002;
+	public static final double driveTrainRightSpeedI = 0.0001;  
+	public static final double driveTrainRightSpeedD = 0.0001;
+
+	public static final double driveTrainLeftPositionP = 0.002;
+	public static final double driveTrainLeftPositionI = 0.0001412646174233;  
+	public static final double driveTrainLeftPositionD = 0.0074778888124088;
+	
+	public static final double driveTrainRightPositionP = 0.002;
+	public static final double driveTrainRightPositionI = 0.0001412646174233;  
+	public static final double driveTrainRightPositionD = 0.0074778888124088;
+
+	public static final double rotatePositionP = 0.001;
+	public static final double rotatePositionI = 0.00001;
+	public static final double rotatePositionD = 0.0;
+	
+	double pTurn = 0.001;
+	double iTurn = 0.00001;
+	double pDrive = 0;
+	
+	public static final double liftPUp = 0.002;
+	public static final double liftIUp = 0.0001;
+	public static final double liftDUp = 0.0001;
+	
+	public static final double liftPDw = 0.002;
+	public static final double liftIDw = 0.0001;
+	public static final double liftDDw = 0.0001;
+	
+	public static final long liftPIDPeriod = 100; //100ms
+	
+	/****************************************************************
+	 *                TCP Servers  (ONLY FOR DEBUGGING)             *
+	 ****************************************************************/
+	public static final int TCPServerRightDrivetrainPos = 1180;
+	public static final int TCPServerRightDrivetrainSpeed = 1181;
+	public static final int TCPServerLeftDrivetrainPos = 1182;
+	public static final int TCPServerLeftDrivetrainSpeed = 1183;
+	public static final int TCPServerRotateController = 1184;
+	public static final int TCPServerShooterSpeedAft = 1185;
+	public static final int TCPServerShooterSpeedFwd = 1186;
+	public static final int TCPServerArmPos = 1187;
+	
+
 }

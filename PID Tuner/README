@@ -1,0 +1,35 @@
+To run the UI:
+
+- Install Node.js version 0.8.2 (from nodejs.org)
+- Set the NPM certs `with npm config set ca=""`
+- Install socket.io (open cmd and type `npm install socket.io@0.9.11` without quotes)
+- Install express (open cmd and type `npm install express@2.5.1` without quotes)
+- Install carrier (open cmd and type `npm install carrier@0.1.8` without quotes)
+- Run the server:
+  - navigate to the PID Tuner folder in the CMD terminal
+  - type 'node TCPClient 1180 8090' without quotes. Where the first paramter is the port the robot is listening on using TCPsocketSender class, and the second argument is the webserver port.
+- Navigate to localhost:8090 in your browser
+
+
+
+Note: As of 12/11/12 Express 3 and socket.io don't play nice together.
+Tested working with the following package revisions:
+├── carrier@0.1.8
+├─┬ express@2.5.1
+│ ├─┬ connect@1.8.7
+│ │ └── formidable@1.0.11
+│ ├── mime@1.2.7
+│ ├── mkdirp@0.0.7
+│ └── qs@0.5.3
+└─┬ socket.io@0.9.11
+  ├── policyfile@0.0.4
+  ├── redis@0.7.3
+  └─┬ socket.io-client@0.9.11
+    ├─┬ active-x-obfuscator@0.0.1
+    │ └── zeparser@0.0.5
+    ├── uglify-js@1.2.5
+    ├─┬ ws@0.4.25
+    │ ├── commander@0.6.1
+    │ ├── options@0.0.3
+    │ └── tinycolor@0.0.1
+    └── xmlhttprequest@1.4.2
