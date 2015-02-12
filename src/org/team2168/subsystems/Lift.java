@@ -71,7 +71,7 @@ public class Lift extends Subsystem {
 	 * @return position in inches
 	 */
 	public double getPosition() {
-		return liftEncoder.getDistance();
+		return liftEncoder.getPos();
 	}
 
 	/**
