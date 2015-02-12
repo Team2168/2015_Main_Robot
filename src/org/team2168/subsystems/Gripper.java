@@ -35,22 +35,35 @@ public class Gripper extends Subsystem {
 	}
 
 	/**
-	 * Engages the gripper to grab
+	 * Engages the gripper
 	 */
 	public void engageGripper() {
-
 		gripper.set(Value.kForward);
-
 	}
 
 	/**
-	 * Disengages the gripper to release
+	 * Disengages the gripper
 	 */
 	public void releaseGripper() {
-
 		gripper.set(Value.kReverse);
-
 	}
+
+	/**
+	 *
+	 * @return true when the gripper is engaged
+	 */
+	public boolean isGripperEngaged() {
+		return gripper.get() == Value.kForward;
+	}
+
+	/**
+	 *
+	 * @return true when the gripper is disengaged
+	 */
+	public boolean isGripperDisengaged() {
+		return gripper.get() == Value.kReverse;
+	}
+
 
 	/**
 	 * Set the default command for a subsystem here.

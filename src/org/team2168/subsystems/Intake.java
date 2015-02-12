@@ -55,7 +55,7 @@ public class Intake extends Subsystem {
 	public void engageIntake() {
 		rightLeftIntake.set(Value.kForward);
 	}
-	
+
 	/**
 	 * Releases the intake from intaking position
 	 */
@@ -87,7 +87,6 @@ public class Intake extends Subsystem {
 		setLeftIntakeSpeed(speed);
 		setRightIntakeSpeed(speed);
 	}
-
 
 	/**
 	 * Stops the intake motors
@@ -135,4 +134,19 @@ public class Intake extends Subsystem {
 		//setDefaultCommand(new MySpecialCommand());
 	}
 
+	/**
+	 *
+	 * @return true when the intake is engaged.
+	 */
+	public boolean isIntakeEngaged() {
+		return rightLeftIntake.get() == Value.kForward;
+	}
+
+	/**
+	 *
+	 * @return true when the intake is disngaged.
+	 */
+	public boolean isIntakeDisengaged() {
+		return rightLeftIntake.get() == Value.kReverse;
+	}
 }

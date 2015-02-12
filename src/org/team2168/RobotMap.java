@@ -117,6 +117,8 @@ public class RobotMap {
 	public static final int MAX_LIFT_HEIGHT = 76;
 	public static final int MIN_LIFT_HEIGHT = 0;
 
+	//TODO: find height of lift in order to be above a tote with another being carried
+	public static final double LIFT_ABOVE_TOTE = 20.0; //inches
 
 	/*************************************************************************
 	 *                            MISC PARAMETERS
