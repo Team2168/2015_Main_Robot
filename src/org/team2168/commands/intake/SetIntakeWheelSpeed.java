@@ -1,17 +1,20 @@
-package org.team2168.commands.lift;
+package org.team2168.commands.intake;
 
-import org.team2168.OI;
 import org.team2168.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Drives the lift with a joystick.
+ *
  */
-public class LiftWithJoystick extends Command {
+public class SetIntakeWheelSpeed extends Command {
 
-	public LiftWithJoystick() {
-		requires(Robot.lift);
+	private double wheelSpeed;
+
+	public SetIntakeWheelSpeed(double speed) {
+		requires(Robot.intake);
+
+		wheelSpeed = speed;
 	}
 
 	/**
@@ -24,14 +27,14 @@ public class LiftWithJoystick extends Command {
 	 * Called repeatedly when this Command is scheduled to run
 	 */
 	protected void execute() {
-		Robot.lift.drive(OI.operatorJoystick.getRightStickRaw_Y());
+		Robot.intake.setIntakeSpeed(wheelSpeed);
 	}
 
 	/**
 	 * Make this return true when this Command no longer needs to run execute()
 	 */
 	protected boolean isFinished() {
-		return false;
+		return true;
 	}
 
 	/**
@@ -42,7 +45,7 @@ public class LiftWithJoystick extends Command {
 
 	/**
 	 * Called when another command which requires one or more of the same
-	 * subsystems is scheduled to run
+	 * subsystems is scheduled to run.
 	 */
 	protected void interrupted() {
 	}

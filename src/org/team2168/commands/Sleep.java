@@ -1,16 +1,13 @@
-package org.team2168.commands.intake;
-
-import org.team2168.OI;
-import org.team2168.Robot;
+package org.team2168.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * This command runs forever
  */
-public class ForwardIntakeWheels extends Command {
+public class Sleep extends Command {
 
-    public ForwardIntakeWheels() {
+    public Sleep() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -21,7 +18,6 @@ public class ForwardIntakeWheels extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.intake.setIntakeSpeed(1);
     }
 
     // Make this return true when this Command no longer needs to run execute()

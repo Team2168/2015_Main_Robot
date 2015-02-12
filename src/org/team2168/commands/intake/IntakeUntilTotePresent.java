@@ -1,20 +1,17 @@
-package org.team2168.commands.lift;
+package org.team2168.commands.intake;
 
 import org.team2168.Robot;
+import org.team2168.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class SetLiftPosition extends Command {
+public class IntakeUntilTotePresent extends Command {
 
-	double position;
-
-	
-	public SetLiftPosition(double position) {
-		this.position = position;
-		requires(Robot.lift);
+	public IntakeUntilTotePresent() {
+		requires(Robot.intake);
 	}
 
 	// Called just before this Command runs the first time
@@ -23,17 +20,17 @@ public class SetLiftPosition extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.lift.setPosition(position);
+		Robot.intake.setIntakeSpeed(RobotMap.INTAKE_WHEEL_SPEED);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return true;
+		return Robot.intake.isTotePresent();
 	}
 
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.lift.isWithinDestiantionTolerance(position);
+		Robot.intake.setIntakeSpeed(0.0);
 	}
 
 	// Called when another command which requires one or more of the same

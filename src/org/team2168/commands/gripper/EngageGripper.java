@@ -5,7 +5,7 @@ import org.team2168.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * this command engages the gripper
+ * This command engages the gripper
  */
 public class EngageGripper extends Command {
 
@@ -30,7 +30,7 @@ public class EngageGripper extends Command {
 	 * This method ends the command when it returns true
 	 */
 	protected boolean isFinished() {
-		return false;
+		return Robot.gripper.isGripperEngaged();
 	}
 
 	/**
