@@ -1,7 +1,5 @@
 package org.team2168.gamepads;
 
-
-
 import org.team2168.RobotMap;
 import org.team2168.utils.JoystickAnalogButton;
 import org.team2168.utils.Util;
@@ -100,7 +98,6 @@ public class F310 extends Joystick
 	public double getDAxisRaw_X() {
 		return getRawAxis(AXIS_DPAD_X);
 	}
-
 
 	/**
 	 * Checks whether Button A is being pressed and returns true if it is.

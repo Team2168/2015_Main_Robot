@@ -30,7 +30,7 @@ public class ReleaseGripper extends Command {
 	 * This method ends the command when it returns true
 	 */
 	protected boolean isFinished() {
-		return false;
+		return Robot.gripper.isGripperReleased();
 	}
 
 	/**
