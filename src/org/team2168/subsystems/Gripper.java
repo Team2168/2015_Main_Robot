@@ -51,7 +51,35 @@ public class Gripper extends Subsystem {
 		gripper.set(Value.kReverse);
 
 	}
+	
+	/**
+	 * Gets the state of the current pneumatic gripper
+	 *
+	 * @return True when potato brake is enabled, False when disabled
+	 */
+	public boolean isGripperEngaged(){
+		if (gripper.get() == Value.kForward){
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 
+	/**
+	 * Gets the state of the current pneumatic gripper
+	 *
+	 * @return True when brake is disabled, False when enabled
+	 */
+	public boolean isGripperReleased(){
+		if (gripper.get() == Value.kReverse){
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
 	/**
 	 * Set the default command for a subsystem here.
 	 */
