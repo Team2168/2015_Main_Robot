@@ -25,7 +25,6 @@ public class WinchWithJoystick extends Command {
      */
     protected void execute() {
         Robot.winch.drive(OI.operatorJoystick.getRightStickRaw_Y());
-        Robot.winch.drive(OI.testJoystick.getRightStickRaw_X());
     }
 
     /**

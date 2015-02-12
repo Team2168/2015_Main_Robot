@@ -68,7 +68,11 @@ public class RobotMap {
 	//Joysticks////////////////////////////////////////////////////////////////
 	public final static int DRIVER_JOYSTICK = 0;
 	public final static int OPERATOR_JOYSTICK = 1;
-	public final static int TEST_JOYSTICK = 2;
+	public final static int MOTORS_TEST_JOYSTICK = 2;
+	public final static int PNUEMATICS_TEST_JOYSTICK = 3;
+	public final static int COMMANDS_TEST_JOYSTICK = 4;
+	public final static int AUTO_TEST_JOYSTICK = 5;
+	
 
 	/*************************************************************************
 	 *                         DRIVETRAIN PARAMETERS
