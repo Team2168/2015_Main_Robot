@@ -2,6 +2,7 @@ package org.team2168.commands.lift;
 
 import org.team2168.OI;
 import org.team2168.Robot;
+import org.team2168.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -24,7 +25,14 @@ public class LiftWithJoystick extends Command {
 	 * Called repeatedly when this Command is scheduled to run
 	 */
 	protected void execute() {
-		Robot.lift.drive(OI.operatorJoystick.getRightStickRaw_Y());
+		
+		if(Math.abs(OI.operatorJoystick.getRightStickRaw_Y()) > RobotMap.LIFT_MIN_SPEED)
+		{
+			Robot.lift.disableBrake();
+			Robot.lift.drive(OI.operatorJoystick.getRightStickRaw_Y());
+		}
+		else
+			Robot.lift.enableBrake();
 	}
 
 	/**

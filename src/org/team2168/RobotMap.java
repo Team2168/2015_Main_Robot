@@ -123,7 +123,7 @@ public class RobotMap {
 
 	//TODO: find height of lift in order to be above a tote with another being carried
 	public static final double LIFT_ABOVE_TOTE = 20.0; //inches
-
+	public static final double LIFT_MIN_SPEED = 0.2; //pwm signal
 	
 
 	/*************************************************************************
