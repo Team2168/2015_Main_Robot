@@ -7,12 +7,13 @@ import org.team2168.subsystems.Intake;
 import org.team2168.subsystems.Lift;
 import org.team2168.subsystems.Pneumatics;
 import org.team2168.subsystems.Winch;
+import org.team2168.utils.ConsolePrinter;
 
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -25,24 +26,45 @@ public class Robot extends IterativeRobot {
 
 	public static OI oi;
 
-	//Subsystem objects
-	public static final Drivetrain drivetrain = Drivetrain.getInstance();
-	public static final Intake intake = Intake.getInstance();
-	public static final Lift lift = Lift.getInstance();
-	public static final Winch winch = Winch.getInstance();
-	public static final Gripper gripper = Gripper.getInstance();
-	public static final Pneumatics pneumatics = Pneumatics.getInstance();
+	// Subsystem objects
+	public static Drivetrain drivetrain;
+	public static Intake intake;
+	public static Lift lift;
+	public static Winch winch;
+	public static Gripper gripper;
+	public static Pneumatics pneumatics;
 
-	//Auto command objects
+	//SmartDash printer
+	ConsolePrinter printer;
+
+	public static BuiltInAccelerometer accel;
+
+	// Auto command objects
 	Command autonomousCommand;
+	Command driveWithJoystick;
+
 
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
+		drivetrain = Drivetrain.getInstance();
+		intake = Intake.getInstance();
+		lift = Lift.getInstance();
+		winch = Winch.getInstance();
+		gripper = Gripper.getInstance();
+		pneumatics = Pneumatics.getInstance();
+
+		accel = new BuiltInAccelerometer();
+
+		//create thread to write dashboard variables
+		printer = new ConsolePrinter(20);
+		printer.startThread();
+
 		oi = new OI();
 		// instantiate the command used for the autonomous period
+		// autonomousCommand = new ExampleCommand();
 	}
 
 	/**
@@ -83,10 +105,10 @@ public class Robot extends IterativeRobot {
 	}
 
 	/**
-	 * This function is called when the disabled button is hit.
-	 * You can use it to reset subsystems before shutting down.
+	 * This function is called when the disabled button is hit. You can use it
+	 * to reset subsystems before shutting down.
 	 */
-	public void disabledInit(){
+	public void disabledInit() {
 
 	}
 
@@ -95,9 +117,6 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-
-		SmartDashboard.putNumber("System Pressure (PSI)", pneumatics.getPressure());
-		SmartDashboard.putNumber("System Pressure (VDC)", pneumatics.getRawPressure());
 	}
 
 	/**
