@@ -10,8 +10,30 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DriveWithJoysticks extends Command {
 
+	Double leftStick;
+	Double rightStick;
+	
+	boolean driveWithJoystick;
+	
+	/**
+	 * Call the command with this constructor to run it with Joysticks
+	 */
 	public DriveWithJoysticks() {
 		requires(Robot.drivetrain);
+		this.driveWithJoystick = true;
+	}
+	
+	/**
+	 * Call the command with this constructor to run it without joysticks
+	 * @param leftStick
+	 * @param rightStick
+	 */
+	public DriveWithJoysticks(Double leftStick, Double rightStick) {
+		requires(Robot.drivetrain);
+		this.leftStick = leftStick;
+		this.rightStick = rightStick;
+		
+		this.driveWithJoystick = false;
 	}
 
 	/**
@@ -24,8 +46,11 @@ public class DriveWithJoysticks extends Command {
 	 * Called repeatedly when this Command is scheduled to run
 	 */
 	protected void execute() {
-		Robot.drivetrain.tankDrive(OI.driverJoystick.getLeftStickRaw_Y(),
-				OI.driverJoystick.getRightStickRaw_Y());
+		if (!(driveWithJoystick)) {
+			Robot.drivetrain.tankDrive(this.leftStick, this.rightStick);
+		}else {
+			Robot.drivetrain.tankDrive(OI.driverJoystick.getLeftStickRaw_Y(), OI.driverJoystick.getRightStickRaw_Y());
+		}
 	}
 
 	/**
