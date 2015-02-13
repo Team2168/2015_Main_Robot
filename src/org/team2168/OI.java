@@ -47,7 +47,7 @@ public class OI {
 		operatorJoystick.ButtonLeftDPad().whenPressed(new ReleaseGripper());
 		operatorJoystick.ButtonRightBumper().whenPressed(new EngageIntake());
 		operatorJoystick.ButtonLeftBumper().whenPressed(new DisengageIntake());
-		operatorJoystick.ButtonRightTrigger().whileHeld(new SetIntakeWheelSpeed(OI.operatorJoystick.getRightTriggerAxisRaw()));
+		operatorJoystick.ButtonRightTrigger().whileHeld(new SetIntakeWheelSpeed(-1*(OI.operatorJoystick.getRightTriggerAxisRaw())));
 		operatorJoystick.ButtonLeftTrigger().whileHeld(new SetIntakeWheelSpeed(OI.operatorJoystick.getLeftTriggerAxisRaw()));
 
 
