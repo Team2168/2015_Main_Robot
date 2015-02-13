@@ -204,7 +204,7 @@ public class Drivetrain extends Subsystem {
 	public void initDefaultCommand() {
 		//setDefaultCommand(new DriveWithJoysticks(OI.driverJoystick.getLeftStickRaw_Y(),
 		//		OI.driverJoystick.getRightStickRaw_Y()));
-		setDefaultCommand(new DriveWithJoysticks(-1.0, 0.0));
+		setDefaultCommand(new DriveWithJoysticks());
 	}
 
 	/**
