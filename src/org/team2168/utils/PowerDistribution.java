@@ -13,17 +13,17 @@ public class PowerDistribution {
 	
 	private PowerDistributionPanel pdp;
 	
-	volatile double[] channelCurrent;
-	volatile double[] channelVoltage;
-	volatile int[] channelError;
+	private volatile double[] channelCurrent;
+	private volatile double[] channelVoltage;
+	private volatile int[] channelError;
 	
-	volatile double batteryVoltage; 
-	volatile double mainBreakerTemp;
+	private volatile double batteryVoltage; 
+	private volatile double mainBreakerTemp;
 	
-	volatile double totalCurrent;
-	volatile double totalEnergy;
-	volatile double totalPower;
-	volatile double temp;
+	private volatile double totalCurrent;
+	private volatile double totalEnergy;
+	private volatile double totalPower;
+	private volatile double temp;
 	
 	public static final int NUM_OF_PDP_CHANNELS = 16;
 	
@@ -52,6 +52,11 @@ public class PowerDistribution {
 	{
 		return channelCurrent[channel];
 	}
+
+	public double getBatteryVoltage() {
+		return batteryVoltage;
+	}
+	
 	private void run() {
 		
 		for(int i=0; i<NUM_OF_PDP_CHANNELS; i++)
@@ -67,10 +72,10 @@ public class PowerDistribution {
 		}
 		
 		
-//		totalCurrent = pdp.getTotalCurrent();
-//		totalEnergy = pdp.getTotalEnergy();
-//		temp = pdp.getTemperature();
-//		totalPower = pdp.getTotalPower();
+		totalCurrent = pdp.getTotalCurrent();
+		totalEnergy = pdp.getTotalEnergy();
+		temp = pdp.getTemperature();
+		totalPower = pdp.getTotalPower();
 		
 	}
 

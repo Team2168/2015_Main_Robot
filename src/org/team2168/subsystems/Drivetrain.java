@@ -287,7 +287,7 @@ public class Drivetrain extends Subsystem {
 	 */
 	public void driveLeft1(double speed) {
 		leftMotor1.set(speed);
-		leftMotor1Voltage = Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP) * speed;
+		leftMotor1Voltage = Robot.pdp.getBatteryVoltage() * speed;
 	}
 
 	/**
@@ -296,7 +296,7 @@ public class Drivetrain extends Subsystem {
 	 */
 	public void driveLeft2(double speed) {
 		leftMotor2.set(speed);
-		leftMotor2Voltage = Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP) * speed;
+		leftMotor2Voltage = Robot.pdp.getBatteryVoltage() * speed;
 	}
 
 	/**
@@ -305,7 +305,7 @@ public class Drivetrain extends Subsystem {
 	 */
 	public void driveLeft3(double speed) {
 		leftMotor3.set(speed);
-		leftMotor3Voltage = Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_3_PDP) * speed;
+		leftMotor3Voltage =  Robot.pdp.getBatteryVoltage() * speed;
 	}
 
 	/**
@@ -324,7 +324,7 @@ public class Drivetrain extends Subsystem {
 	 */
 	public void driveRight1(double speed) {
 		rightMotor1.set(speed);
-		rightMotor1Voltage = Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP) * speed;
+		rightMotor1Voltage = Robot.pdp.getBatteryVoltage() * speed;
 	}
 
 	/**
@@ -333,7 +333,7 @@ public class Drivetrain extends Subsystem {
 	 */
 	public void driveRight2(double speed) {
 		rightMotor2.set(speed);
-		rightMotor2Voltage = Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP) * speed;
+		rightMotor2Voltage = Robot.pdp.getBatteryVoltage() * speed;
 	}
 
 	/**
@@ -342,7 +342,7 @@ public class Drivetrain extends Subsystem {
 	 */
 	public void driveRight3(double speed) {
 		rightMotor3.set(speed);
-		rightMotor3Voltage = Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_3_PDP) * speed;
+		rightMotor3Voltage = Robot.pdp.getBatteryVoltage() * speed;
 	}
 
 	/**

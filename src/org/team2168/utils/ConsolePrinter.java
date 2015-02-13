@@ -9,8 +9,8 @@ import org.team2168.Robot;
 import org.team2168.RobotMap;
 import org.team2168.subsystems.Drivetrain;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 
 import org.team2168.Robot;
 import org.team2168.RobotMap;
@@ -32,8 +32,8 @@ public class ConsolePrinter {
 		this.executor.schedule(new ConsolePrintTask(this), 0L, this.period);
 		
 		try {
-			this.log = new PrintWriter("/home/lvuser/gyroLog.txt", "UTF-8");
-			log.println("Time \t SensorData \t RegisterData");
+			this.log = new PrintWriter("/home/lvuser/Log.txt", "UTF-8");
+			log.println("Time \t VoltageL1 \t VoltageL2 \t VoltageL3 \t VoltageR1 \t VoltageR2 \t VoltageR3 \t CurrentL1 \t CurrentL2 \t CurrentL3 \t CurrentR1 \t CurrentR2 \t CurrentR3 \t Gyrot SPI Gyro Angle \t SPI Gyro Rate \t Analog Gyro Angle \t Analog Gyro Rate \t Left Encoder Position \t Left Encoder Rate \t Right Encoder Position \t Right Encoder Rate");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -51,8 +51,6 @@ public class ConsolePrinter {
 	    	SmartDashboard.putNumber("Right Encoder Distance:",Drivetrain.getInstance().getRightPosition());
 	    	SmartDashboard.putBoolean("isPracticeBot", Drivetrain.getInstance().isPracticeBot());
 	    	
-	    	log.println(Robot.drivetrain.gyroSPI.getDeltatime() + "\t" + Robot.drivetrain.gyroSPI.getRate() + "\t" + Robot.drivetrain.gyroSPI.getAngle() );
-	    	log.flush();
 	    	SmartDashboard.putNumber("GYRO DeltTime:", Robot.drivetrain.gyroSPI.getDeltatime());
 	    	SmartDashboard.putNumber("GYRO Rate:", Robot.drivetrain.gyroSPI.getRate());
 	    	SmartDashboard.putNumber("GYRO Angle SPI:", Robot.drivetrain.gyroSPI.getAngle());
@@ -77,6 +75,52 @@ public class ConsolePrinter {
 	    	SmartDashboard.putNumber("DTLeft2MotorVoltage", Robot.drivetrain.getLeft2MotorVoltage());
 	    	SmartDashboard.putNumber("DTLeft3MotorVoltage", Robot.drivetrain.getLeft3MotorVoltage());
 
+	    	SmartDashboard.putNumber("Battery Voltage", Robot.pdp.getBatteryVoltage());
+	    	
+	    	
+	    	SmartDashboard.putNumber("DTRight1MotorCurrent", Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP));
+	    	SmartDashboard.putNumber("DTRight2MotorCurrent", Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP));
+	    	SmartDashboard.putNumber("DTRight3MotorCurrent", Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_3_PDP));
+	    	
+	    	SmartDashboard.putNumber("DTLeft1MotorCurrent", Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP));
+	    	SmartDashboard.putNumber("DTLeft2MotorCurrent", Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP));
+	    	SmartDashboard.putNumber("DTLeft3MotorCurrent", Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_3_PDP));
+	    	
+	    	
+	    	//file log
+	    	log.println(Timer.getFPGATimestamp() + "\t" + 
+	    			Robot.drivetrain.getLeft1MotorVoltage() + "\t" + 
+	    			Robot.drivetrain.getLeft2MotorVoltage() + "\t" + 
+	    			Robot.drivetrain.getLeft3MotorVoltage() + "\t" + 
+	    			
+					Robot.drivetrain.getRight1MotorVoltage() + "\t" + 
+					Robot.drivetrain.getRight2MotorVoltage() + "\t" + 
+					Robot.drivetrain.getRight3MotorVoltage() + "\t" + 
+
+					Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP) + "\t" +
+					Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP) + "\t" +
+					Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_3_PDP) + "\t" +
+					
+					Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP) + "\t" +
+					Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP) + "\t" +
+					Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_3_PDP) + "\t" +
+
+					Robot.drivetrain.gyroAnalog.getPos() + "\t" + 
+					Robot.drivetrain.gyroAnalog.getRate() + "\t" + 
+					
+					Robot.drivetrain.gyroSPI.getPos() + "\t" + 
+					Robot.drivetrain.gyroSPI.getRate() + "\t" +
+					
+					Robot.drivetrain.drivetrainLeftEncoder.getPos() + "\t" + 
+					Robot.drivetrain.drivetrainLeftEncoder.getRate() + "\t" +
+					
+					Robot.drivetrain.drivetrainRightEncoder.getPos() + "\t" +
+					Robot.drivetrain.drivetrainRightEncoder.getRate() + "\t"
+	    			
+	    			);
+	    	log.flush();
+	    	
+	    	
 		}
 	}
 

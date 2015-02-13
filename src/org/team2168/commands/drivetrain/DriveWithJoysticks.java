@@ -13,6 +13,8 @@ public class DriveWithJoysticks extends Command {
 	Double leftStick;
 	Double rightStick;
 	
+	//TODO: Figure out why this change was made, and delete if not needed
+	
 	boolean driveWithJoystick;
 	
 	/**
