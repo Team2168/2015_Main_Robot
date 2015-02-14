@@ -44,7 +44,7 @@ public class LiftPIDPosition extends Command {
 		if (!Robot.lift.liftController.isFinished())
 			Robot.lift.disableBrake();
 		
-		Robot.lift.liftController.setSetPoint(setPoint);
+		//Robot.lift.liftController.setSetPoint(setPoint);
 		Robot.lift.drive(Robot.lift.liftController.getControlOutput());
 		
 		//set the brake

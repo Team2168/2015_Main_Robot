@@ -86,7 +86,12 @@ public class ConsolePrinter {
 	    	SmartDashboard.putNumber("DTLeft2MotorCurrent", Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP));
 	    	SmartDashboard.putNumber("DTLeft3MotorCurrent", Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_3_PDP));
 	    	
+	    	SmartDashboard.putNumber("Lift Encoder Position", Robot.lift.getPosition());
+	    	SmartDashboard.putNumber("Lift Encoder Rage", Robot.lift.liftEncoder.getRate());
 	    	
+	    	SmartDashboard.putNumber("Lift Motor Current", Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_PDP));
+	    	SmartDashboard.putNumber("Lift Motor Voltage", Robot.lift.getMotorVoltage());
+	
 	    	//file log
 	    	log.println(Timer.getFPGATimestamp() + "\t" + 
 	    			Robot.drivetrain.getLeft1MotorVoltage() + "\t" + 

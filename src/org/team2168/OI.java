@@ -10,6 +10,8 @@ import org.team2168.commands.intake.DisengageIntake;
 import org.team2168.commands.intake.EngageIntake;
 import org.team2168.commands.lift.DisableBrake;
 import org.team2168.commands.lift.EnableBrake;
+import org.team2168.commands.lift.PIDCommands.LiftPIDPause;
+import org.team2168.commands.lift.PIDCommands.LiftPIDPosition;
 import org.team2168.utils.F310;
 import org.team2168.commands.drivetrain.DriveXDistance;
 
@@ -51,7 +53,7 @@ public class OI {
 		//operatorJoystick.ButtonRightTrigger().whileHeld(new ReverseIntakeWheels());
 		//operatorJoystick.ButtonLeftTrigger().whileHeld(new ForwardIntakeWheels());
 
-
+		
     
 
 
@@ -63,10 +65,10 @@ public class OI {
         pnuematicTestJoystick.ButtonLeftBumper().whenPressed(new EngageIntake());
         pnuematicTestJoystick.ButtonRightBumper().whenPressed(new DisengageIntake());
         
-        commandsTestJoystick.ButtonA().whenPressed(new IntakeTote());
-        commandsTestJoystick.ButtonB().whenPressed(new LiftTote());
+        commandsTestJoystick.ButtonA().whenPressed(new LiftPIDPosition());
+        commandsTestJoystick.ButtonB().whenPressed(new LiftPIDPause());
         commandsTestJoystick.ButtonRightBumper().whenPressed(new DriveXDistance(180,0.3,-1.20));
-        
+       
         
 	}
 }

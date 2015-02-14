@@ -1,9 +1,11 @@
 package org.team2168.subsystems;
 
+import org.team2168.Robot;
 import org.team2168.RobotMap;
 import org.team2168.PIDController.sensors.AverageEncoder;
 import org.team2168.PIDControllers.PIDPosition;
 import org.team2168.commands.lift.LiftWithJoystick;
+import org.team2168.utils.TCPSocketSender;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -21,8 +23,12 @@ public class Lift extends Subsystem {
 	private double currentPosition;
 	private static final double DESTINATION_TOL = 1.0; //inches
 
+	private volatile double motorVoltage;
+	
 	public AverageEncoder liftEncoder;
 	public PIDPosition liftController;
+	
+	TCPSocketSender TCPliftPosController;
 	
 	/**
 	 * A private constructor to prevent multiple instances of the subsystem from
@@ -41,10 +47,13 @@ public class Lift extends Subsystem {
 				RobotMap.LIFT_BRAKE_DOUBLE_SOLENOID_REVERSE);
 		
 		liftController = new PIDPosition("LiftPID", RobotMap.liftPUp, 
-				RobotMap.liftIUp, RobotMap.liftDUp, 
-				RobotMap.liftPDw, RobotMap.liftIDw, 
-				RobotMap.liftDDw, liftEncoder,
+				RobotMap.liftIUp, RobotMap.liftDUp, liftEncoder,
     			RobotMap.liftPIDPeriod);
+		liftController.startThread();
+		
+		//start TCP Servers for DEBUGING ONLY
+    	TCPliftPosController = new TCPSocketSender(RobotMap.TCPServerLiftPos, liftController);
+    	TCPliftPosController.start();
 		
 	}
 
@@ -67,6 +76,15 @@ public class Lift extends Subsystem {
 	}
 
 	/**
+	 * 
+	 * @return
+	 */
+	public double getMotorVoltage()
+	{
+		return motorVoltage;
+	}
+	
+	/**
 	 * Drive the lift in open loop mode.
 	 *
 	 * @param speed
@@ -74,6 +92,7 @@ public class Lift extends Subsystem {
 	 */
 	public void drive(double speed) {
 		intakeMotor.set(speed);
+		motorVoltage = Robot.pdp.getBatteryVoltage() * speed;
 	}
 
 	/**

@@ -933,6 +933,7 @@ public class PIDPosition implements TCPMessageInterface {
 				p = pGain2;
 				i = iGain2;
 				d = dGain2;
+
 			} else {
 				p = pGain;
 				i = iGain;
@@ -1045,6 +1046,7 @@ public class PIDPosition implements TCPMessageInterface {
 				// the deadband, if it is, we increase the
 				// output above deadband
 				// to drive the motor
+				
 
 				if (err > 0 && coNotSaturated < minPosOutput) {
 					co = minPosOutput;

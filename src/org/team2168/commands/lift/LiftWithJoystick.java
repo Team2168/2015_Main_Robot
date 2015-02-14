@@ -29,10 +29,13 @@ public class LiftWithJoystick extends Command {
 		if(Math.abs(OI.operatorJoystick.getRightStickRaw_Y()) > RobotMap.LIFT_MIN_SPEED)
 		{
 			Robot.lift.disableBrake();
-			Robot.lift.drive(OI.operatorJoystick.getRightStickRaw_Y());
+			Robot.lift.drive(OI.operatorJoystick.getRightStickRaw_Y() + OI.commandsTestJoystick.getRightStickRaw_Y());
 		}
 		else
+		{
 			Robot.lift.enableBrake();
+			Robot.lift.drive(0);
+		}
 	}
 
 	/**
