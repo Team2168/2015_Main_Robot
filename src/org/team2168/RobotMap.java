@@ -113,15 +113,15 @@ public class RobotMap {
 	//1.4 inch pully shaft
 	//TODO: UPDATE THESE WITH CORRECT VALUES
 	private static final int liftPulsePerRotation = 256; //encoder ticks per rotation
-	private static final double liftGearRatio = 1.4/1; //ratio between wheel over encoder
-	private static final double liftWheelDiameter = 6;
-	public static final int liftEncoderPulsePerRot = (int) (drivePulsePerRotation * driveGearRatio); //pulse per rotation * gear ratio
-	public static final double liftEncoderDistPerTick = (Math.PI * driveWheelDiameter/driveEncoderPulsePerRot);
+	private static final double liftGearRatio = 1/1; //ratio between wheel over encoder
+	private static final double liftWheelDiameter = 1.4;
+	public static final int liftEncoderPulsePerRot = (int) (liftPulsePerRotation * liftGearRatio); //pulse per rotation * gear ratio
+	public static final double liftEncoderDistPerTick = (Math.PI * liftWheelDiameter/liftPulsePerRotation);
 	public static final CounterBase.EncodingType liftEncodingType = CounterBase.EncodingType.k4X; //count rising and falling edges on both channels
 	public static final AverageEncoder.PositionReturnType liftPosReturnType = AverageEncoder.PositionReturnType.INCH;
 	public static final AverageEncoder.SpeedReturnType liftSpeedReturnType = AverageEncoder.SpeedReturnType.RPM;
-	public static final int liftEncoderMinRate = 10;
-	public static final int liftEncoderMinPeriod = 10;
+	public static final int liftEncoderMinRate = 5;
+	public static final int liftEncoderMinPeriod = 5;
 	public static final boolean liftEncoderReverse = false;
 	public static final int liftAvgEncoderVal = 5;
 
