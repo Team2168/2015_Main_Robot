@@ -168,19 +168,19 @@ public class RobotMap {
 	 *                            PID Parameters 
 	 *************************************************************************/
 	//period to run PID loops on drive train
-	public static final long driveTrainPIDPeriod = 100;//100ms loop
+	public static final long driveTrainPIDPeriod = 70;//70ms loop
 	public static final int drivetrainPIDArraySize = 50;
 
 	//PID Gains for Left & Right Speed and Position
 	//Bandwidth =
 	//Phase Margin = 
-	public static final double driveTrainLeftSpeedP =  0.002;
-	public static final double driveTrainLeftSpeedI =  0.0001; 
-	public static final double driveTrainLeftSpeedD =  0.0001;
+	public static final double driveTrainLeftSpeedP =  0.4779;
+	public static final double driveTrainLeftSpeedI =  1.0526; 
+	public static final double driveTrainLeftSpeedD =  0.0543;
 
-	public static final double driveTrainRightSpeedP = 0.002;
-	public static final double driveTrainRightSpeedI = 0.0001;  
-	public static final double driveTrainRightSpeedD = 0.0001;
+	public static final double driveTrainRightSpeedP = 0.4779;
+	public static final double driveTrainRightSpeedI = 1.0526;  
+	public static final double driveTrainRightSpeedD = 0.0543;
 
 	public static final double driveTrainLeftPositionP = 0.002;
 	public static final double driveTrainLeftPositionI = 0.0001412646174233;  

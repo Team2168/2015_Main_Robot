@@ -1092,6 +1092,8 @@ public class PIDSpeed2 implements TCPMessageInterface {
 				// see if setpoint is reached
 				atSpeed();
 
+				//Feed forward term
+				co += sp*1/15;
 //			//}
 		}
 
