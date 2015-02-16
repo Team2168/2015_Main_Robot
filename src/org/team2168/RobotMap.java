@@ -96,9 +96,9 @@ public class RobotMap {
 	public static final double driveEncoderDistPerTick = (Math.PI * driveWheelDiameter/driveEncoderPulsePerRot);
 	public static final CounterBase.EncodingType driveEncodingType = CounterBase.EncodingType.k4X; //count rising and falling edges on both channels
 	public static final AverageEncoder.PositionReturnType drivePosReturnType = AverageEncoder.PositionReturnType.INCH;
-	public static final AverageEncoder.SpeedReturnType driveSpeedReturnType = AverageEncoder.SpeedReturnType.RPM;
-	public static final int driveEncoderMinRate = 10;
-	public static final int driveEncoderMinPeriod = 10;
+	public static final AverageEncoder.SpeedReturnType driveSpeedReturnType = AverageEncoder.SpeedReturnType.FPS;
+	public static final int driveEncoderMinRate = 0;
+	public static final int driveEncoderMinPeriod = 1;
 	public static final boolean leftDriveTrainEncoderReverse = false;
 	public static final boolean rightDriveTrainEncoderReverse = true;
 	public static final int driveAvgEncoderVal = 5;
@@ -119,7 +119,7 @@ public class RobotMap {
 	public static final double liftEncoderDistPerTick = (Math.PI * liftWheelDiameter/liftPulsePerRotation);
 	public static final CounterBase.EncodingType liftEncodingType = CounterBase.EncodingType.k4X; //count rising and falling edges on both channels
 	public static final AverageEncoder.PositionReturnType liftPosReturnType = AverageEncoder.PositionReturnType.INCH;
-	public static final AverageEncoder.SpeedReturnType liftSpeedReturnType = AverageEncoder.SpeedReturnType.RPM;
+	public static final AverageEncoder.SpeedReturnType liftSpeedReturnType = AverageEncoder.SpeedReturnType.FPS;
 	public static final int liftEncoderMinRate = 5;
 	public static final int liftEncoderMinPeriod = 5;
 	public static final boolean liftEncoderReverse = false;

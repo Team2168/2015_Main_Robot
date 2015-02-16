@@ -248,7 +248,6 @@ public class PIDSpeed2 implements TCPMessageInterface {
 		setPointArray = null;
 	
 		this.diff = 0;
-
 	}
 
 	/**
@@ -998,7 +997,7 @@ public class PIDSpeed2 implements TCPMessageInterface {
 	 * method in a periodic thread.
 	 */
 	private synchronized void calculate() {
-		runTime = Timer.getFPGATimestamp();
+		runTime = System.currentTimeMillis();
 
 		if (enable) {
 			// poll encoder
@@ -1049,7 +1048,7 @@ public class PIDSpeed2 implements TCPMessageInterface {
 				err = sp - cp;
 				
 				// calculate derivative gain d/dt
-				double currentTime = Timer.getFPGATimestamp();
+				double currentTime = System.currentTimeMillis();
 				executionTime = currentTime - clock; // time
 
 
@@ -1097,7 +1096,7 @@ public class PIDSpeed2 implements TCPMessageInterface {
 //			//}
 		}
 
-		runTime = Timer.getFPGATimestamp() - runTime;
+		runTime = System.currentTimeMillis() - runTime;
 	}
 
 	/**
