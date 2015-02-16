@@ -124,6 +124,9 @@ public class PIDSpeed2 implements TCPMessageInterface {
 	private volatile double acceptErrorDiff; // allowable error (in units of
 												// setpoint)
 
+	
+	private double diff;
+	
 	// tread executor
 	java.util.Timer executor;
 	long period;
@@ -243,7 +246,8 @@ public class PIDSpeed2 implements TCPMessageInterface {
 		setPointByArray = false;
 		setPointArrayCounter = 0;
 		setPointArray = null;
-		
+	
+		this.diff = 0;
 
 	}
 
@@ -1024,13 +1028,10 @@ public class PIDSpeed2 implements TCPMessageInterface {
 				setPointByArray=false;
 
 			// if setpoint is 0, set output to zero
-			if (sp == 0) {
-				co = 0;
-			} else // setpoint is not zero... so we do PID calc
-			{
-
-				// calculate error between current position and setpoint
-				err = sp - cp;
+			//if (sp == 0) {
+			//	co = 0;
+			//} else // setpoint is not zero... so we do PID calc
+			//{
 
 				// if gain schedule has been enabled, make sure we use
 				// proper PID gains
@@ -1043,158 +1044,55 @@ public class PIDSpeed2 implements TCPMessageInterface {
 					i = iGain;
 					d = dGain;
 				}
-
-				// calculate proportional gain
-				prop = p * err;
-
-				// calculate integral gain by summing past errors
-				errsum = err + olderrsum;
-				integ = i * errsum;
-
-				// save for use in next loop
-				olderrsum += errsum;
-
+				
+				// calculate error between current position and setpoint
+				err = sp - cp;
+				
 				// calculate derivative gain d/dt
-				executionTime = Timer.getFPGATimestamp() - clock; // time
-																	// between
-																	// loops
+				double currentTime = Timer.getFPGATimestamp();
+				executionTime = currentTime - clock; // time
+
 
 				// prevent divide by zero error, by disabiling deriv term
 				// if execution time is zero.
-				if (executionTime >= 0) {
-					deriv = d * ((err - olderr) / (executionTime)); // delta
-																	// error/delta
-																	// time
-
-				} else {
-					deriv = 0;
-				}
-				// update clock with current time for next loop
-				clock = Timer.getFPGATimestamp();
+				if (executionTime >= 0) 
+					diff = (err - olderr) /executionTime; // delta
+				else 
+					diff = 0;
 				
+				//integration
+				errsum = errsum + (err * executionTime);
+								
 
-				// filter derivative noise using euler filter method
-				// if filtering is enabled
-				double filteredDeriv = 0;
-				if (enDerivFilter) {
-					filteredDeriv = (1 - r) * filterDerivOld + r * deriv;
-					filterDerivOld = filteredDeriv;
-					deriv = filteredDeriv;
-				}
-
+				// calculate proportional gain
+				prop = p * err;
+				integ = i*errsum;
+				deriv = d*diff;
+				
 				// calculate new control output based on filtering
 				co = prop + integ + deriv;
 
+
+								
 				// save control output for graphing
 				coNotSaturated = co;
 
-				// The below statements allow us to condition the output
-				// of our controller so that it perfoms better than
-				// a standard PID controller.
+				//Saturation
+		           if(co > maxPosOutput)
+		               co = maxPosOutput;
 
-				// if there is an integral term we prevent integral windup
-				// and clamp the output to the max output value to
-				// prevent output saturation
-				// clamp output to min and max output value to prevent
+		           
+		           if(co < maxNegOutput)
+		               co = maxNegOutput;
 
-				if (i != 0) {
-					// clamp to max values
-					// if (co > maxPosOutput)
-					// {
-					// integ = maxPosOutput - prop - deriv;
-					// System.out.println("one.one");
-					// }
-					//
-					if (co < maxNegOutput) {
-						integ = maxNegOutput - prop - deriv;
-						// System.out.println("one.two");
-					}
 
-					// prevent integral windup
-					// if (co > maxPosOutput)
-					// {
-					// errsum = integ / i;
-					// System.out.println("one.three");
-					// }
-
-					if (co < maxNegOutput) {
-						errsum = integ / i;
-						// System.out.println("one.four");
-					}
-					// generate new control output based on min and max and
-					// integral windup.
-					co = prop + integ + deriv;
-					olderrsum = errsum;
-
-					// System.out.println("one");
-				} else {
-					// no integral term so dont need to prevent windup
-					// we can just clamp to max/min value to prevent
-					// saturation
-					if (co > maxPosOutput)
-						co = maxPosOutput;
-					if (co < maxNegOutput)
-						co = maxNegOutput;
-
-					// System.out.println("two");
-				}
-
-				// check to see if we met our setpoint
-				// if current value is within exceptable range make control
-				// output last
-				// output value and stop integrating error
-
-				if (Math.abs(err) <= acceptErrorDiff) {
-
-					integ = coOld - prop - deriv;
-					co = coOld;
-
-					errsum = olderrsum;
-					olderrsum = olderrsum; // stop accumulating error
-
-					// System.out.println("three");
-
-				}
-
-				// if (Math.abs(err) <= acceptErrorDiff)
-				// {
-				// co = coOld; //keeps wheel spinning at old rate
-				// olderrsum = errsum; //stop accumulating error
-				//
-				// System.out.println("three");
-				//
-				// } else
-				// {
-				//
-				// // there is still a significant error
-				// // we now check if output signal is below
-				// // the deadband, if it is, we increase the
-				// // output above deadband
-				// // to drive the motor
-				//
-				// if (err > 0 && coNotSaturated < minPosOutput
-				// && co < (maxPosOutput - minPosOutput))
-				// {
-				// co = coOld + prop + integ + deriv;
-				// System.out.println("four");
-				//
-				// }
-				// if (err < 0 && coNotSaturated < maxNegOutput
-				// && co < (maxNegOutput - minNegOutput))
-				//
-				// {
-				// co = coOld + prop + integ + deriv;
-				// System.out.println("five");
-				// }
-				//
-				// }
-
-				coOld = co;
-
+		           // update clock with current time for next loop
+		           clock = currentTime;
+				
 				// see if setpoint is reached
 				atSpeed();
 
-			}
+//			//}
 		}
 
 		runTime = Timer.getFPGATimestamp() - runTime;
