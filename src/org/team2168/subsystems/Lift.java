@@ -4,6 +4,7 @@ import org.team2168.Robot;
 import org.team2168.RobotMap;
 import org.team2168.PIDController.sensors.AverageEncoder;
 import org.team2168.PIDControllers.PIDPosition;
+import org.team2168.PIDControllers.PIDPosition2;
 import org.team2168.commands.lift.LiftWithJoystick;
 import org.team2168.utils.TCPSocketSender;
 
@@ -26,7 +27,7 @@ public class Lift extends Subsystem {
 	private volatile double motorVoltage;
 	
 	public AverageEncoder liftEncoder;
-	public PIDPosition liftController;
+	public PIDPosition2 liftController;
 	
 	TCPSocketSender TCPliftPosController;
 	
@@ -46,7 +47,7 @@ public class Lift extends Subsystem {
 		liftBrake = new DoubleSolenoid(RobotMap.LIFT_BRAKE_DOUBLE_SOLENOID_FORWARD,
 				RobotMap.LIFT_BRAKE_DOUBLE_SOLENOID_REVERSE);
 		
-		liftController = new PIDPosition("LiftPID", RobotMap.liftPUp, 
+		liftController = new PIDPosition2("LiftPID", RobotMap.liftPUp, 
 				RobotMap.liftIUp, RobotMap.liftDUp, liftEncoder,
     			RobotMap.liftPIDPeriod);
 		liftController.startThread();

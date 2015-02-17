@@ -119,9 +119,9 @@ public class RobotMap {
 	public static final double liftEncoderDistPerTick = (Math.PI * liftWheelDiameter/liftPulsePerRotation);
 	public static final CounterBase.EncodingType liftEncodingType = CounterBase.EncodingType.k4X; //count rising and falling edges on both channels
 	public static final AverageEncoder.PositionReturnType liftPosReturnType = AverageEncoder.PositionReturnType.INCH;
-	public static final AverageEncoder.SpeedReturnType liftSpeedReturnType = AverageEncoder.SpeedReturnType.FPS;
-	public static final int liftEncoderMinRate = 5;
-	public static final int liftEncoderMinPeriod = 5;
+	public static final AverageEncoder.SpeedReturnType liftSpeedReturnType = AverageEncoder.SpeedReturnType.RPM;
+	public static final int liftEncoderMinRate = 10;
+	public static final int liftEncoderMinPeriod = 10;
 	public static final boolean liftEncoderReverse = false;
 	public static final int liftAvgEncoderVal = 5;
 
@@ -198,15 +198,15 @@ public class RobotMap {
 	double iTurn = 0.00001;
 	double pDrive = 0;
 	
-	public static final double liftPUp = 0.002;
-	public static final double liftIUp = 0.0001;
-	public static final double liftDUp = 0.0001;
+	public static final double liftPUp = 0.0098;
+	public static final double liftIUp = 0.0124;
+	public static final double liftDUp = 0.0005418310445973070;
 	
 	public static final double liftPDw = 0.002;
 	public static final double liftIDw = 0.0001;
 	public static final double liftDDw = 0.0001;
 	
-	public static final long liftPIDPeriod = 100; //100ms
+	public static final long liftPIDPeriod = 70; //100ms
 	
 	/****************************************************************
 	 *                TCP Servers  (ONLY FOR DEBUGGING)             *
