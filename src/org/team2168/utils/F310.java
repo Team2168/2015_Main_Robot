@@ -1,5 +1,7 @@
 package org.team2168.utils;
 
+import org.team2168.OI;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -19,7 +21,6 @@ public class F310 extends Joystick
 	private static final int AXIS_Right_SHOULDER_TRIGGER = 3;
 	private static final int AXIS_RIGHT_X = 4;
 	private static final int AXIS_RIGHT_Y = 5;
-	private static final int AXIS_DPAD_X = 6;
 
 	// Gamepad buttons
 	private static final int BUTTON_A = 1;
@@ -32,6 +33,12 @@ public class F310 extends Joystick
 	private static final int BUTTON_START = 8;
 	private static final int BUTTON_LEFT_STICK = 9;
 	private static final int BUTTON_RIGHT_STICK = 10;
+	
+	//POV (D-Pad) buttons
+	private static final int DPAD_UP = 0;
+	private static final int DPAD_RIGHT = 90;
+	private static final int DPAD_DOWN = 180;
+	private static final int DPAD_LEFT = 270;
 
 	//private static final int BUTTON_MODE = -1;
 	//private static final int BUTTON_LOGITECH = -1;
@@ -87,14 +94,6 @@ public class F310 extends Joystick
 	public double getRightTriggerAxisRaw() {
 		return getRawAxis(AXIS_Right_SHOULDER_TRIGGER);
 	}
-
-	/**
-	 * Returns the position of the shoulder trigger.
-	 */
-	public double getDAxisRaw_X() {
-		return getRawAxis(AXIS_DPAD_X);
-	}
-
 
 	/**
 	 * Checks whether Button A is being pressed and returns true if it is.
@@ -153,14 +152,20 @@ public class F310 extends Joystick
 	 * WPILIB cannot access the vertical axis of the Logitech Game Controller Dpad
 	 */
 
-	public boolean isPressedButtonDPadLeft() {
-		double x = getDAxisRaw_X();
-		return (x < -0.5);
+	public boolean isPressedButtonDPadUp() {
+		return (OI.operatorJoystick.getPOV() == DPAD_UP);
 	}
 
 	public boolean isPressedButtonDPadRight() {
-		double x = getDAxisRaw_X();
-		return (x > 0.5);
+		return (OI.operatorJoystick.getPOV() == DPAD_RIGHT);
+	}
+	
+	public boolean isPressedButtonDPadDown() {
+		return (OI.operatorJoystick.getPOV() == DPAD_DOWN);
+	}
+	
+	public boolean isPressedButtonDPadLeft() {
+		return (OI.operatorJoystick.getPOV() == DPAD_LEFT);
 	}
 
 	public boolean isPressedButtonLeftTrigger() {
@@ -249,11 +254,19 @@ public class F310 extends Joystick
 		return new JoystickAnalogButton(this, AXIS_Right_SHOULDER_TRIGGER, -0.5);
 	}
 
-	public JoystickAnalogButton ButtonLeftDPad() {
-		return new JoystickAnalogButton(this, AXIS_DPAD_X, -0.5);
+	public JoystickAnalogButton ButtonUpDPad() {
+		return new JoystickAnalogButton(this, DPAD_UP);
 	}
-
+	
 	public JoystickAnalogButton ButtonRightDPad() {
-		return new JoystickAnalogButton(this, AXIS_DPAD_X, 0.5);
+		return new JoystickAnalogButton(this, DPAD_RIGHT);
+	}
+	
+	public JoystickAnalogButton ButtonDownDPad() {
+		return new JoystickAnalogButton(this, DPAD_DOWN);
+	}
+	
+	public JoystickAnalogButton ButtonLeftDPad() {
+		return new JoystickAnalogButton(this, DPAD_LEFT);
 	}
 }

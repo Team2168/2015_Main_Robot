@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.TimerTask;
 
+import org.team2168.OI;
 import org.team2168.Robot;
 import org.team2168.RobotMap;
 import org.team2168.subsystems.Drivetrain;
@@ -91,6 +92,8 @@ public class ConsolePrinter {
 	    	
 	    	SmartDashboard.putNumber("Lift Motor Current", Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_PDP));
 	    	SmartDashboard.putNumber("Lift Motor Voltage", Robot.lift.getMotorVoltage());
+	    	
+	    	SmartDashboard.putNumber("D-Pad Angle", OI.operatorJoystick.getPOV());
 	
 	    	//file log
 	    	log.println(Timer.getFPGATimestamp() + "\t" + 
