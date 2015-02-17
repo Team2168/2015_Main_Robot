@@ -48,7 +48,8 @@ public class RobotMap {
 	public final static int GRIPPER_DOUBLE_SOLENOID_REVERSE = 3;
 	public final static int LIFT_BRAKE_DOUBLE_SOLENOID_FORWARD = 4;
 	public final static int LIFT_BRAKE_DOUBLE_SOLENOID_REVERSE = 5;
-
+	public final static int PUSHER_SOLENOID_FORWARD = 6;
+	public final static int PUSHER_SOLENOID_REVERSE = 7;
 
 	//Digital IO Channels//////////////////////////////////////////////////////
 	//0-9 on RoboRio 10-25 on MXP

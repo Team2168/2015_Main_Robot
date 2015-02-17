@@ -10,6 +10,7 @@ import org.team2168.utils.TCPSocketSender;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -18,7 +19,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Lift extends Subsystem {
 
 	private static Lift instance = null;
-	private Talon intakeMotor;
+	private Victor intakeMotor;
 	private DoubleSolenoid liftBrake;
 	private double currentPosition;
 	private static final double DESTINATION_TOL = 1.0; //inches
@@ -35,7 +36,7 @@ public class Lift extends Subsystem {
 	 * being created.
 	 */
 	private Lift() {
-		intakeMotor = new Talon(RobotMap.LIFT_MOTOR);
+		intakeMotor = new Victor(RobotMap.LIFT_MOTOR);
 		liftEncoder = new AverageEncoder(RobotMap.LIFT_ENCODER_A,
 				RobotMap.LIFT_ENCODER_B, RobotMap.liftEncoderPulsePerRot,
 				RobotMap.liftEncoderDistPerTick,
@@ -43,7 +44,7 @@ public class Lift extends Subsystem {
 				RobotMap.liftEncodingType, RobotMap.liftSpeedReturnType,
 				RobotMap.liftPosReturnType, RobotMap.liftAvgEncoderVal);
 		
-		liftBrake = new DoubleSolenoid(RobotMap.LIFT_BRAKE_DOUBLE_SOLENOID_FORWARD,
+		liftBrake = new DoubleSolenoid(RobotMap.PCM_CAN_ID, RobotMap.LIFT_BRAKE_DOUBLE_SOLENOID_FORWARD,
 				RobotMap.LIFT_BRAKE_DOUBLE_SOLENOID_REVERSE);
 		
 		liftController = new PIDPosition("LiftPID", RobotMap.liftPUp, 
@@ -72,7 +73,7 @@ public class Lift extends Subsystem {
 	 * Set the default command for the subsystem.
 	 */
 	public void initDefaultCommand() {
-		setDefaultCommand(new LiftWithJoystick());
+		//setDefaultCommand(new LiftWithJoystick());
 	}
 
 	/**

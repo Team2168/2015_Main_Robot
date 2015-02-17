@@ -5,6 +5,7 @@ import org.team2168.commands.winch.WinchWithJoystick;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -13,7 +14,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Winch extends Subsystem {
 
     private static Winch instance = null;
-    private static Talon winchMotor;
+    private static Victor winchMotor;
     private static Encoder winchEncoder;
 
     /**
@@ -21,7 +22,7 @@ public class Winch extends Subsystem {
      * being created.
      */
     private Winch() {
-        winchMotor = new Talon(RobotMap.WINCH_MOTOR);
+        winchMotor = new Victor(RobotMap.WINCH_MOTOR);
         winchEncoder = new Encoder(RobotMap.WINCH_ENCODER_A,
                 RobotMap.WINCH_ENCODER_B);
     }

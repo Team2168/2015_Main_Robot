@@ -60,16 +60,18 @@ public class F310 extends Joystick
 
 	/**
 	 * Returns the Y position of the left stick.
+	 * @return Positive when pushing up on the stick.
 	 */
 	public double getLeftStickRaw_Y() {
-		return getRawAxis(AXIS_LEFT_Y);
+		return -getRawAxis(AXIS_LEFT_Y);
 	}
 
 	/**
 	 * Returns the Y position of the right stick.
+	 * @return Positive when pushing up on the stick.
 	 */
 	public double getRightStickRaw_Y() {
-		return getRawAxis(AXIS_RIGHT_Y);
+		return -getRawAxis(AXIS_RIGHT_Y);
 	}
 
 	/**

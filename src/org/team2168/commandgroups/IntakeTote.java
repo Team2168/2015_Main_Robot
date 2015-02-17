@@ -23,6 +23,6 @@ public class IntakeTote extends CommandGroup {
 		addSequential(new EnableBrake());
 		addSequential(new EngageIntake());
 		addSequential(new IntakeUntilTotePresent());
-		addSequential(new SetIntakeWheelSpeed(0.0));
+		//addSequential(new SetIntakeWheelSpeed(0.0));
 	}
 }

@@ -20,7 +20,7 @@ public class Gripper extends Subsystem {
 	 * Private to prevent creating more than one instance of this subsystem.
 	 */
 	private Gripper(){
-		gripper = new DoubleSolenoid(RobotMap.GRIPPER_DOUBLE_SOLENOID_FORWARD,
+		gripper = new DoubleSolenoid(RobotMap.PCM_CAN_ID, RobotMap.GRIPPER_DOUBLE_SOLENOID_FORWARD,
 				RobotMap.GRIPPER_DOUBLE_SOLENOID_REVERSE);
 	}
 
@@ -69,6 +69,8 @@ public class Gripper extends Subsystem {
 	 * Set the default command for a subsystem here.
 	 */
 	public void initDefaultCommand() {
-		setDefaultCommand(new ReleaseGripper());
+		//We don't want a command that finishes to be the default...
+		//Call the command on startup if you want to establish component position.
+		//setDefaultCommand(new ReleaseGripper());
 	}
 }
