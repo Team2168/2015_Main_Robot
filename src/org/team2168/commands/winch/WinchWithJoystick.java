@@ -24,7 +24,7 @@ public class WinchWithJoystick extends Command {
      * Called repeatedly when this Command is scheduled to run
      */
     protected void execute() {
-        Robot.winch.drive(OI.operatorJoystick.getRightStickRaw_Y());
+        Robot.winch.drive(OI.operatorJoystick.getLeftStickRaw_Y());
     }
 
     
