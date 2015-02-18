@@ -24,15 +24,13 @@ public class EngageGripper extends Command {
 	 */
 	protected void execute() {
 		Robot.gripper.engageGripper();
-		System.out.println("Gripper Engaged");
 	}
 
 	/**
 	 * This method ends the command when it returns true
 	 */
 	protected boolean isFinished() {
-		//return Robot.gripper.isGripperEngaged();
-		return true;
+		return Robot.gripper.isGripperEngaged();
 	}
 
 	/**

@@ -24,15 +24,13 @@ public class ReleaseGripper extends Command {
 	 */
 	protected void execute() {
 		Robot.gripper.releaseGripper();
-		System.out.println("Gripper Disengaged");
 	}
 
 	/**
 	 * This method ends the command when it returns true
 	 */
 	protected boolean isFinished() {
-		//return Robot.gripper.isGripperDisengaged();
-		return true;
+		return Robot.gripper.isGripperDisengaged();
 	}
 
 	/**

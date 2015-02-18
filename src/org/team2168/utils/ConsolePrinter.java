@@ -94,6 +94,8 @@ public class ConsolePrinter {
 	    	SmartDashboard.putNumber("Lift Motor Voltage", Robot.lift.getMotorVoltage());
 	    	
 	    	SmartDashboard.putNumber("D-Pad Angle", OI.operatorJoystick.getPOV());
+	    	
+	    	SmartDashboard.putNumber("Tote IR", Robot.intake.getToteDistance());
 	
 	    	//file log
 	    	log.println(Timer.getFPGATimestamp() + "\t" + 
