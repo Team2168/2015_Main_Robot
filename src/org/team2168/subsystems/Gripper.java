@@ -20,7 +20,7 @@ public class Gripper extends Subsystem {
 	 * Private to prevent creating more than one instance of this subsystem.
 	 */
 	private Gripper(){
-		gripper = new DoubleSolenoid(RobotMap.GRIPPER_DOUBLE_SOLENOID_FORWARD,
+		gripper = new DoubleSolenoid(0,RobotMap.GRIPPER_DOUBLE_SOLENOID_FORWARD,
 				RobotMap.GRIPPER_DOUBLE_SOLENOID_REVERSE);
 	}
 

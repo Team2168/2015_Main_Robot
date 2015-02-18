@@ -8,6 +8,7 @@ import org.team2168.commands.gripper.EngageGripper;
 import org.team2168.commands.gripper.ReleaseGripper;
 import org.team2168.commands.intake.DisengageIntake;
 import org.team2168.commands.intake.EngageIntake;
+import org.team2168.commands.intake.SetIntakeWheelSpeed;
 import org.team2168.commands.lift.DisableBrake;
 import org.team2168.commands.lift.EnableBrake;
 import org.team2168.commands.lift.PIDCommands.LiftPIDPause;
@@ -46,20 +47,21 @@ public class OI {
 
 		//OPERATOR JOYSTICK BUTTON MAP/////////////////////////////////////////////
 		operatorJoystick.ButtonA().whenPressed(new DriveLiftToSetPosition(RobotMap.MIN_LIFT_HEIGHT));
-		operatorJoystick.ButtonY().whenPressed(new DriveLiftToSetPosition(RobotMap.LIFT_ABOVE_TOTE));
-		operatorJoystick.ButtonRightDPad().whenPressed(new EngageGripper());
+		//operatorJoystick.ButtonY().whenPressed(new DriveLiftToSetPosition(RobotMap.LIFT_ABOVE_TOTE));
+		//operatorJoystick.ButtonB.whenPressed(new EngageGripper());
 		operatorJoystick.ButtonLeftDPad().whenPressed(new ReleaseGripper());
 		operatorJoystick.ButtonRightBumper().whenPressed(new EngageIntake());
 		operatorJoystick.ButtonLeftBumper().whenPressed(new DisengageIntake());
 		//TODO: The triggers return analog values. Use this feature to allow the operator to
 		// drive the intake at variable speeds send a variable speed to the intake wheels.
-		//operatorJoystick.ButtonRightTrigger().whileHeld(new ReverseIntakeWheels());
-		//operatorJoystick.ButtonLeftTrigger().whileHeld(new ForwardIntakeWheels());
+		operatorJoystick.ButtonB().whenPressed(new SetIntakeWheelSpeed(1));
+		operatorJoystick.ButtonX().whenPressed(new SetIntakeWheelSpeed(-1));
+		operatorJoystick.ButtonY().whenPressed(new SetIntakeWheelSpeed(0));
 
 		
     
 
-
+      
 		//TEST CONTROLLER BUTTON MAP///////////////////////////////////////////////
         pnuematicTestJoystick.ButtonA().whenPressed(new EngageGripper());
         pnuematicTestJoystick.ButtonB().whenPressed(new ReleaseGripper());
