@@ -147,27 +147,6 @@ public class F310 extends Joystick
 		return getRawButton(BUTTON_RIGHT_STICK);
 	}
 
-	/**
-	 * DPad Left and Right only
-	 * WPILIB cannot access the vertical axis of the Logitech Game Controller Dpad
-	 */
-
-	public boolean isPressedButtonDPadUp() {
-		return (OI.operatorJoystick.getPOV() == DPAD_UP);
-	}
-
-	public boolean isPressedButtonDPadRight() {
-		return (OI.operatorJoystick.getPOV() == DPAD_RIGHT);
-	}
-	
-	public boolean isPressedButtonDPadDown() {
-		return (OI.operatorJoystick.getPOV() == DPAD_DOWN);
-	}
-	
-	public boolean isPressedButtonDPadLeft() {
-		return (OI.operatorJoystick.getPOV() == DPAD_LEFT);
-	}
-
 	public boolean isPressedButtonLeftTrigger() {
 		double x = getLeftTriggerAxisRaw();
 		return (x < -0.5);
@@ -254,19 +233,19 @@ public class F310 extends Joystick
 		return new JoystickAnalogButton(this, AXIS_Right_SHOULDER_TRIGGER, -0.5);
 	}
 
-	public JoystickAnalogButton ButtonUpDPad() {
-		return new JoystickAnalogButton(this, DPAD_UP);
+	public JoystickPOVButton ButtonUpDPad() {
+		return new JoystickPOVButton(this, DPAD_UP);
 	}
 	
-	public JoystickAnalogButton ButtonRightDPad() {
-		return new JoystickAnalogButton(this, DPAD_RIGHT);
+	public JoystickPOVButton ButtonRightDPad() {
+		return new JoystickPOVButton(this, DPAD_RIGHT);
 	}
 	
-	public JoystickAnalogButton ButtonDownDPad() {
-		return new JoystickAnalogButton(this, DPAD_DOWN);
+	public JoystickPOVButton ButtonDownDPad() {
+		return new JoystickPOVButton(this, DPAD_DOWN);
 	}
 	
-	public JoystickAnalogButton ButtonLeftDPad() {
-		return new JoystickAnalogButton(this, DPAD_LEFT);
+	public JoystickPOVButton ButtonLeftDPad() {
+		return new JoystickPOVButton(this, DPAD_LEFT);
 	}
 }
