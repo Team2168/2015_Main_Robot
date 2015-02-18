@@ -29,16 +29,18 @@ public class RobotMap {
 	public final static int WINCH_MOTOR = 9;
 	
 	//PDP Channels/////////////////////////////////////////////////////////////
-	public final static int DRIVETRAIN_RIGHT_MOTOR_1_PDP = 0;
+	public final static int DRIVETRAIN_RIGHT_MOTOR_1_PDP = 2;
 	public final static int DRIVETRAIN_RIGHT_MOTOR_2_PDP = 1;
-	public final static int DRIVETRAIN_RIGHT_MOTOR_3_PDP = 2;
+	public final static int DRIVETRAIN_RIGHT_MOTOR_3_PDP = 0;
 	public final static int DRIVETRAIN_LEFT_MOTOR_1_PDP = 13;
 	public final static int DRIVETRAIN_LEFT_MOTOR_2_PDP = 14;
 	public final static int DRIVETRAIN_LEFT_MOTOR_3_PDP = 15;
-	public final static int INTAKE_LEFT_MOTOR_PDP = 6;
-	public final static int INTAKE_RIGHT_MOTOR_PDP = 7;
+	public final static int INTAKE_LEFT_MOTOR_PDP = 11;
+	public final static int INTAKE_RIGHT_MOTOR_PDP = 4;
 	public final static int LIFT_MOTOR_PDP = 12;
-	public final static int WINCH_MOTOR_PDP = 9;
+	public final static int WINCH_MOTOR_PDP = 10;
+	public final static int DIO_POWER = 6;
+	public final static int PCM_POWER = 9;
 
 
 	//Solenoid Channels////////////////////////////////////////////////////////
@@ -48,7 +50,8 @@ public class RobotMap {
 	public final static int GRIPPER_DOUBLE_SOLENOID_REVERSE = 3;
 	public final static int LIFT_BRAKE_DOUBLE_SOLENOID_FORWARD = 4;
 	public final static int LIFT_BRAKE_DOUBLE_SOLENOID_REVERSE = 5;
-
+	public final static int PUSHER_SOLENOID_FORWARD = 6;
+	public final static int PUSHER_SOLENOID_REVERSE = 7;
 
 	//Digital IO Channels//////////////////////////////////////////////////////
 	//0-9 on RoboRio 10-25 on MXP
@@ -73,7 +76,7 @@ public class RobotMap {
 
 	//CAN Device IDs///////////////////////////////////////////////////////////
 	public final static int PDP_CAN_ID = 1;
-	public final static int PCM_CAN_ID = 2;
+	public final static int PCM_CAN_ID = 0;
 
 
 	//Joysticks////////////////////////////////////////////////////////////////

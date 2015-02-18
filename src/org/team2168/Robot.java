@@ -6,6 +6,7 @@ import org.team2168.subsystems.Gripper;
 import org.team2168.subsystems.Intake;
 import org.team2168.subsystems.Lift;
 import org.team2168.subsystems.Pneumatics;
+import org.team2168.subsystems.Pusher;
 import org.team2168.subsystems.Winch;
 import org.team2168.utils.ConsolePrinter;
 import org.team2168.utils.PowerDistribution;
@@ -15,7 +16,6 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -34,7 +34,8 @@ public class Robot extends IterativeRobot {
 	public static Winch winch;
 	public static Gripper gripper;
 	public static Pneumatics pneumatics;
-
+	public static Pusher pusher;
+	
 	//Power Monitor
 	public static PowerDistribution pdp;
 	
@@ -53,13 +54,14 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
+		pneumatics = Pneumatics.getInstance();
 		drivetrain = Drivetrain.getInstance();
 		intake = Intake.getInstance();
 		lift = Lift.getInstance();
 		winch = Winch.getInstance();
 		gripper = Gripper.getInstance();
-		pneumatics = Pneumatics.getInstance();
-
+		pusher = Pusher.getInstance();
+		
 		accel = new BuiltInAccelerometer();
 		
 		pdp = new PowerDistribution(RobotMap.PDPThreadPeriod);
@@ -72,6 +74,8 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		// instantiate the command used for the autonomous period
 		// autonomousCommand = new ExampleCommand();
+		
+		System.out.println("Bot Finished Loading.");
 	}
 
 

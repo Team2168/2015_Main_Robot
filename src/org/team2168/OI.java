@@ -8,10 +8,13 @@ import org.team2168.commands.gripper.EngageGripper;
 import org.team2168.commands.gripper.ReleaseGripper;
 import org.team2168.commands.intake.DisengageIntake;
 import org.team2168.commands.intake.EngageIntake;
+import org.team2168.commands.intake.SetIntakeWheelSpeed;
 import org.team2168.commands.lift.DisableBrake;
 import org.team2168.commands.lift.EnableBrake;
 import org.team2168.commands.lift.PIDCommands.LiftPIDPause;
 import org.team2168.commands.lift.PIDCommands.LiftPIDPosition;
+import org.team2168.commands.pusher.PushTotes;
+import org.team2168.commands.pusher.RetractPusher;
 import org.team2168.utils.F310;
 import org.team2168.commands.drivetrain.DriveXDistance;
 
@@ -39,7 +42,8 @@ public class OI {
 
 
 		//DRIVER JOYSTICK BUTTON MAP///////////////////////////////////////////////
-
+		//driverJoystick.ButtonA().whenPressed(new PushTotes());
+		//driverJoystick.ButtonB().whenPressed(new RetractPusher());
 
 		//OPERATOR JOYSTICK BUTTON MAP/////////////////////////////////////////////
 		operatorJoystick.ButtonA().whenPressed(new DriveLiftToSetPosition(RobotMap.MIN_LIFT_HEIGHT));
@@ -48,12 +52,8 @@ public class OI {
 		operatorJoystick.ButtonLeftDPad().whenPressed(new ReleaseGripper());
 		operatorJoystick.ButtonRightBumper().whenPressed(new EngageIntake());
 		operatorJoystick.ButtonLeftBumper().whenPressed(new DisengageIntake());
-		//TODO: The triggers return analog values. Use this feature to allow the operator to
-		// drive the intake at variable speeds send a variable speed to the intake wheels.
-		//operatorJoystick.ButtonRightTrigger().whileHeld(new ReverseIntakeWheels());
-		//operatorJoystick.ButtonLeftTrigger().whileHeld(new ForwardIntakeWheels());
-
-		
+		operatorJoystick.ButtonStart().whenPressed(new PushTotes());
+		operatorJoystick.ButtonBack().whenPressed(new RetractPusher());
     
 
 
@@ -64,11 +64,11 @@ public class OI {
         pnuematicTestJoystick.ButtonY().whenPressed(new DisableBrake());
         pnuematicTestJoystick.ButtonLeftBumper().whenPressed(new EngageIntake());
         pnuematicTestJoystick.ButtonRightBumper().whenPressed(new DisengageIntake());
-        
-        commandsTestJoystick.ButtonA().whenPressed(new LiftPIDPosition());
-        commandsTestJoystick.ButtonB().whenPressed(new LiftPIDPause());
-        commandsTestJoystick.ButtonRightBumper().whenPressed(new DriveXDistance(180,0.3,-1.20));
-       
+//        
+//        commandsTestJoystick.ButtonA().whenPressed(new LiftPIDPosition());
+//        commandsTestJoystick.ButtonB().whenPressed(new LiftPIDPause());
+//        commandsTestJoystick.ButtonRightBumper().whenPressed(new DriveXDistance(180,0.3,-1.20));
+//       
         
 	}
 }

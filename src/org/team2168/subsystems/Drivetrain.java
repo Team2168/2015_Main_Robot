@@ -361,8 +361,8 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the right motors
 	 */
 	public void tankDrive(double leftSpeed, double rightSpeed) {
-		driveLeft(-leftSpeed);
-		driveRight(rightSpeed);
+		driveLeft(leftSpeed);
+		driveRight(-rightSpeed);
 	}
 
 	/**
