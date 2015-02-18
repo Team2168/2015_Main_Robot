@@ -73,7 +73,7 @@ public class Lift extends Subsystem {
 	 * Set the default command for the subsystem.
 	 */
 	public void initDefaultCommand() {
-		//setDefaultCommand(new LiftWithJoystick());
+		setDefaultCommand(new LiftWithJoystick());
 	}
 
 	/**
