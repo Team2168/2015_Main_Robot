@@ -69,6 +69,35 @@ public class AverageEncoder extends Encoder implements PIDSensorInterface {
 
     }
 
+    
+
+    public double getRawRate() {
+    	
+    	double rate = super.getRate(); //Inches per second
+    	
+    	switch (speedReturnType.value) {
+        case SpeedReturnType.IPS_val:
+            return rate;
+       
+        case SpeedReturnType.FPS_val:
+            return (rate / 12); // feet per second
+        
+        case SpeedReturnType.RPM_val:
+            return ((rate * 60) / (distPerTick*PPR)); // ticks per minute... rpm
+           
+        case SpeedReturnType.PERIOD_val:
+            return (super.getPeriod()); // ticks per minute... rpm
+     
+        default:
+            // should be unreachable
+            putData(0);
+            break;
+
+        }
+
+    	return super.getRate();
+    }
+    
     /**
      * returns (gets) Average of last n values sent, as name says.
      *
@@ -112,6 +141,7 @@ public class AverageEncoder extends Encoder implements PIDSensorInterface {
         // millisecond
         oldTime = timeNow;
         countBefore = countNow;
+        
 
         switch (speedReturnType.value) {
         case SpeedReturnType.IPS_val:

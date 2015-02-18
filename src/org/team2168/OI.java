@@ -14,6 +14,9 @@ import org.team2168.commands.lift.PIDCommands.LiftPIDPause;
 import org.team2168.commands.lift.PIDCommands.LiftPIDPosition;
 import org.team2168.utils.F310;
 import org.team2168.commands.drivetrain.DriveXDistance;
+import org.team2168.commands.drivetrain.PIDCommands.DriveLeftPIDPath;
+import org.team2168.commands.drivetrain.PIDCommands.DrivePIDPath;
+import org.team2168.commands.drivetrain.PIDCommands.DriveRightPIDPath;
 
 
 /**
@@ -68,7 +71,11 @@ public class OI {
         commandsTestJoystick.ButtonA().whenPressed(new LiftPIDPosition());
         commandsTestJoystick.ButtonB().whenPressed(new LiftPIDPause());
         commandsTestJoystick.ButtonRightBumper().whenPressed(new DriveXDistance(180,0.3,-1.20));
-       
+        //commandsTestJoystick.ButtonX().whenPressed(new DrivePath());
+        commandsTestJoystick.ButtonX().whenPressed(new DriveLeftPIDPath(Robot.path.smoothLeftVelocity));
+        commandsTestJoystick.ButtonY().whenPressed(new DriveRightPIDPath(Robot.path.smoothRightVelocity));
+        commandsTestJoystick.ButtonLeftBumper().whenPressed(new DrivePIDPath(Robot.path.smoothLeftVelocity, Robot.path.smoothRightVelocity));
+        
         
 	}
 }

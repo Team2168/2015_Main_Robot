@@ -1,6 +1,7 @@
 
 package org.team2168;
 
+import org.team2168.PIDController.pathplanner.FalconPathPlanner;
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.Gripper;
 import org.team2168.subsystems.Intake;
@@ -41,6 +42,10 @@ public class Robot extends IterativeRobot {
 	//SmartDash printer
 	ConsolePrinter printer;
 	
+	//path follower
+	public static FalconPathPlanner path;
+		
+	
 	public static BuiltInAccelerometer accel;
 
 	// Auto command objects
@@ -65,6 +70,24 @@ public class Robot extends IterativeRobot {
 		pdp = new PowerDistribution(RobotMap.PDPThreadPeriod);
 		pdp.startThread();
 
+		long start = System.currentTimeMillis();
+		//create waypoint path
+		double[][] waypoints = new double[][]{
+				{4, 6},
+				{4, 16}
+		}; 
+
+		double totalTime = 10; //seconds
+		double timeStep = 0.07; //period of control loop on Rio, seconds
+		double robotTrackWidth = 2; //distance between left and right wheels, feet
+
+		
+		path = new FalconPathPlanner(waypoints);
+		path.calculate(totalTime, timeStep, robotTrackWidth);
+
+		System.out.println("Time in ms: " + (System.currentTimeMillis()-start));
+	
+		
         //create thread to write dashboard variables
 		printer = new ConsolePrinter(RobotMap.SmartDashThreadPeriod);
 		printer.startThread();

@@ -96,9 +96,9 @@ public class RobotMap {
 	public static final double driveEncoderDistPerTick = (Math.PI * driveWheelDiameter/driveEncoderPulsePerRot);
 	public static final CounterBase.EncodingType driveEncodingType = CounterBase.EncodingType.k4X; //count rising and falling edges on both channels
 	public static final AverageEncoder.PositionReturnType drivePosReturnType = AverageEncoder.PositionReturnType.INCH;
-	public static final AverageEncoder.SpeedReturnType driveSpeedReturnType = AverageEncoder.SpeedReturnType.RPM;
-	public static final int driveEncoderMinRate = 10;
-	public static final int driveEncoderMinPeriod = 10;
+	public static final AverageEncoder.SpeedReturnType driveSpeedReturnType = AverageEncoder.SpeedReturnType.FPS;
+	public static final int driveEncoderMinRate = 0;
+	public static final int driveEncoderMinPeriod = 1;
 	public static final boolean leftDriveTrainEncoderReverse = false;
 	public static final boolean rightDriveTrainEncoderReverse = true;
 	public static final int driveAvgEncoderVal = 5;
@@ -120,8 +120,8 @@ public class RobotMap {
 	public static final CounterBase.EncodingType liftEncodingType = CounterBase.EncodingType.k4X; //count rising and falling edges on both channels
 	public static final AverageEncoder.PositionReturnType liftPosReturnType = AverageEncoder.PositionReturnType.INCH;
 	public static final AverageEncoder.SpeedReturnType liftSpeedReturnType = AverageEncoder.SpeedReturnType.RPM;
-	public static final int liftEncoderMinRate = 5;
-	public static final int liftEncoderMinPeriod = 5;
+	public static final int liftEncoderMinRate = 10;
+	public static final int liftEncoderMinPeriod = 10;
 	public static final boolean liftEncoderReverse = false;
 	public static final int liftAvgEncoderVal = 5;
 
@@ -168,19 +168,19 @@ public class RobotMap {
 	 *                            PID Parameters 
 	 *************************************************************************/
 	//period to run PID loops on drive train
-	public static final long driveTrainPIDPeriod = 100;//100ms loop
+	public static final long driveTrainPIDPeriod = 70;//70ms loop
 	public static final int drivetrainPIDArraySize = 50;
 
 	//PID Gains for Left & Right Speed and Position
 	//Bandwidth =
 	//Phase Margin = 
-	public static final double driveTrainLeftSpeedP =  0.002;
-	public static final double driveTrainLeftSpeedI =  0.0001; 
-	public static final double driveTrainLeftSpeedD =  0.0001;
+	public static final double driveTrainLeftSpeedP =  0.4779;
+	public static final double driveTrainLeftSpeedI =  1.0526; 
+	public static final double driveTrainLeftSpeedD =  0.0543;
 
-	public static final double driveTrainRightSpeedP = 0.002;
-	public static final double driveTrainRightSpeedI = 0.0001;  
-	public static final double driveTrainRightSpeedD = 0.0001;
+	public static final double driveTrainRightSpeedP = 0.4779;
+	public static final double driveTrainRightSpeedI = 1.0526;  
+	public static final double driveTrainRightSpeedD = 0.0543;
 
 	public static final double driveTrainLeftPositionP = 0.002;
 	public static final double driveTrainLeftPositionI = 0.0001412646174233;  
@@ -198,15 +198,15 @@ public class RobotMap {
 	double iTurn = 0.00001;
 	double pDrive = 0;
 	
-	public static final double liftPUp = 0.002;
-	public static final double liftIUp = 0.0001;
-	public static final double liftDUp = 0.0001;
+	public static final double liftPUp = 0.0098;
+	public static final double liftIUp = 0.0124;
+	public static final double liftDUp = 0.0005418310445973070;
 	
 	public static final double liftPDw = 0.002;
 	public static final double liftIDw = 0.0001;
 	public static final double liftDDw = 0.0001;
 	
-	public static final long liftPIDPeriod = 100; //100ms
+	public static final long liftPIDPeriod = 70; //100ms
 	
 	/****************************************************************
 	 *                TCP Servers  (ONLY FOR DEBUGGING)             *

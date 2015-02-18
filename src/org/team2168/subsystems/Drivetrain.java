@@ -2,6 +2,7 @@ package org.team2168.subsystems;
 
 
 
+
 import org.team2168.OI;
 import org.team2168.Robot;
 import org.team2168.RobotMap;
@@ -10,6 +11,7 @@ import org.team2168.PIDController.sensors.AverageEncoder;
 import org.team2168.PIDController.sensors.FalconGyro;
 import org.team2168.PIDControllers.PIDPosition;
 import org.team2168.PIDControllers.PIDSpeed;
+import org.team2168.PIDControllers.PIDSpeed2;
 import org.team2168.commands.drivetrain.DriveWithJoysticks;
 import org.team2168.utils.TCPSocketSender;
 
@@ -50,8 +52,8 @@ public class Drivetrain extends Subsystem {
 	public PIDPosition rotateController;
 	
 	//declare speed controllers
-	public PIDSpeed rightSpeedController;
-	public PIDSpeed leftSpeedController;
+	public PIDSpeed2 rightSpeedController;
+	public PIDSpeed2 leftSpeedController;
 	
 	//output voltage...ONLY FOR DEBUGGING PURPOSES, SHOULD BE REMOVED FOR COMPITITION
 	private volatile double leftMotor1Voltage;
@@ -131,7 +133,7 @@ public class Drivetrain extends Subsystem {
 				
 
 		    	//Spawn new PID Controller
-		    	rightSpeedController = new PIDSpeed(
+		    	rightSpeedController = new PIDSpeed2(
 		    			"RightSpeedController", 
 		    			RobotMap.driveTrainRightSpeedP,
 		    			RobotMap.driveTrainRightSpeedI, 
@@ -147,7 +149,7 @@ public class Drivetrain extends Subsystem {
 		    			drivetrainRightEncoder,
 		    			RobotMap.driveTrainPIDPeriod);
 		    	
-		    	leftSpeedController = new PIDSpeed(
+		    	leftSpeedController = new PIDSpeed2(
 		    			"LeftSpeedController", 
 		    			RobotMap.driveTrainLeftSpeedP,
 		    			RobotMap.driveTrainLeftSpeedI, 

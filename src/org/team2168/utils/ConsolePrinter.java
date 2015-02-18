@@ -33,7 +33,7 @@ public class ConsolePrinter {
 		
 		try {
 			this.log = new PrintWriter("/home/lvuser/Log.txt", "UTF-8");
-			log.println("Time \t VoltageL1 \t VoltageL2 \t VoltageL3 \t VoltageR1 \t VoltageR2 \t VoltageR3 \t CurrentL1 \t CurrentL2 \t CurrentL3 \t CurrentR1 \t CurrentR2 \t CurrentR3 \t Gyrot SPI Gyro Angle \t SPI Gyro Rate \t Analog Gyro Angle \t Analog Gyro Rate \t Left Encoder Position \t Left Encoder Rate \t Right Encoder Position \t Right Encoder Rate");
+			log.println("Time \t VoltageL1 \t VoltageL2 \t VoltageL3 \t VoltageR1 \t VoltageR2 \t VoltageR3 \t CurrentL1 \t CurrentL2 \t CurrentL3 \t CurrentR1 \t CurrentR2 \t CurrentR3 \t Gyrot SPI Gyro Angle \t SPI Gyro Rate \t Analog Gyro Angle \t Analog Gyro Rate \t Left Encoder Position \t Left Encoder Rate \t Right Encoder Position \t Right Encoder Rate \t Lift Voltage \t Lift Current \t Lift Position \t Lift Rate");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -70,6 +70,7 @@ public class ConsolePrinter {
 	    	SmartDashboard.putNumber("DTRight1MotorVoltage", Robot.drivetrain.getRight1MotorVoltage());
 	    	SmartDashboard.putNumber("DTRight2MotorVoltage", Robot.drivetrain.getRight2MotorVoltage());
 	    	SmartDashboard.putNumber("DTRight3MotorVoltage", Robot.drivetrain.getRight3MotorVoltage());
+	    	SmartDashboard.putNumber("DTRightEncoderRate", Robot.drivetrain.drivetrainRightEncoder.getRate());
 	    	
 	    	SmartDashboard.putNumber("DTLeft1MotorVoltage", Robot.drivetrain.getLeft1MotorVoltage());
 	    	SmartDashboard.putNumber("DTLeft2MotorVoltage", Robot.drivetrain.getLeft2MotorVoltage());
@@ -87,7 +88,9 @@ public class ConsolePrinter {
 	    	SmartDashboard.putNumber("DTLeft3MotorCurrent", Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_3_PDP));
 	    	
 	    	SmartDashboard.putNumber("Lift Encoder Position", Robot.lift.getPosition());
-	    	SmartDashboard.putNumber("Lift Encoder Rage", Robot.lift.liftEncoder.getRate());
+	    	SmartDashboard.putNumber("Lift Encoder Rate", Robot.lift.liftEncoder.getRawRate());
+	    	
+	    	System.out.println(Robot.lift.liftEncoder.getRawRate());
 	    	
 	    	SmartDashboard.putNumber("Lift Motor Current", Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_PDP));
 	    	SmartDashboard.putNumber("Lift Motor Voltage", Robot.lift.getMotorVoltage());
@@ -120,8 +123,13 @@ public class ConsolePrinter {
 					Robot.drivetrain.drivetrainLeftEncoder.getRate() + "\t" +
 					
 					Robot.drivetrain.drivetrainRightEncoder.getPos() + "\t" +
-					Robot.drivetrain.drivetrainRightEncoder.getRate() + "\t"
+					Robot.drivetrain.drivetrainRightEncoder.getRate() + "\t" + 
 	    			
+					Robot.lift.getMotorVoltage() + "\t" +
+					Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_PDP) + "\t" +
+					Robot.lift.getPosition() + "\t" +
+					Robot.lift.liftEncoder.getRawRate()
+					
 	    			);
 	    	log.flush();
 	    	
