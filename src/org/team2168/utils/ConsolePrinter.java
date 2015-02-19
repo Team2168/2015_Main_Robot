@@ -45,7 +45,7 @@ public class ConsolePrinter {
 
 			SmartDashboard.putNumber("Left Encoder Distance",Drivetrain.getInstance().getLeftPosition());
 			SmartDashboard.putNumber("Right Encoder Distance:",Drivetrain.getInstance().getRightPosition());
-			SmartDashboard.putBoolean("isPracticeBot", Drivetrain.getInstance().isPracticeBot());
+			SmartDashboard.putBoolean("isPracticeBot", Robot.isPracticeRobot());
 
 			SmartDashboard.putNumber("GYRO DeltTime:", Robot.drivetrain.gyroSPI.getDeltatime());
 			SmartDashboard.putNumber("GYRO Rate:", Robot.drivetrain.gyroSPI.getRate());

@@ -12,6 +12,7 @@ import org.team2168.utils.ConsolePrinter;
 import org.team2168.utils.PowerDistribution;
 
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -35,18 +36,18 @@ public class Robot extends IterativeRobot {
 	public static Gripper gripper;
 	public static Pneumatics pneumatics;
 	public static Pusher pusher;
-	
-	//Power Monitor
-	public static PowerDistribution pdp;
-	
-	//SmartDash printer
-	ConsolePrinter printer;
-	
+
+	public static PowerDistribution pdp;  //Power Monitor
+
+	ConsolePrinter printer;  //SmartDash printer
+
 	public static BuiltInAccelerometer accel;
 
 	// Auto command objects
 	Command autonomousCommand;
 	Command driveWithJoystick;
+
+	private static DigitalInput practiceBot;
 
 
 	/**
@@ -61,20 +62,22 @@ public class Robot extends IterativeRobot {
 		winch = Winch.getInstance();
 		gripper = Gripper.getInstance();
 		pusher = Pusher.getInstance();
-		
+
 		accel = new BuiltInAccelerometer();
-		
+
 		pdp = new PowerDistribution(RobotMap.PDPThreadPeriod);
 		pdp.startThread();
 
-        //create thread to write dashboard variables
+		practiceBot = new DigitalInput(RobotMap.PracticeBotJumper);
+
+		//create thread to write dashboard variables
 		printer = new ConsolePrinter(RobotMap.SmartDashThreadPeriod);
 		printer.startThread();
 
 		oi = new OI();
 		// instantiate the command used for the autonomous period
 		// autonomousCommand = new ExampleCommand();
-		
+
 		System.out.println("Bot Finished Loading.");
 	}
 
@@ -117,14 +120,14 @@ public class Robot extends IterativeRobot {
 	}
 
 
-    /**
-     * This function is called when the disabled button is hit. You can use it
-     * to reset subsystems before shutting down.
-     */
-    public void disabledInit() {
-    	Robot.drivetrain.gyroSPI.calibrate();
-    	Robot.drivetrain.gyroAnalog.reInitGyro();
-    }
+	/**
+	 * This function is called when the disabled button is hit. You can use it
+	 * to reset subsystems before shutting down.
+	 */
+	public void disabledInit() {
+		Robot.drivetrain.gyroSPI.calibrate();
+		Robot.drivetrain.gyroAnalog.reInitGyro();
+	}
 
 	/**
 	 * This function is called periodically during operator control
@@ -138,5 +141,15 @@ public class Robot extends IterativeRobot {
 	 */
 	public void testPeriodic() {
 		LiveWindow.run();
+	}
+
+	/**
+	 * Returns the status of DIO pin 24 on the MXP.
+	 * Place a jumper between pin pin 32 and 30 on the MXP to indicate
+	 * this RoboRio is installed on the practice bot.
+	 * @return true if this is the practice robot
+	 */
+	public static boolean isPracticeRobot() {
+		return !practiceBot.get();
 	}
 }

@@ -10,17 +10,14 @@ import org.team2168.PIDControllers.PIDSpeed;
 import org.team2168.commands.drivetrain.DriveWithJoysticks;
 import org.team2168.utils.TCPSocketSender;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  * The drivetrain subsystem.
  */
 public class Drivetrain extends Subsystem {
-
 
 	private static Drivetrain instance = null;
 	private SpeedController leftMotor1;
@@ -35,17 +32,10 @@ public class Drivetrain extends Subsystem {
 	public FalconGyro gyroAnalog;
 	public ADXRS453Gyro gyroSPI;
 
-	public static DigitalInput practiceBot;
-
-
-	//declare position controllers
+	//declare position/speed controllers
 	public PIDPosition rightPosController;
 	public PIDPosition leftPosController;
-
-	//Rotate Controller
 	public PIDPosition rotateController;
-
-	//declare speed controllers
 	public PIDSpeed rightSpeedController;
 	public PIDSpeed leftSpeedController;
 
@@ -64,36 +54,17 @@ public class Drivetrain extends Subsystem {
 	TCPSocketSender TCPleftSpeedController;
 	TCPSocketSender TCProtateController;
 
-
-
-
 	/**
 	 * This method instantiates the motors.
 	 * Private to prevent creating more than one instance of this subsystem.
 	 */
 	private Drivetrain() {
-
-		practiceBot = new DigitalInput(RobotMap.PracticeBotJumper);
-
-
-		if(isPracticeBot())
-		{
-			leftMotor1 = new Victor(RobotMap.DRIVETRAIN_LEFT_MOTOR_1);
-			rightMotor1 = new Victor(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1);
-			leftMotor2 = new Victor(RobotMap.DRIVETRAIN_LEFT_MOTOR_2);
-			rightMotor2 = new Victor(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2);
-			leftMotor3 = new Victor(RobotMap.DRIVETRAIN_LEFT_MOTOR_3);
-			rightMotor3 = new Victor(RobotMap.DRIVETRAIN_RIGHT_MOTOR_3);
-		}
-		else
-		{
-			leftMotor1 = new Talon(RobotMap.DRIVETRAIN_LEFT_MOTOR_1);
-			rightMotor1 = new Talon(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1);
-			leftMotor2 = new Talon(RobotMap.DRIVETRAIN_LEFT_MOTOR_2);
-			rightMotor2 = new Talon(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2);
-			leftMotor3 = new Talon(RobotMap.DRIVETRAIN_LEFT_MOTOR_3);
-			rightMotor3 = new Talon(RobotMap.DRIVETRAIN_RIGHT_MOTOR_3);
-		}
+		leftMotor1 = new Talon(RobotMap.DRIVETRAIN_LEFT_MOTOR_1);
+		rightMotor1 = new Talon(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1);
+		leftMotor2 = new Talon(RobotMap.DRIVETRAIN_LEFT_MOTOR_2);
+		rightMotor2 = new Talon(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2);
+		leftMotor3 = new Talon(RobotMap.DRIVETRAIN_LEFT_MOTOR_3);
+		rightMotor3 = new Talon(RobotMap.DRIVETRAIN_RIGHT_MOTOR_3);
 
 		gyroSPI = new ADXRS453Gyro();
 		gyroSPI.startThread();
@@ -196,9 +167,6 @@ public class Drivetrain extends Subsystem {
 		rightMotor1Voltage = 0;
 		rightMotor2Voltage = 0;
 		rightMotor3Voltage = 0;
-
-
-
 	}
 
 	/**
@@ -216,8 +184,6 @@ public class Drivetrain extends Subsystem {
 	 * This method sets the default command so it always drives with the joysticks
 	 */
 	public void initDefaultCommand() {
-		//setDefaultCommand(new DriveWithJoysticks(OI.driverJoystick.getLeftStickRaw_Y(),
-		//		OI.driverJoystick.getRightStickRaw_Y()));
 		setDefaultCommand(new DriveWithJoysticks());
 	}
 
@@ -225,8 +191,7 @@ public class Drivetrain extends Subsystem {
 	 * Returns the last commanded voltage to the motor
 	 * @return double in volts representing last commanded voltage to motor
 	 */
-	public double getLeft1MotorVoltage()
-	{
+	public double getLeft1MotorVoltage() {
 		return leftMotor1Voltage;
 	}
 
@@ -234,8 +199,7 @@ public class Drivetrain extends Subsystem {
 	 * Returns the last commanded voltage to the motor
 	 * @return double in volts representing last commanded voltage to motor
 	 */
-	public double getLeft2MotorVoltage()
-	{
+	public double getLeft2MotorVoltage() {
 		return leftMotor2Voltage;
 	}
 
@@ -243,8 +207,7 @@ public class Drivetrain extends Subsystem {
 	 * Returns the last commanded voltage to the motor
 	 * @return double in volts representing last commanded voltage to motor
 	 */
-	public double getLeft3MotorVoltage()
-	{
+	public double getLeft3MotorVoltage() {
 		return leftMotor3Voltage;
 	}
 
@@ -252,8 +215,7 @@ public class Drivetrain extends Subsystem {
 	 * Returns the last commanded voltage to the motor
 	 * @return double in volts representing last commanded voltage to motor
 	 */
-	public double getRight1MotorVoltage()
-	{
+	public double getRight1MotorVoltage() {
 		return rightMotor1Voltage;
 	}
 
@@ -261,8 +223,7 @@ public class Drivetrain extends Subsystem {
 	 * Returns the last commanded voltage to the motor
 	 * @return double in volts representing last commanded voltage to motor
 	 */
-	public double getRight2MotorVoltage()
-	{
+	public double getRight2MotorVoltage() {
 		return rightMotor2Voltage;
 	}
 
@@ -270,12 +231,9 @@ public class Drivetrain extends Subsystem {
 	 * Returns the last commanded voltage to the motor
 	 * @return double in volts representing last commanded voltage to motor
 	 */
-	public double getRight3MotorVoltage()
-	{
+	public double getRight3MotorVoltage() {
 		return rightMotor3Voltage;
 	}
-
-
 
 	/**
 	 * Drive the first left motor in the chassis.
@@ -419,7 +377,6 @@ public class Drivetrain extends Subsystem {
 		resetRightPosition();
 	}
 
-
 	/**
 	 * Get the direction the chassis is heading.
 	 * @return heading in degrees.
@@ -433,18 +390,5 @@ public class Drivetrain extends Subsystem {
 	 */
 	public void resetGyro() {
 		gyroSPI.reset();
-	}
-
-
-	/**
-	 * Returns the status of DIO pin 24 on the MXP
-	 * Place a jumper between pin pin 32 and 30 on the
-	 * MXP to indicate this RoboRio is installed on the
-	 * practice bot.
-	 * @return
-	 */
-	public boolean isPracticeBot()
-	{
-		return !practiceBot.get();
 	}
 }
