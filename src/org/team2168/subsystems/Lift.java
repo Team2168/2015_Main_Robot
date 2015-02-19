@@ -50,6 +50,7 @@ public class Lift extends Subsystem {
 		liftController = new PIDPosition2("LiftPID", RobotMap.liftPUp, 
 				RobotMap.liftIUp, RobotMap.liftDUp, liftEncoder,
     			RobotMap.liftPIDPeriod);
+//		liftController.setEnDerivFilter(true, RobotMap.liftNUp);
 		liftController.startThread();
 		
 		//start TCP Servers for DEBUGING ONLY

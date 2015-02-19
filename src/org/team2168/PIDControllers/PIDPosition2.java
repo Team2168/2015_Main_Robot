@@ -3,8 +3,6 @@ package org.team2168.PIDControllers;
 import java.util.TimerTask;
 
 import org.team2168.PIDController.sensors.PIDSensorInterface;
-import org.team2168.commands.drivetrain.PIDCommands.DrivePIDPause;
-import org.team2168.commands.drivetrain.PIDCommands.DriveRightPIDSpeed;
 import org.team2168.utils.TCPMessageInterface;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -13,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * @author Kevin Harrilal, First Robotics Team 2168
  * 
- *         The PID Speed class implements a PID controller used to perform speed
+ *         The PID Position class implements a PID controller used to perform speed
  *         control on a DC motor. The purpose of this class is to keep a DC
  *         motor rotating at a constant speed when the correct P, I, and D gains
  *         have been chosen. <br>
@@ -51,8 +49,8 @@ import edu.wpi.first.wpilibj.command.Command;
  *         leftEncoder.start(); //start the encoder<br>
  *         leftEncoder.reset(); //reset the encoder (not needed but useful) <br>
  * <br>
- *         PIDSpeed speedController = new
- *         PIDSpeed("DriveTrain Speed Controller", P, I, D, leftEncoder,
+ *         PIDPosition speedController = new
+ *         PIDSpeed("DriveTrain Position Controller", P, I, D, leftEncoder,
  *         period); //launch the PID thread <br>
  *         speedController.Enable(); //start the PID thread<br>
  * <br>
@@ -110,7 +108,7 @@ public class PIDPosition2 implements TCPMessageInterface {
 
 	// deriv filters
 	private volatile double filterDerivOld;
-	private volatile double r; // between 0 and 1
+	//private volatile double r; // between 0 and 1
 
 	// max and min limit variables
 	private volatile double maxPosOutput; // max positive output (+1)
@@ -146,6 +144,10 @@ public class PIDPosition2 implements TCPMessageInterface {
 	boolean setPointByArray;
 	int setPointArrayCounter;
 	double[] setPointArray;
+	
+	private double int_d_term;
+	private double lastDeriv;
+	private volatile double n;
 	
 	
 
@@ -219,7 +221,6 @@ public class PIDPosition2 implements TCPMessageInterface {
 		this.filterDerivOld = 0;
 		this.olderr = 0;
 		this.olderrsum = 0;
-		this.r = 1;
 		this.sp = 0;
 
 		// set Output Limits
@@ -243,11 +244,16 @@ public class PIDPosition2 implements TCPMessageInterface {
 		this.encoder.reset();
 		
 		//setpoint array
-		setPointByArray = false;
-		setPointArrayCounter = 0;
-		setPointArray = null;
+		this.setPointByArray = false;
+		this.setPointArrayCounter = 0;
+		this.setPointArray = null;
 	
 		this.diff = 0;
+		
+		//deriv filtering
+		this.int_d_term = 0;
+		this.lastDeriv = 0;
+		this.n = 0;
 	}
 
 	/**
@@ -531,7 +537,7 @@ public class PIDPosition2 implements TCPMessageInterface {
 	 *         returns the current r value set.
 	 */
 	public double getDerivativeFilterConstant() {
-		return r;
+		return n;
 	}
 
 	/**
@@ -693,7 +699,8 @@ public class PIDPosition2 implements TCPMessageInterface {
 	 *            disable derivative filtering. It may take one period cycle for
 	 *            this to take affect in the control loop. Use
 	 */
-	public void setEnDerivFilter(boolean enDerivFilter) {
+	public void setEnDerivFilter(boolean enDerivFilter, double filterConst) {
+		this.n = filterConst;
 		this.enDerivFilter = enDerivFilter;
 	}
 
@@ -735,7 +742,7 @@ public class PIDPosition2 implements TCPMessageInterface {
 	 *            will set the value of r.
 	 */
 	public void setDerivFilterGain(double r) {
-		this.r = r;
+		this.n = r;
 	}
 
 	/**
@@ -898,7 +905,7 @@ public class PIDPosition2 implements TCPMessageInterface {
 				+ "\"_min Pos Output\":" + this.minPosOutput + ","
 				+ "\"_min Neg Output\":" + this.minNegOutput + "," +
 
-				"\"_deriv Filter Constant\":" + this.r
+				"\"_deriv Filter Constant\":" + this.n
 				+ ","
 				+ "\"_acceptable Err\":"
 				+ this.acceptErrorDiff
@@ -923,7 +930,7 @@ public class PIDPosition2 implements TCPMessageInterface {
 				+ "\"_min Pos Output_init\":" + this.minPosOutput + ","
 				+ "\"_min Neg Output_init\":" + this.minNegOutput + "," +
 
-				"\"_deriv Filter Constant_init\":" + this.r + ","
+				"\"_deriv Filter Constant_init\":" + this.n + ","
 				+ "\"_acceptError_init\":" + this.acceptErrorDiff + ","
 				+ "\"_array_size_init\":" + this.SIZE + "," + "\"_name\":"
 				+ "\"" + this.name + "\"" +
@@ -947,15 +954,15 @@ public class PIDPosition2 implements TCPMessageInterface {
 			this.maxNegOutput = Double.valueOf(message[6]).doubleValue();
 			this.minPosOutput = Double.valueOf(message[7]).doubleValue();
 			this.minNegOutput = Double.valueOf(message[8]).doubleValue();
-			// this.enDerivFilter = TCPsocketSender.strToBool(message[9]);
+			this.enDerivFilter = Boolean.valueOf(message[9]).booleanValue();
 			this.acceptErrorDiff = Double.valueOf(message[10]).doubleValue();
 			// setSIZE(Integer.valueOf(message[11]).intValue());
 			
 			
-			 if(Boolean.valueOf(message[4]).booleanValue())
-				 new DriveRightPIDSpeed(Double.valueOf(message[3]).doubleValue()).start();
-			 else
-				 new DrivePIDPause().start();
+//			 if(Boolean.valueOf(message[4]).booleanValue())
+//				 new DriveRightPIDSpeed(Double.valueOf(message[3]).doubleValue()).start();
+//			 else
+//				 new DrivePIDPause().start();
 			
 			
 		} catch (NumberFormatException e) {
@@ -999,11 +1006,12 @@ public class PIDPosition2 implements TCPMessageInterface {
 	private synchronized void calculate() {
 		runTime = System.currentTimeMillis();
 
-		if (enable) {
+		if (enable) 
+		{
 			// poll encoder
-			if (encoder == null) {
+			if (encoder == null)
 				throw new NullPointerException(" Feedback Encoder was null");
-			}
+		
 
 			// noticed that WPILibJ Encoder will sometimes throw a NaN for
 			// getRate. Although
@@ -1015,7 +1023,7 @@ public class PIDPosition2 implements TCPMessageInterface {
 			double tempPos = encoder.getPos();
 			if (!Double.isNaN(tempPos))
 				cp = tempPos; // cp is in nominal units returned by the sensor
-			
+
 			//allow setPoint to be updated by array
 			if(setPointByArray == true && setPointArrayCounter < setPointArray.length)
 			{
@@ -1025,67 +1033,79 @@ public class PIDPosition2 implements TCPMessageInterface {
 			else
 				setPointByArray=false;
 
-				// if gain schedule has been enabled, make sure we use
-				// proper PID gains
-				if (enGainSched && err < 0) 
-				{
-					p = pGain2;
-					i = iGain2;
-					d = dGain2;
-				} 
-				else 
-				{
-					p = pGain;
-					i = iGain;
-					d = dGain;
-				}
-				
-				// calculate error between current position and setpoint
-				err = sp - cp;
-				
-				// calculate derivative gain d/dt
-				double currentTime = System.currentTimeMillis();
-				executionTime = currentTime - clock; // time
+			// if gain schedule has been enabled, make sure we use
+			// proper PID gains
+			if (enGainSched && err < 0) 
+			{
+				p = pGain2;
+				i = iGain2;
+				d = dGain2;
+			} 
+			else 
+			{
+				p = pGain;
+				i = iGain;
+				d = dGain;
+			}
+
+			// calculate error between current position and setpoint
+			err = sp - cp;
+
+			// calculate derivative gain d/dt
+			double currentTime = System.currentTimeMillis();
+			executionTime = currentTime - clock; // time
 
 
+			//integral anti-windup control via clamping
+			if((coNotSaturated > maxPosOutput || errsum < maxNegOutput  ) && (Math.signum(coNotSaturated) == Math.signum(i*err)))
+				errsum = errsum;
+			else
+				errsum = errsum + (err * executionTime);
+
+			integ = i*errsum; //final integral term
+
+			//deriv term
+			if(enDerivFilter)
+			{
+				//Derivative filtering using forward euler integration
+				int_d_term = int_d_term + (lastDeriv * executionTime);
+				deriv = ((d*err) - int_d_term)*n;
+				lastDeriv = deriv;
+			}
+			else
+			{
 				// prevent divide by zero error, by disabiling deriv term
 				// if execution time is zero.
 				if (executionTime > 0) 
 					diff = (err - olderr) /executionTime; // delta
 				else 
 					diff = 0;
-				
-				//anti-windup control via clamping
-				if((coNotSaturated > maxPosOutput || errsum < maxNegOutput  ) && (Math.signum(coNotSaturated) == Math.signum(i*err)))
-					errsum = errsum;
-				else
-					errsum = errsum + (err * executionTime);
 
-
-				// calculate  terms
-				prop = p*err;
-				integ = i*errsum;
 				deriv = d*diff;
-				
+			}
+
+			//proportional term
+			prop = p*err;
 			
-				// calculate new control output based on filtering
-				co = prop + integ + deriv;
-				// save control output for graphing
-				coNotSaturated = co;
 
-				//Saturation
-		           if(co > maxPosOutput)
-		               co = maxPosOutput;
-		           if(co < maxNegOutput)
-		               co = maxNegOutput;
+			// calculate new control output based on filtering
+			co = prop + integ + deriv;
+			// save control output for graphing
+			coNotSaturated = co;
+
+			//Saturation
+			if(co > maxPosOutput)
+				co = maxPosOutput;
+			if(co < maxNegOutput)
+				co = maxNegOutput;
 
 
-		           // update clock with current time for next loop
-		           clock = currentTime;
-		           olderr = err;
-		           
-				// see if setpoint is reached
-				atSpeed();
+			// update clock with current time for next loop
+			clock = currentTime;
+			olderr = err;
+
+			// see if setpoint is reached
+			atSpeed();
 
 		}
 
