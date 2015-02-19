@@ -9,7 +9,6 @@ import org.team2168.utils.TCPSocketSender;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -21,16 +20,15 @@ public class Lift extends Subsystem {
 	private static Lift instance = null;
 	private Victor intakeMotor;
 	private DoubleSolenoid liftBrake;
-	private double currentPosition;
 	private static final double DESTINATION_TOL = 1.0; //inches
 
 	private volatile double motorVoltage;
-	
+
 	public AverageEncoder liftEncoder;
 	public PIDPosition liftController;
-	
+
 	TCPSocketSender TCPliftPosController;
-	
+
 	/**
 	 * A private constructor to prevent multiple instances of the subsystem from
 	 * being created.
@@ -43,19 +41,19 @@ public class Lift extends Subsystem {
 				RobotMap.liftEncoderReverse,
 				RobotMap.liftEncodingType, RobotMap.liftSpeedReturnType,
 				RobotMap.liftPosReturnType, RobotMap.liftAvgEncoderVal);
-		
+
 		liftBrake = new DoubleSolenoid(RobotMap.PCM_CAN_ID, RobotMap.LIFT_BRAKE_DOUBLE_SOLENOID_FORWARD,
 				RobotMap.LIFT_BRAKE_DOUBLE_SOLENOID_REVERSE);
-		
-		liftController = new PIDPosition("LiftPID", RobotMap.liftPUp, 
+
+		liftController = new PIDPosition("LiftPID", RobotMap.liftPUp,
 				RobotMap.liftIUp, RobotMap.liftDUp, liftEncoder,
-    			RobotMap.liftPIDPeriod);
+				RobotMap.liftPIDPeriod);
 		liftController.startThread();
-		
+
 		//start TCP Servers for DEBUGING ONLY
-    	TCPliftPosController = new TCPSocketSender(RobotMap.TCPServerLiftPos, liftController);
-    	TCPliftPosController.start();
-		
+		TCPliftPosController = new TCPSocketSender(RobotMap.TCPServerLiftPos, liftController);
+		TCPliftPosController.start();
+
 	}
 
 	/**
@@ -77,14 +75,14 @@ public class Lift extends Subsystem {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public double getMotorVoltage()
 	{
 		return motorVoltage;
 	}
-	
+
 	/**
 	 * Drive the lift in open loop mode.
 	 *

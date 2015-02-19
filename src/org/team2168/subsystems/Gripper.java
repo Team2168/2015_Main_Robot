@@ -1,7 +1,6 @@
 package org.team2168.subsystems;
 
 import org.team2168.RobotMap;
-import org.team2168.commands.gripper.ReleaseGripper;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;

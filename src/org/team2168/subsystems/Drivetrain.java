@@ -1,8 +1,5 @@
 package org.team2168.subsystems;
 
-
-
-import org.team2168.OI;
 import org.team2168.Robot;
 import org.team2168.RobotMap;
 import org.team2168.PIDController.sensors.ADXRS453Gyro;
@@ -14,7 +11,6 @@ import org.team2168.commands.drivetrain.DriveWithJoysticks;
 import org.team2168.utils.TCPSocketSender;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Victor;
@@ -33,26 +29,26 @@ public class Drivetrain extends Subsystem {
 	private SpeedController rightMotor2;
 	private SpeedController leftMotor3;
 	private SpeedController rightMotor3;
-	
+
 	public AverageEncoder drivetrainLeftEncoder;
 	public AverageEncoder drivetrainRightEncoder;
 	public FalconGyro gyroAnalog;
 	public ADXRS453Gyro gyroSPI;
-	
+
 	public static DigitalInput practiceBot;
-	
+
 
 	//declare position controllers
 	public PIDPosition rightPosController;
 	public PIDPosition leftPosController;
-	
+
 	//Rotate Controller
 	public PIDPosition rotateController;
-	
+
 	//declare speed controllers
 	public PIDSpeed rightSpeedController;
 	public PIDSpeed leftSpeedController;
-	
+
 	//output voltage...ONLY FOR DEBUGGING PURPOSES, SHOULD BE REMOVED FOR COMPITITION
 	private volatile double leftMotor1Voltage;
 	private volatile double leftMotor2Voltage;
@@ -60,7 +56,7 @@ public class Drivetrain extends Subsystem {
 	private volatile double rightMotor1Voltage;
 	private volatile double rightMotor2Voltage;
 	private volatile double rightMotor3Voltage;
-	
+
 	//declare TCP severs...ONLY FOR DEBUGGING PURPOSES, SHOULD BE REMOVED FOR COMPITITION
 	TCPSocketSender TCPrightPosController;
 	TCPSocketSender TCPrightSpeedController;
@@ -68,18 +64,18 @@ public class Drivetrain extends Subsystem {
 	TCPSocketSender TCPleftSpeedController;
 	TCPSocketSender TCProtateController;
 
-	
-	
+
+
 
 	/**
 	 * This method instantiates the motors.
 	 * Private to prevent creating more than one instance of this subsystem.
 	 */
 	private Drivetrain() {
-		
-        practiceBot = new DigitalInput(RobotMap.PracticeBotJumper);
-        
-        
+
+		practiceBot = new DigitalInput(RobotMap.PracticeBotJumper);
+
+
 		if(isPracticeBot())
 		{
 			leftMotor1 = new Victor(RobotMap.DRIVETRAIN_LEFT_MOTOR_1);
@@ -98,11 +94,11 @@ public class Drivetrain extends Subsystem {
 			leftMotor3 = new Talon(RobotMap.DRIVETRAIN_LEFT_MOTOR_3);
 			rightMotor3 = new Talon(RobotMap.DRIVETRAIN_RIGHT_MOTOR_3);
 		}
-		
-    	gyroSPI = new ADXRS453Gyro();
-    	gyroSPI.startThread();
-    	gyroAnalog = new FalconGyro(RobotMap.DRIVE_GYRO);
-		
+
+		gyroSPI = new ADXRS453Gyro();
+		gyroSPI.startThread();
+		gyroAnalog = new FalconGyro(RobotMap.DRIVE_GYRO);
+
 		drivetrainRightEncoder = new AverageEncoder(
 				RobotMap.DRIVETRAIN_RIGHT_ENCODER_A,
 				RobotMap.DRIVETRAIN_RIGHT_ENCODER_B,
@@ -119,90 +115,90 @@ public class Drivetrain extends Subsystem {
 				RobotMap.leftDriveTrainEncoderReverse,
 				RobotMap.driveEncodingType, RobotMap.driveSpeedReturnType,
 				RobotMap.drivePosReturnType, RobotMap.driveAvgEncoderVal);
-		
+
 		//DriveStraight Controller
-				rotateController = new PIDPosition(
-		    			"RotationController", 
-		    			RobotMap.rotatePositionP,
-		    			RobotMap.rotatePositionI, 
-		    			RobotMap.rotatePositionD, 
-		    			gyroSPI,
-		    			RobotMap.driveTrainPIDPeriod);
-				
+		rotateController = new PIDPosition(
+				"RotationController",
+				RobotMap.rotatePositionP,
+				RobotMap.rotatePositionI,
+				RobotMap.rotatePositionD,
+				gyroSPI,
+				RobotMap.driveTrainPIDPeriod);
 
-		    	//Spawn new PID Controller
-		    	rightSpeedController = new PIDSpeed(
-		    			"RightSpeedController", 
-		    			RobotMap.driveTrainRightSpeedP,
-		    			RobotMap.driveTrainRightSpeedI, 
-		    			RobotMap.driveTrainRightSpeedD, 
-		    			drivetrainRightEncoder,
-		    			RobotMap.driveTrainPIDPeriod);
-		    	
-		    	rightPosController = new PIDPosition(
-		    			"RightPositionController", 
-		    			RobotMap.driveTrainRightPositionP,
-		    			RobotMap.driveTrainRightPositionI, 
-		    			RobotMap.driveTrainRightPositionD, 
-		    			drivetrainRightEncoder,
-		    			RobotMap.driveTrainPIDPeriod);
-		    	
-		    	leftSpeedController = new PIDSpeed(
-		    			"LeftSpeedController", 
-		    			RobotMap.driveTrainLeftSpeedP,
-		    			RobotMap.driveTrainLeftSpeedI, 
-		    			RobotMap.driveTrainLeftSpeedD, 
-		    			drivetrainLeftEncoder,
-		    			RobotMap.driveTrainPIDPeriod);
-		    	
-		    	leftPosController = new PIDPosition(
-		    			"LeftPositionController", 
-		    			RobotMap.driveTrainLeftPositionP,
-		    			RobotMap.driveTrainLeftPositionI, 
-		    			RobotMap.driveTrainLeftPositionD, 
-		    			drivetrainLeftEncoder,
-		    			RobotMap.driveTrainPIDPeriod);
-		    	
-		    	//add min and max output defaults and set array size
-		    	rightSpeedController.setSIZE(RobotMap.drivetrainPIDArraySize);
-		    	leftSpeedController.setSIZE(RobotMap.drivetrainPIDArraySize);
-		    	rightPosController.setSIZE(RobotMap.drivetrainPIDArraySize);
-		    	leftPosController.setSIZE(RobotMap.drivetrainPIDArraySize);    	
-		    	rotateController.setSIZE(RobotMap.drivetrainPIDArraySize); 
-		    	
-		    	//start controller threads
-		    	rightSpeedController.startThread();
-		    	rightPosController.startThread();
-		    	leftSpeedController.startThread();
-		    	leftPosController.startThread();
-		    	rotateController.startThread();
-		    	
-		    	//start TCP Servers for DEBUGING ONLY
-		    	TCPrightPosController = new TCPSocketSender(RobotMap.TCPServerRightDrivetrainPos, rightPosController);
-		    	TCPrightPosController.start();
-		   	
-		    	TCPrightSpeedController = new TCPSocketSender(RobotMap.TCPServerRightDrivetrainSpeed, rightSpeedController);
-		    	TCPrightSpeedController.start();
-		    	
-		    	TCPleftPosController = new TCPSocketSender(RobotMap.TCPServerLeftDrivetrainPos, leftPosController);
-		    	TCPleftPosController.start();
-		    	
-		    	TCPleftSpeedController = new TCPSocketSender(RobotMap.TCPServerLeftDrivetrainSpeed, leftSpeedController);
-		    	TCPleftSpeedController.start();
-				
-		    	TCProtateController = new TCPSocketSender(RobotMap.TCPServerRotateController, rotateController);
-		    	TCProtateController.start();
-		    	
 
-		    	leftMotor1Voltage = 0;
-		    	leftMotor2Voltage = 0;
-		    	leftMotor3Voltage = 0;
-		    	rightMotor1Voltage = 0;
-		    	rightMotor2Voltage = 0;
-		    	rightMotor3Voltage = 0;
-		    	
-		
-		
+		//Spawn new PID Controller
+		rightSpeedController = new PIDSpeed(
+				"RightSpeedController",
+				RobotMap.driveTrainRightSpeedP,
+				RobotMap.driveTrainRightSpeedI,
+				RobotMap.driveTrainRightSpeedD,
+				drivetrainRightEncoder,
+				RobotMap.driveTrainPIDPeriod);
+
+		rightPosController = new PIDPosition(
+				"RightPositionController",
+				RobotMap.driveTrainRightPositionP,
+				RobotMap.driveTrainRightPositionI,
+				RobotMap.driveTrainRightPositionD,
+				drivetrainRightEncoder,
+				RobotMap.driveTrainPIDPeriod);
+
+		leftSpeedController = new PIDSpeed(
+				"LeftSpeedController",
+				RobotMap.driveTrainLeftSpeedP,
+				RobotMap.driveTrainLeftSpeedI,
+				RobotMap.driveTrainLeftSpeedD,
+				drivetrainLeftEncoder,
+				RobotMap.driveTrainPIDPeriod);
+
+		leftPosController = new PIDPosition(
+				"LeftPositionController",
+				RobotMap.driveTrainLeftPositionP,
+				RobotMap.driveTrainLeftPositionI,
+				RobotMap.driveTrainLeftPositionD,
+				drivetrainLeftEncoder,
+				RobotMap.driveTrainPIDPeriod);
+
+		//add min and max output defaults and set array size
+		rightSpeedController.setSIZE(RobotMap.drivetrainPIDArraySize);
+		leftSpeedController.setSIZE(RobotMap.drivetrainPIDArraySize);
+		rightPosController.setSIZE(RobotMap.drivetrainPIDArraySize);
+		leftPosController.setSIZE(RobotMap.drivetrainPIDArraySize);
+		rotateController.setSIZE(RobotMap.drivetrainPIDArraySize);
+
+		//start controller threads
+		rightSpeedController.startThread();
+		rightPosController.startThread();
+		leftSpeedController.startThread();
+		leftPosController.startThread();
+		rotateController.startThread();
+
+		//start TCP Servers for DEBUGING ONLY
+		TCPrightPosController = new TCPSocketSender(RobotMap.TCPServerRightDrivetrainPos, rightPosController);
+		TCPrightPosController.start();
+
+		TCPrightSpeedController = new TCPSocketSender(RobotMap.TCPServerRightDrivetrainSpeed, rightSpeedController);
+		TCPrightSpeedController.start();
+
+		TCPleftPosController = new TCPSocketSender(RobotMap.TCPServerLeftDrivetrainPos, leftPosController);
+		TCPleftPosController.start();
+
+		TCPleftSpeedController = new TCPSocketSender(RobotMap.TCPServerLeftDrivetrainSpeed, leftSpeedController);
+		TCPleftSpeedController.start();
+
+		TCProtateController = new TCPSocketSender(RobotMap.TCPServerRotateController, rotateController);
+		TCProtateController.start();
+
+
+		leftMotor1Voltage = 0;
+		leftMotor2Voltage = 0;
+		leftMotor3Voltage = 0;
+		rightMotor1Voltage = 0;
+		rightMotor2Voltage = 0;
+		rightMotor3Voltage = 0;
+
+
+
 	}
 
 	/**
@@ -224,7 +220,7 @@ public class Drivetrain extends Subsystem {
 		//		OI.driverJoystick.getRightStickRaw_Y()));
 		setDefaultCommand(new DriveWithJoysticks());
 	}
-	
+
 	/**
 	 * Returns the last commanded voltage to the motor
 	 * @return double in volts representing last commanded voltage to motor
@@ -233,7 +229,7 @@ public class Drivetrain extends Subsystem {
 	{
 		return leftMotor1Voltage;
 	}
-	
+
 	/**
 	 * Returns the last commanded voltage to the motor
 	 * @return double in volts representing last commanded voltage to motor
@@ -242,7 +238,7 @@ public class Drivetrain extends Subsystem {
 	{
 		return leftMotor2Voltage;
 	}
-	
+
 	/**
 	 * Returns the last commanded voltage to the motor
 	 * @return double in volts representing last commanded voltage to motor
@@ -251,7 +247,7 @@ public class Drivetrain extends Subsystem {
 	{
 		return leftMotor3Voltage;
 	}
-	
+
 	/**
 	 * Returns the last commanded voltage to the motor
 	 * @return double in volts representing last commanded voltage to motor
@@ -260,7 +256,7 @@ public class Drivetrain extends Subsystem {
 	{
 		return rightMotor1Voltage;
 	}
-	
+
 	/**
 	 * Returns the last commanded voltage to the motor
 	 * @return double in volts representing last commanded voltage to motor
@@ -269,7 +265,7 @@ public class Drivetrain extends Subsystem {
 	{
 		return rightMotor2Voltage;
 	}
-	
+
 	/**
 	 * Returns the last commanded voltage to the motor
 	 * @return double in volts representing last commanded voltage to motor
@@ -278,8 +274,8 @@ public class Drivetrain extends Subsystem {
 	{
 		return rightMotor3Voltage;
 	}
-	
-	
+
+
 
 	/**
 	 * Drive the first left motor in the chassis.
@@ -438,17 +434,17 @@ public class Drivetrain extends Subsystem {
 	public void resetGyro() {
 		gyroSPI.reset();
 	}
-	
-    
-    /**
-     * Returns the status of DIO pin 24 on the MXP
-     * Place a jumper between pin pin 32 and 30 on the
-     * MXP to indicate this RoboRio is installed on the
-     * practice bot. 
-     * @return
-     */
-    public boolean isPracticeBot()
-    {
-    	return !practiceBot.get();
-    }
+
+
+	/**
+	 * Returns the status of DIO pin 24 on the MXP
+	 * Place a jumper between pin pin 32 and 30 on the
+	 * MXP to indicate this RoboRio is installed on the
+	 * practice bot.
+	 * @return
+	 */
+	public boolean isPracticeBot()
+	{
+		return !practiceBot.get();
+	}
 }

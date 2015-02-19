@@ -1,7 +1,5 @@
 package org.team2168.utils;
 
-import org.team2168.OI;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -10,7 +8,6 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * in OI all the time
  *
  * @author kevin
- *
  */
 public class F310 extends Joystick
 {
@@ -33,7 +30,7 @@ public class F310 extends Joystick
 	private static final int BUTTON_START = 8;
 	private static final int BUTTON_LEFT_STICK = 9;
 	private static final int BUTTON_RIGHT_STICK = 10;
-	
+
 	//POV (D-Pad) buttons
 	private static final int DPAD_UP = 0;
 	private static final int DPAD_RIGHT = 90;
@@ -236,15 +233,15 @@ public class F310 extends Joystick
 	public JoystickPOVButton ButtonUpDPad() {
 		return new JoystickPOVButton(this, DPAD_UP);
 	}
-	
+
 	public JoystickPOVButton ButtonRightDPad() {
 		return new JoystickPOVButton(this, DPAD_RIGHT);
 	}
-	
+
 	public JoystickPOVButton ButtonDownDPad() {
 		return new JoystickPOVButton(this, DPAD_DOWN);
 	}
-	
+
 	public JoystickPOVButton ButtonLeftDPad() {
 		return new JoystickPOVButton(this, DPAD_LEFT);
 	}

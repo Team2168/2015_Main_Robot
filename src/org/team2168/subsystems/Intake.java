@@ -1,6 +1,5 @@
 package org.team2168.subsystems;
 
-import org.team2168.OI;
 import org.team2168.RobotMap;
 import org.team2168.commands.intake.SetIntakeWheelSpeed;
 
@@ -8,7 +7,6 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
