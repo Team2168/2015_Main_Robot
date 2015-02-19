@@ -80,6 +80,7 @@ public class F310 extends Joystick
 
 	/**
 	 * Returns the position of the shoulder trigger.
+	 * @return 1.0 to 0.0 (1.0 when depressed)
 	 */
 	public double getLeftTriggerAxisRaw() {
 		return getRawAxis(AXIS_Left_SHOULDER_TRIGGER);
@@ -87,6 +88,7 @@ public class F310 extends Joystick
 
 	/**
 	 * Returns the position of the shoulder trigger.
+	 * @return 1.0 to 0.0 (1.0 when depressed)
 	 */
 	public double getRightTriggerAxisRaw() {
 		return getRawAxis(AXIS_Right_SHOULDER_TRIGGER);
