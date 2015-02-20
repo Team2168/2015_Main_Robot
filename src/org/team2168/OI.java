@@ -24,9 +24,10 @@ public class OI {
 	public static F310 pnuematicTestJoystick;
 	public static F310 commandsTestJoystick;
 	public static F310 autoTestJoystick;
+	
+	private static OI oi = new OI();
 
-
-	public OI() {
+	private OI() {
 		driverJoystick = new F310(RobotMap.DRIVER_JOYSTICK);
 		operatorJoystick = new F310(RobotMap.OPERATOR_JOYSTICK);
 		motorsTestJoystick = new F310(RobotMap.MOTORS_TEST_JOYSTICK);
@@ -64,5 +65,9 @@ public class OI {
 		//        commandsTestJoystick.ButtonRightBumper().whenPressed(new DriveXDistance(180,0.3,-1.20));
 		//
 
+	
+	}
+	public static OI getInstance() {
+		return oi;
 	}
 }
