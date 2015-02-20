@@ -1,5 +1,6 @@
 package org.team2168.subsystems;
 
+import org.team2168.OI;
 import org.team2168.Robot;
 import org.team2168.RobotMap;
 import org.team2168.PIDController.sensors.AverageEncoder;
@@ -71,7 +72,7 @@ public class Lift extends Subsystem {
 	 * Set the default command for the subsystem.
 	 */
 	public void initDefaultCommand() {
-		setDefaultCommand(new LiftWithJoystick());
+		setDefaultCommand(new LiftWithJoystick(OI.operatorJoystick, RobotMap.rightAxisY));
 	}
 
 	/**
