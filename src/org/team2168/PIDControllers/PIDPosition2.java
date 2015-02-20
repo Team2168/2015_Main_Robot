@@ -1022,7 +1022,7 @@ public class PIDPosition2 implements TCPMessageInterface {
 	 * method in a periodic thread.
 	 */
 	private synchronized void calculate() {
-		runTime = System.currentTimeMillis();
+		runTime = Timer.getFPGATimestamp();
 
 		if (enable) 
 		{
@@ -1070,8 +1070,10 @@ public class PIDPosition2 implements TCPMessageInterface {
 			err = sp - cp;
 
 			// calculate derivative gain d/dt
-			double currentTime = System.currentTimeMillis();
+			double currentTime = Timer.getFPGATimestamp();
 			executionTime = currentTime - clock; // time
+			
+			
 
 			
 			//integral
