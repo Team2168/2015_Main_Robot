@@ -14,28 +14,28 @@ public class F310 extends Joystick
 	// Gamepad axis ports
 	public static final int AXIS_LEFT_X = 0;
 	public static final int AXIS_LEFT_Y = 1;
-	private static final int AXIS_Left_SHOULDER_TRIGGER = 2;
-	private static final int AXIS_Right_SHOULDER_TRIGGER = 3;
+	public static final int AXIS_Left_SHOULDER_TRIGGER = 2;
+	public static final int AXIS_Right_SHOULDER_TRIGGER = 3;
 	public static final int AXIS_RIGHT_X = 4;
 	public static final int AXIS_RIGHT_Y = 5;
 
 	// Gamepad buttons
-	private static final int BUTTON_A = 1;
-	private static final int BUTTON_B = 2;
-	private static final int BUTTON_X = 3;
-	private static final int BUTTON_Y = 4;
-	private static final int BUTTON_SHOULDER_LEFT_BUMPER = 5;
-	private static final int BUTTON_SHOULDER_RIGHT_BUMPER = 6;
-	private static final int BUTTON_BACK = 7;
-	private static final int BUTTON_START = 8;
-	private static final int BUTTON_LEFT_STICK = 9;
-	private static final int BUTTON_RIGHT_STICK = 10;
+	public static final int BUTTON_A = 1;
+	public static final int BUTTON_B = 2;
+	public static final int BUTTON_X = 3;
+	public static final int BUTTON_Y = 4;
+	public static final int BUTTON_SHOULDER_LEFT_BUMPER = 5;
+	public static final int BUTTON_SHOULDER_RIGHT_BUMPER = 6;
+	public static final int BUTTON_BACK = 7;
+	public static final int BUTTON_START = 8;
+	public static final int BUTTON_LEFT_STICK = 9;
+	public static final int BUTTON_RIGHT_STICK = 10;
 
 	//POV (D-Pad) buttons
-	private static final int DPAD_UP = 0;
-	private static final int DPAD_RIGHT = 90;
-	private static final int DPAD_DOWN = 180;
-	private static final int DPAD_LEFT = 270;
+	public static final int DPAD_UP = 0;
+	public static final int DPAD_RIGHT = 90;
+	public static final int DPAD_DOWN = 180;
+	public static final int DPAD_LEFT = 270;
 
 	//private static final int BUTTON_MODE = -1;
 	//private static final int BUTTON_LOGITECH = -1;
@@ -50,6 +50,7 @@ public class F310 extends Joystick
 
 	/**
 	 * Returns the X position of the left stick.
+	 * @return Positive when pushing right on the stick (1.0 to -1.0).
 	 */
 	public double getLeftStickRaw_X() {
 		return getRawAxis(AXIS_LEFT_X);
@@ -57,6 +58,7 @@ public class F310 extends Joystick
 
 	/**
 	 * Returns the X position of the right stick.
+	 * @return Positive when pushing right on the stick (1.0 to -1.0).
 	 */
 	public double getRightStickRaw_X() {
 		return getRawAxis(AXIS_RIGHT_X);
@@ -64,7 +66,7 @@ public class F310 extends Joystick
 
 	/**
 	 * Returns the Y position of the left stick.
-	 * @return Positive when pushing up on the stick.
+	 * @return Positive when pushing up on the stick (1.0 to -1.0).
 	 */
 	public double getLeftStickRaw_Y() {
 		return -getRawAxis(AXIS_LEFT_Y);
@@ -95,28 +97,32 @@ public class F310 extends Joystick
 	}
 
 	/**
-	 * Checks whether Button A is being pressed and returns true if it is.
+	 * Checks whether Button A is being pressed
+	 * @return true if pressed
 	 */
 	public boolean isPressedButtonA() {
 		return getRawButton(BUTTON_A);
 	}
 
 	/**
-	 * Checks whether Button B is being pressed and returns true if it is.
+	 * Checks whether Button B is being pressed
+	 * @return true if pressed
 	 */
 	public boolean isPressedButtonB() {
 		return getRawButton(BUTTON_B);
 	}
 
 	/**
-	 * Checks whether Button X is being pressed and returns true if it is.
+	 * Checks whether Button X is being pressed
+	 * @return true if pressed
 	 */
 	public boolean isPressedButtonX() {
 		return getRawButton(BUTTON_X);
 	}
 
 	/**
-	 * Checks whether Button Y is being pressed and returns true if it is.
+	 * Checks whether Button Y is being pressed
+	 * @return true if pressed
 	 */
 	public boolean isPressedButtonY() {
 		return getRawButton(BUTTON_Y);
