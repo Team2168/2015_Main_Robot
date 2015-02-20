@@ -9,6 +9,7 @@ import org.team2168.PIDController.sensors.FalconGyro;
 import org.team2168.PIDControllers.PIDPosition;
 import org.team2168.PIDControllers.PIDSpeed;
 import org.team2168.commands.drivetrain.DriveWithJoysticks;
+import org.team2168.utils.F310;
 import org.team2168.utils.TCPSocketSender;
 
 import edu.wpi.first.wpilibj.SpeedController;
@@ -185,7 +186,7 @@ public class Drivetrain extends Subsystem {
 	 * This method sets the default command so it always drives with the joysticks
 	 */
 	public void initDefaultCommand() {
-		setDefaultCommand(new DriveWithJoysticks(OI.driverJoystick, RobotMap.leftAxisY, RobotMap.rightAxisY));
+		setDefaultCommand(new DriveWithJoysticks(OI.driverJoystick, F310.AXIS_LEFT_Y, F310.AXIS_RIGHT_Y));
 	}
 
 	/**

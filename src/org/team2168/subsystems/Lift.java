@@ -6,6 +6,7 @@ import org.team2168.RobotMap;
 import org.team2168.PIDController.sensors.AverageEncoder;
 import org.team2168.PIDControllers.PIDPosition;
 import org.team2168.commands.lift.LiftWithJoystick;
+import org.team2168.utils.F310;
 import org.team2168.utils.TCPSocketSender;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -72,7 +73,7 @@ public class Lift extends Subsystem {
 	 * Set the default command for the subsystem.
 	 */
 	public void initDefaultCommand() {
-		setDefaultCommand(new LiftWithJoystick(OI.operatorJoystick, RobotMap.rightAxisY));
+		setDefaultCommand(new LiftWithJoystick(OI.operatorJoystick, F310.AXIS_RIGHT_Y));
 	}
 
 	/**

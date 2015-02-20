@@ -3,6 +3,7 @@ package org.team2168.subsystems;
 import org.team2168.OI;
 import org.team2168.RobotMap;
 import org.team2168.commands.winch.WinchWithJoystick;
+import org.team2168.utils.F310;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Victor;
@@ -42,7 +43,7 @@ public class Winch extends Subsystem {
 	 * Set the default command for the subsystem.
 	 */
 	public void initDefaultCommand() {
-		setDefaultCommand(new WinchWithJoystick(OI.operatorJoystick, RobotMap.leftAxisY));
+		setDefaultCommand(new WinchWithJoystick(OI.operatorJoystick, F310.AXIS_LEFT_Y));
 	}
 
 	/**

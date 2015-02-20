@@ -9,8 +9,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  *
  * @author kevin
  */
-public class F310 extends Joystick
-{
+public class F310 extends Joystick {
 	// Gamepad axis ports
 	public static final int AXIS_LEFT_X = 0;
 	public static final int AXIS_LEFT_Y = 1;
