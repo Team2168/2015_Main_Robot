@@ -34,7 +34,8 @@ public class MotorCalibrationDrivetrainRight extends Command {
     }
 
     /**
-     * Oscillates the motors back and forth 3 times for calibration
+     * Oscillates the motors back and forth individually 3 times for calibration, from maximum reverse to maximum forward.
+     * Starts with the first motor controller, then the second, and then the last on the the left drivetrain motors.
      */
     protected void execute() {
     	if (motor1 == true) {
