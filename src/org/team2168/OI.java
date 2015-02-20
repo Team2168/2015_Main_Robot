@@ -1,6 +1,5 @@
 package org.team2168;
 
-
 import org.team2168.commandgroups.DriveLiftToSetPosition;
 import org.team2168.commands.gripper.EngageGripper;
 import org.team2168.commands.gripper.ReleaseGripper;
@@ -11,7 +10,6 @@ import org.team2168.commands.lift.EnableBrake;
 import org.team2168.commands.pusher.PushTotes;
 import org.team2168.commands.pusher.RetractPusher;
 import org.team2168.utils.F310;
-
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -24,9 +22,12 @@ public class OI {
 	public static F310 pnuematicTestJoystick;
 	public static F310 commandsTestJoystick;
 	public static F310 autoTestJoystick;
-	
-	private static OI oi = new OI();
 
+	private static OI instance = null;
+
+	/**
+	 * A private constructor, to prevent multiple instances of this class from existing.
+	 */
 	private OI() {
 		driverJoystick = new F310(RobotMap.DRIVER_JOYSTICK);
 		operatorJoystick = new F310(RobotMap.OPERATOR_JOYSTICK);
@@ -65,9 +66,17 @@ public class OI {
 		//        commandsTestJoystick.ButtonRightBumper().whenPressed(new DriveXDistance(180,0.3,-1.20));
 		//
 
-	
+
 	}
+
+	/**
+	 * @return an instance of the OI class.
+	 */
 	public static OI getInstance() {
-		return oi;
+		if(instance == null) {
+			instance = new OI();
+		}
+
+		return instance;
 	}
 }
