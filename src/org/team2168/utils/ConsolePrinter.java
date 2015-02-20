@@ -90,7 +90,6 @@ public class ConsolePrinter {
 	    	SmartDashboard.putNumber("Lift Encoder Position", Robot.lift.getPosition());
 	    	SmartDashboard.putNumber("Lift Encoder Rate", Robot.lift.liftEncoder.getRawRate());
 	    	
-	    	System.out.println(Robot.lift.liftEncoder.getRawRate());
 	    	
 	    	SmartDashboard.putNumber("Lift Motor Current", Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_PDP));
 	    	SmartDashboard.putNumber("Lift Motor Voltage", Robot.lift.getMotorVoltage());

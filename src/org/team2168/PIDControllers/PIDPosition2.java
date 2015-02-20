@@ -1,5 +1,8 @@
 package org.team2168.PIDControllers;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.TimerTask;
 
 import org.team2168.PIDController.sensors.PIDSensorInterface;
@@ -149,6 +152,8 @@ public class PIDPosition2 implements TCPMessageInterface {
 	private double lastDeriv;
 	private volatile double n;
 	
+	PrintWriter log;
+	
 	
 
 	/**
@@ -254,6 +259,17 @@ public class PIDPosition2 implements TCPMessageInterface {
 		this.int_d_term = 0;
 		this.lastDeriv = 0;
 		this.n = 0;
+		
+		try {
+			this.log = new PrintWriter("/home/lvuser/"+this.name+".txt", "UTF-8");
+			this.log.println("time: \tcperr: \tsp: \terr: \tpterm: \twindup: \terrsum: \titerm: \tdterm: \toutput \toutputBeforInteg \tcounstat \texctime");
+				} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -354,6 +370,8 @@ public class PIDPosition2 implements TCPMessageInterface {
 		this.isFinished = false;
 
 		reset();
+		
+		
 
 	}
 
@@ -1055,14 +1073,12 @@ public class PIDPosition2 implements TCPMessageInterface {
 			double currentTime = System.currentTimeMillis();
 			executionTime = currentTime - clock; // time
 
-
-			//integral anti-windup control via clamping
-			if((coNotSaturated > maxPosOutput || errsum < maxNegOutput  ) && (Math.signum(coNotSaturated) == Math.signum(i*err)))
-				errsum = errsum;
-			else
-				errsum = errsum + (err * executionTime);
-
+			
+			//integral
+			boolean windup = false;
+			errsum = errsum + (olderr * executionTime);
 			integ = i*errsum; //final integral term
+
 
 			//deriv term
 			if(enDerivFilter)
@@ -1090,6 +1106,17 @@ public class PIDPosition2 implements TCPMessageInterface {
 
 			// calculate new control output based on filtering
 			co = prop + integ + deriv;
+			
+			double saveCo = co;
+			
+			//integral anti-windup control via clamping
+			if((co > maxPosOutput || co < maxNegOutput  ) && (Math.signum(co) == Math.signum(i*err)))
+			{
+				errsum = 0;
+				integ = i*errsum;
+				co = prop + integ + deriv;
+				windup = true;
+			}
 			// save control output for graphing
 			coNotSaturated = co;
 
@@ -1106,6 +1133,9 @@ public class PIDPosition2 implements TCPMessageInterface {
 
 			// see if setpoint is reached
 			atSpeed();
+			
+			log.println(currentTime + "\t " + cp + "\t" + sp + "\t " + err + "\t" + prop + "\t" + windup + "\t" + errsum +"\t" + integ + "\t" + deriv + "\t" + co + "\t" + saveCo + "\t" + coNotSaturated + "\t" +executionTime );
+			
 
 		}
 
