@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -119,7 +120,6 @@ public class Robot extends IterativeRobot {
 			autonomousCommand.cancel();
 		}
 	}
-
 
 	/**
 	 * This function is called when the disabled button is hit. You can use it

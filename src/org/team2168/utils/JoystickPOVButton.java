@@ -14,7 +14,6 @@ public class JoystickPOVButton extends Button {
 	int m_axisNumber;
 	private double THRESHOLD = 0.5;
 
-
 	/**
 	 * Create a button for triggering commands off a joystick's analog axis
 	 *
@@ -53,9 +52,6 @@ public class JoystickPOVButton extends Button {
 	 * @return true when the analog value exceeds the specified threshold.
 	 */
 	public boolean get() {
-			return m_joystick.getPOV() == THRESHOLD;
-
-		}
-	
-
+		return m_joystick.getPOV() == THRESHOLD;
+	}
 }

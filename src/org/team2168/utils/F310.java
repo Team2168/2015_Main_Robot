@@ -152,13 +152,11 @@ public class F310 extends Joystick {
 	}
 
 	public boolean isPressedButtonLeftTrigger() {
-		double x = getLeftTriggerAxisRaw();
-		return (x < -0.5);
+		return ButtonLeftTrigger().get();
 	}
 
 	public boolean isPressedButtonRightTrigger() {
-		double x = getRightTriggerAxisRaw();
-		return (x < -0.5);
+		return ButtonRightTrigger().get();
 	}
 
 	/**
