@@ -55,6 +55,13 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
+		//Instantiate sensors
+		practiceBot = new DigitalInput(RobotMap.PracticeBotJumper);
+		accel = new BuiltInAccelerometer();
+		pdp = new PowerDistribution(RobotMap.PDPThreadPeriod);
+		pdp.startThread();
+
+		//Instantiate subsystems
 		pneumatics = Pneumatics.getInstance();
 		drivetrain = Drivetrain.getInstance();
 		intake = Intake.getInstance();
@@ -63,18 +70,12 @@ public class Robot extends IterativeRobot {
 		gripper = Gripper.getInstance();
 		pusher = Pusher.getInstance();
 
-		accel = new BuiltInAccelerometer();
-
-		pdp = new PowerDistribution(RobotMap.PDPThreadPeriod);
-		pdp.startThread();
-
-		practiceBot = new DigitalInput(RobotMap.PracticeBotJumper);
-
-		//create thread to write dashboard variables
+		//Create thread to write dashboard variables
 		printer = new ConsolePrinter(RobotMap.SmartDashThreadPeriod);
 		printer.startThread();
 
 		oi = new OI();
+
 		// instantiate the command used for the autonomous period
 		// autonomousCommand = new ExampleCommand();
 
