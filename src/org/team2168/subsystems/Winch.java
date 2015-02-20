@@ -1,5 +1,6 @@
 package org.team2168.subsystems;
 
+import org.team2168.OI;
 import org.team2168.RobotMap;
 import org.team2168.commands.winch.WinchWithJoystick;
 
@@ -41,7 +42,7 @@ public class Winch extends Subsystem {
 	 * Set the default command for the subsystem.
 	 */
 	public void initDefaultCommand() {
-		setDefaultCommand(new WinchWithJoystick());
+		setDefaultCommand(new WinchWithJoystick(OI.operatorJoystick, RobotMap.leftAxisY));
 	}
 
 	/**

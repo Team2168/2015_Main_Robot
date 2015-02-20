@@ -4,6 +4,7 @@ import org.team2168.OI;
 import org.team2168.Robot;
 import org.team2168.RobotMap;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -11,7 +12,12 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class LiftWithJoystick extends Command {
 
-	public LiftWithJoystick() {
+	Joystick joystick;
+	int axis;
+	
+	public LiftWithJoystick(Joystick joystick, int axis) {
+		this.joystick = joystick;
+		this.axis = axis;
 		requires(Robot.lift);
 	}
 
@@ -26,10 +32,10 @@ public class LiftWithJoystick extends Command {
 	 */
 	protected void execute() {
 		
-		if(Math.abs(OI.operatorJoystick.getRightStickRaw_Y()) > RobotMap.LIFT_MIN_SPEED)
+		if(Math.abs(joystick.getRawAxis(axis)) > RobotMap.LIFT_MIN_SPEED) 
 		{
 			Robot.lift.disableBrake();
-			Robot.lift.drive(OI.operatorJoystick.getRightStickRaw_Y());
+			Robot.lift.drive(joystick.getRawAxis(axis)); 
 		}
 		else
 		{

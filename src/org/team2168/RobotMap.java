@@ -2,6 +2,7 @@ package org.team2168;
 
 import org.team2168.PIDController.sensors.AverageEncoder;
 import org.team2168.PIDControllers.PIDPosition;
+import org.team2168.utils.F310;
 
 import edu.wpi.first.wpilibj.CounterBase;
 
@@ -86,7 +87,11 @@ public class RobotMap {
 	public final static int PNUEMATICS_TEST_JOYSTICK = 3;
 	public final static int COMMANDS_TEST_JOYSTICK = 4;
 	public final static int AUTO_TEST_JOYSTICK = 5;
-	
+	/*************************************************************************
+	 *                         F310 AXIS PARAMETERS
+	 *************************************************************************/
+	public final static int leftAxisY = F310.AXIS_LEFT_Y;
+	public final static int rightAxisY = F310.AXIS_RIGHT_Y;
 
 	/*************************************************************************
 	 *                         DRIVETRAIN PARAMETERS

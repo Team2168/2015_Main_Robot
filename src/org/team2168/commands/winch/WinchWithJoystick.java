@@ -3,6 +3,7 @@ package org.team2168.commands.winch;
 import org.team2168.OI;
 import org.team2168.Robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -10,7 +11,12 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class WinchWithJoystick extends Command {
 
-    public WinchWithJoystick() {
+	Joystick joystick;
+	int axis;
+	
+    public WinchWithJoystick(Joystick joystick, int axis) {
+    	this.joystick = joystick;
+    	this.axis = axis;
         requires(Robot.winch);
     }
 
@@ -24,7 +30,7 @@ public class WinchWithJoystick extends Command {
      * Called repeatedly when this Command is scheduled to run
      */
     protected void execute() {
-        Robot.winch.drive(OI.operatorJoystick.getLeftStickRaw_Y());
+        Robot.winch.drive(joystick.getRawAxis(axis)); 
     }
 
     

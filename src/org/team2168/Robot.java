@@ -74,7 +74,7 @@ public class Robot extends IterativeRobot {
 		printer = new ConsolePrinter(RobotMap.SmartDashThreadPeriod);
 		printer.startThread();
 
-		oi = new OI();
+		oi = OI.getInstance();
 
 		// instantiate the command used for the autonomous period
 		// autonomousCommand = new ExampleCommand();

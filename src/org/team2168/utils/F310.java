@@ -12,12 +12,12 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 public class F310 extends Joystick
 {
 	// Gamepad axis ports
-	private static final int AXIS_LEFT_X = 0;
-	private static final int AXIS_LEFT_Y = 1;
+	public static final int AXIS_LEFT_X = 0;
+	public static final int AXIS_LEFT_Y = 1;
 	private static final int AXIS_Left_SHOULDER_TRIGGER = 2;
 	private static final int AXIS_Right_SHOULDER_TRIGGER = 3;
-	private static final int AXIS_RIGHT_X = 4;
-	private static final int AXIS_RIGHT_Y = 5;
+	public static final int AXIS_RIGHT_X = 4;
+	public static final int AXIS_RIGHT_Y = 5;
 
 	// Gamepad buttons
 	private static final int BUTTON_A = 1;
