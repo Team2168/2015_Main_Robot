@@ -1,7 +1,7 @@
 
 package org.team2168;
 
-import org.team2168.PIDController.pathplanner.FalconPathPlanner;
+import org.team2168.PID.pathplanner.FalconPathPlanner;
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.Gripper;
 import org.team2168.subsystems.Intake;

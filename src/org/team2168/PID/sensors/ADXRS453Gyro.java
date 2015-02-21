@@ -1,4 +1,4 @@
-package org.team2168.PIDController.sensors;
+package org.team2168.PID.sensors;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

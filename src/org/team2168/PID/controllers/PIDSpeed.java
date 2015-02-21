@@ -1,8 +1,8 @@
-package org.team2168.PIDControllers;
+package org.team2168.PID.controllers;
 
 import java.util.TimerTask;
 
-import org.team2168.PIDController.sensors.PIDSensorInterface;
+import org.team2168.PID.sensors.PIDSensorInterface;
 import org.team2168.commands.drivetrain.PIDCommands.DrivePIDPause;
 import org.team2168.commands.drivetrain.PIDCommands.DriveRightPIDSpeed;
 import org.team2168.utils.TCPMessageInterface;

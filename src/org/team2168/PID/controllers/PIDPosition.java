@@ -1,23 +1,17 @@
-package org.team2168.PIDControllers;
+package org.team2168.PID.controllers;
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.TimerTask;
 
-import org.team2168.PIDController.sensors.PIDSensorInterface;
+import org.team2168.PID.sensors.PIDSensorInterface;
 import org.team2168.utils.TCPMessageInterface;
-
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * @author Kevin Harrilal, First Robotics Team 2168
  * 
- *         The PID Position class implements a PID controller used to perform speed
- *         control on a DC motor. The purpose of this class is to keep a DC
- *         motor rotating at a constant speed when the correct P, I, and D gains
- *         have been chosen. <br>
+ *         The PID Position class implements a PID controller used to perform
+ *         position control on a DC motor. The purpose of this class is to keep
+ *         a DC motor rotating at a constant position when the correct P, I, and
+ *         D gains have been chosen. <br>
  * <br>
  *         The controller implements the parallel form the PID controller. <br>
  * <br>
@@ -42,7 +36,6 @@ import edu.wpi.first.wpilibj.command.Command;
  * <br>
  *         To use this class is simple, an example is below <br>
  * <br>
- * 
  *         Encoder leftEncoder= new Encoder(1,2) //Encoder on DIO ports 1 and 2 <br>
  *         double P = 1; //P gain <br>
  *         double I = 2; //I gain <br>
@@ -52,16 +45,19 @@ import edu.wpi.first.wpilibj.command.Command;
  *         leftEncoder.start(); //start the encoder<br>
  *         leftEncoder.reset(); //reset the encoder (not needed but useful) <br>
  * <br>
- *         PIDPosition speedController = new
+ *         PIDPosition posController = new
  *         PIDSpeed("DriveTrain Position Controller", P, I, D, leftEncoder,
  *         period); //launch the PID thread <br>
- *         speedController.Enable(); //start the PID thread<br>
+ *         posController.startThread(); //starts the PID Controller in its own
+ *         thread posController.Enable(); //start the PID calculation<br>
  * <br>
- *         Multiple instances of the PIDSpeed Object can be created for multiple
- *         PID loops to run. Each loop will run in its own thread at the period
- *         specified in its constructor. <br>
+ *         Multiple instances of the PIDPosition Object can be created for
+ *         multiple PID loops to run. Each loop will run in its own thread at
+ *         the period specified in its constructor. <br>
+ * 
+ * 
  */
-public class PIDPosition2 implements TCPMessageInterface {
+public class PIDPosition implements TCPMessageInterface {
 	// gains for gain schedule
 	private volatile double pGain;
 	private volatile double iGain;
@@ -83,9 +79,9 @@ public class PIDPosition2 implements TCPMessageInterface {
 	private volatile boolean isFinished;
 
 	// create local PID portions
-	double prop;
-	double integ;
-	double deriv;
+	private double prop;
+	private double integ;
+	private double deriv;
 
 	// Other internal variable
 	private volatile boolean enGainSched;
@@ -111,7 +107,7 @@ public class PIDPosition2 implements TCPMessageInterface {
 
 	// deriv filters
 	private volatile double filterDerivOld;
-	//private volatile double r; // between 0 and 1
+	private volatile double r; // between 0 and 1
 
 	// max and min limit variables
 	private volatile double maxPosOutput; // max positive output (+1)
@@ -125,12 +121,9 @@ public class PIDPosition2 implements TCPMessageInterface {
 	private volatile double acceptErrorDiff; // allowable error (in units of
 												// setpoint)
 
-	
-	private double diff;
-	
 	// tread executor
-	java.util.Timer executor;
-	long period;
+	private java.util.Timer executor;
+	private long period;
 
 	// encoder
 	PIDSensorInterface encoder = null;
@@ -142,50 +135,26 @@ public class PIDPosition2 implements TCPMessageInterface {
 	private volatile int SIZE;
 	private volatile double[] atSpeed;
 	private volatile int count;
-	
-	//variables to command setpoints with array
-	boolean setPointByArray;
-	int setPointArrayCounter;
-	double[] setPointArray;
-	
-	private double int_d_term;
-	private double lastDeriv;
-	private volatile double n;
-	
-	PrintWriter log;
-	
-	
 
 	/**
-	 * This is the default constructor for the {@link PIDPosition2} class. All other
-	 * constructors within this class make a call to this constructor first.
+	 * This is the default constructor for the {@link PIDPosition} class. All
+	 * other constructors within this class make a call to this constructor
+	 * first.
 	 * 
 	 * 
 	 * 
-	 * @param name
-	 *            - type String used to identify this PID Instance and thread
-	 *            i.e "LeftDrivePID"
-	 * @param P
-	 *            - type double which represents Proportional Gain for the Speed
-	 *            Controller
-	 * @param I
-	 *            - type double which represents Integral Gain for the Speed
-	 *            Controller
-	 * @param D
-	 *            - type double which represents Derivative Gain for the Speed
-	 *            Controller
-	 * @param currentPos
-	 *            - type SpeedSensorInterface Object which is used to reference
-	 *            the encoder object this PID loop will use as feedback
-	 * @param period
-	 *            - type long which represents the time the thread will execute
-	 *            at in milliseconds. i.e 40 means the loop will execute every
-	 *            40ms.
+	 * @param name used to identify this PID Instance and thread
+	 *             i.e "LeftDrivePID"
+	 * @param P Proportional Gain for the Speed Controller
+	 * @param I Integral Gain for the Speed Controller
+	 * @param D Derivative Gain for the Speed Controller
+	 * @param currentPos sensor object this PID loop will use as feedback
+	 * @param period the time the thread will execute at in milliseconds.
+	 *               i.e 40 means the loop will execute every 40ms.
 	 * 
-	 * @throws NullPointerException
-	 *             if the Speed Sensor object passed is null;
+	 * @throws NullPointerException if the Speed Sensor object passed is null;
 	 */
-	public PIDPosition2(String name, double P, double I, double D,
+	public PIDPosition(String name, double P, double I, double D,
 			PIDSensorInterface currentPos, long period) {
 
 		if (currentPos == null)
@@ -198,7 +167,7 @@ public class PIDPosition2 implements TCPMessageInterface {
 		this.iGain = I;
 		this.dGain = D;
 		this.encoder = currentPos; // point to reference of encoder instead of
-									// creating new
+								   //creating new
 		this.period = period;
 		this.pGain2 = P;
 		this.iGain2 = I;
@@ -226,13 +195,14 @@ public class PIDPosition2 implements TCPMessageInterface {
 		this.filterDerivOld = 0;
 		this.olderr = 0;
 		this.olderrsum = 0;
+		this.r = 1;
 		this.sp = 0;
 
 		// set Output Limits
 		this.maxNegOutput = -1;
 		this.maxPosOutput = 1;
 		this.minNegOutput = 0;
-		this.minPosOutput = 0;
+		this.minPosOutput = 0; // minimum for arm at 82 degrees is around 0.315
 
 		// set all booleans to false
 
@@ -247,34 +217,12 @@ public class PIDPosition2 implements TCPMessageInterface {
 
 		// reset encoder
 		this.encoder.reset();
-		
-		//setpoint array
-		this.setPointByArray = false;
-		this.setPointArrayCounter = 0;
-		this.setPointArray = null;
-	
-		this.diff = 0;
-		
-		//deriv filtering
-		this.int_d_term = 0;
-		this.lastDeriv = 0;
-		this.n = 0;
-		
-		try {
-			this.log = new PrintWriter("/home/lvuser/"+this.name+".txt", "UTF-8");
-			this.log.println("time: \tcperr: \tsp: \terr: \tpterm: \twindup: \terrsum: \titerm: \tdterm: \toutput \toutputBeforInteg \tcounstat \texctime");
-				} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 	}
 
 	/**
-	 * This constructor for the {@link PIDPosition2} class allows the user to set
-	 * PID gains for gainScheduling.<br>
+	 * This constructor for the {@link PIDPositionArm} class allows the user to
+	 * set PID gains for gainScheduling.<br>
 	 * <br>
 	 * This is handy for when one would like to have separate gains when the
 	 * Error between the setpoint and the CurrentValue is Positive verse
@@ -286,41 +234,29 @@ public class PIDPosition2 implements TCPMessageInterface {
 	 * not start running until a call to enable() has been made.
 	 * 
 	 * 
-	 * @param name
-	 *            - type String used to identify this PID Instance and thread
+	 * @param name used to identify this PID Instance and thread
 	 *            i.e "LeftDrivePID"
-	 * @param pUp
-	 *            - type double which represents Proportional Gain for the Speed
-	 *            Controller to use when the Error is greater than zero.
-	 * @param iUp
-	 *            - type double which represents Integral Gain for the Speed
-	 *            Controller to use when the Error is greater than zero.
-	 * @param dUp
-	 *            - type double which represents Derivative Gain for the Speed
-	 *            Controller to use when the Error is greater than zero.
-	 * @param pDown
-	 *            - type double which represents Proportional Gain for the Speed
-	 *            Controller to use when the Error is less than zero.
-	 * @param iDown
-	 *            - type double which represents Integral Gain for the Speed
-	 *            Controller to use when the Error is less than zero.
-	 * @param dDown
-	 *            - type double which represents Derivative Gain for the Speed
-	 *            Controller to use when the Error is less than zero.
-	 * 
-	 * @param currentPos
-	 *            - type Encoder Object which is used to reference the encoder
-	 *            object this PID loop will use as feedback
-	 * @param period
-	 *            - type long which represents the time the thread will execute
-	 *            at in milliseconds. i.e 40 means the loop will execute every
-	 *            40ms.
+	 * @param pUp Proportional Gain for the Speed Controller to use when
+	 *            the Error is greater than zero.
+	 * @param iUp Integral Gain for the Speed Controller to use when the
+	 *            Error is greater than zero.
+	 * @param dUp Derivative Gain for the Speed Controller to use when
+	 *            the Error is greater than zero.
+	 * @param pDown Proportional Gain for the Speed Controller to use when
+	 *            the Error is less than zero.
+	 * @param iDownIntegral Gain for the Speed Controller to use when the
+	 *            Error is less than zero.
+	 * @param dDown Derivative Gain for the Speed Controller to use when
+	 *            the Error is less than zero.
+	 * @param currentPos the encoder object this PID loop will use as feedback
+	 * @param period the time the thread will execute at in milliseconds.
+	 *            i.e 40 means the loop will execute every 40ms.
 	 * 
 	 * @throws NullPointerException
 	 *             if the Speed Sensor object passed is null;
 	 */
 
-	public PIDPosition2(String name, double pUp, double iUp, double dUp,
+	public PIDPosition(String name, double pUp, double iUp, double dUp,
 			double pDown, double iDown, double dDown,
 			PIDSensorInterface currentPos, long period) {
 		this(name, pUp, iUp, dUp, currentPos, period);
@@ -339,8 +275,7 @@ public class PIDPosition2 implements TCPMessageInterface {
 	 */
 	public void startThread() {
 		this.executor = new java.util.Timer();
-		this.executor.schedule(new PIDSpeedTask(this), 0L, this.period);
-
+		this.executor.schedule(new PIDTask(this), 0L, this.period);
 	}
 
 	/**
@@ -370,8 +305,6 @@ public class PIDPosition2 implements TCPMessageInterface {
 		this.isFinished = false;
 
 		reset();
-		
-		
 
 	}
 
@@ -503,6 +436,10 @@ public class PIDPosition2 implements TCPMessageInterface {
 	 *         the Speed Sensor.
 	 */
 	public double getSensorRate() {
+		return cp;
+	}
+
+	public double returnRate() {
 		return encoder.getRate();
 	}
 
@@ -510,8 +447,8 @@ public class PIDPosition2 implements TCPMessageInterface {
 	 * @return The controller output value. This is the output to use to drive
 	 *         the motors based on the PID control. It is saturated to the
 	 *         minimum and maximum values set by @link
-	 *         {@link #setMinPosOutput(double)},@link
-	 *         {@link #setMinPosOutput(double)},@link
+	 *         {@link #setMinPosOutput(double)}, @link
+	 *         {@link #setMinPosOutput(double)}, @link
 	 *         {@link #setMaxNegOutput(double)}, @link
 	 *         {@link #setMinNegOutput(double)} so it does not drive the PWM to
 	 *         the motor controller beyond its limit. For FRC the @link
@@ -531,7 +468,6 @@ public class PIDPosition2 implements TCPMessageInterface {
 	 *         where the @link {@link #getControlOutput()}. This is for
 	 *         debugging purposes only. <br>
 	 * <br>
-	 * 
 	 *         Use the @link {@link #getControlOutput()} method to drive a
 	 *         device based on controller output.
 	 */
@@ -555,7 +491,7 @@ public class PIDPosition2 implements TCPMessageInterface {
 	 *         returns the current r value set.
 	 */
 	public double getDerivativeFilterConstant() {
-		return n;
+		return r;
 	}
 
 	/**
@@ -717,8 +653,7 @@ public class PIDPosition2 implements TCPMessageInterface {
 	 *            disable derivative filtering. It may take one period cycle for
 	 *            this to take affect in the control loop. Use
 	 */
-	public void setEnDerivFilter(boolean enDerivFilter, double filterConst) {
-		this.n = filterConst;
+	public void setEnDerivFilter(boolean enDerivFilter) {
 		this.enDerivFilter = enDerivFilter;
 	}
 
@@ -730,27 +665,7 @@ public class PIDPosition2 implements TCPMessageInterface {
 	 *            setpoint.
 	 */
 	public void setSetPoint(double sp) {
-		this.setPointByArray = false;
 		this.sp = sp;
-	}
-	
-	/**
-	 * @param sp
-	 *            This method sets the setpoint the controller is to achieve.
-	 *            Use this method to change the setpoint, if the controller is
-	 *            enabled it will automatically start to achieve the new
-	 *            setpoint.
-	 */
-	public void setSetPoint(double[][] sp) {
-		this.setPointByArray = true;
-		
-		//copy array
-		this.setPointArray = new double[sp.length];
-		for(int i=0; i<setPointArray.length; i++)
-			setPointArray[i] = sp[i][1];
-		
-		this.setPointArrayCounter = 0;
-				
 	}
 
 	/**
@@ -760,7 +675,7 @@ public class PIDPosition2 implements TCPMessageInterface {
 	 *            will set the value of r.
 	 */
 	public void setDerivFilterGain(double r) {
-		this.n = r;
+		this.r = r;
 	}
 
 	/**
@@ -822,7 +737,8 @@ public class PIDPosition2 implements TCPMessageInterface {
 
 	/**
 	 * 
-	 * @param size size of the array used to average the output. When the array
+	 * @param size
+	 *            size of the array used to average the output. When the array
 	 * 
 	 */
 	public void setSIZE(int size) {
@@ -860,16 +776,6 @@ public class PIDPosition2 implements TCPMessageInterface {
 
 		return this.isFinished;
 	}
-	
-	/** returns true if current sp is controlled by an array, false otherwise
-	 * 
-	 * 
-	 */
-	public boolean isSetPointByArray() {
-
-		return this.setPointByArray;
-	}
-	
 
 	/**
 	 * Function to see if the wheel is at steady state speed
@@ -923,7 +829,7 @@ public class PIDPosition2 implements TCPMessageInterface {
 				+ "\"_min Pos Output\":" + this.minPosOutput + ","
 				+ "\"_min Neg Output\":" + this.minNegOutput + "," +
 
-				"\"_deriv Filter Constant\":" + this.n
+				"\"_deriv Filter Constant\":" + this.r
 				+ ","
 				+ "\"_acceptable Err\":"
 				+ this.acceptErrorDiff
@@ -938,6 +844,11 @@ public class PIDPosition2 implements TCPMessageInterface {
 				+ this.isFinished + "}\n";
 	}
 
+	/**
+	 * This is used with a TCP Stream debugger to show the values of the PID
+	 * loop.
+	 */
+
 	public synchronized String JSONInit() {
 		return "{" + "\"_P_Used_init\":" + this.pGain + ","
 				+ "\"_I_Used_init\":" + this.iGain + "," + "\"_D_Used_init\":"
@@ -948,10 +859,11 @@ public class PIDPosition2 implements TCPMessageInterface {
 				+ "\"_min Pos Output_init\":" + this.minPosOutput + ","
 				+ "\"_min Neg Output_init\":" + this.minNegOutput + "," +
 
-				"\"_deriv Filter Constant_init\":" + this.n + ","
+				"\"_deriv Filter Constant_init\":" + this.r + ","
 				+ "\"_acceptError_init\":" + this.acceptErrorDiff + ","
-				+ "\"_array_size_init\":" + this.SIZE + "," + "\"_name\":"
-				+ "\"" + this.name + "\"" +
+				+ "\"_array_size_init\":" + this.SIZE + "," +
+
+				"\"_name\":" + "\"" + this.name + "\"" +
 
 				"}\n";
 	}
@@ -968,52 +880,23 @@ public class PIDPosition2 implements TCPMessageInterface {
 			this.iGain = Double.valueOf(message[1]).doubleValue();
 			this.dGain = Double.valueOf(message[2]).doubleValue();
 			this.sp = Double.valueOf(message[3]).doubleValue();
+
 			this.maxPosOutput = Double.valueOf(message[5]).doubleValue();
 			this.maxNegOutput = Double.valueOf(message[6]).doubleValue();
 			this.minPosOutput = Double.valueOf(message[7]).doubleValue();
 			this.minNegOutput = Double.valueOf(message[8]).doubleValue();
-			this.enDerivFilter = Boolean.valueOf(message[9]).booleanValue();
+			// this.enDerivFilter = TCPsocketSender.strToBool(message[9]);
 			this.acceptErrorDiff = Double.valueOf(message[10]).doubleValue();
 			// setSIZE(Integer.valueOf(message[11]).intValue());
-			
-			
-//			 if(Boolean.valueOf(message[4]).booleanValue())
-//				 new DriveRightPIDSpeed(Double.valueOf(message[3]).doubleValue()).start();
-//			 else
-//				 new DrivePIDPause().start();
-			
-			
+			//
+			// if(TCPsocketSender.strToBool(message[4])) //enable PID boolean
+			// new
+			// PID_PosDrive(Double.valueOf(message[3]).doubleValue()).start();
+			// else
+			// new PID_Pause().start();
 		} catch (NumberFormatException e) {
-			// System.out.println("Don't send empty values");
+			System.out.println("Don't send empty values");
 		}
-
-		// $('#P_Gain').val() +','+
-		//
-		// $('#I_Gain').val() +','+
-		//
-		// $('#D_Gain').val() +','+
-		//
-		// $('#setSetPt').val() +','+
-		//
-		// $('#PID_Ena'.is(':checked') +','+
-		//
-		// $('#MxPOutTR').val() +','+
-		//
-		// $('#MxNOutTR').val() +','+
-		//
-		// $('#MnPOutTR').val() +','+
-		//
-		// $('#MnNOutTR').val() +','+
-		//
-		// $('#DervFltEn'.is(':checked') +','+
-		//
-		// $('#DrvFltrCns').val() +','+
-		//
-		// $('#acceptErr').val() +','+
-		//
-		// $('#Array Size').val() +','+
-
-		// copy values
 	}
 
 	/**
@@ -1022,126 +905,183 @@ public class PIDPosition2 implements TCPMessageInterface {
 	 * method in a periodic thread.
 	 */
 	private synchronized void calculate() {
-		runTime = Timer.getFPGATimestamp();
+		runTime = System.currentTimeMillis();
 
-		if (enable) 
-		{
+		if (enable) {
 			// poll encoder
-			if (encoder == null)
+			if (encoder == null) {
 				throw new NullPointerException(" Feedback Encoder was null");
-		
+			}
 
 			// noticed that WPILibJ Encoder will sometimes throw a NaN for
 			// getRate. Although
 			// This could potentially NaN all values of the Control Loop for the
 			// period which
-			// the encoder returns NaN. We check for the Nan Value and clamp the
+			// the encoder returns NaN. We check for the NaN Value and clamp the
 			// rate to its last
 			// value.
 			double tempPos = encoder.getPos();
 			if (!Double.isNaN(tempPos))
 				cp = tempPos; // cp is in nominal units returned by the sensor
 
-			//allow setPoint to be updated by array
-			if(setPointByArray == true && setPointArrayCounter < setPointArray.length)
-			{
-				sp = setPointArray[setPointArrayCounter];
-				setPointArrayCounter++;
-			}
-			else
-				setPointByArray=false;
+			// calculate error between current position and setpoint
+			err = sp - cp;
 
 			// if gain schedule has been enabled, make sure we use
 			// proper PID gains
-			if (enGainSched && err < 0) 
-			{
+			if (enGainSched && (err < 0)) {
 				p = pGain2;
 				i = iGain2;
 				d = dGain2;
-			} 
-			else 
-			{
+
+			} else {
 				p = pGain;
 				i = iGain;
 				d = dGain;
 			}
 
-			// calculate error between current position and setpoint
-			err = sp - cp;
+			// calculate proportional gain
+			prop = p * err;
+
+			// calculate integral gain by summing past errors
+			
+			//TODO integral calc is incorrect, see matlab code to fix
+			errsum = err + olderrsum;
+			integ = i * errsum;
+
+			// save old ErrorSum for use in next loop
+			olderrsum += errsum;
 
 			// calculate derivative gain d/dt
-			double currentTime = Timer.getFPGATimestamp();
-			executionTime = currentTime - clock; // time
-			
-			
+			executionTime = System.currentTimeMillis() - clock; // time between
+																// loops
 
-			
-			//integral
-			boolean windup = false;
-			errsum = errsum + (olderr * executionTime);
-			integ = i*errsum; //final integral term
-
-
-			//deriv term
-			if(enDerivFilter)
-			{
-				//Derivative filtering using forward euler integration
-				int_d_term = int_d_term + (lastDeriv * executionTime);
-				deriv = ((d*err) - int_d_term)*n;
-				lastDeriv = deriv;
-			}
+			// prevent divide by zero error, by disabling deriv term
+			// if execution time is zero.
+			if (executionTime >= 0)
+				deriv = d * ((err - olderr) / (executionTime)); // deriv term
 			else
-			{
-				// prevent divide by zero error, by disabiling deriv term
-				// if execution time is zero.
-				if (executionTime > 0) 
-					diff = (err - olderr) /executionTime; // delta
-				else 
-					diff = 0;
+				deriv = 0;
 
-				deriv = d*diff;
+			// update clock with current time for next loop
+			clock = System.currentTimeMillis();
+
+			// filter derivative noise using euler filter method
+			// if filtering is enabled
+			double filteredDeriv = 0;
+			if (enDerivFilter) {
+				filteredDeriv = (1 - r) * filterDerivOld + r * deriv;
+				filterDerivOld = filteredDeriv;
+				deriv = filteredDeriv;
 			}
-
-			//proportional term
-			prop = p*err;
-			
 
 			// calculate new control output based on filtering
 			co = prop + integ + deriv;
-			
-			double saveCo = co;
-			
-			//integral anti-windup control via clamping
-			if((co > maxPosOutput || co < maxNegOutput  ) && (Math.signum(co) == Math.signum(i*err)))
-			{
-				errsum = 0;
-				integ = i*errsum;
-				co = prop + integ + deriv;
-				windup = true;
-			}
+
 			// save control output for graphing
 			coNotSaturated = co;
 
-			//Saturation
-			if(co > maxPosOutput)
-				co = maxPosOutput;
-			if(co < maxNegOutput)
-				co = maxNegOutput;
+			// The below statements allow us to condition the output
+			// of our controller so that it perfoms better than
+			// a standard PID controller.
 
+			// if there is an integral term we prevent integral windup
+			// and clamp the output to the max output value to
+			// prevent output saturation by using back calculation method
 
-			// update clock with current time for next loop
-			clock = currentTime;
-			olderr = err;
+			if (i != 0) {
+				// TODO: See if these items can be combined into two IF
+				// statements
+				// clamp to max values
+				if (co > maxPosOutput) {
+					integ = maxPosOutput - prop - deriv;
+					// System.out.println("one.one");
+				}
+
+				if (co < maxNegOutput) {
+					integ = maxNegOutput - prop - deriv;
+					// System.out.println("one.two");
+				}
+
+				// prevent integral windup
+				if (co > maxPosOutput) {
+					errsum = integ / i;
+					// System.out.println("one.three");
+				}
+
+				if (co < maxNegOutput) {
+					errsum = integ / i;
+					// System.out.println("one.four");
+				}
+
+				// generate new control output based on min and max and
+				// integral windup.
+				co = prop + integ + deriv;
+				olderrsum = errsum;
+
+				// System.out.println("one");
+			} else {
+				// no integral term so don't need to prevent windup
+				// we can just clamp to max/min value to prevent
+				// saturation
+				if (co > maxPosOutput)
+					co = maxPosOutput;
+				if (co < maxNegOutput)
+					co = maxNegOutput;
+
+				 //System.out.println("two");
+			}
+
+			// check to see if we met our setpoint
+			// if current value is within exceptable range make control,
+			// we stop integrating error
+			if (Math.abs(err) <= acceptErrorDiff) {
+//				co = 0; // stops wheel at position, assumes no mechanical load
+				olderrsum = 0; // stop accumulating error
+
+				 //System.out.println("three");
+
+			} else {
+
+				// there is still a significant error
+				// we now check if output signal is below
+				// the deadband, if it is, we increase the
+				// output above deadband
+				// to drive the motor
+				
+
+				if (err > 0 && coNotSaturated < minPosOutput) {
+					co = minPosOutput;
+					// System.out.println("four");
+
+					// TODO: Reset integral term to value so that there is
+					// no windup integ = MinPosOutput - prop - deriv.;
+				}
+				if (err < 0 && coNotSaturated > minNegOutput)
+
+				{
+					co = minNegOutput;
+					 //System.out.println("five");
+
+					// TODO: Reset integral term to value so that there is
+					// no windup integ = MinPosOutput - prop - deriv.;
+				}
+
+			}
+
+			coOld = co;
 
 			// see if setpoint is reached
+
+			// TODO: maybe for poisiton control we can remove the atSpeed
+			// command and just set the boolean to true inside the
+			// acceptDiffError
+			// if block
 			atSpeed();
-			
-			log.println(currentTime + "\t " + cp + "\t" + sp + "\t " + err + "\t" + prop + "\t" + windup + "\t" + errsum +"\t" + integ + "\t" + deriv + "\t" + co + "\t" + saveCo + "\t" + coNotSaturated + "\t" +executionTime );
-			
 
 		}
 
-		runTime = executionTime;
+		runTime = System.currentTimeMillis() - runTime;
 	}
 
 	/**
@@ -1150,24 +1090,26 @@ public class PIDPosition2 implements TCPMessageInterface {
 	 * @author HarrilalEngineering
 	 * 
 	 */
-	private class PIDSpeedTask extends TimerTask {
-		// internal PIDSpeed object to run in new thread
-		private PIDPosition2 speedController;
+	private class PIDTask extends TimerTask {
+		// internal PID object to run in new thread
+		private PIDPosition Controller;
 
 		/**
-		 * constructor for the private class PIDSpeedTask, which will be used to
+		 * constructor for the private class PIDTask, which will be used to
 		 * spawn a new thread. Each thread will continuously run the run()
 		 * function
 		 * 
-		 * @param id a string used to identify this particular controller
-		 * @param controller the controller parameters used to create the thread
+		 * @param id
+		 *            a string used to identify this particular controller
+		 * @param pidPosition
+		 *            the controller parameters used to create the thread
 		 */
-		private PIDSpeedTask(PIDPosition2 controller) {
+		private PIDTask(PIDPosition pidPosition) {
 
-			if (controller == null) {
+			if (pidPosition == null) {
 				throw new NullPointerException(" PIDController was null");
 			}
-			speedController = controller;
+			this.Controller = pidPosition;
 		}
 
 		/**
@@ -1175,7 +1117,7 @@ public class PIDPosition2 implements TCPMessageInterface {
 		 */
 
 		public void run() {
-			speedController.calculate();
+			Controller.calculate();
 
 		}
 	}
