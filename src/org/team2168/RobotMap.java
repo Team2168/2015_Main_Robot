@@ -1,7 +1,6 @@
 package org.team2168;
 
 import org.team2168.PIDController.sensors.AverageEncoder;
-import org.team2168.PIDControllers.PIDPosition;
 
 import edu.wpi.first.wpilibj.CounterBase;
 
@@ -27,18 +26,20 @@ public class RobotMap {
 	public final static int INTAKE_RIGHT_MOTOR = 7;
 	public final static int LIFT_MOTOR = 8;
 	public final static int WINCH_MOTOR = 9;
-	
+
 	//PDP Channels/////////////////////////////////////////////////////////////
-	public final static int DRIVETRAIN_RIGHT_MOTOR_1_PDP = 0;
+	public final static int DRIVETRAIN_RIGHT_MOTOR_1_PDP = 2;
 	public final static int DRIVETRAIN_RIGHT_MOTOR_2_PDP = 1;
-	public final static int DRIVETRAIN_RIGHT_MOTOR_3_PDP = 2;
+	public final static int DRIVETRAIN_RIGHT_MOTOR_3_PDP = 0;
 	public final static int DRIVETRAIN_LEFT_MOTOR_1_PDP = 13;
 	public final static int DRIVETRAIN_LEFT_MOTOR_2_PDP = 14;
 	public final static int DRIVETRAIN_LEFT_MOTOR_3_PDP = 15;
-	public final static int INTAKE_LEFT_MOTOR_PDP = 6;
-	public final static int INTAKE_RIGHT_MOTOR_PDP = 7;
+	public final static int INTAKE_LEFT_MOTOR_PDP = 11;
+	public final static int INTAKE_RIGHT_MOTOR_PDP = 4;
 	public final static int LIFT_MOTOR_PDP = 12;
-	public final static int WINCH_MOTOR_PDP = 9;
+	public final static int WINCH_MOTOR_PDP = 10;
+	public final static int DIO_POWER = 6;
+	public final static int PCM_POWER = 9;
 
 
 	//Solenoid Channels////////////////////////////////////////////////////////
@@ -48,7 +49,8 @@ public class RobotMap {
 	public final static int GRIPPER_DOUBLE_SOLENOID_REVERSE = 3;
 	public final static int LIFT_BRAKE_DOUBLE_SOLENOID_FORWARD = 4;
 	public final static int LIFT_BRAKE_DOUBLE_SOLENOID_REVERSE = 5;
-
+	public final static int PUSHER_SOLENOID_FORWARD = 6;
+	public final static int PUSHER_SOLENOID_REVERSE = 7;
 
 	//Digital IO Channels//////////////////////////////////////////////////////
 	//0-9 on RoboRio 10-25 on MXP
@@ -72,8 +74,8 @@ public class RobotMap {
 
 
 	//CAN Device IDs///////////////////////////////////////////////////////////
+	public final static int PCM_CAN_ID = 0;
 	public final static int PDP_CAN_ID = 1;
-	public final static int PCM_CAN_ID = 2;
 
 
 	//Joysticks////////////////////////////////////////////////////////////////
@@ -83,7 +85,7 @@ public class RobotMap {
 	public final static int PNUEMATICS_TEST_JOYSTICK = 3;
 	public final static int COMMANDS_TEST_JOYSTICK = 4;
 	public final static int AUTO_TEST_JOYSTICK = 5;
-	
+
 
 	/*************************************************************************
 	 *                         DRIVETRAIN PARAMETERS
@@ -109,7 +111,7 @@ public class RobotMap {
 	/*************************************************************************
 	 *                              LIFT PARAMETERS
 	 *************************************************************************/
-	
+
 	//1.4 inch pully shaft
 	//TODO: UPDATE THESE WITH CORRECT VALUES
 	private static final int liftPulsePerRotation = 256; //encoder ticks per rotation
@@ -141,7 +143,7 @@ public class RobotMap {
 	//TODO: find height of lift in order to be above a tote with another being carried
 	public static final double LIFT_ABOVE_TOTE = 20.0; //inches
 	public static final double LIFT_MIN_SPEED = 0.14; //pwm signal
-	
+
 
 	/*************************************************************************
 	 *                            MISC PARAMETERS
@@ -154,18 +156,18 @@ public class RobotMap {
 	public final static double INTAKE_WHEEL_SPEED = 0.5;
 	public final static boolean PRINT_SD_DEBUG_DATA = true;
 	public final static long SmartDashThreadPeriod = 100; //ms
-	
+
 	/*************************************************************************
-	 *                            Electrical Parameters 
+	 *                            Electrical Parameters
 	 *************************************************************************/
 	public final static long PDPThreadPeriod = 50; //ms
 	public final static double WARNING_CURRENT_LIMIT = 35;  //amps
 	public final static double STALL_CURRENT_LIMIT = 80;  //amps
 	public final static double MAIN_BREAKER_TRIP_TEMP = 150;  //farenheit
 
-	
+
 	/*************************************************************************
-	 *                            PID Parameters 
+	 *                            PID Parameters
 	 *************************************************************************/
 	//period to run PID loops on drive train
 	public static final long driveTrainPIDPeriod = 70;//70ms loop
@@ -183,17 +185,17 @@ public class RobotMap {
 	public static final double driveTrainRightSpeedD = 0.0543;
 
 	public static final double driveTrainLeftPositionP = 0.002;
-	public static final double driveTrainLeftPositionI = 0.0001412646174233;  
+	public static final double driveTrainLeftPositionI = 0.0001412646174233;
 	public static final double driveTrainLeftPositionD = 0.0074778888124088;
-	
+
 	public static final double driveTrainRightPositionP = 0.002;
-	public static final double driveTrainRightPositionI = 0.0001412646174233;  
+	public static final double driveTrainRightPositionI = 0.0001412646174233;
 	public static final double driveTrainRightPositionD = 0.0074778888124088;
 
 	public static final double rotatePositionP = 0.0001;
 	public static final double rotatePositionI = 0.00001;
 	public static final double rotatePositionD = 0.0;
-	
+
 	double pTurn = 0.001;
 	double iTurn = 0.00001;
 	double pDrive = 0;
@@ -206,10 +208,6 @@ public class RobotMap {
 //	public static final double liftIUp = 0.0110;
 //	public static final double liftDUp = 0.0017;
 //	public static final double liftNUp = 10.7300;
-	
-	public static final double liftPDw = 0.002;
-	public static final double liftIDw = 0.0001;
-	public static final double liftDDw = 0.0001;
 	
 	public static final long liftPIDPeriod = 70; //100ms
 	
@@ -224,6 +222,6 @@ public class RobotMap {
 	public static final int TCPServerShooterSpeedAft = 1185;
 	public static final int TCPServerShooterSpeedFwd = 1186;
 	public static final int TCPServerLiftPos = 1187;
-	
+
 
 }

@@ -10,7 +10,7 @@ import org.team2168.commands.lift.EnableBrake;
 import org.team2168.commands.lift.SetLiftPosition;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-
+ 
 /**
  *
  */
@@ -23,6 +23,6 @@ public class IntakeTote extends CommandGroup {
 		addSequential(new EnableBrake());
 		addSequential(new EngageIntake());
 		addSequential(new IntakeUntilTotePresent());
-		addSequential(new SetIntakeWheelSpeed(0.0));
+		//addSequential(new SetIntakeWheelSpeed(0.0));
 	}
 }

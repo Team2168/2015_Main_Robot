@@ -3,6 +3,7 @@ package org.team2168.commands.drivetrain;
 import org.team2168.OI;
 import org.team2168.Robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -10,32 +11,15 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DriveWithJoysticks extends Command {
 
-	Double leftStick;
-	Double rightStick;
+	Joystick joystick;
+	int leftAxis;
+	int rightAxis;
 	
-	//TODO: Figure out why this change was made, and delete if not needed
-	
-	boolean driveWithJoystick;
-	
-	/**
-	 * Call the command with this constructor to run it with Joysticks
-	 */
-	public DriveWithJoysticks() {
+	public DriveWithJoysticks(Joystick joystick, int leftAxis, int rightAxis) {
+		this.joystick = joystick;
+		this.leftAxis = leftAxis;
+		this.rightAxis = rightAxis;
 		requires(Robot.drivetrain);
-		this.driveWithJoystick = true;
-	}
-	
-	/**
-	 * Call the command with this constructor to run it without joysticks
-	 * @param leftStick
-	 * @param rightStick
-	 */
-	public DriveWithJoysticks(Double leftStick, Double rightStick) {
-		requires(Robot.drivetrain);
-		this.leftStick = leftStick;
-		this.rightStick = rightStick;
-		
-		this.driveWithJoystick = false;
 	}
 
 	/**
@@ -48,11 +32,8 @@ public class DriveWithJoysticks extends Command {
 	 * Called repeatedly when this Command is scheduled to run
 	 */
 	protected void execute() {
-		if (!(driveWithJoystick)) {
-			Robot.drivetrain.tankDrive(this.leftStick, this.rightStick);
-		}else {
-			Robot.drivetrain.tankDrive(OI.driverJoystick.getLeftStickRaw_Y(), OI.driverJoystick.getRightStickRaw_Y());
-		}
+		Robot.drivetrain.tankDrive(joystick.getRawAxis(leftAxis),
+				joystick.getRawAxis(rightAxis));
 	}
 
 	/**

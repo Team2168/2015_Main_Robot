@@ -7,11 +7,13 @@ import org.team2168.subsystems.Gripper;
 import org.team2168.subsystems.Intake;
 import org.team2168.subsystems.Lift;
 import org.team2168.subsystems.Pneumatics;
+import org.team2168.subsystems.Pusher;
 import org.team2168.subsystems.Winch;
 import org.team2168.utils.ConsolePrinter;
 import org.team2168.utils.PowerDistribution;
 
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -35,22 +37,19 @@ public class Robot extends IterativeRobot {
 	public static Winch winch;
 	public static Gripper gripper;
 	public static Pneumatics pneumatics;
+	public static Pusher pusher;
 
-	//Power Monitor
-	public static PowerDistribution pdp;
-	
-	//SmartDash printer
-	ConsolePrinter printer;
-	
-	//path follower
-	public static FalconPathPlanner path;
-		
-	
+	public static PowerDistribution pdp;  //Power Monitor
+	ConsolePrinter printer;  //SmartDash printer
+
 	public static BuiltInAccelerometer accel;
 
 	// Auto command objects
 	Command autonomousCommand;
 	Command driveWithJoystick;
+
+	private static DigitalInput practiceBot;
+	public static FalconPathPlanner path;
 
 
 	/**
@@ -58,43 +57,31 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
+		//Instantiate sensors
+		practiceBot = new DigitalInput(RobotMap.PracticeBotJumper);
+		accel = new BuiltInAccelerometer();
+		pdp = new PowerDistribution(RobotMap.PDPThreadPeriod);
+		pdp.startThread();
+
+		//Instantiate subsystems
+		pneumatics = Pneumatics.getInstance();
 		drivetrain = Drivetrain.getInstance();
 		intake = Intake.getInstance();
 		lift = Lift.getInstance();
 		winch = Winch.getInstance();
 		gripper = Gripper.getInstance();
-		pneumatics = Pneumatics.getInstance();
+		pusher = Pusher.getInstance();
 
-		accel = new BuiltInAccelerometer();
-		
-		pdp = new PowerDistribution(RobotMap.PDPThreadPeriod);
-		pdp.startThread();
-
-		long start = System.currentTimeMillis();
-		//create waypoint path
-		double[][] waypoints = new double[][]{
-				{4, 6},
-				{4, 16}
-		}; 
-
-		double totalTime = 10; //seconds
-		double timeStep = 0.07; //period of control loop on Rio, seconds
-		double robotTrackWidth = 2; //distance between left and right wheels, feet
-
-		
-		path = new FalconPathPlanner(waypoints);
-		path.calculate(totalTime, timeStep, robotTrackWidth);
-
-		System.out.println("Time in ms: " + (System.currentTimeMillis()-start));
-	
-		
         //create thread to write dashboard variables
 		printer = new ConsolePrinter(RobotMap.SmartDashThreadPeriod);
 		printer.startThread();
 
-		oi = new OI();
+		oi = OI.getInstance();
+
 		// instantiate the command used for the autonomous period
 		// autonomousCommand = new ExampleCommand();
+
+		System.out.println("Bot Finished Loading.");
 	}
 
 
@@ -135,15 +122,14 @@ public class Robot extends IterativeRobot {
 		}
 	}
 
-
-    /**
-     * This function is called when the disabled button is hit. You can use it
-     * to reset subsystems before shutting down.
-     */
-    public void disabledInit() {
-    	Robot.drivetrain.gyroSPI.calibrate();
-    	Robot.drivetrain.gyroAnalog.reInitGyro();
-    }
+	/**
+	 * This function is called when the disabled button is hit. You can use it
+	 * to reset subsystems before shutting down.
+	 */
+	public void disabledInit() {
+		Robot.drivetrain.gyroSPI.calibrate();
+		Robot.drivetrain.gyroAnalog.reInitGyro();
+	}
 
 	/**
 	 * This function is called periodically during operator control
@@ -157,5 +143,35 @@ public class Robot extends IterativeRobot {
 	 */
 	public void testPeriodic() {
 		LiveWindow.run();
+	}
+
+	/**
+	 * Returns the status of DIO pin 24 on the MXP.
+	 * Place a jumper between pin pin 32 and 30 on the MXP to indicate
+	 * this RoboRio is installed on the practice bot.
+	 * @return true if this is the practice robot
+	 */
+	public static boolean isPracticeRobot() {
+		return !practiceBot.get();
+	}
+	
+	public void pathPlanner()
+	{
+		long start = System.currentTimeMillis();
+		//create waypoint path
+		double[][] waypoints = new double[][]{
+				{4, 6},
+				{4, 16}
+		}; 
+
+		double totalTime = 10; //seconds
+		double timeStep = 0.07; //period of control loop on Rio, seconds
+		double robotTrackWidth = 2; //distance between left and right wheels, feet
+
+		
+		path = new FalconPathPlanner(waypoints);
+		path.calculate(totalTime, timeStep, robotTrackWidth);
+
+		System.out.println("Time in ms: " + (System.currentTimeMillis()-start));
 	}
 }

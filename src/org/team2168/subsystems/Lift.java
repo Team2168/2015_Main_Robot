@@ -1,16 +1,18 @@
 package org.team2168.subsystems;
 
+import org.team2168.OI;
 import org.team2168.Robot;
 import org.team2168.RobotMap;
 import org.team2168.PIDController.sensors.AverageEncoder;
 import org.team2168.PIDControllers.PIDPosition;
 import org.team2168.PIDControllers.PIDPosition2;
 import org.team2168.commands.lift.LiftWithJoystick;
+import org.team2168.utils.F310;
 import org.team2168.utils.TCPSocketSender;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -19,44 +21,43 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Lift extends Subsystem {
 
 	private static Lift instance = null;
-	private Talon intakeMotor;
+	private Victor intakeMotor;
 	private DoubleSolenoid liftBrake;
-	private double currentPosition;
 	private static final double DESTINATION_TOL = 1.0; //inches
 
 	private volatile double motorVoltage;
-	
+
 	public AverageEncoder liftEncoder;
 	public PIDPosition2 liftController;
 	
 	TCPSocketSender TCPliftPosController;
-	
+
 	/**
 	 * A private constructor to prevent multiple instances of the subsystem from
 	 * being created.
 	 */
 	private Lift() {
-		intakeMotor = new Talon(RobotMap.LIFT_MOTOR);
+		intakeMotor = new Victor(RobotMap.LIFT_MOTOR);
 		liftEncoder = new AverageEncoder(RobotMap.LIFT_ENCODER_A,
 				RobotMap.LIFT_ENCODER_B, RobotMap.liftEncoderPulsePerRot,
 				RobotMap.liftEncoderDistPerTick,
 				RobotMap.liftEncoderReverse,
 				RobotMap.liftEncodingType, RobotMap.liftSpeedReturnType,
 				RobotMap.liftPosReturnType, RobotMap.liftAvgEncoderVal);
-		
-		liftBrake = new DoubleSolenoid(RobotMap.LIFT_BRAKE_DOUBLE_SOLENOID_FORWARD,
+
+		liftBrake = new DoubleSolenoid(RobotMap.PCM_CAN_ID, RobotMap.LIFT_BRAKE_DOUBLE_SOLENOID_FORWARD,
 				RobotMap.LIFT_BRAKE_DOUBLE_SOLENOID_REVERSE);
-		
+
 		liftController = new PIDPosition2("LiftPID", RobotMap.liftPUp, 
 				RobotMap.liftIUp, RobotMap.liftDUp, liftEncoder,
     			RobotMap.liftPIDPeriod);
 //		liftController.setEnDerivFilter(true, RobotMap.liftNUp);
 		liftController.startThread();
-		
+
 		//start TCP Servers for DEBUGING ONLY
-    	TCPliftPosController = new TCPSocketSender(RobotMap.TCPServerLiftPos, liftController);
-    	TCPliftPosController.start();
-		
+		TCPliftPosController = new TCPSocketSender(RobotMap.TCPServerLiftPos, liftController);
+		TCPliftPosController.start();
+
 	}
 
 	/**
@@ -74,18 +75,18 @@ public class Lift extends Subsystem {
 	 * Set the default command for the subsystem.
 	 */
 	public void initDefaultCommand() {
-		setDefaultCommand(new LiftWithJoystick());
+		setDefaultCommand(new LiftWithJoystick(OI.operatorJoystick, F310.AXIS_RIGHT_Y));
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public double getMotorVoltage()
 	{
 		return motorVoltage;
 	}
-	
+
 	/**
 	 * Drive the lift in open loop mode.
 	 *

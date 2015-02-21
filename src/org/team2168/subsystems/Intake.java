@@ -1,12 +1,13 @@
 package org.team2168.subsystems;
 
 import org.team2168.RobotMap;
+import org.team2168.commands.intake.SetIntakeWheelSpeed;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -17,8 +18,8 @@ public class Intake extends Subsystem {
 
 	private static Intake instance = null;
 	private DoubleSolenoid rightLeftIntake;
-	private Talon leftMotor;
-	private Talon rightMotor;
+	private Victor leftMotor;
+	private Victor rightMotor;
 	private static DigitalInput leftLimitSwitch;
 	private static DigitalInput rightLimitSwitch;
 	private static AnalogInput toteDistanceSensor;
@@ -29,10 +30,10 @@ public class Intake extends Subsystem {
 	 * from being created.
 	 */
 	private Intake() {
-		rightLeftIntake = new DoubleSolenoid(RobotMap.INTAKE_DOUBLE_SOLENOID_FORWARD,
+		rightLeftIntake = new DoubleSolenoid(RobotMap.PCM_CAN_ID, RobotMap.INTAKE_DOUBLE_SOLENOID_FORWARD,
 				RobotMap.INTAKE_DOUBLE_SOLENOID_REVERSE);
-		rightMotor 	= new Talon(RobotMap.INTAKE_LEFT_MOTOR);
-		leftMotor 	= new Talon(RobotMap.INTAKE_RIGHT_MOTOR);
+		rightMotor 	= new Victor(RobotMap.INTAKE_LEFT_MOTOR);
+		leftMotor 	= new Victor(RobotMap.INTAKE_RIGHT_MOTOR);
 		leftLimitSwitch = new DigitalInput(RobotMap.LEFT_TOTE_SWITCH);
 		rightLimitSwitch = new DigitalInput(RobotMap.RIGHT_TOTE_SWITCH);
 		toteDistanceSensor = new AnalogInput(RobotMap.INTAKE_SENSOR);
@@ -85,7 +86,7 @@ public class Intake extends Subsystem {
 	 */
 	public void setIntakeSpeed(double speed) {
 		setLeftIntakeSpeed(speed);
-		setRightIntakeSpeed(speed);
+		setRightIntakeSpeed(-speed);
 	}
 
 	/**
@@ -131,7 +132,7 @@ public class Intake extends Subsystem {
 	 * Set the default command for the subsystem
 	 */
 	public void initDefaultCommand() {
-		//setDefaultCommand(new MySpecialCommand());
+		setDefaultCommand(new SetIntakeWheelSpeed());
 	}
 
 	/**

@@ -1,9 +1,6 @@
 package org.team2168;
 
-
 import org.team2168.commandgroups.DriveLiftToSetPosition;
-import org.team2168.commandgroups.IntakeTote;
-import org.team2168.commandgroups.LiftTote;
 import org.team2168.commands.gripper.EngageGripper;
 import org.team2168.commands.gripper.ReleaseGripper;
 import org.team2168.commands.intake.DisengageIntake;
@@ -13,6 +10,8 @@ import org.team2168.commands.lift.DisableBrake;
 import org.team2168.commands.lift.EnableBrake;
 import org.team2168.commands.lift.PIDCommands.LiftPIDPause;
 import org.team2168.commands.lift.PIDCommands.LiftPIDPosition;
+import org.team2168.commands.pusher.PushTotes;
+import org.team2168.commands.pusher.RetractPusher;
 import org.team2168.utils.F310;
 import org.team2168.commands.drivetrain.DriveXDistance;
 import org.team2168.commands.drivetrain.PIDCommands.DriveLeftPIDPath;
@@ -32,8 +31,12 @@ public class OI {
 	public static F310 commandsTestJoystick;
 	public static F310 autoTestJoystick;
 
+	private static OI instance = null;
 
-	public OI() {
+	/**
+	 * A private constructor, to prevent multiple instances of this class from existing.
+	 */
+	private OI() {
 		driverJoystick = new F310(RobotMap.DRIVER_JOYSTICK);
 		operatorJoystick = new F310(RobotMap.OPERATOR_JOYSTICK);
 		motorsTestJoystick = new F310(RobotMap.MOTORS_TEST_JOYSTICK);
@@ -43,7 +46,8 @@ public class OI {
 
 
 		//DRIVER JOYSTICK BUTTON MAP///////////////////////////////////////////////
-
+		//driverJoystick.ButtonA().whenPressed(new PushTotes());
+		//driverJoystick.ButtonB().whenPressed(new RetractPusher());
 
 		//OPERATOR JOYSTICK BUTTON MAP/////////////////////////////////////////////
 		operatorJoystick.ButtonA().whenPressed(new DriveLiftToSetPosition(RobotMap.MIN_LIFT_HEIGHT));
@@ -52,16 +56,10 @@ public class OI {
 		operatorJoystick.ButtonLeftDPad().whenPressed(new ReleaseGripper());
 		operatorJoystick.ButtonRightBumper().whenPressed(new EngageIntake());
 		operatorJoystick.ButtonLeftBumper().whenPressed(new DisengageIntake());
-		//TODO: The triggers return analog values. Use this feature to allow the operator to
-		// drive the intake at variable speeds send a variable speed to the intake wheels.
-		operatorJoystick.ButtonB().whenPressed(new SetIntakeWheelSpeed(1));
-		operatorJoystick.ButtonX().whenPressed(new SetIntakeWheelSpeed(-1));
-		operatorJoystick.ButtonY().whenPressed(new SetIntakeWheelSpeed(0));
+		operatorJoystick.ButtonStart().whenPressed(new PushTotes());
+		operatorJoystick.ButtonBack().whenPressed(new RetractPusher());
 
 		
-    
-
-      
 		//TEST CONTROLLER BUTTON MAP///////////////////////////////////////////////
         pnuematicTestJoystick.ButtonA().whenPressed(new EngageGripper());
         pnuematicTestJoystick.ButtonB().whenPressed(new ReleaseGripper());
@@ -78,6 +76,15 @@ public class OI {
         commandsTestJoystick.ButtonY().whenPressed(new DriveRightPIDPath(Robot.path.smoothRightVelocity));
         commandsTestJoystick.ButtonLeftBumper().whenPressed(new DrivePIDPath(Robot.path.smoothLeftVelocity, Robot.path.smoothRightVelocity));
         
-        
+	}
+
+	/**
+	 * @return an instance of the OI class.
+	 */
+	public static OI getInstance() {
+		if(instance == null) {
+			instance = new OI();
+		}
+		return instance;
 	}
 }

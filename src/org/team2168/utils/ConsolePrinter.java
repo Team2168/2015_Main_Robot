@@ -12,15 +12,12 @@ import org.team2168.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.team2168.Robot;
-import org.team2168.RobotMap;
-
 
 
 public class ConsolePrinter {
 	private java.util.Timer executor;
 	private long period;
-	
+
 	PrintWriter log;
 
 	public ConsolePrinter(long period) {
@@ -30,7 +27,7 @@ public class ConsolePrinter {
 	public void startThread() {
 		this.executor = new java.util.Timer();
 		this.executor.schedule(new ConsolePrintTask(this), 0L, this.period);
-		
+
 		try {
 			this.log = new PrintWriter("/home/lvuser/Log.txt", "UTF-8");
 			log.println("Time \t VoltageL1 \t VoltageL2 \t VoltageL3 \t VoltageR1 \t VoltageR2 \t VoltageR3 \t CurrentL1 \t CurrentL2 \t CurrentL3 \t CurrentR1 \t CurrentR2 \t CurrentR3 \t Gyrot SPI Gyro Angle \t SPI Gyro Rate \t Analog Gyro Angle \t Analog Gyro Rate \t Left Encoder Position \t Left Encoder Rate \t Right Encoder Position \t Right Encoder Rate \t Lift Voltage \t Lift Current \t Lift Position \t Lift Rate");
@@ -41,15 +38,14 @@ public class ConsolePrinter {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	public void print() {
 		if (RobotMap.PRINT_SD_DEBUG_DATA) {
-
-	    	SmartDashboard.putNumber("Left Encoder Distance",Drivetrain.getInstance().getLeftPosition());
-	    	SmartDashboard.putNumber("Right Encoder Distance:",Drivetrain.getInstance().getRightPosition());
-	    	SmartDashboard.putBoolean("isPracticeBot", Drivetrain.getInstance().isPracticeBot());
+			SmartDashboard.putNumber("Left Encoder Distance",Drivetrain.getInstance().getLeftPosition());
+			SmartDashboard.putNumber("Right Encoder Distance:",Drivetrain.getInstance().getRightPosition());
+			SmartDashboard.putBoolean("isPracticeBot", Robot.isPracticeRobot());
 	    	
 	    	SmartDashboard.putNumber("GYRO DeltTime:", Robot.drivetrain.gyroSPI.getDeltatime());
 	    	SmartDashboard.putNumber("GYRO Rate:", Robot.drivetrain.gyroSPI.getRate());
@@ -78,7 +74,6 @@ public class ConsolePrinter {
 
 	    	SmartDashboard.putNumber("Battery Voltage", Robot.pdp.getBatteryVoltage());
 	    	
-	    	
 	    	SmartDashboard.putNumber("DTRight1MotorCurrent", Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP));
 	    	SmartDashboard.putNumber("DTRight2MotorCurrent", Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP));
 	    	SmartDashboard.putNumber("DTRight3MotorCurrent", Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_3_PDP));
@@ -96,43 +91,32 @@ public class ConsolePrinter {
 	
 	    	//file log
 	    	log.println(Timer.getFPGATimestamp() + "\t" + 
-	    			Robot.drivetrain.getLeft1MotorVoltage() + "\t" + 
-	    			Robot.drivetrain.getLeft2MotorVoltage() + "\t" + 
-	    			Robot.drivetrain.getLeft3MotorVoltage() + "\t" + 
-	    			
-					Robot.drivetrain.getRight1MotorVoltage() + "\t" + 
-					Robot.drivetrain.getRight2MotorVoltage() + "\t" + 
-					Robot.drivetrain.getRight3MotorVoltage() + "\t" + 
-
-					Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP) + "\t" +
-					Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP) + "\t" +
-					Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_3_PDP) + "\t" +
-					
-					Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP) + "\t" +
-					Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP) + "\t" +
-					Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_3_PDP) + "\t" +
-
-					Robot.drivetrain.gyroAnalog.getPos() + "\t" + 
-					Robot.drivetrain.gyroAnalog.getRate() + "\t" + 
-					
-					Robot.drivetrain.gyroSPI.getPos() + "\t" + 
-					Robot.drivetrain.gyroSPI.getRate() + "\t" +
-					
-					Robot.drivetrain.drivetrainLeftEncoder.getPos() + "\t" + 
-					Robot.drivetrain.drivetrainLeftEncoder.getRate() + "\t" +
-					
-					Robot.drivetrain.drivetrainRightEncoder.getPos() + "\t" +
-					Robot.drivetrain.drivetrainRightEncoder.getRate() + "\t" + 
-	    			
-					Robot.lift.getMotorVoltage() + "\t" +
-					Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_PDP) + "\t" +
-					Robot.lift.getPosition() + "\t" +
-					Robot.lift.liftEncoder.getRawRate()
-					
-	    			);
+				Robot.drivetrain.getLeft1MotorVoltage() + "\t" + 
+				Robot.drivetrain.getLeft2MotorVoltage() + "\t" + 
+				Robot.drivetrain.getLeft3MotorVoltage() + "\t" + 
+				
+				Robot.drivetrain.getRight1MotorVoltage() + "\t" + 
+				Robot.drivetrain.getRight2MotorVoltage() + "\t" + 
+				Robot.drivetrain.getRight3MotorVoltage() + "\t" + 
+	
+				Robot.drivetrain.gyroAnalog.getPos() + "\t" + 
+				Robot.drivetrain.gyroAnalog.getRate() + "\t" + 
+				
+				Robot.drivetrain.gyroSPI.getPos() + "\t" + 
+				Robot.drivetrain.gyroSPI.getRate() + "\t" +
+				
+				Robot.drivetrain.drivetrainLeftEncoder.getPos() + "\t" + 
+				Robot.drivetrain.drivetrainLeftEncoder.getRate() + "\t" +
+				
+				Robot.drivetrain.drivetrainRightEncoder.getPos() + "\t" +
+				Robot.drivetrain.drivetrainRightEncoder.getRate() + "\t" + 
+				
+				Robot.lift.getMotorVoltage() + "\t" +
+				Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_PDP) + "\t" +
+				Robot.lift.getPosition() + "\t" +
+				Robot.lift.liftEncoder.getRawRate()
+			);
 	    	log.flush();
-	    	
-	    	
 		}
 	}
 
