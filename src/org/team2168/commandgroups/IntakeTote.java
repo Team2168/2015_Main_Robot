@@ -4,7 +4,7 @@ import org.team2168.RobotMap;
 import org.team2168.commands.gripper.ReleaseGripper;
 import org.team2168.commands.intake.EngageIntake;
 import org.team2168.commands.intake.IntakeUntilTotePresent;
-import org.team2168.commands.intake.SetIntakeWheelSpeed;
+import org.team2168.commands.intake.DriveIntakeWithJoystick;
 import org.team2168.commands.lift.DisableBrake;
 import org.team2168.commands.lift.EnableBrake;
 import org.team2168.commands.lift.SetLiftPosition;

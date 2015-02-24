@@ -1,7 +1,8 @@
 package org.team2168.subsystems;
 
 import org.team2168.RobotMap;
-import org.team2168.commands.intake.SetIntakeWheelSpeed;
+import org.team2168.commands.intake.StopIntakeWheels;
+import org.team2168.utils.NPointAverager;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -24,6 +25,7 @@ public class Intake extends Subsystem {
 	private static DigitalInput rightLimitSwitch;
 	private static AnalogInput toteDistanceSensor;
 	private static final double CM_TO_INCH =  0.393701;
+	private static NPointAverager toteDistance;
 
 	/**
 	 * A private constructor to prevent multiple instances of the subsystem
@@ -37,6 +39,7 @@ public class Intake extends Subsystem {
 		leftLimitSwitch = new DigitalInput(RobotMap.LEFT_TOTE_SWITCH);
 		rightLimitSwitch = new DigitalInput(RobotMap.RIGHT_TOTE_SWITCH);
 		toteDistanceSensor = new AnalogInput(RobotMap.INTAKE_SENSOR);
+		toteDistance = new NPointAverager(10);
 	}
 
 	/**
@@ -112,27 +115,37 @@ public class Intake extends Subsystem {
 	 * Returns the raw voltage from the intake distance sensor
 	 * @return the sensed voltage from the distance sensor
 	 */
-	public double getRawToteDistance() {
+	private double getRawToteDistance() {
 		return toteDistanceSensor.getVoltage();
 	}
 
 	/**
-	 * Gets the distance to the nearest object from the back of the intake.
-	 * @return the distance in inches
+	 * Get the averaged voltage of the intake distance sensor
+	 * @return average value in volts
 	 */
-	public double getToteDistance() {
-		double toteDistance = getRawToteDistance();
-
-		//y = 0.512x^2 - 0.8656x + 6.1888
-		//R^2 = 0.9985
-		return ((0.512 * Math.pow(toteDistance, 2) - 0.8656 * toteDistance + 6.1888) * CM_TO_INCH);
+	public double getAveragedRawToteDistance() {
+		toteDistance.putData(getRawToteDistance());
+		return toteDistance.getAverage();
 	}
+
+	//	/**
+	//	 * Gets the distance to the nearest object from the back of the intake.
+	//	 * @return the distance in inches
+	//	 */
+	//	public double getToteDistance() {
+	//		double toteDistance = getRawToteDistance();
+	//
+	//		//y = 0.512x^2 - 0.8656x + 6.1888
+	//		//R^2 = 0.9985
+	//		return ((0.512 * Math.pow(toteDistance, 2) - 0.8656 * toteDistance + 6.1888) * CM_TO_INCH);
+	//	}
 
 	/**
 	 * Set the default command for the subsystem
 	 */
 	public void initDefaultCommand() {
-		setDefaultCommand(new SetIntakeWheelSpeed());
+		//setDefaultCommand(new SetIntakeWheelSpeed());
+		setDefaultCommand(new StopIntakeWheels());
 	}
 
 	/**
