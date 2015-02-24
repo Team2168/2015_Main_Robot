@@ -154,7 +154,6 @@ public class RobotMap {
 	public final static double PRESS_SENSOR_HIGH_PRESSURE = 150.0;
 
 	public final static double INTAKE_WHEEL_SPEED = 0.5;
-	//public final static double INTAKE_TOTE_DISENGAGED_UNTIL_VOLTAGE = 0.6;
 	public final static double INTAKE_TOTE_ENGAGE_VOLTAGE = 0.80;
 	public final static double INTAKE_TOTE_STOP_VOLTAGE = 2.65;
 	public final static boolean PRINT_SD_DEBUG_DATA = true;

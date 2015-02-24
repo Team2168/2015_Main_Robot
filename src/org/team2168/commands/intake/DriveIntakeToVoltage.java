@@ -40,6 +40,7 @@ public class DriveIntakeToVoltage extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
+		//TODO: Replace with a proportional controller to ramp speed down as the tote comes into the robot.
 		Robot.intake.setIntakeSpeed(RobotMap.INTAKE_WHEEL_SPEED);
 	}
 

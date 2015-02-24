@@ -2,7 +2,7 @@ package org.team2168.subsystems;
 
 import org.team2168.RobotMap;
 import org.team2168.commands.intake.StopIntakeWheels;
-import org.team2168.utils.NPointAverager;
+import org.team2168.utils.Util;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -24,8 +24,14 @@ public class Intake extends Subsystem {
 	private static DigitalInput leftLimitSwitch;
 	private static DigitalInput rightLimitSwitch;
 	private static AnalogInput toteDistanceSensor;
+	private static double averagedToteDistance = 0.0;
+	//TODO: calibrate this value
+	private static final double TOTE_SENSOR_AVG_GAIN = 0.8;
 	private static final double CM_TO_INCH =  0.393701;
-	private static NPointAverager toteDistance;
+
+	//Intake sensor won't return voltages smaller than:
+	//TODO: calibrate this value
+	private final static double INTAKE_TOTE_MIN_VOLTAGE = 0.5;
 
 	/**
 	 * A private constructor to prevent multiple instances of the subsystem
@@ -39,7 +45,6 @@ public class Intake extends Subsystem {
 		leftLimitSwitch = new DigitalInput(RobotMap.LEFT_TOTE_SWITCH);
 		rightLimitSwitch = new DigitalInput(RobotMap.RIGHT_TOTE_SWITCH);
 		toteDistanceSensor = new AnalogInput(RobotMap.INTAKE_SENSOR);
-		toteDistance = new NPointAverager(10);
 	}
 
 	/**
@@ -116,7 +121,9 @@ public class Intake extends Subsystem {
 	 * @return the sensed voltage from the distance sensor
 	 */
 	private double getRawToteDistance() {
-		return toteDistanceSensor.getVoltage();
+		//Don't return values that are less than the TOTE_MIN_VOLTAGE.
+		// This is to prevent garbage data being sent out when nothing is in front of the sensor.
+		return Util.max(INTAKE_TOTE_MIN_VOLTAGE, toteDistanceSensor.getVoltage());
 	}
 
 	/**
@@ -124,8 +131,9 @@ public class Intake extends Subsystem {
 	 * @return average value in volts
 	 */
 	public double getAveragedRawToteDistance() {
-		toteDistance.putData(getRawToteDistance());
-		return toteDistance.getAverage();
+		averagedToteDistance = Util.runningAverage(getRawToteDistance(),
+				averagedToteDistance, TOTE_SENSOR_AVG_GAIN);
+		return averagedToteDistance;
 	}
 
 	//	/**
@@ -137,6 +145,7 @@ public class Intake extends Subsystem {
 	//
 	//		//y = 0.512x^2 - 0.8656x + 6.1888
 	//		//R^2 = 0.9985
+	//		//TODO: figure out why this isn't working
 	//		return ((0.512 * Math.pow(toteDistance, 2) - 0.8656 * toteDistance + 6.1888) * CM_TO_INCH);
 	//	}
 
@@ -158,7 +167,7 @@ public class Intake extends Subsystem {
 
 	/**
 	 *
-	 * @return true when the intake is disngaged.
+	 * @return true when the intake is disengaged.
 	 */
 	public boolean isIntakeDisengaged() {
 		return rightLeftIntake.get() == Value.kReverse;
