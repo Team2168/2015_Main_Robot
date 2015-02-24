@@ -5,6 +5,9 @@ import org.team2168.commands.gripper.EngageGripper;
 import org.team2168.commands.gripper.ReleaseGripper;
 import org.team2168.commands.intake.DisengageIntake;
 import org.team2168.commands.intake.EngageIntake;
+import org.team2168.commands.intake.IntakeSingleTote;
+import org.team2168.commands.intake.SetIntakeSpeed;
+import org.team2168.commands.intake.StopIntakeWheels;
 import org.team2168.commands.lift.DisableBrake;
 import org.team2168.commands.lift.EnableBrake;
 import org.team2168.commands.pusher.PushTotes;
@@ -50,7 +53,10 @@ public class OI {
 		operatorJoystick.ButtonLeftBumper().whenPressed(new DisengageIntake());
 		operatorJoystick.ButtonStart().whenPressed(new PushTotes());
 		operatorJoystick.ButtonBack().whenPressed(new RetractPusher());
-
+		operatorJoystick.ButtonRightTrigger().whenPressed(new IntakeSingleTote());
+		operatorJoystick.ButtonRightTrigger().whenReleased(new StopIntakeWheels());
+		operatorJoystick.ButtonLeftTrigger().whileHeld(new SetIntakeSpeed(-RobotMap.INTAKE_WHEEL_SPEED));
+		operatorJoystick.ButtonLeftTrigger().whenReleased(new StopIntakeWheels());
 
 
 		//TEST CONTROLLER BUTTON MAP///////////////////////////////////////////////

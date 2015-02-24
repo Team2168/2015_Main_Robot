@@ -102,4 +102,15 @@ public class Util {
 	public static double intercept(double slope, double x, double y) {
 		return y - (slope * x);
 	}
+
+	/**
+	 * A simple low-overhead filter.
+	 * @param value new value to add to the running average
+	 * @param sum the running total for the filtered value
+	 * @param gain a between 0.0 - 1.0. The higher the gain, the slower the sum will respond to input changes.
+	 * @return the filtered value
+	 */
+	public static double runningAverage(double value, double sum, double gain) {
+		return (sum * gain) + (value * (1 - gain));
+	}
 }

@@ -89,7 +89,7 @@ public class ConsolePrinter {
 			SmartDashboard.putNumber("Lift Motor Voltage", Robot.lift.getMotorVoltage());
 
 
-			SmartDashboard.putNumber("Tote IR", Robot.intake.getRawToteDistance());
+			SmartDashboard.putNumber("Tote IR (V)", Robot.intake.getAveragedRawToteDistance());
 
 			//	    	//file log
 			//	    	log.println(Timer.getFPGATimestamp() + "\t" +
