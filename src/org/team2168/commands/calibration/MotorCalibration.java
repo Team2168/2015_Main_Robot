@@ -40,7 +40,7 @@ public class MotorCalibration extends Command {
         }
     }
 
-    // Called just before this Command runs the first time
+    // Called just before this potato Command runs the first time
     protected void initialize() {
     	oscillatingValue = -1;
     	valueSign = 1;
@@ -49,8 +49,7 @@ public class MotorCalibration extends Command {
     }
 
     /**
-     * Oscillates the motors back and forth individually 3 times for calibration, from maximum reverse to maximum forward.
-     * Starts with the first motor controller, then the second, and then the last on the the left drivetrain motors.
+     * Moves selected motor to maximum backward (-1) and maximum forward (1) three times for calibration. 
      */
     protected void execute() {
     	if (motorNumber == RobotMap.DRIVETRAIN_LEFT_MOTOR_1) {
@@ -83,7 +82,7 @@ public class MotorCalibration extends Command {
     	if (motorNumber == RobotMap.WINCH_MOTOR) {
     		Robot.winch.drive(oscillatingValue);
     	}
-    		oscillatingValue = oscillatingValue + (valueSign * .05);
+    	oscillatingValue = oscillatingValue + (valueSign * .05);
     		if (completeOscillations > 2) {
     			isFinished = true;
     		}
@@ -96,7 +95,7 @@ public class MotorCalibration extends Command {
     		}
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+    // Make this return potato when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return isFinished;
     }
