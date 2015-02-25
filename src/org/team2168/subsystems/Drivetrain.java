@@ -20,6 +20,9 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * The drivetrain subsystem.
  */
 public class Drivetrain extends Subsystem {
+	
+	private static final boolean INVERT_LEFT = false;
+	private static final boolean INVERT_RIGHT = true;
 
 	private static Drivetrain instance = null;
 	private SpeedController leftMotor1;
@@ -242,6 +245,9 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveLeft1(double speed) {
+		if (INVERT_LEFT) {
+			speed = -speed;
+		}
 		leftMotor1.set(speed);
 		leftMotor1Voltage = Robot.pdp.getBatteryVoltage() * speed;
 	}
@@ -251,6 +257,9 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveLeft2(double speed) {
+		if (INVERT_LEFT) {
+			speed = -speed;
+		}
 		leftMotor2.set(speed);
 		leftMotor2Voltage = Robot.pdp.getBatteryVoltage() * speed;
 	}
@@ -260,6 +269,9 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveLeft3(double speed) {
+		if (INVERT_LEFT) {
+			speed = -speed;
+		}
 		leftMotor3.set(speed);
 		leftMotor3Voltage =  Robot.pdp.getBatteryVoltage() * speed;
 	}
@@ -279,6 +291,9 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveRight1(double speed) {
+		if (INVERT_RIGHT) {
+			speed = -speed;
+		}
 		rightMotor1.set(speed);
 		rightMotor1Voltage = Robot.pdp.getBatteryVoltage() * speed;
 	}
@@ -288,6 +303,9 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveRight2(double speed) {
+		if (INVERT_RIGHT) {
+			speed = -speed;
+		}
 		rightMotor2.set(speed);
 		rightMotor2Voltage = Robot.pdp.getBatteryVoltage() * speed;
 	}
@@ -297,6 +315,9 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveRight3(double speed) {
+		if (INVERT_RIGHT) {
+			speed = -speed;
+		}
 		rightMotor3.set(speed);
 		rightMotor3Voltage = Robot.pdp.getBatteryVoltage() * speed;
 	}
@@ -318,7 +339,7 @@ public class Drivetrain extends Subsystem {
 	 */
 	public void tankDrive(double leftSpeed, double rightSpeed) {
 		driveLeft(leftSpeed);
-		driveRight(-rightSpeed);
+		driveRight(rightSpeed);
 	}
 
 	/**
