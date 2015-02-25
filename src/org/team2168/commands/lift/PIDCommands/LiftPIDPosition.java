@@ -38,18 +38,10 @@ public class LiftPIDPosition extends Command {
     
 	protected void execute() {
 		
-		//TODO to check logic on robot for filtering set points.
-		
-		//disengage
-		if (!Robot.lift.liftController.isFinished())
-			Robot.lift.disableBrake();
 		
 		//Robot.lift.liftController.setSetPoint(setPoint);
 		Robot.lift.drive(Robot.lift.liftController.getControlOutput());
 		
-		//set the brake
-		if (Robot.lift.liftController.isFinished())
-			Robot.lift.enableBrake();
 		
     }
 

@@ -59,7 +59,7 @@ public class DriveXDistance extends Command{
 		Robot.drivetrain.resetPosition();;
 		//drivetrain.resetGyro();
 		endDistance = Robot.drivetrain.getAveragedDistance() + distanceGoal;
-		angle = Robot.drivetrain.gyroSPI.getAngle();
+		angle = Robot.drivetrain.gyroSPI.getAngleDeg();
 		
 		//reset controller
 		Robot.drivetrain.rotateController.reset();
@@ -88,7 +88,7 @@ public class DriveXDistance extends Command{
 			leftSpeed = speed;
 		}
 		
-		Robot.drivetrain.rotateController.setSetPoint(Robot.drivetrain.gyroSPI.getAngle());
+		Robot.drivetrain.rotateController.setSetPoint(Robot.drivetrain.gyroSPI.getAngleDeg());
 	}
 
 	protected void execute() {
@@ -99,7 +99,7 @@ public class DriveXDistance extends Command{
 		double distError = currentDistance - this.distanceGoal;
 
 		//angle error
-		double turnError = Robot.drivetrain.gyroSPI.getAngle() - angle;
+		double turnError = Robot.drivetrain.gyroSPI.getAngleDeg() - angle;
 		double steeringAdjust = pTurn  * turnError;
 		
 	
@@ -142,11 +142,9 @@ public class DriveXDistance extends Command{
 			Robot.drivetrain.tankDrive(rightSpeed, leftSpeed); //use ratelimiter
 		
 		
-		
-		
 		System.out.println("Right Speed: " + rightSpeed + 
 				" Left Speed: " + leftSpeed + 
-				" Angle = " + Robot.drivetrain.gyroSPI.getAngle() + 
+				" Angle = " + Robot.drivetrain.gyroSPI.getAngleDeg() + 
 				" Distance = " + currentDistance +
 				" Angle Error = " + turnError +
 				" Dist Error = " + distError + 

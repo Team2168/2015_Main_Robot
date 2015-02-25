@@ -94,7 +94,19 @@ public class Lift extends Subsystem {
 	 *            value from -1.0 to 1.0, positive drives the lift up.
 	 */
 	public void drive(double speed) {
-		intakeMotor.set(speed);
+		
+		if(Math.abs(speed) > RobotMap.LIFT_MIN_SPEED) 
+		{
+			disableBrake();
+			intakeMotor.set(speed); 
+		}
+		else
+		{
+			intakeMotor.set(0); 
+			enableBrake();
+		}
+		
+		
 		motorVoltage = Robot.pdp.getBatteryVoltage() * speed;
 	}
 

@@ -30,6 +30,9 @@ public class Drivetrain extends Subsystem {
 	private SpeedController leftMotor3;
 	private SpeedController rightMotor3;
 
+	private boolean leftNegated = true;
+	private boolean rightNegated = false;
+	
 	public AverageEncoder drivetrainLeftEncoder;
 	public AverageEncoder drivetrainRightEncoder;
 	public FalconGyro gyroAnalog;
@@ -243,8 +246,16 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveLeft1(double speed) {
-		leftMotor1.set(speed);
-		leftMotor1Voltage = Robot.pdp.getBatteryVoltage() * speed;
+		double temp = 0;
+		
+		if (leftNegated) 
+			temp = -speed;
+		else
+			temp = speed;
+
+		leftMotor1.set(temp);
+		leftMotor1Voltage = Robot.pdp.getBatteryVoltage() * temp;
+		
 	}
 
 	/**
@@ -252,8 +263,16 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveLeft2(double speed) {
-		leftMotor2.set(speed);
-		leftMotor2Voltage = Robot.pdp.getBatteryVoltage() * speed;
+		double temp = 0;
+		
+		if (leftNegated) 
+			temp = -speed;
+		else
+			temp = speed;
+		
+		leftMotor2.set(temp);
+		leftMotor2Voltage = Robot.pdp.getBatteryVoltage() * temp;	
+		
 	}
 
 	/**
@@ -261,8 +280,18 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveLeft3(double speed) {
-		leftMotor3.set(speed);
-		leftMotor3Voltage =  Robot.pdp.getBatteryVoltage() * speed;
+		
+		double temp = 0;
+		
+		if (leftNegated) 
+			temp = -speed;
+		else
+			temp = speed;
+		
+		leftMotor3.set(temp);
+		leftMotor3Voltage =  Robot.pdp.getBatteryVoltage() * temp;
+			
+		
 	}
 
 	/**
@@ -280,8 +309,15 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveRight1(double speed) {
-		rightMotor1.set(speed);
-		rightMotor1Voltage = Robot.pdp.getBatteryVoltage() * speed;
+		double temp = 0;
+		
+		if (rightNegated) 
+			temp = -speed;
+		else
+			temp = speed;
+		
+		rightMotor1.set(temp);
+		rightMotor1Voltage = Robot.pdp.getBatteryVoltage() * temp;
 	}
 
 	/**
@@ -289,8 +325,15 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveRight2(double speed) {
-		rightMotor2.set(speed);
-		rightMotor2Voltage = Robot.pdp.getBatteryVoltage() * speed;
+		double temp = 0;
+		
+		if (rightNegated) 
+			temp = -speed;
+		else
+			temp = speed;
+		
+		rightMotor2.set(temp);
+		rightMotor2Voltage = Robot.pdp.getBatteryVoltage() * temp;	
 	}
 
 	/**
@@ -298,10 +341,16 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveRight3(double speed) {
-		rightMotor3.set(speed);
-		rightMotor3Voltage = Robot.pdp.getBatteryVoltage() * speed;
+		double temp = 0;
+		
+		if (rightNegated) 
+			temp = -speed;
+		else
+			temp = speed;
+		
+		rightMotor3.set(temp);
+		rightMotor3Voltage = Robot.pdp.getBatteryVoltage() * temp;	
 	}
-
 	/**
 	 * Drive the motors on the left right side of the chassis.
 	 * @param speed the speed to drive the motors (-1 to 1, positive is forward, negative is backwards)
@@ -319,7 +368,7 @@ public class Drivetrain extends Subsystem {
 	 */
 	public void tankDrive(double leftSpeed, double rightSpeed) {
 		driveLeft(leftSpeed);
-		driveRight(-rightSpeed);
+		driveRight(rightSpeed);
 	}
 
 	/**
@@ -385,7 +434,7 @@ public class Drivetrain extends Subsystem {
 	 * @return heading in degrees.
 	 */
 	public double getHeading() {
-		return gyroSPI.getAngle();
+		return gyroSPI.getAngleDeg();
 	}
 
 	/**

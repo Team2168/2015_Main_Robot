@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.TimerTask;
 
+import org.team2168.Robot;
 import org.team2168.PID.sensors.PIDSensorInterface;
 import org.team2168.utils.TCPMessageInterface;
 
@@ -905,7 +906,7 @@ public class PIDPosition2 implements TCPMessageInterface {
 
 	public synchronized String sendJSON() {
 
-		return "{" + "\"_expected Period\":" + this.period + ","
+		return "{" + "\"_expected Period\":" + this.executionTime + ","
 				+ "\"_execcution Time\":" + this.runTime + "," + "\"_output\":"
 				+ this.co + "," + "\"_error\":" + this.err + ","
 				+ "\"_Prop Term\":" + this.prop + "," + "\"_Integ Term\":"
@@ -1073,9 +1074,7 @@ public class PIDPosition2 implements TCPMessageInterface {
 			double currentTime = Timer.getFPGATimestamp();
 			executionTime = currentTime - clock; // time
 			
-			
 
-			
 			//integral
 			boolean windup = false;
 			errsum = errsum + (olderr * executionTime);
@@ -1132,6 +1131,10 @@ public class PIDPosition2 implements TCPMessageInterface {
 			// update clock with current time for next loop
 			clock = currentTime;
 			olderr = err;
+			
+			if(Math.abs(err) < 1)
+				co = 0.0;
+			
 
 			// see if setpoint is reached
 			atSpeed();
@@ -1141,7 +1144,7 @@ public class PIDPosition2 implements TCPMessageInterface {
 
 		}
 
-		runTime = executionTime;
+		runTime = Timer.getFPGATimestamp() - runTime;
 	}
 
 	/**

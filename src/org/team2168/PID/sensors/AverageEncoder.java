@@ -134,36 +134,38 @@ public class AverageEncoder extends Encoder implements PIDSensorInterface {
     //
 
     public double getRate() {
-        // getRate
-        timeNow = System.currentTimeMillis();
-        countNow = super.get();
-        rate = (countNow - countBefore) / (timeNow - oldTime); // counts per
-        // millisecond
-        oldTime = timeNow;
-        countBefore = countNow;
+//        // getRate
+//        timeNow = System.currentTimeMillis();
+//        countNow = super.get();
+//        rate = (countNow - countBefore) / (timeNow - oldTime); // counts per
+//        // millisecond
+//        oldTime = timeNow;
+//        countBefore = countNow;
+//        
+//
+//        switch (speedReturnType.value) {
+//        case SpeedReturnType.IPS_val:
+//            putData(rate * distPerTick * 1000);
+//            break;
+//        case SpeedReturnType.FPS_val:
+//            putData(rate * distPerTick * 1000 / 12); // feet per second
+//            break;
+//        case SpeedReturnType.RPM_val:
+//            putData(rate * 1000 * 60 / PPR); // ticks per minute... rpm
+//            break;
+//        case SpeedReturnType.PERIOD_val:
+//            putData(super.getPeriod()); // ticks per minute... rpm
+//            break;
+//        default:
+//            // should be unreachable
+//            putData(0);
+//            break;
+//
+//        }
+//
+//        //return getAverage(); // ticks per minute... rpm
         
-
-        switch (speedReturnType.value) {
-        case SpeedReturnType.IPS_val:
-            putData(rate * distPerTick * 1000);
-            break;
-        case SpeedReturnType.FPS_val:
-            putData(rate * distPerTick * 1000 / 12); // feet per second
-            break;
-        case SpeedReturnType.RPM_val:
-            putData(rate * 1000 * 60 / PPR); // ticks per minute... rpm
-            break;
-        case SpeedReturnType.PERIOD_val:
-            putData(super.getPeriod()); // ticks per minute... rpm
-            break;
-        default:
-            // should be unreachable
-            putData(0);
-            break;
-
-        }
-
-        return getAverage(); // ticks per minute... rpm
+        return getRawRate();//work around until issue is fixed
     }
 
     public double getPos() {
@@ -177,6 +179,8 @@ public class AverageEncoder extends Encoder implements PIDSensorInterface {
             return (double) (super.get()) / PPR * 360;
         case PositionReturnType.RADIANS_val:
             return (double) (super.get()) / PPR * (2 * Math.PI);
+        case PositionReturnType.FEET_val:
+            return super.getDistance()/12.0;
         default:
             // should be unreachable
             return 0;
@@ -218,6 +222,7 @@ public class AverageEncoder extends Encoder implements PIDSensorInterface {
         static final int INCH_val = 1;
         static final int DEGREE_val = 2;
         static final int RADIANS_val = 3;
+        static final int FEET_val = 4;
         public final int value;
         /**
          * Count only the rising edge
@@ -237,6 +242,9 @@ public class AverageEncoder extends Encoder implements PIDSensorInterface {
 
         public static final PositionReturnType RADIANS = new PositionReturnType(
                 RADIANS_val);
+        
+        public static final PositionReturnType FEET = new PositionReturnType(
+        		FEET_val);
 
         private PositionReturnType(int value) {
             this.value = value;

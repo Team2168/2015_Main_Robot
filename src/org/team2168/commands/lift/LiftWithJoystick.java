@@ -32,16 +32,8 @@ public class LiftWithJoystick extends Command {
 	 */
 	protected void execute() {
 		
-		if(Math.abs(joystick.getRawAxis(axis)) > RobotMap.LIFT_MIN_SPEED) 
-		{
-			Robot.lift.disableBrake();
 			Robot.lift.drive(joystick.getRawAxis(axis)); 
-		}
-		else
-		{
-			Robot.lift.enableBrake();
-			Robot.lift.drive(0);
-		}
+
 	}
 
 	/**

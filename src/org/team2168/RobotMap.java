@@ -97,7 +97,7 @@ public class RobotMap {
 	public static final int driveEncoderPulsePerRot = (int) (drivePulsePerRotation * driveGearRatio); //pulse per rotation * gear ratio
 	public static final double driveEncoderDistPerTick = (Math.PI * driveWheelDiameter/driveEncoderPulsePerRot);
 	public static final CounterBase.EncodingType driveEncodingType = CounterBase.EncodingType.k4X; //count rising and falling edges on both channels
-	public static final AverageEncoder.PositionReturnType drivePosReturnType = AverageEncoder.PositionReturnType.INCH;
+	public static final AverageEncoder.PositionReturnType drivePosReturnType = AverageEncoder.PositionReturnType.FEET;
 	public static final AverageEncoder.SpeedReturnType driveSpeedReturnType = AverageEncoder.SpeedReturnType.FPS;
 	public static final int driveEncoderMinRate = 0;
 	public static final int driveEncoderMinPeriod = 1;
@@ -222,6 +222,5 @@ public class RobotMap {
 	public static final int TCPServerShooterSpeedAft = 1185;
 	public static final int TCPServerShooterSpeedFwd = 1186;
 	public static final int TCPServerLiftPos = 1187;
-
 
 }

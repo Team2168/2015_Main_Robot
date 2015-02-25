@@ -2,6 +2,8 @@
 package org.team2168;
 
 import org.team2168.PID.pathplanner.FalconPathPlanner;
+import org.team2168.PID.trajectory.LoadPathFile;
+import org.team2168.PID.trajectory.Path;
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.Gripper;
 import org.team2168.subsystems.Intake;
@@ -43,7 +45,7 @@ public class Robot extends IterativeRobot {
 	ConsolePrinter printer;  //SmartDash printer
 
 	public static BuiltInAccelerometer accel;
-
+	
 	// Auto command objects
 	Command autonomousCommand;
 	Command driveWithJoystick;
@@ -51,6 +53,8 @@ public class Robot extends IterativeRobot {
 	private static DigitalInput practiceBot;
 	public static FalconPathPlanner path;
 
+	
+	public static Path drivePath;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -76,10 +80,16 @@ public class Robot extends IterativeRobot {
 		printer = new ConsolePrinter(RobotMap.SmartDashThreadPeriod);
 		printer.startThread();
 
-		oi = OI.getInstance();
+		
 
 		// instantiate the command used for the autonomous period
 		// autonomousCommand = new ExampleCommand();
+		
+		pathPlanner();
+		
+		drivePath = LoadPathFile.readFile("/home/lvuser/straightPath.txt");
+		
+		oi = OI.getInstance();
 
 		System.out.println("Bot Finished Loading.");
 	}

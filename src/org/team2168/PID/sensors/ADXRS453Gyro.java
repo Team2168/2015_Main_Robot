@@ -148,14 +148,19 @@ public class ADXRS453Gyro implements PIDSensorInterface
 	{
 		return status;
 	}
-	public double getAngle() 
+	public double getAngleDeg() 
 	{
 		return angle;
 	}
 	
+	public double getAngleRadians()
+	{
+		return (getAngleDeg() * Math.PI) / 180.0;
+	}
+	
 	public double getPos()
 	{
-		return getAngle();
+		return getAngleDeg();
 	}
 
 	public double getDeltatime()
