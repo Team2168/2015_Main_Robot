@@ -45,7 +45,7 @@ public class Winch extends Subsystem {
 	 * Set the default command for the subsystem.
 	 */
 	public void initDefaultCommand() {
-		setDefaultCommand(new WinchWithJoystick(OI.operatorJoystick)); 
+		setDefaultCommand(new WinchWithJoystick(OI.driverJoystick)); 
 	}
 
 	/**
