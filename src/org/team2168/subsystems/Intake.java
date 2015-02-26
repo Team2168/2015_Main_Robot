@@ -79,7 +79,7 @@ public class Intake extends Subsystem {
 
 	/**
 	 * Sets the left intake motor speed.
-	 * @param speed 1 to 0 (Tote In) 0 to -1 (Tote Out)
+	 * @param speed 1 to 0 (Tote Out) 0 to -1 (Tote In)
 	 */
 	public void setLeftIntakeSpeed(double speed) {
 		if (LEFT_INVERTED)
