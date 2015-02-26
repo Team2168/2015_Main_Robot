@@ -51,7 +51,8 @@ public class DriveTrajectoryPath extends Command {
 	        double speedLeft = direction * followerLeft.calculate(distanceL);
 	        double speedRight = direction * followerRight.calculate(distanceR);
 	        
-	        double goalHeading = followerLeft.getHeading();
+	        //double goalHeading = followerLeft.getHeading();
+	        double goalHeading = 0;
 	        double observedHeading = Robot.drivetrain.gyroSPI.getAngleRadians(); //radians
 
 	        double angleDiffRads = Util.getDifferenceInAngleRadians(observedHeading, goalHeading);

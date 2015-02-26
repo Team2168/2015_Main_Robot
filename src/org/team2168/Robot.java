@@ -87,7 +87,7 @@ public class Robot extends IterativeRobot {
 		
 		pathPlanner();
 		
-		drivePath = LoadPathFile.readFile("/home/lvuser/straightPath.txt");
+		drivePath = LoadPathFile.readFile("/home/lvuser/2168StraightPath.txt");
 		
 		oi = OI.getInstance();
 
@@ -174,7 +174,7 @@ public class Robot extends IterativeRobot {
 				{4, 16}
 		}; 
 
-		double totalTime = 10; //seconds
+		double totalTime = 5; //seconds
 		double timeStep = 0.07; //period of control loop on Rio, seconds
 		double robotTrackWidth = 2; //distance between left and right wheels, feet
 

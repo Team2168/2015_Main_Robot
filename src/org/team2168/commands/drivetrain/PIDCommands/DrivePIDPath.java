@@ -34,8 +34,8 @@ public class DrivePIDPath extends Command {
     // Called repeatedly when this Command is scheduled to run
     
 	protected void execute() {
-    	Robot.drivetrain.driveLeft(Robot.drivetrain.leftSpeedController.getControlOutput());
-    	Robot.drivetrain.driveRight(Robot.drivetrain.rightSpeedController.getControlOutput());
+    	Robot.drivetrain.tankDrive(Robot.drivetrain.leftSpeedController.getControlOutput(),
+    	Robot.drivetrain.rightSpeedController.getControlOutput());
         
     }
 
