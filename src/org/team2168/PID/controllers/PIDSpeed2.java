@@ -1,5 +1,8 @@
 package org.team2168.PID.controllers;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.TimerTask;
 
 import org.team2168.PID.sensors.PIDSensorInterface;
@@ -147,6 +150,11 @@ public class PIDSpeed2 implements TCPMessageInterface {
 	int setPointArrayCounter;
 	double[] setPointArray;
 	
+	private double int_d_term;
+	private double lastDeriv;
+	private volatile double n;
+	
+	PrintWriter log;
 	
 
 	/**
@@ -248,6 +256,18 @@ public class PIDSpeed2 implements TCPMessageInterface {
 		setPointArray = null;
 	
 		this.diff = 0;
+		this.n = 0;
+		
+		try {
+			this.log = new PrintWriter("/home/lvuser/"+this.name+".txt", "UTF-8");
+			this.log.println("time: \tcperr: \tsp: \terr: \tpterm: \twindup: \terrsum: \titerm: \tdterm: \toutput \toutputBeforInteg \tcounstat \texctime");
+				} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -997,7 +1017,7 @@ public class PIDSpeed2 implements TCPMessageInterface {
 	 * method in a periodic thread.
 	 */
 	private synchronized void calculate() {
-		runTime = System.currentTimeMillis();
+		runTime = Timer.getFPGATimestamp();
 
 		if (enable) {
 			// poll encoder
@@ -1046,57 +1066,84 @@ public class PIDSpeed2 implements TCPMessageInterface {
 				
 				// calculate error between current position and setpoint
 				err = sp - cp;
-				
+
 				// calculate derivative gain d/dt
-				double currentTime = System.currentTimeMillis();
+				double currentTime = Timer.getFPGATimestamp();
 				executionTime = currentTime - clock; // time
-
-
-				// prevent divide by zero error, by disabiling deriv term
-				// if execution time is zero.
-				if (executionTime >= 0) 
-					diff = (err - olderr) /executionTime; // delta
-				else 
-					diff = 0;
 				
-				//integration
-				errsum = errsum + (err * executionTime);
-								
 
-				// calculate proportional gain
-				prop = p * err;
-				integ = i*errsum;
-				deriv = d*diff;
+				//integral
+				boolean windup = false;
+				errsum = errsum + (olderr * executionTime);
+				double integ = i*errsum; //final integral term
 				
+				double deriv = 0;
+
+				//deriv term
+				if(enDerivFilter)
+				{
+					//Derivative filtering using forward euler integration
+					int_d_term = int_d_term + (lastDeriv * executionTime);
+					deriv = ((d*err) - int_d_term)*n;
+					lastDeriv = deriv;
+				}
+				else
+				{
+					// prevent divide by zero error, by disabiling deriv term
+					// if execution time is zero.
+					double diff = 0;
+					if (executionTime > 0) 
+						diff = (err - olderr) /executionTime; // delta
+					else 
+						diff = 0;
+
+					deriv = d*diff;
+				}
+
+				//proportional term
+				double prop = p*err;
+				
+				double co;
 				// calculate new control output based on filtering
 				co = prop + integ + deriv;
-
-
-								
+				
+				
+				//integral anti-windup control via clamping
+				//essentially assume error is zero in this case
+				if((co > maxPosOutput || co < maxNegOutput  ) && (Math.signum(co) == Math.signum(i*err)))
+				{
+					errsum = errsum - (olderr * executionTime);
+					integ = i*errsum;
+					co = prop + integ + deriv;
+					windup = true;
+				}
+				
 				// save control output for graphing
 				coNotSaturated = co;
 
 				//Saturation
-		           if(co > maxPosOutput)
-		               co = maxPosOutput;
-
-		           
-		           if(co < maxNegOutput)
-		               co = maxNegOutput;
+				if(co > maxPosOutput)
+					co = maxPosOutput;
+				if(co < maxNegOutput)
+					co = maxNegOutput;
 
 
-		           // update clock with current time for next loop
-		           clock = currentTime;
+				// update clock with current time for next loop
+				clock = currentTime;
+				olderr = err;
 				
-				// see if setpoint is reached
-				atSpeed();
+			//	System.out.println("time: " + currentTime + "\tcperr: " + cp + "\tsp: " + sp + "\terr: " + err + "\tpterm: " + prop + "\twindup: " + windup + "\terrsum: " + errsum +"\titerm: " + integ + "\tdterm: " + deriv + "\toutput" + co + "\texctime" + executionTime );
+				log.println(currentTime + "\t " + cp + "\t" + sp + "\t " + err + "\t" + prop + "\t" + windup + "\t" + errsum +"\t" + integ + "\t" + deriv + "\t" + co + "\t" + executionTime );
 
+				coOld = co;
+				
 				//Feed forward term
-				co += sp*1/15;
-//			//}
+				co += coOld;
+
+				
 		}
 
-		runTime = System.currentTimeMillis() - runTime;
+		runTime = Timer.getFPGATimestamp() - runTime;
 	}
 
 	/**

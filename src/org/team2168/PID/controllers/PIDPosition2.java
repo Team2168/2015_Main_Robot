@@ -1078,8 +1078,9 @@ public class PIDPosition2 implements TCPMessageInterface {
 			//integral
 			boolean windup = false;
 			errsum = errsum + (olderr * executionTime);
-			integ = i*errsum; //final integral term
-
+			double integ = i*errsum; //final integral term
+			
+			double deriv = 0;
 
 			//deriv term
 			if(enDerivFilter)
@@ -1093,6 +1094,7 @@ public class PIDPosition2 implements TCPMessageInterface {
 			{
 				// prevent divide by zero error, by disabiling deriv term
 				// if execution time is zero.
+				double diff = 0;
 				if (executionTime > 0) 
 					diff = (err - olderr) /executionTime; // delta
 				else 
@@ -1102,22 +1104,23 @@ public class PIDPosition2 implements TCPMessageInterface {
 			}
 
 			//proportional term
-			prop = p*err;
+			double prop = p*err;
 			
-
+			double co;
 			// calculate new control output based on filtering
 			co = prop + integ + deriv;
 			
-			double saveCo = co;
 			
 			//integral anti-windup control via clamping
+			//essentially assume error is zero in this case
 			if((co > maxPosOutput || co < maxNegOutput  ) && (Math.signum(co) == Math.signum(i*err)))
 			{
-				errsum = 0;
+				errsum = errsum - (olderr * executionTime);
 				integ = i*errsum;
 				co = prop + integ + deriv;
 				windup = true;
 			}
+			
 			// save control output for graphing
 			coNotSaturated = co;
 
@@ -1132,15 +1135,8 @@ public class PIDPosition2 implements TCPMessageInterface {
 			clock = currentTime;
 			olderr = err;
 			
-			if(Math.abs(err) < 1)
-				co = 0.0;
-			
-
-			// see if setpoint is reached
-			atSpeed();
-			
-			log.println(currentTime + "\t " + cp + "\t" + sp + "\t " + err + "\t" + prop + "\t" + windup + "\t" + errsum +"\t" + integ + "\t" + deriv + "\t" + co + "\t" + saveCo + "\t" + coNotSaturated + "\t" +executionTime );
-			
+		//	System.out.println("time: " + currentTime + "\tcperr: " + cp + "\tsp: " + sp + "\terr: " + err + "\tpterm: " + prop + "\twindup: " + windup + "\terrsum: " + errsum +"\titerm: " + integ + "\tdterm: " + deriv + "\toutput" + co + "\texctime" + executionTime );
+			log.println(currentTime + "\t " + cp + "\t" + sp + "\t " + err + "\t" + prop + "\t" + windup + "\t" + errsum +"\t" + integ + "\t" + deriv + "\t" + co + "\t" + executionTime );
 
 		}
 

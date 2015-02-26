@@ -21,9 +21,7 @@ public class DriveTrajectoryPath extends Command {
    public DriveTrajectoryPath(Trajectory leftProfile, Trajectory rightProfile, double direction, double heading){
 	    followerLeft.configure(0.029, 0.020,0.001,1/180,1/180);
 	    followerRight.configure(0.029, 0.020,0.001,1/180,1/180);
-	
 	   
-	    
 	    reset();
 	    followerLeft.setTrajectory(leftProfile);
 	    followerRight.setTrajectory(rightProfile);
