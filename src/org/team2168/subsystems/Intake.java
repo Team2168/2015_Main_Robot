@@ -82,12 +82,10 @@ public class Intake extends Subsystem {
 	 * @param speed 1 to 0 (Tote In) 0 to -1 (Tote Out)
 	 */
 	public void setLeftIntakeSpeed(double speed) {
-		
-		double temp = speed;
 		if (LEFT_INVERTED)
-			temp = -speed;
-			
-		leftMotor.set(temp);
+			speed = -speed;
+
+		leftMotor.set(speed);
 	}
 
 	/**
@@ -95,12 +93,10 @@ public class Intake extends Subsystem {
 	 * @param speed 1 to 0 (Tote In) 0 to -1 (Tote Out)
 	 */
 	public void setRightIntakeSpeed(double speed) {
-		
-		double temp = speed;
 		if (RIGHT_INVERTED)
-			temp  = -speed;
-		
-		rightMotor.set(temp);
+			speed  = -speed;
+
+		rightMotor.set(speed);
 	}
 
 	/**
