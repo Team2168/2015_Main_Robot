@@ -1,23 +1,23 @@
-package org.team2168.commands.lift;
+package org.team2168.commands.intake;
 
-import org.team2168.OI;
 import org.team2168.Robot;
-import org.team2168.RobotMap;
-import org.team2168.utils.F310;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Drives the lift with a joystick.
+ *
  */
-public class LiftWithJoystick extends Command {
+public class SetIntakeSpeed extends Command {
 
-	F310 joystick;
-	
-	public LiftWithJoystick(F310 joystick) {
-		this.joystick = joystick;
-		requires(Robot.lift);
+	double speed = 0.0;
+
+	/**
+	 *
+	 * @param speed the speed to drive the intake at
+	 */
+	public SetIntakeSpeed(double speed) {
+		requires(Robot.intake);
+		this.speed = speed;
 	}
 
 	/**
@@ -28,18 +28,19 @@ public class LiftWithJoystick extends Command {
 
 	/**
 	 * Called repeatedly when this Command is scheduled to run
+	 * because there are 2 axes using the same command we have
+	 * to get to difference of the 2 at the same time in order
+	 * to get the correct value
 	 */
 	protected void execute() {
-
-			Robot.lift.drive(joystick.getRightStickRaw_Y()); 
-
+		Robot.intake.setIntakeSpeed(speed);
 	}
 
 	/**
 	 * Make this return true when this Command no longer needs to run execute()
 	 */
 	protected boolean isFinished() {
-		return false;
+		return true;
 	}
 
 	/**
@@ -50,7 +51,7 @@ public class LiftWithJoystick extends Command {
 
 	/**
 	 * Called when another command which requires one or more of the same
-	 * subsystems is scheduled to run
+	 * subsystems is scheduled to run.
 	 */
 	protected void interrupted() {
 	}

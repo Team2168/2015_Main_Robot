@@ -38,6 +38,9 @@ public class Drivetrain extends Subsystem {
 	public FalconGyro gyroAnalog;
 	public ADXRS453Gyro gyroSPI;
 
+	private static final boolean lEFT_INVERTED = false;
+	private static final boolean RIGHT_INVERTED = true;
+	
 	//declare position/speed controllers
 	public PIDPosition rightPosController;
 	public PIDPosition leftPosController;
@@ -67,6 +70,7 @@ public class Drivetrain extends Subsystem {
 	 * Private to prevent creating more than one instance of this subsystem.
 	 */
 	private Drivetrain() {
+		//leftMotor1 = new Talon(RobotMap.DRIVETRAIN_LEFT_MOTOR_1);
 		leftMotor1 = new Talon(RobotMap.DRIVETRAIN_LEFT_MOTOR_1);
 		rightMotor1 = new Talon(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1);
 		leftMotor2 = new Talon(RobotMap.DRIVETRAIN_LEFT_MOTOR_2);
@@ -190,7 +194,7 @@ public class Drivetrain extends Subsystem {
 	 * This method sets the default command so it always drives with the joysticks
 	 */
 	public void initDefaultCommand() {
-		setDefaultCommand(new DriveWithJoysticks(OI.driverJoystick, F310.AXIS_LEFT_Y, F310.AXIS_RIGHT_Y));
+		setDefaultCommand(new DriveWithJoysticks(OI.driverJoystick));
 	}
 
 	/**
@@ -246,16 +250,13 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveLeft1(double speed) {
-		double temp = 0;
 		
-		if (leftNegated) 
+		double temp = speed;
+		if (lEFT_INVERTED)
 			temp = -speed;
-		else
-			temp = speed;
-
-		leftMotor1.set(temp);
-		leftMotor1Voltage = Robot.pdp.getBatteryVoltage() * temp;
 		
+		leftMotor1.set(-temp);
+		leftMotor1Voltage = Robot.pdp.getBatteryVoltage() * temp;
 	}
 
 	/**
@@ -263,16 +264,13 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveLeft2(double speed) {
-		double temp = 0;
 		
-		if (leftNegated) 
+		double temp = speed;
+		if (lEFT_INVERTED)
 			temp = -speed;
-		else
-			temp = speed;
 		
 		leftMotor2.set(temp);
-		leftMotor2Voltage = Robot.pdp.getBatteryVoltage() * temp;	
-		
+		leftMotor2Voltage = Robot.pdp.getBatteryVoltage() * temp;
 	}
 
 	/**
@@ -280,18 +278,13 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveLeft3(double speed) {
-		
-		double temp = 0;
-		
-		if (leftNegated) 
+
+		double temp = speed;
+		if (lEFT_INVERTED)
 			temp = -speed;
-		else
-			temp = speed;
 		
 		leftMotor3.set(temp);
 		leftMotor3Voltage =  Robot.pdp.getBatteryVoltage() * temp;
-			
-		
 	}
 
 	/**
@@ -309,12 +302,11 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveRight1(double speed) {
-		double temp = 0;
 		
-		if (rightNegated) 
+		double temp = speed;
+		if (RIGHT_INVERTED)
 			temp = -speed;
-		else
-			temp = speed;
+		
 		
 		rightMotor1.set(temp);
 		rightMotor1Voltage = Robot.pdp.getBatteryVoltage() * temp;
@@ -325,15 +317,14 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveRight2(double speed) {
-		double temp = 0;
 		
-		if (rightNegated) 
+		double temp = speed;
+		if (RIGHT_INVERTED)
 			temp = -speed;
-		else
-			temp = speed;
 		
 		rightMotor2.set(temp);
-		rightMotor2Voltage = Robot.pdp.getBatteryVoltage() * temp;	
+		rightMotor2Voltage = Robot.pdp.getBatteryVoltage() * temp;
+
 	}
 
 	/**
@@ -341,15 +332,14 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveRight3(double speed) {
-		double temp = 0;
 		
-		if (rightNegated) 
+		double temp = speed;
+		if (RIGHT_INVERTED)
 			temp = -speed;
-		else
-			temp = speed;
 		
 		rightMotor3.set(temp);
-		rightMotor3Voltage = Robot.pdp.getBatteryVoltage() * temp;	
+		rightMotor3Voltage = Robot.pdp.getBatteryVoltage() * temp;
+
 	}
 	/**
 	 * Drive the motors on the left right side of the chassis.

@@ -33,7 +33,7 @@ public class DriveTrajectoryPath extends Command {
 
     // Called just before this Command runs the first time
 	protected void initialize() {
-
+		 reset();
     
     }
 
@@ -59,7 +59,7 @@ public class DriveTrajectoryPath extends Command {
 	        double angleDiff = Math.toDegrees(angleDiffRads);
 
 	        double turn = kTurn * angleDiff;
-	        Robot.drivetrain.tankDrive(speedLeft + turn, speedRight - turn);
+	        Robot.drivetrain.tankDrive(speedLeft, speedRight);
 	      }
 	    
     }

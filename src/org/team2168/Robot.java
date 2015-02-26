@@ -17,9 +17,12 @@ import org.team2168.utils.PowerDistribution;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
+import edu.wpi.first.wpilibj.tables.ITable;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -76,18 +79,17 @@ public class Robot extends IterativeRobot {
 		gripper = Gripper.getInstance();
 		pusher = Pusher.getInstance();
 
-        //create thread to write dashboard variables
-		printer = new ConsolePrinter(RobotMap.SmartDashThreadPeriod);
-		printer.startThread();
-
-		
-
 		// instantiate the command used for the autonomous period
 		// autonomousCommand = new ExampleCommand();
 		
 		pathPlanner();
 		
 		drivePath = LoadPathFile.readFile("/home/lvuser/2168StraightPath.txt");
+		
+		
+        //create thread to write dashboard variables
+		printer = new ConsolePrinter(RobotMap.SmartDashThreadPeriod);
+		printer.startThread();
 		
 		oi = OI.getInstance();
 

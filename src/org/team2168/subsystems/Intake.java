@@ -1,7 +1,10 @@
 package org.team2168.subsystems;
 
+import org.team2168.OI;
 import org.team2168.RobotMap;
-import org.team2168.commands.intake.SetIntakeWheelSpeed;
+import org.team2168.commands.intake.DriveIntakeWithJoystick;
+import org.team2168.commands.intake.StopIntakeWheels;
+import org.team2168.utils.Util;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -23,8 +26,18 @@ public class Intake extends Subsystem {
 	private static DigitalInput leftLimitSwitch;
 	private static DigitalInput rightLimitSwitch;
 	private static AnalogInput toteDistanceSensor;
+	private static double averagedToteDistance = 0.0;
+	//TODO: calibrate this value
+	private static final double TOTE_SENSOR_AVG_GAIN = 0.8;
 	private static final double CM_TO_INCH =  0.393701;
 
+	//Intake sensor won't return voltages smaller than:
+	//TODO: calibrate this value
+	private final static double INTAKE_TOTE_MIN_VOLTAGE = 0.5;
+
+	private static final boolean LEFT_INVERTED = false;
+	private static final boolean RIGHT_INVERTED = false;
+	
 	/**
 	 * A private constructor to prevent multiple instances of the subsystem
 	 * from being created.
@@ -69,7 +82,12 @@ public class Intake extends Subsystem {
 	 * @param speed 1 to 0 (Tote In) 0 to -1 (Tote Out)
 	 */
 	public void setLeftIntakeSpeed(double speed) {
-		leftMotor.set(speed);
+		
+		double temp = speed;
+		if (LEFT_INVERTED)
+			temp = -speed;
+			
+		leftMotor.set(temp);
 	}
 
 	/**
@@ -77,7 +95,12 @@ public class Intake extends Subsystem {
 	 * @param speed 1 to 0 (Tote In) 0 to -1 (Tote Out)
 	 */
 	public void setRightIntakeSpeed(double speed) {
-		rightMotor.set(speed);
+		
+		double temp = speed;
+		if (RIGHT_INVERTED)
+			temp  = -speed;
+		
+		rightMotor.set(temp);
 	}
 
 	/**
@@ -86,7 +109,7 @@ public class Intake extends Subsystem {
 	 */
 	public void setIntakeSpeed(double speed) {
 		setLeftIntakeSpeed(speed);
-		setRightIntakeSpeed(-speed);
+		setRightIntakeSpeed(speed);
 	}
 
 	/**
@@ -112,27 +135,41 @@ public class Intake extends Subsystem {
 	 * Returns the raw voltage from the intake distance sensor
 	 * @return the sensed voltage from the distance sensor
 	 */
-	public double getRawToteDistance() {
-		return toteDistanceSensor.getVoltage();
+	private double getRawToteDistance() {
+		//Don't return values that are less than the TOTE_MIN_VOLTAGE.
+		// This is to prevent garbage data being sent out when nothing is in front of the sensor.
+		return Util.max(INTAKE_TOTE_MIN_VOLTAGE, toteDistanceSensor.getVoltage());
 	}
 
 	/**
-	 * Gets the distance to the nearest object from the back of the intake.
-	 * @return the distance in inches
+	 * Get the averaged voltage of the intake distance sensor
+	 * @return average value in volts
 	 */
-	public double getToteDistance() {
-		double toteDistance = getRawToteDistance();
-
-		//y = 0.512x^2 - 0.8656x + 6.1888
-		//R^2 = 0.9985
-		return ((0.512 * Math.pow(toteDistance, 2) - 0.8656 * toteDistance + 6.1888) * CM_TO_INCH);
+	public double getAveragedRawToteDistance() {
+		averagedToteDistance = Util.runningAverage(getRawToteDistance(),
+				averagedToteDistance, TOTE_SENSOR_AVG_GAIN);
+		return averagedToteDistance;
 	}
+
+	//	/**
+	//	 * Gets the distance to the nearest object from the back of the intake.
+	//	 * @return the distance in inches
+	//	 */
+	//	public double getToteDistance() {
+	//		double toteDistance = getRawToteDistance();
+	//
+	//		//y = 0.512x^2 - 0.8656x + 6.1888
+	//		//R^2 = 0.9985
+	//		//TODO: figure out why this isn't working
+	//		return ((0.512 * Math.pow(toteDistance, 2) - 0.8656 * toteDistance + 6.1888) * CM_TO_INCH);
+	//	}
 
 	/**
 	 * Set the default command for the subsystem
 	 */
 	public void initDefaultCommand() {
-		setDefaultCommand(new SetIntakeWheelSpeed());
+		//setDefaultCommand(new SetIntakeWheelSpeed());
+		setDefaultCommand(new DriveIntakeWithJoystick(OI.operatorJoystick));
 	}
 
 	/**
@@ -145,7 +182,7 @@ public class Intake extends Subsystem {
 
 	/**
 	 *
-	 * @return true when the intake is disngaged.
+	 * @return true when the intake is disengaged.
 	 */
 	public boolean isIntakeDisengaged() {
 		return rightLeftIntake.get() == Value.kReverse;

@@ -2,6 +2,7 @@ package org.team2168.commands.drivetrain;
 
 import org.team2168.OI;
 import org.team2168.Robot;
+import org.team2168.utils.F310;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
@@ -11,14 +12,10 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DriveWithJoysticks extends Command {
 
-	Joystick joystick;
-	int leftAxis;
-	int rightAxis;
+	F310 joystick;
 	
-	public DriveWithJoysticks(Joystick joystick, int leftAxis, int rightAxis) {
+	public DriveWithJoysticks(F310 joystick) {
 		this.joystick = joystick;
-		this.leftAxis = leftAxis;
-		this.rightAxis = rightAxis;
 		requires(Robot.drivetrain);
 	}
 
@@ -32,8 +29,8 @@ public class DriveWithJoysticks extends Command {
 	 * Called repeatedly when this Command is scheduled to run
 	 */
 	protected void execute() {
-		Robot.drivetrain.tankDrive(joystick.getRawAxis(leftAxis),
-				joystick.getRawAxis(rightAxis));
+		Robot.drivetrain.tankDrive(joystick.getLeftStickRaw_Y(),
+				joystick.getRightStickRaw_Y());
 	}
 
 	/**
