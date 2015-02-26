@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj.Encoder;
  *
  */
 public class AverageEncoder extends Encoder implements PIDSensorInterface {
-    private int averagorSize;
-    private double[] averagorArray;
+    private int averagerSize;
+    private double[] averagerArray;
     private int arrayPos = 0; // Next array position to put values to be
     // averaged
 
@@ -32,16 +32,19 @@ public class AverageEncoder extends Encoder implements PIDSensorInterface {
     /**
      * Constructor for end point average class
      *
-     * @param n
-     *            the size of end point average
+     * @param n the size of N-point average (>= 1)
      */
     public AverageEncoder(int channelA, int channelB, int PPR,
             double distPerTick, boolean reverseDirection,
             EncodingType encoderType, int averageN) {
         super(channelA, channelB, reverseDirection, encoderType);
 
-        this.averagorSize = averageN;
-        this.averagorArray = new double[averagorSize];
+        if(averageN < 1) {
+            averageN = 1;
+        }
+
+        this.averagerSize = averageN;
+        this.averagerArray = new double[averagerSize];
         this.timeNow = 0;
         this.oldTime = 0;
         this.countNow = 0;
@@ -77,10 +80,10 @@ public class AverageEncoder extends Encoder implements PIDSensorInterface {
     private double getAverage() {
         double sum = 0;
 
-        for (int i = 0; i < averagorSize; i++)
-            sum += averagorArray[i];
+        for (int i = 0; i < averagerSize; i++)
+            sum += averagerArray[i];
 
-        return sum / averagorSize;
+        return sum / averagerSize;
     }
 
     /**
@@ -93,10 +96,10 @@ public class AverageEncoder extends Encoder implements PIDSensorInterface {
 
     private void putData(double value) {
 
-        averagorArray[arrayPos] = value;
+        averagerArray[arrayPos] = value;
         arrayPos++;
 
-        if (arrayPos >= averagorSize) // Is equal or greater to averagorSize
+        if (arrayPos >= averagerSize) // Is equal or greater to averagerSize
             // because array is zero indexed. Rolls
             // over index position.
             arrayPos = 0;
