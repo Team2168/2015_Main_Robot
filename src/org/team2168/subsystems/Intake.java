@@ -1,6 +1,8 @@
 package org.team2168.subsystems;
 
+import org.team2168.OI;
 import org.team2168.RobotMap;
+import org.team2168.commands.intake.DriveIntakeWithJoystick;
 import org.team2168.commands.intake.StopIntakeWheels;
 import org.team2168.utils.Util;
 
@@ -33,6 +35,9 @@ public class Intake extends Subsystem {
 	//TODO: calibrate this value
 	private final static double INTAKE_TOTE_MIN_VOLTAGE = 0.5;
 
+	private static final boolean LEFT_INVERTED = false;
+	private static final boolean RIGHT_INVERTED = false;
+	
 	/**
 	 * A private constructor to prevent multiple instances of the subsystem
 	 * from being created.
@@ -77,7 +82,12 @@ public class Intake extends Subsystem {
 	 * @param speed 1 to 0 (Tote In) 0 to -1 (Tote Out)
 	 */
 	public void setLeftIntakeSpeed(double speed) {
-		leftMotor.set(speed);
+		
+		double temp = speed;
+		if (LEFT_INVERTED)
+			temp = -speed;
+			
+		leftMotor.set(temp);
 	}
 
 	/**
@@ -85,7 +95,12 @@ public class Intake extends Subsystem {
 	 * @param speed 1 to 0 (Tote In) 0 to -1 (Tote Out)
 	 */
 	public void setRightIntakeSpeed(double speed) {
-		rightMotor.set(speed);
+		
+		double temp = speed;
+		if (RIGHT_INVERTED)
+			temp  = -speed;
+		
+		rightMotor.set(temp);
 	}
 
 	/**
@@ -94,7 +109,7 @@ public class Intake extends Subsystem {
 	 */
 	public void setIntakeSpeed(double speed) {
 		setLeftIntakeSpeed(speed);
-		setRightIntakeSpeed(-speed);
+		setRightIntakeSpeed(speed);
 	}
 
 	/**
@@ -154,7 +169,7 @@ public class Intake extends Subsystem {
 	 */
 	public void initDefaultCommand() {
 		//setDefaultCommand(new SetIntakeWheelSpeed());
-		setDefaultCommand(new StopIntakeWheels());
+		setDefaultCommand(new DriveIntakeWithJoystick(OI.operatorJoystick));
 	}
 
 	/**

@@ -2,6 +2,7 @@ package org.team2168.commands.intake;
 
 import org.team2168.OI;
 import org.team2168.Robot;
+import org.team2168.utils.F310;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -10,10 +11,11 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DriveIntakeWithJoystick extends Command {
 
+	F310 joystick;
 
-	public DriveIntakeWithJoystick() {
+	public DriveIntakeWithJoystick(F310 joystick) {
+		this.joystick = joystick;
 		requires(Robot.intake);
-		;
 	}
 
 	/**
@@ -29,8 +31,7 @@ public class DriveIntakeWithJoystick extends Command {
 	 * to get the correct value
 	 */
 	protected void execute() {
-		Robot.intake.setIntakeSpeed(OI.operatorJoystick.getRightTriggerAxisRaw()
-				-OI.operatorJoystick.getLeftTriggerAxisRaw());
+		Robot.intake.setIntakeSpeed(joystick.getLeftStickRaw_Y());
 	}
 
 	/**

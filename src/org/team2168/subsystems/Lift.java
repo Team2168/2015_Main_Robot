@@ -26,6 +26,8 @@ public class Lift extends Subsystem {
 
 	private volatile double motorVoltage;
 
+	private static final boolean MOTOR_INVERTED = false;
+	
 	public AverageEncoder liftEncoder;
 	public PIDPosition liftController;
 
@@ -73,7 +75,7 @@ public class Lift extends Subsystem {
 	 * Set the default command for the subsystem.
 	 */
 	public void initDefaultCommand() {
-		setDefaultCommand(new LiftWithJoystick(OI.operatorJoystick, F310.AXIS_RIGHT_Y));
+		setDefaultCommand(new LiftWithJoystick(OI.operatorJoystick));
 	}
 
 	/**
@@ -92,8 +94,13 @@ public class Lift extends Subsystem {
 	 *            value from -1.0 to 1.0, positive drives the lift up.
 	 */
 	public void drive(double speed) {
-		intakeMotor.set(speed);
-		motorVoltage = Robot.pdp.getBatteryVoltage() * speed;
+		
+		double temp = speed;
+		if (MOTOR_INVERTED)
+			temp = -speed;
+		
+		intakeMotor.set(temp);
+		motorVoltage = Robot.pdp.getBatteryVoltage() * temp;
 	}
 
 	/**

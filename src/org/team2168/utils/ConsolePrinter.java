@@ -5,13 +5,12 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.TimerTask;
 
+import org.team2168.OI;
 import org.team2168.Robot;
 import org.team2168.RobotMap;
 import org.team2168.subsystems.Drivetrain;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-
 
 public class ConsolePrinter {
 	private java.util.Timer executor;
@@ -91,6 +90,19 @@ public class ConsolePrinter {
 
 			SmartDashboard.putNumber("Tote IR (V)", Robot.intake.getAveragedRawToteDistance());
 
+			SmartDashboard.putNumber("Left Stick Raw Value", OI.getInstance().driverJoystick.getLeftStickRaw_Y());
+			SmartDashboard.putNumber("Right Stick Raw Value", OI.getInstance().driverJoystick.getRightStickRaw_Y());
+			
+			SmartDashboard.putNumber("Left Trigger Raw Value", OI.getInstance().driverJoystick.getLeftTriggerAxisRaw());
+			SmartDashboard.putNumber("Right Trigger Raw Value", OI.getInstance().driverJoystick.getRightTriggerAxisRaw());
+			
+			SmartDashboard.putNumber("Operator Left Stick Raw Value", OI.getInstance().operatorJoystick.getLeftStickRaw_Y());
+			SmartDashboard.putNumber("Operator Right Stick Raw Value", OI.getInstance().operatorJoystick.getRightStickRaw_Y());
+			
+			SmartDashboard.putNumber("Operator Left Trigger Raw Value", OI.getInstance().operatorJoystick.getLeftTriggerAxisRaw());
+			SmartDashboard.putNumber("Operator Right Trigger Raw Value", OI.getInstance().operatorJoystick.getRightTriggerAxisRaw());
+			
+			
 			//	    	//file log
 			//	    	log.println(Timer.getFPGATimestamp() + "\t" +
 			//	    			Robot.drivetrain.getLeft1MotorVoltage() + "\t" +

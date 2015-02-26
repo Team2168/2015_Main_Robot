@@ -18,6 +18,8 @@ public class Winch extends Subsystem {
 	private static Victor winchMotor;
 	private static Encoder winchEncoder;
 
+	private static final boolean MOTOR_INVERED = false;
+	
 	/**
 	 * A private constructor to prevent multiple instances of the subsystem from
 	 * being created.
@@ -43,7 +45,7 @@ public class Winch extends Subsystem {
 	 * Set the default command for the subsystem.
 	 */
 	public void initDefaultCommand() {
-		setDefaultCommand(new WinchWithJoystick(OI.operatorJoystick, F310.AXIS_LEFT_Y));
+		setDefaultCommand(new WinchWithJoystick(OI.operatorJoystick)); 
 	}
 
 	/**
@@ -53,7 +55,12 @@ public class Winch extends Subsystem {
 	 *            Value from -1.0 to 1.0, positive values winch inward.
 	 */
 	public void drive(double speed) {
-		winchMotor.set(speed);
+		
+		double temp = speed;
+		if (MOTOR_INVERED)
+			temp = -speed;
+			
+		winchMotor.set(temp);
 	}
 
 	/**

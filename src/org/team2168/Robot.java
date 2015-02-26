@@ -14,9 +14,12 @@ import org.team2168.utils.PowerDistribution;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
+import edu.wpi.first.wpilibj.tables.ITable;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -79,7 +82,6 @@ public class Robot extends IterativeRobot {
 
 		// instantiate the command used for the autonomous period
 		// autonomousCommand = new ExampleCommand();
-
 		System.out.println("Bot Finished Loading.");
 	}
 
