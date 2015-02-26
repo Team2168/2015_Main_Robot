@@ -90,7 +90,7 @@ public class Intake extends Subsystem {
 
 	/**
 	 * Sets the right intake motor speed.
-	 * @param speed 1 to 0 (Tote In) 0 to -1 (Tote Out)
+	 * @param speed 1 to 0 (Tote Out) 0 to -1 (Tote In)
 	 */
 	public void setRightIntakeSpeed(double speed) {
 		if (RIGHT_INVERTED)
@@ -101,7 +101,7 @@ public class Intake extends Subsystem {
 
 	/**
 	 * Sets both intake motors to the same speed
-	 * @param speed 1 to 0 (Tote In) 0 to -1 (Tote Out)
+	 * @param speed 1 to 0 (Tote Out) 0 to -1 (Tote In)
 	 */
 	public void setIntakeSpeed(double speed) {
 		setLeftIntakeSpeed(speed);
