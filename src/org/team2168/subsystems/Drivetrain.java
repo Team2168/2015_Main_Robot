@@ -34,7 +34,7 @@ public class Drivetrain extends Subsystem {
 	public FalconGyro gyroAnalog;
 	public ADXRS453Gyro gyroSPI;
 
-	private static final boolean lEFT_INVERTED = false;
+	private static final boolean LEFT_INVERTED = false;
 	private static final boolean RIGHT_INVERTED = true;
 	
 	//declare position/speed controllers
@@ -102,7 +102,6 @@ public class Drivetrain extends Subsystem {
 				gyroSPI,
 				RobotMap.driveTrainPIDPeriod);
 
-
 		//Spawn new PID Controller
 		rightSpeedController = new PIDSpeed(
 				"RightSpeedController",
@@ -165,7 +164,6 @@ public class Drivetrain extends Subsystem {
 
 		TCProtateController = new TCPSocketSender(RobotMap.TCPServerRotateController, rotateController);
 		TCProtateController.start();
-
 
 		leftMotor1Voltage = 0;
 		leftMotor2Voltage = 0;
@@ -246,13 +244,11 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveLeft1(double speed) {
+		if (LEFT_INVERTED)
+			speed = -speed;
 		
-		double temp = speed;
-		if (lEFT_INVERTED)
-			temp = -speed;
-		
-		leftMotor1.set(-temp);
-		leftMotor1Voltage = Robot.pdp.getBatteryVoltage() * temp;
+		leftMotor1.set(speed);
+		leftMotor1Voltage = Robot.pdp.getBatteryVoltage() * speed;
 	}
 
 	/**
@@ -260,13 +256,11 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveLeft2(double speed) {
-		
-		double temp = speed;
 		if (lEFT_INVERTED)
-			temp = -speed;
+			speed = -speed;
 		
-		leftMotor2.set(temp);
-		leftMotor2Voltage = Robot.pdp.getBatteryVoltage() * temp;
+		leftMotor2.set(speed);
+		leftMotor2Voltage = Robot.pdp.getBatteryVoltage() * speed;
 	}
 
 	/**
@@ -274,13 +268,11 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveLeft3(double speed) {
-		
-		double temp = speed;
 		if (lEFT_INVERTED)
-			temp = -speed;
+			speed = -speed;
 		
-		leftMotor3.set(temp);
-		leftMotor3Voltage =  Robot.pdp.getBatteryVoltage() * temp;
+		leftMotor3.set(speed);
+		leftMotor3Voltage =  Robot.pdp.getBatteryVoltage() * speed;
 	}
 
 	/**
@@ -298,14 +290,11 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveRight1(double speed) {
-		
-		double temp = speed;
 		if (RIGHT_INVERTED)
 			temp = -speed;
-		
-		
-		rightMotor1.set(temp);
-		rightMotor1Voltage = Robot.pdp.getBatteryVoltage() * temp;
+
+		rightMotor1.set(speed);
+		rightMotor1Voltage = Robot.pdp.getBatteryVoltage() * speed;
 	}
 
 	/**
@@ -313,13 +302,11 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveRight2(double speed) {
-		
-		double temp = speed;
 		if (RIGHT_INVERTED)
-			temp = -speed;
+			speed = -speed;
 		
-		rightMotor2.set(temp);
-		rightMotor2Voltage = Robot.pdp.getBatteryVoltage() * temp;
+		rightMotor2.set(speed);
+		rightMotor2Voltage = Robot.pdp.getBatteryVoltage() * speed;
 	}
 
 	/**
@@ -327,13 +314,11 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveRight3(double speed) {
-		
-		double temp = speed;
 		if (RIGHT_INVERTED)
-			temp = -speed;
+			speed = -speed;
 		
-		rightMotor3.set(temp);
-		rightMotor3Voltage = Robot.pdp.getBatteryVoltage() * temp;
+		rightMotor3.set(speed);
+		rightMotor3Voltage = Robot.pdp.getBatteryVoltage() * speed;
 	}
 
 	/**
