@@ -70,6 +70,7 @@ public class LoadPathFile {
   
 	
 	
+	@SuppressWarnings("resource")
 	private static ArrayList<String[]> readFile(File fileLocation)
 	{
 		ArrayList<String[]> FileList = new ArrayList<String[]>();
@@ -81,10 +82,27 @@ public class LoadPathFile {
 			sc = new Scanner(fileLocation);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("ERROR: PATH FILE NOT FOUND IN LOADPATHFILE.JAVA");
+			
+			//send Empty Array so We don't break anything
+			//if file is not found
+			
+			String[] line1 = {"Empty File"};
+			String[] line2 = {"1"};
+			String[] line3 = {"pos", "vel", "accel", "jerk", "heading", "dt", "x", "y"};
+			String[] line4 = {"0", "0", "0", "0", "0", "0", "0", "0"};
+			String[] line5 = {"0", "0", "0", "0", "0", "0", "0", "0"};
+			
+			FileList.add(line1);
+			FileList.add(line2);
+			FileList.add(line3);
+			FileList.add(line4);
+			FileList.add(line5);
+			
+			return FileList;
 		}     
 		
-		while (sc.hasNextLine()) 
+		while (sc.hasNextLine() && sc != null) 
 		{
 		    String line = sc.nextLine();
 		    System.out.println(line);

@@ -3,14 +3,12 @@ package org.team2168.subsystems;
 import org.team2168.OI;
 import org.team2168.Robot;
 import org.team2168.RobotMap;
-import org.team2168.PID.controllers.PIDPosition;
-import org.team2168.PID.controllers.PIDSpeed;
+import org.team2168.PID.controllers.PIDPosition2;
 import org.team2168.PID.controllers.PIDSpeed2;
 import org.team2168.PID.sensors.ADXRS453Gyro;
 import org.team2168.PID.sensors.AverageEncoder;
 import org.team2168.PID.sensors.FalconGyro;
 import org.team2168.commands.drivetrain.DriveWithJoysticks;
-import org.team2168.utils.F310;
 import org.team2168.utils.TCPSocketSender;
 
 import edu.wpi.first.wpilibj.SpeedController;
@@ -29,9 +27,6 @@ public class Drivetrain extends Subsystem {
 	private SpeedController rightMotor2;
 	private SpeedController leftMotor3;
 	private SpeedController rightMotor3;
-
-	private boolean leftNegated = true;
-	private boolean rightNegated = false;
 	
 	public AverageEncoder drivetrainLeftEncoder;
 	public AverageEncoder drivetrainRightEncoder;
@@ -42,9 +37,9 @@ public class Drivetrain extends Subsystem {
 	private static final boolean RIGHT_INVERTED = true;
 	
 	//declare position/speed controllers
-	public PIDPosition rightPosController;
-	public PIDPosition leftPosController;
-	public PIDPosition rotateController;
+	public PIDPosition2 rightPosController;
+	public PIDPosition2 leftPosController;
+	public PIDPosition2 rotateController;
 
 	//declare speed controllers
 	public PIDSpeed2 rightSpeedController;
@@ -100,7 +95,7 @@ public class Drivetrain extends Subsystem {
 				RobotMap.drivePosReturnType, RobotMap.driveAvgEncoderVal);
 
 		//DriveStraight Controller
-		rotateController = new PIDPosition(
+		rotateController = new PIDPosition2(
 				"RotationController",
 				RobotMap.rotatePositionP,
 				RobotMap.rotatePositionI,
@@ -117,7 +112,7 @@ public class Drivetrain extends Subsystem {
 				drivetrainRightEncoder,
 				RobotMap.driveTrainPIDPeriod);
 
-		rightPosController = new PIDPosition(
+		rightPosController = new PIDPosition2(
 				"RightPositionController", 
 				RobotMap.driveTrainRightPositionP,
 				RobotMap.driveTrainRightPositionI, 
@@ -133,7 +128,7 @@ public class Drivetrain extends Subsystem {
 				drivetrainLeftEncoder,
 				RobotMap.driveTrainPIDPeriod);
 
-		leftPosController = new PIDPosition(
+		leftPosController = new PIDPosition2(
 				"LeftPositionController", 
 				RobotMap.driveTrainLeftPositionP,
 				RobotMap.driveTrainLeftPositionI, 
