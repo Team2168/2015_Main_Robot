@@ -1,6 +1,5 @@
 package org.team2168.commands.intake;
 
-import org.team2168.OI;
 import org.team2168.Robot;
 import org.team2168.utils.F310;
 
@@ -31,7 +30,7 @@ public class DriveIntakeWithJoystick extends Command {
 	 * to get the correct value
 	 */
 	protected void execute() {
-		Robot.intake.setIntakeSpeed(joystick.getLeftStickRaw_Y());
+		Robot.intake.setIntakeSpeed(-joystick.getLeftStickRaw_Y());
 	}
 
 	/**
