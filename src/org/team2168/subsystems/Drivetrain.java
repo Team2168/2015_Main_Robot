@@ -9,7 +9,6 @@ import org.team2168.PIDController.sensors.FalconGyro;
 import org.team2168.PIDControllers.PIDPosition;
 import org.team2168.PIDControllers.PIDSpeed;
 import org.team2168.commands.drivetrain.DriveWithJoysticks;
-import org.team2168.utils.F310;
 import org.team2168.utils.TCPSocketSender;
 
 import edu.wpi.first.wpilibj.SpeedController;
@@ -36,7 +35,7 @@ public class Drivetrain extends Subsystem {
 
 	private static final boolean LEFT_INVERTED = false;
 	private static final boolean RIGHT_INVERTED = true;
-	
+
 	//declare position/speed controllers
 	public PIDPosition rightPosController;
 	public PIDPosition leftPosController;
@@ -246,7 +245,7 @@ public class Drivetrain extends Subsystem {
 	public void driveLeft1(double speed) {
 		if (LEFT_INVERTED)
 			speed = -speed;
-		
+
 		leftMotor1.set(speed);
 		leftMotor1Voltage = Robot.pdp.getBatteryVoltage() * speed;
 	}
@@ -256,9 +255,9 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveLeft2(double speed) {
-		if (lEFT_INVERTED)
+		if (LEFT_INVERTED)
 			speed = -speed;
-		
+
 		leftMotor2.set(speed);
 		leftMotor2Voltage = Robot.pdp.getBatteryVoltage() * speed;
 	}
@@ -268,9 +267,9 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveLeft3(double speed) {
-		if (lEFT_INVERTED)
+		if (LEFT_INVERTED)
 			speed = -speed;
-		
+
 		leftMotor3.set(speed);
 		leftMotor3Voltage =  Robot.pdp.getBatteryVoltage() * speed;
 	}
@@ -291,7 +290,7 @@ public class Drivetrain extends Subsystem {
 	 */
 	public void driveRight1(double speed) {
 		if (RIGHT_INVERTED)
-			temp = -speed;
+			speed = -speed;
 
 		rightMotor1.set(speed);
 		rightMotor1Voltage = Robot.pdp.getBatteryVoltage() * speed;
@@ -304,7 +303,7 @@ public class Drivetrain extends Subsystem {
 	public void driveRight2(double speed) {
 		if (RIGHT_INVERTED)
 			speed = -speed;
-		
+
 		rightMotor2.set(speed);
 		rightMotor2Voltage = Robot.pdp.getBatteryVoltage() * speed;
 	}
@@ -316,7 +315,7 @@ public class Drivetrain extends Subsystem {
 	public void driveRight3(double speed) {
 		if (RIGHT_INVERTED)
 			speed = -speed;
-		
+
 		rightMotor3.set(speed);
 		rightMotor3Voltage = Robot.pdp.getBatteryVoltage() * speed;
 	}

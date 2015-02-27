@@ -3,7 +3,6 @@ package org.team2168.subsystems;
 import org.team2168.OI;
 import org.team2168.RobotMap;
 import org.team2168.commands.intake.DriveIntakeWithJoystick;
-import org.team2168.commands.intake.StopIntakeWheels;
 import org.team2168.utils.Util;
 
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -36,8 +35,8 @@ public class Intake extends Subsystem {
 	private final static double INTAKE_TOTE_MIN_VOLTAGE = 0.5;
 
 	private static final boolean LEFT_INVERTED = false;
-	private static final boolean RIGHT_INVERTED = false;
-	
+	private static final boolean RIGHT_INVERTED = true;
+
 	/**
 	 * A private constructor to prevent multiple instances of the subsystem
 	 * from being created.
