@@ -3,7 +3,7 @@ package org.team2168.subsystems;
 import org.team2168.OI;
 import org.team2168.Robot;
 import org.team2168.RobotMap;
-import org.team2168.PID.controllers.PIDPosition2;
+import org.team2168.PID.controllers.PIDPosition;
 import org.team2168.PID.sensors.AverageEncoder;
 import org.team2168.commands.lift.LiftWithJoystick;
 import org.team2168.utils.TCPSocketSender;
@@ -28,7 +28,7 @@ public class Lift extends Subsystem {
 	private static final boolean MOTOR_INVERTED = false;
 	
 	public AverageEncoder liftEncoder;
-	public PIDPosition2 liftController;
+	public PIDPosition liftController;
 	
 	TCPSocketSender TCPliftPosController;
 
@@ -48,7 +48,7 @@ public class Lift extends Subsystem {
 		liftBrake = new DoubleSolenoid(RobotMap.PCM_CAN_ID, RobotMap.LIFT_BRAKE_DOUBLE_SOLENOID_FORWARD,
 				RobotMap.LIFT_BRAKE_DOUBLE_SOLENOID_REVERSE);
 
-		liftController = new PIDPosition2("LiftPID", RobotMap.liftPUp, 
+		liftController = new PIDPosition("LiftPID", RobotMap.liftPUp, 
 				RobotMap.liftIUp, RobotMap.liftDUp, liftEncoder,
     			RobotMap.liftPIDPeriod);
 //		liftController.setEnDerivFilter(true, RobotMap.liftNUp);

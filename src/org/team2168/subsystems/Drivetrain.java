@@ -3,8 +3,8 @@ package org.team2168.subsystems;
 import org.team2168.OI;
 import org.team2168.Robot;
 import org.team2168.RobotMap;
-import org.team2168.PID.controllers.PIDPosition2;
-import org.team2168.PID.controllers.PIDSpeed2;
+import org.team2168.PID.controllers.PIDPosition;
+import org.team2168.PID.controllers.PIDSpeed;
 import org.team2168.PID.sensors.ADXRS453Gyro;
 import org.team2168.PID.sensors.AverageEncoder;
 import org.team2168.PID.sensors.FalconGyro;
@@ -38,12 +38,12 @@ public class Drivetrain extends Subsystem {
 	private static final boolean RIGHT_INVERTED = true;
 	
 	//declare position/speed controllers
-	public PIDPosition2 driveTrainPosController;
-	public PIDSpeed2 rotateController;
+	public PIDPosition driveTrainPosController;
+	public PIDSpeed rotateController;
 
 	//declare speed controllers
-	public PIDSpeed2 rightSpeedController;
-	public PIDSpeed2 leftSpeedController;
+	public PIDSpeed rightSpeedController;
+	public PIDSpeed leftSpeedController;
 
 	//output voltage...ONLY FOR DEBUGGING PURPOSES, SHOULD BE REMOVED FOR COMPITITION
 	private volatile double leftMotor1Voltage;
@@ -96,7 +96,7 @@ public class Drivetrain extends Subsystem {
 		imu = new IMU(drivetrainLeftEncoder,drivetrainRightEncoder,RobotMap.wheelbase);
 		
 		//DriveStraight Controller
-		rotateController = new PIDSpeed2(
+		rotateController = new PIDSpeed(
 				"RotationController",
 				RobotMap.rotatePositionP,
 				RobotMap.rotatePositionI,
@@ -104,7 +104,7 @@ public class Drivetrain extends Subsystem {
 				gyroSPI,
 				RobotMap.driveTrainPIDPeriod);
 
-		driveTrainPosController = new PIDPosition2(
+		driveTrainPosController = new PIDPosition(
 				"driveTrainPosController", 
 				RobotMap.driveTrainRightPositionP,
 				RobotMap.driveTrainRightPositionI, 
@@ -113,7 +113,7 @@ public class Drivetrain extends Subsystem {
 				RobotMap.driveTrainPIDPeriod);
 		
 		//Spawn new PID Controller
-		rightSpeedController = new PIDSpeed2(
+		rightSpeedController = new PIDSpeed(
 				"RightSpeedController", 
 				RobotMap.driveTrainRightSpeedP,
 				RobotMap.driveTrainRightSpeedI, 
@@ -121,7 +121,7 @@ public class Drivetrain extends Subsystem {
 				drivetrainRightEncoder,
 				RobotMap.driveTrainPIDPeriod);
 
-		leftSpeedController = new PIDSpeed2(
+		leftSpeedController = new PIDSpeed(
 				"LeftSpeedController", 
 				RobotMap.driveTrainLeftSpeedP,
 				RobotMap.driveTrainLeftSpeedI, 
