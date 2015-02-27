@@ -19,8 +19,9 @@ public class DriveTrajectoryPath extends Command {
 	  double kTurn = -3.0/80.0;
 	
    public DriveTrajectoryPath(Trajectory leftProfile, Trajectory rightProfile, double direction, double heading){
-	    followerLeft.configure(0.029, 0.020,0.001,1/180,1/180);
-	    followerRight.configure(0.029, 0.020,0.001,1/180,1/180);
+	   requires(Robot.drivetrain);
+	   followerLeft.configure(0.029, 0,0,0,0);
+	    followerRight.configure(0.029, 0,0,0,0);
 	   
 	    reset();
 	    followerLeft.setTrajectory(leftProfile);
@@ -39,6 +40,8 @@ public class DriveTrajectoryPath extends Command {
     
 	protected void execute() {
 
+		System.out.println(followerRight.getNumSegments());
+		
 	      if (followerLeft.isFinishedTrajectory()) 
 	    	  Robot.drivetrain.tankDrive(0.0, 0.0);
 	      else
@@ -46,8 +49,12 @@ public class DriveTrajectoryPath extends Command {
 	        double distanceL = direction * Robot.drivetrain.drivetrainLeftEncoder.getPos(); //feet
 	        double distanceR = direction * Robot.drivetrain.drivetrainRightEncoder.getPos(); //feet
 
-	        double speedLeft = direction * followerLeft.calculate(distanceL);
+	        System.out.println("Distance L:" + distanceL);
+	        System.out.println("Distance R:" + distanceR);
+	        
 	        double speedRight = direction * followerRight.calculate(distanceR);
+	        double speedLeft = direction * followerLeft.calculate(distanceL);
+	        
 	        
 	        //double goalHeading = followerLeft.getHeading();
 	        double goalHeading = 0;
@@ -55,9 +62,13 @@ public class DriveTrajectoryPath extends Command {
 
 	        double angleDiffRads = Util.getDifferenceInAngleRadians(observedHeading, goalHeading);
 	        double angleDiff = Math.toDegrees(angleDiffRads);
-
+	        
+	        //System.out.println("Speed Left:" + speedLeft);
+	     
+	        //System.out.println("Speed Right:" + speedRight);
+	        
 	        double turn = kTurn * angleDiff;
-	        Robot.drivetrain.tankDrive(speedLeft, speedRight);
+	        Robot.drivetrain.tankDrive(-speedLeft, -speedRight);
 	      }
 	    
     }

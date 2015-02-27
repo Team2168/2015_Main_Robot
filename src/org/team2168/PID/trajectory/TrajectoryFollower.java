@@ -1,3 +1,5 @@
+//FIXME Outputs neg val instead of pos
+
 package org.team2168.PID.trajectory;
 
 
@@ -47,7 +49,7 @@ public class TrajectoryFollower {
 	      Trajectory.Segment segment = profile_.getSegment(current_segment);
 	      double error = segment.pos - distance_so_far;
 	      
-	      
+	     
 //	      double output = kp_ * error + kd_ * ((error - last_error_)
 //	              / (2*segment.dt) - segment.vel) + (kv_ * segment.vel
 //	              + ka_ * segment.acc);
@@ -69,7 +71,7 @@ public class TrajectoryFollower {
 
 			//integral
 			errsum = errsum + (last_error_ * executionTime);
-			double integ = ki_*errsum; //final integral term
+			double integ = ki_* errsum; //final integral term
 
 			//proportional term
 			double prop = kp_*error;
@@ -102,6 +104,7 @@ public class TrajectoryFollower {
 	      SmartDashboard.putNumber(name + "FollowerSensor", distance_so_far);
 	      SmartDashboard.putNumber(name + "FollowerGoal", segment.pos);
 	      SmartDashboard.putNumber(name + "FollowerError", error);
+	      System.out.println(name + ":" + output + "/Output");
 	      return output;
 	    } else {
 	      return 0;

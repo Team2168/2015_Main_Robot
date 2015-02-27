@@ -106,6 +106,7 @@ public class RobotMap {
 	public static final int driveAvgEncoderVal = 5;
 	public static final double minDriveSpeed =  0.2;
 	public static final double autoNormalSpeed = 0.5;
+	public static final double wheelbase = 2; //units must match PositionReturnType (feet)
 
 
 	/*************************************************************************
@@ -172,7 +173,7 @@ public class RobotMap {
 	 *                            PID Parameters
 	 *************************************************************************/
 	//period to run PID loops on drive train
-	public static final long driveTrainPIDPeriod = 70;//70ms loop
+	public static final long driveTrainPIDPeriod = 20;//70ms loop
 	public static final int drivetrainPIDArraySize = 50;
 
 	//PID Gains for Left & Right Speed and Position
@@ -211,18 +212,15 @@ public class RobotMap {
 //	public static final double liftDUp = 0.0017;
 //	public static final double liftNUp = 10.7300;
 	
-	public static final long liftPIDPeriod = 70; //100ms
+	public static final long liftPIDPeriod = 20; //100ms
 	
 	/****************************************************************
 	 *                TCP Servers  (ONLY FOR DEBUGGING)             *
 	 ****************************************************************/
-	public static final int TCPServerRightDrivetrainPos = 1180;
-	public static final int TCPServerRightDrivetrainSpeed = 1181;
-	public static final int TCPServerLeftDrivetrainPos = 1182;
+	public static final int TCPServerDrivetrainPos = 1180;
+	public static final int TCPServerRotateController = 1181;
+	public static final int TCPServerRightDrivetrainSpeed = 1182;
 	public static final int TCPServerLeftDrivetrainSpeed = 1183;
-	public static final int TCPServerRotateController = 1184;
-	public static final int TCPServerShooterSpeedAft = 1185;
-	public static final int TCPServerShooterSpeedFwd = 1186;
-	public static final int TCPServerLiftPos = 1187;
+	public static final int TCPServerLiftPos = 1184;
 
 }

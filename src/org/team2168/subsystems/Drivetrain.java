@@ -8,6 +8,7 @@ import org.team2168.PID.controllers.PIDSpeed2;
 import org.team2168.PID.sensors.ADXRS453Gyro;
 import org.team2168.PID.sensors.AverageEncoder;
 import org.team2168.PID.sensors.FalconGyro;
+import org.team2168.PID.sensors.IMU;
 import org.team2168.commands.drivetrain.DriveWithJoysticks;
 import org.team2168.utils.TCPSocketSender;
 
@@ -30,16 +31,15 @@ public class Drivetrain extends Subsystem {
 	
 	public AverageEncoder drivetrainLeftEncoder;
 	public AverageEncoder drivetrainRightEncoder;
-	public FalconGyro gyroAnalog;
 	public ADXRS453Gyro gyroSPI;
+	public IMU imu;
 
 	private static final boolean lEFT_INVERTED = false;
 	private static final boolean RIGHT_INVERTED = true;
 	
 	//declare position/speed controllers
-	public PIDPosition2 rightPosController;
-	public PIDPosition2 leftPosController;
-	public PIDPosition2 rotateController;
+	public PIDPosition2 driveTrainPosController;
+	public PIDSpeed2 rotateController;
 
 	//declare speed controllers
 	public PIDSpeed2 rightSpeedController;
@@ -54,9 +54,8 @@ public class Drivetrain extends Subsystem {
 	private volatile double rightMotor3Voltage;
 
 	//declare TCP severs...ONLY FOR DEBUGGING PURPOSES, SHOULD BE REMOVED FOR COMPITITION
-	TCPSocketSender TCPrightPosController;
+	TCPSocketSender TCPdrivePosController;
 	TCPSocketSender TCPrightSpeedController;
-	TCPSocketSender TCPleftPosController;
 	TCPSocketSender TCPleftSpeedController;
 	TCPSocketSender TCProtateController;
 
@@ -75,7 +74,7 @@ public class Drivetrain extends Subsystem {
 
 		gyroSPI = new ADXRS453Gyro();
 		gyroSPI.startThread();
-		gyroAnalog = new FalconGyro(RobotMap.DRIVE_GYRO);
+
 
 		drivetrainRightEncoder = new AverageEncoder(
 				RobotMap.DRIVETRAIN_RIGHT_ENCODER_A,
@@ -94,8 +93,10 @@ public class Drivetrain extends Subsystem {
 				RobotMap.driveEncodingType, RobotMap.driveSpeedReturnType,
 				RobotMap.drivePosReturnType, RobotMap.driveAvgEncoderVal);
 
+		imu = new IMU(drivetrainLeftEncoder,drivetrainRightEncoder,RobotMap.wheelbase);
+		
 		//DriveStraight Controller
-		rotateController = new PIDPosition2(
+		rotateController = new PIDSpeed2(
 				"RotationController",
 				RobotMap.rotatePositionP,
 				RobotMap.rotatePositionI,
@@ -103,20 +104,20 @@ public class Drivetrain extends Subsystem {
 				gyroSPI,
 				RobotMap.driveTrainPIDPeriod);
 
+		driveTrainPosController = new PIDPosition2(
+				"driveTrainPosController", 
+				RobotMap.driveTrainRightPositionP,
+				RobotMap.driveTrainRightPositionI, 
+				RobotMap.driveTrainRightPositionD, 
+				imu,
+				RobotMap.driveTrainPIDPeriod);
+		
 		//Spawn new PID Controller
 		rightSpeedController = new PIDSpeed2(
 				"RightSpeedController", 
 				RobotMap.driveTrainRightSpeedP,
 				RobotMap.driveTrainRightSpeedI, 
 				RobotMap.driveTrainRightSpeedD, 
-				drivetrainRightEncoder,
-				RobotMap.driveTrainPIDPeriod);
-
-		rightPosController = new PIDPosition2(
-				"RightPositionController", 
-				RobotMap.driveTrainRightPositionP,
-				RobotMap.driveTrainRightPositionI, 
-				RobotMap.driveTrainRightPositionD, 
 				drivetrainRightEncoder,
 				RobotMap.driveTrainPIDPeriod);
 
@@ -128,37 +129,25 @@ public class Drivetrain extends Subsystem {
 				drivetrainLeftEncoder,
 				RobotMap.driveTrainPIDPeriod);
 
-		leftPosController = new PIDPosition2(
-				"LeftPositionController", 
-				RobotMap.driveTrainLeftPositionP,
-				RobotMap.driveTrainLeftPositionI, 
-				RobotMap.driveTrainLeftPositionD, 
-				drivetrainLeftEncoder,
-				RobotMap.driveTrainPIDPeriod);
 
 		//add min and max output defaults and set array size
 		rightSpeedController.setSIZE(RobotMap.drivetrainPIDArraySize);
 		leftSpeedController.setSIZE(RobotMap.drivetrainPIDArraySize);
-		rightPosController.setSIZE(RobotMap.drivetrainPIDArraySize);
-		leftPosController.setSIZE(RobotMap.drivetrainPIDArraySize);    	
+		driveTrainPosController.setSIZE(RobotMap.drivetrainPIDArraySize);	
 		rotateController.setSIZE(RobotMap.drivetrainPIDArraySize); 
 
 		//start controller threads
 		rightSpeedController.startThread();
-		rightPosController.startThread();
 		leftSpeedController.startThread();
-		leftPosController.startThread();
+		driveTrainPosController.startThread();
 		rotateController.startThread();
 
 		//start TCP Servers for DEBUGING ONLY
-		TCPrightPosController = new TCPSocketSender(RobotMap.TCPServerRightDrivetrainPos, rightPosController);
-		TCPrightPosController.start();
+		TCPdrivePosController = new TCPSocketSender(RobotMap.TCPServerDrivetrainPos, driveTrainPosController);
+		TCPdrivePosController.start();
 
 		TCPrightSpeedController = new TCPSocketSender(RobotMap.TCPServerRightDrivetrainSpeed, rightSpeedController);
 		TCPrightSpeedController.start();
-
-		TCPleftPosController = new TCPSocketSender(RobotMap.TCPServerLeftDrivetrainPos, leftPosController);
-		TCPleftPosController.start();
 
 		TCPleftSpeedController = new TCPSocketSender(RobotMap.TCPServerLeftDrivetrainSpeed, leftSpeedController);
 		TCPleftSpeedController.start();

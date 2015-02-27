@@ -93,6 +93,19 @@ public class Robot extends IterativeRobot {
 		
 		oi = OI.getInstance();
 
+		System.out.println(drivePath.getLeftWheelTrajectory().getNumSegments());
+		System.out.println(drivePath.getRightWheelTrajectory().getNumSegments());
+
+		System.out.println("Left Wheel Trajectory");
+		for (int s = 0; s <= drivePath.getLeftWheelTrajectory().getNumSegments(); s++) {
+			System.out.println(drivePath.getLeftWheelTrajectory().getSegment(s));
+		}
+		
+		System.out.println("Right Wheel Trajectory");
+		for (int s = 0; s <= drivePath.getRightWheelTrajectory().getNumSegments(); s++) {
+			System.out.println(drivePath.getRightWheelTrajectory().getSegment(s));
+		}
+		
 		System.out.println("Bot Finished Loading.");
 	}
 
@@ -140,7 +153,6 @@ public class Robot extends IterativeRobot {
 	 */
 	public void disabledInit() {
 		Robot.drivetrain.gyroSPI.calibrate();
-		Robot.drivetrain.gyroAnalog.reInitGyro();
 	}
 
 	/**

@@ -22,9 +22,7 @@ public class DrivePIDPause extends Command {
     // Called just before this Command runs the first time
     
 	protected void initialize() {
-		Robot.drivetrain.rightPosController.Pause();
 		Robot.drivetrain.rightSpeedController.Pause();
-		Robot.drivetrain.leftPosController.Pause();
 		Robot.drivetrain.leftSpeedController.Pause();
 		Robot.drivetrain.rotateController.Pause();
     }
@@ -39,10 +37,9 @@ public class DrivePIDPause extends Command {
     // Make this return true when this Command no longer needs to run execute()
     
 	protected boolean isFinished() {
-        return (Robot.drivetrain.rightPosController.isEnabled() == false)
-        		&& (Robot.drivetrain.rightSpeedController.isEnabled() == false)
+        return (Robot.drivetrain.rightSpeedController.isEnabled() == false)
+        		&& (Robot.drivetrain.driveTrainPosController.isEnabled() == false)
         		&& (Robot.drivetrain.leftSpeedController.isEnabled() == false)
-        		&& (Robot.drivetrain.leftPosController.isEnabled() == false)
         		&& (Robot.drivetrain.rotateController.isEnabled() == false);
     }
 

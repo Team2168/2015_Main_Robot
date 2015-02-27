@@ -31,8 +31,16 @@ public class LiftWithJoystick extends Command {
 	 */
 	protected void execute() {
 
+		if(Math.abs(joystick.getRightStickRaw_Y()) > 0.2)
+		{
+			Robot.lift.disableBrake();
 			Robot.lift.drive(joystick.getRightStickRaw_Y()); 
-
+		}
+		else
+		{
+			Robot.lift.drive(0);
+			Robot.lift.enableBrake();
+		}
 	}
 
 	/**

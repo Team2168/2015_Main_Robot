@@ -1,5 +1,6 @@
 package org.team2168;
 
+
 import org.team2168.commandgroups.DriveLiftToSetPosition;
 import org.team2168.commands.gripper.EngageGripper;
 import org.team2168.commands.gripper.ReleaseGripper;
@@ -76,9 +77,10 @@ public class OI {
         pnuematicTestJoystick.ButtonLeftBumper().whenPressed(new EngageIntake());
         pnuematicTestJoystick.ButtonRightBumper().whenPressed(new DisengageIntake());
         
+        
         commandsTestJoystick.ButtonA().whenPressed(new LiftPIDPosition());
         commandsTestJoystick.ButtonB().whenPressed(new LiftPIDPause());
-        commandsTestJoystick.ButtonRightBumper().whenPressed(new DriveXDistance(180,0.3,-1.20));
+        commandsTestJoystick.ButtonRightBumper().whenPressed(new DriveXDistance(5,0.3,1));
        // commandsTestJoystick.ButtonX().whenPressed(new DrivePath());
         commandsTestJoystick.ButtonX().whenPressed(new DriveLeftPIDPath(Robot.path.smoothLeftVelocity));
         commandsTestJoystick.ButtonY().whenPressed(new DriveRightPIDPath(Robot.path.smoothRightVelocity));

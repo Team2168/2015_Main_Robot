@@ -109,7 +109,7 @@ public class Intake extends Subsystem {
 	 */
 	public void setIntakeSpeed(double speed) {
 		setLeftIntakeSpeed(speed);
-		setRightIntakeSpeed(speed);
+		setRightIntakeSpeed(-speed);
 	}
 
 	/**

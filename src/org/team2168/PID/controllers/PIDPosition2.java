@@ -1078,9 +1078,9 @@ public class PIDPosition2 implements TCPMessageInterface {
 			//integral
 			boolean windup = false;
 			errsum = errsum + (olderr * executionTime);
-			double integ = i*errsum; //final integral term
+			integ = i*errsum; //final integral term
 			
-			double deriv = 0;
+			deriv = 0;
 
 			//deriv term
 			if(enDerivFilter)
@@ -1094,7 +1094,7 @@ public class PIDPosition2 implements TCPMessageInterface {
 			{
 				// prevent divide by zero error, by disabiling deriv term
 				// if execution time is zero.
-				double diff = 0;
+				diff = 0;
 				if (executionTime > 0) 
 					diff = (err - olderr) /executionTime; // delta
 				else 
@@ -1104,9 +1104,8 @@ public class PIDPosition2 implements TCPMessageInterface {
 			}
 
 			//proportional term
-			double prop = p*err;
+			prop = p*err;
 			
-			double co;
 			// calculate new control output based on filtering
 			co = prop + integ + deriv;
 			
@@ -1135,8 +1134,8 @@ public class PIDPosition2 implements TCPMessageInterface {
 			clock = currentTime;
 			olderr = err;
 			
-		//	System.out.println("time: " + currentTime + "\tcperr: " + cp + "\tsp: " + sp + "\terr: " + err + "\tpterm: " + prop + "\twindup: " + windup + "\terrsum: " + errsum +"\titerm: " + integ + "\tdterm: " + deriv + "\toutput" + co + "\texctime" + executionTime );
-			log.println(currentTime + "\t " + cp + "\t" + sp + "\t " + err + "\t" + prop + "\t" + windup + "\t" + errsum +"\t" + integ + "\t" + deriv + "\t" + co + "\t" + executionTime );
+			System.out.println("time: " + currentTime + "\tcperr: " + cp + "\tsp: " + sp + "\terr: " + err + "\tpterm: " + prop + "\twindup: " + windup + "\terrsum: " + errsum +"\titerm: " + integ + "\tdterm: " + deriv + "\toutput" + co + "\texctime" + executionTime );
+		//	log.println(currentTime + "\t " + cp + "\t" + sp + "\t " + err + "\t" + prop + "\t" + windup + "\t" + errsum +"\t" + integ + "\t" + deriv + "\t" + co + "\t" + executionTime );
 
 		}
 

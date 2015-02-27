@@ -3,6 +3,7 @@ package org.team2168.PID.trajectory;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class LoadPathFile {
@@ -47,6 +48,8 @@ public class LoadPathFile {
       left.setSegment(i, segment);
     }
     Trajectory right = new Trajectory(num_elements);
+    
+    int k = 0;
     for (int i = num_elements+2; i < FileList.size(); ++i) 
     {
         Trajectory.Segment segment = new Trajectory.Segment();
@@ -61,7 +64,10 @@ public class LoadPathFile {
         segment.x = Double.parseDouble(line[6]);
         segment.y = Double.parseDouble(line[7]);
       
-      right.setSegment(i, segment);
+      right.setSegment(k, segment);
+      System.out.println(right.getSegment(k));
+      k++;
+      
     }
     
     System.out.println("...finished parsing path from string.");
