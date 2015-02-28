@@ -1,41 +1,25 @@
 package org.team2168.PID.sensors;
 
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SPI.Port;
+import edu.wpi.first.wpilibj.Timer;
+
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.BitSet;
 import java.util.TimerTask;
 
-
-
-
-import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.SPI.Port;
-import edu.wpi.first.wpilibj.Timer;
-
 /*
- *
- *
- *  Created on: Jan 18, 2015
- *      Author: Kevin Harrilal
- *      
- *
- *      
- *      
-RATE DATA FORMAT
-
+ * @author Kevin Harrilal
  */
-
-
-public class ADXRS453Gyro implements PIDSensorInterface
-{
+public class ADXRS453Gyro implements PIDSensorInterface {
 
 	static final int DATA_SIZE = 4; //4 bytes = 32 bits
-	static final  byte  PARITY_BIT = (byte) 0x01; //parity check on first bit
+	static final byte PARITY_BIT = (byte) 0x01; //parity check on first bit
 	static final byte STATUS_MASK = (byte) 0x0C;
 	static final byte FIRST_BYTE_DATA_MASK = (byte)  0x03; //mask to find sensor data bits on first byte
 	static final byte THIRD_BYTE_DATA_MASK = (byte) 0xFC; //mask to find sensor data bits on third byte
 	static final byte READ_COMMAND = (byte) 0x20; //0010 0000
-
 
 	//different register values available
 	static final byte ADXRS453_REG_RATE     =  (byte) 0x00;
@@ -48,17 +32,15 @@ public class ADXRS453Gyro implements PIDSensorInterface
 	static final byte ADXRS453_REG_SN_HIGH  =  (byte) 0x0E;
 	static final byte ADXRS453_REG_SN_LOW   =  (byte) 0x10;
 
-
 	//angle integration
-	private Timer calibration_timer;
 	private volatile double currentRate;
 	private volatile double lastRate;
 	private volatile double deltaTime;
 	private volatile double currentTime;
 	private volatile double lastTime;
 	private volatile double angle;
-	private volatile double accumulatedOffset;
-	private double accum;
+	private volatile double driftRate;
+	private volatile double accumulatedRate;
 	
 	//other gyro register data
 	private volatile int id;
@@ -67,7 +49,10 @@ public class ADXRS453Gyro implements PIDSensorInterface
 	
 	//calibration loop
 	private volatile boolean calibrate;
+	private volatile boolean stopCalibrating;
 	private volatile boolean firstLoop;
+        private volatile double timeElapsed;
+        private static double CALIBRATION_PERIOD = 10.0; //seconds
 
 	private SPI spi;
 
@@ -79,10 +64,7 @@ public class ADXRS453Gyro implements PIDSensorInterface
 	private java.util.Timer executor;
 	private long period;
 
-
-	public  ADXRS453Gyro()
-	{
-
+	public  ADXRS453Gyro() {
 		//run at 333Hz loop
 		this.period = (long)3; 
 
@@ -93,22 +75,20 @@ public class ADXRS453Gyro implements PIDSensorInterface
 		spi.setMSBFirst();
 		
 		currentRate = 0.0;
-		accumulatedOffset = 0.0;
+		driftRate = 0.0;
 
-		calibration_timer = new Timer();
-
-		lastTime =0;
-		currentTime =0;
-		lastRate =0;
-		deltaTime=0;
-		accum=0;
-
-		calibrate = true;
-		firstLoop = true;
+		lastTime = 0;
+		currentTime = 0;
+		lastRate = 0;
+		deltaTime = 0;
+		accumulatedRate = 0;
+		
+		calibrate();
 
 		temp = 0;
 		id = 0;
-
+		
+		reset();
 	}
 
 	public void startThread() {
@@ -116,71 +96,76 @@ public class ADXRS453Gyro implements PIDSensorInterface
 		this.executor.schedule(new GyroUpdateTask(this), 0L, this.period);
 	}
 
-
-	public String getMessageBin()
-	{
+	public String getMessageBin() {
 		return binMessage;
 	}
 
-	public String getRateBin()
-	{
+	public String getRateBin() {
 		return binRate;
 	}
 
-	public void calibrate()
-	{
-		calibrate=true;
-		firstLoop=true;
+	/**
+	 * Called to begin the gyros calibration sequence.
+	 * This should only be called during a time when the robot will be
+	 * stationary for a duration of time (~10 sec). Robot motion during
+	 * the calibration sequence will cause significant steady state drift.
+	 */
+	public final void calibrate() {
+		calibrate = true;
+		firstLoop = true;
+		stopCalibrating = false;
 	}
 
-	public void reset()
-	{
-		angle=0;
-
+	/**
+	 * @return true if the calibration sequence is active.
+	 */
+	public final boolean isCalibrating() {
+	    return calibrate;
+	}
+	
+	/**
+	 * Stop the calibration sequence prematurely.
+	 * e.g. if the match is starting
+	 */
+	public final void stopCalibrating() {
+	    stopCalibrating = true;
+	}
+	
+	/**
+	 * Zero the gyro heading.
+	 */
+	public final void reset() {
+		angle = 0;
 	}
 
-	public double getRate() 
-	{
+	public double getRate() {
 		return currentRate;
 	}
 
-	public int getStatus()
-	{
+	public int getStatus() {
 		return status;
 	}
-	public double getAngleDeg() 
-	{
+	public double getAngle() {
 		return angle;
 	}
 	
-	public double getAngleRadians()
-	{
-		return (getAngleDeg() * Math.PI) / 180.0;
-	}
-	
-	public double getPos()
-	{
-		return getAngleDeg();
+	public double getPos() {
+		return getAngle();
 	}
 
-	public double getDeltatime()
-	{
+	public double getDeltatime() {
 		return deltaTime;
 	}
 
-	public int getID()
-	{
+	public int getID() {
 		return id;
 	}
 
-	public double getTemp()
-	{
+	public double getTemp() {
 		return temp;
 	}
 
-	public short getRegisterValue(byte registerAddress)
-	{
-
+	public short getRegisterValue(byte registerAddress) {
 		byte[] command = new byte[DATA_SIZE];
 		byte[] data = new byte[DATA_SIZE];
 		command[0] = 0;
@@ -191,7 +176,6 @@ public class ADXRS453Gyro implements PIDSensorInterface
 		data[1] = 0;
 		data[2] = 0;
 		data[3] = 0;
-
 
 		command[0] = (byte) ((0x01 << 7) | (registerAddress >> 7));
 		command[1] = (byte) (registerAddress << 1);
@@ -205,30 +189,25 @@ public class ADXRS453Gyro implements PIDSensorInterface
 				((short)data[2] << 3) |
 				((short)(data[3] >> 5)));
 
-
 		return registerValue;
 	}
 	
-	public static String getBinaryFromByte(byte[] bytes)
-	{
+	public static String getBinaryFromByte(byte[] bytes) {
 		String temp = "";;
 		for (byte b : bytes)
-
-			temp+=Integer.toBinaryString(b & 255 | 256).substring(1) + " ";
+                    temp += Integer.toBinaryString(b & 255 | 256).substring(1) + " ";
 
 		return temp;
 	}
 
 	////////// PRIVATE FUNCTIONS ////////////////
 
-	private void checkParity(byte[] data)
-	{
+	private void checkParity(byte[] data) {
 		if(BitSet.valueOf(data).cardinality() % 2 == 0)
 			data[3] |= PARITY_BIT;
 	}
 
-	private double getSensorData()
-	{
+	private double getSensorData() {
 		byte[] command = new byte[DATA_SIZE];
 		byte[] data = new byte[DATA_SIZE];
 		command[0] = READ_COMMAND;
@@ -247,8 +226,7 @@ public class ADXRS453Gyro implements PIDSensorInterface
 		return sensorDataMask(data);
 	}
 
-	private double sensorDataMask(byte[] data)
-	{
+	private double sensorDataMask(byte[] data) {
 		//returns full binary from gyro for debugging
 		binMessage = getBinaryFromByte(data);
 
@@ -276,14 +254,12 @@ public class ADXRS453Gyro implements PIDSensorInterface
 		return value / 80.0;
 	}
 
-	private int GetID()
-	{ 
+	private int GetID() {
 		short id = getRegisterValue(ADXRS453_REG_PID);
 		return id >> 8;
 	}
 
-	private double GetTemperature()
-	{
+	private double GetTemperature() {
 		//TODO: reverify calc, not sure this works
 		short registerValue = 0;
 		short  temperature   = 0;
@@ -295,14 +271,12 @@ public class ADXRS453Gyro implements PIDSensorInterface
 		return temperature;
 	}
 
-
-	private void update()
-	{
-
-		if(lastTime == 0)
-		{
+	/**
+	 * Periodically executed to update the gyro state data.
+	 */
+	private void update() {
+		if(lastTime == 0) {
 			lastTime = Timer.getFPGATimestamp();
-			angle=0;
 		}
 
 		currentRate =  getSensorData();
@@ -315,29 +289,33 @@ public class ADXRS453Gyro implements PIDSensorInterface
 		//if(Math.abs(currentRate) < 2)
 		//	currentRate = 0;
 
-		angle += (currentRate * deltaTime) - accumulatedOffset * deltaTime;
-		//angle += (cu
+		angle += (currentRate - driftRate) * deltaTime;
 
-		if(calibrate)
-		{
-			if(firstLoop)
-			{
-				calibration_timer.start();
-				calibration_timer.reset();
-				accumulatedOffset=0;
-				accum = angle;
+		/*
+		 * Periodically update our drift rate by normalizing out drift
+		 * while the robot is not moving.
+		 * This code is re-entrant and can be stopped at any time
+		 *   (e.g. if a match starts).
+		 */
+		if(calibrate) {
+			if(firstLoop) {
+				driftRate = 0.0;
+				accumulatedRate = 0.0;
+                                timeElapsed = 0.0;
 				firstLoop = false;
 			}
-			if(calibration_timer.get() > 10)
-			{
-				accumulatedOffset = (angle - accum) / calibration_timer.get();
-				firstLoop = true;
+			
+			timeElapsed += deltaTime;
+			accumulatedRate += currentRate;
+			driftRate = accumulatedRate / timeElapsed; //angle/S
+			
+			if(timeElapsed >= CALIBRATION_PERIOD || stopCalibrating) {
+				//finish calibration sequence
 				calibrate = false;
-				angle = 0;
+				reset();
 
-
-				
-				System.out.println("Accumulated Offset: " + accumulatedOffset + "\t" + "Delta Time: " + calibration_timer.get());
+				System.out.println("Accumulated Offset: " + driftRate
+					+ "\tDelta Time: " + timeElapsed);
 			}
 		}
 
@@ -347,7 +325,6 @@ public class ADXRS453Gyro implements PIDSensorInterface
 		//Get all other Gyro data here
 		temp = GetTemperature();
 		id = GetID();
-
 	}
 
 	private class GyroUpdateTask extends TimerTask {
@@ -355,7 +332,7 @@ public class ADXRS453Gyro implements PIDSensorInterface
 
 		private GyroUpdateTask(ADXRS453Gyro gyro) {
 			if (gyro == null) {
-				throw new NullPointerException("printer was null");
+				throw new NullPointerException("Gyro pointer null");
 			}
 			this.gyro = gyro;
 		}
@@ -369,5 +346,3 @@ public class ADXRS453Gyro implements PIDSensorInterface
 	}
 
 }
-
-

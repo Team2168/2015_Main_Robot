@@ -7,7 +7,6 @@ import org.team2168.PID.controllers.PIDPosition;
 import org.team2168.PID.controllers.PIDSpeed;
 import org.team2168.PID.sensors.ADXRS453Gyro;
 import org.team2168.PID.sensors.AverageEncoder;
-import org.team2168.PID.sensors.FalconGyro;
 import org.team2168.PID.sensors.IMU;
 import org.team2168.commands.drivetrain.DriveWithJoysticks;
 import org.team2168.utils.TCPSocketSender;
@@ -34,9 +33,9 @@ public class Drivetrain extends Subsystem {
 	public ADXRS453Gyro gyroSPI;
 	public IMU imu;
 
-	private static final boolean lEFT_INVERTED = false;
+	private static final boolean LEFT_INVERTED = false;
 	private static final boolean RIGHT_INVERTED = true;
-	
+
 	//declare position/speed controllers
 	public PIDPosition driveTrainPosController;
 	public PIDPosition rotateController;
@@ -111,7 +110,7 @@ public class Drivetrain extends Subsystem {
 				RobotMap.driveTrainRightPositionD, 
 				imu,
 				RobotMap.driveTrainPIDPeriod);
-		
+
 		//Spawn new PID Controller
 		rightSpeedController = new PIDSpeed(
 				"RightSpeedController", 
@@ -234,13 +233,11 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveLeft1(double speed) {
-		
-		double temp = speed;
-		if (lEFT_INVERTED)
-			temp = -speed;
-		
-		leftMotor1.set(-temp);
-		leftMotor1Voltage = Robot.pdp.getBatteryVoltage() * temp;
+		if (LEFT_INVERTED)
+			speed = -speed;
+
+		leftMotor1.set(speed);
+		leftMotor1Voltage = Robot.pdp.getBatteryVoltage() * speed;
 	}
 
 	/**
@@ -248,13 +245,11 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveLeft2(double speed) {
-		
-		double temp = speed;
-		if (lEFT_INVERTED)
-			temp = -speed;
-		
-		leftMotor2.set(temp);
-		leftMotor2Voltage = Robot.pdp.getBatteryVoltage() * temp;
+		if (LEFT_INVERTED)
+			speed = -speed;
+
+		leftMotor2.set(speed);
+		leftMotor2Voltage = Robot.pdp.getBatteryVoltage() * speed;
 	}
 
 	/**
@@ -263,12 +258,11 @@ public class Drivetrain extends Subsystem {
 	 */
 	public void driveLeft3(double speed) {
 
-		double temp = speed;
-		if (lEFT_INVERTED)
-			temp = -speed;
-		
-		leftMotor3.set(temp);
-		leftMotor3Voltage =  Robot.pdp.getBatteryVoltage() * temp;
+		if (LEFT_INVERTED)
+			speed = -speed;
+
+		leftMotor3.set(speed);
+		leftMotor3Voltage =  Robot.pdp.getBatteryVoltage() * speed;
 	}
 
 	/**
@@ -286,14 +280,11 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveRight1(double speed) {
-		
-		double temp = speed;
 		if (RIGHT_INVERTED)
-			temp = -speed;
-		
-		
-		rightMotor1.set(temp);
-		rightMotor1Voltage = Robot.pdp.getBatteryVoltage() * temp;
+			speed = -speed;
+
+		rightMotor1.set(speed);
+		rightMotor1Voltage = Robot.pdp.getBatteryVoltage() * speed;
 	}
 
 	/**
@@ -301,14 +292,11 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveRight2(double speed) {
-		
-		double temp = speed;
 		if (RIGHT_INVERTED)
-			temp = -speed;
-		
-		rightMotor2.set(temp);
-		rightMotor2Voltage = Robot.pdp.getBatteryVoltage() * temp;
+			speed = -speed;
 
+		rightMotor2.set(speed);
+		rightMotor2Voltage = Robot.pdp.getBatteryVoltage() * speed;
 	}
 
 	/**
@@ -316,14 +304,11 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveRight3(double speed) {
-		
-		double temp = speed;
 		if (RIGHT_INVERTED)
-			temp = -speed;
-		
-		rightMotor3.set(temp);
-		rightMotor3Voltage = Robot.pdp.getBatteryVoltage() * temp;
+			speed = -speed;
 
+		rightMotor3.set(speed);
+		rightMotor3Voltage = Robot.pdp.getBatteryVoltage() * speed;
 	}
 	/**
 	 * Drive the motors on the left right side of the chassis.
@@ -408,7 +393,7 @@ public class Drivetrain extends Subsystem {
 	 * @return heading in degrees.
 	 */
 	public double getHeading() {
-		return gyroSPI.getAngleDeg();
+		return gyroSPI.getAngle();
 	}
 
 	/**

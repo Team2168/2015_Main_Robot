@@ -90,17 +90,14 @@ public class Lift extends Subsystem {
 	/**
 	 * Drive the lift in open loop mode.
 	 *
-	 * @param speed
-	 *            value from -1.0 to 1.0, positive drives the lift up.
+	 * @param speed value from -1.0 to 1.0, positive drives the lift up.
 	 */
 	public void drive(double speed) {
-		
-		double temp = speed;
 		if (MOTOR_INVERTED)
-			temp = -speed;
-		
-		intakeMotor.set(temp);
-		motorVoltage = Robot.pdp.getBatteryVoltage() * temp;
+			speed = -speed;
+
+		intakeMotor.set(speed);
+		motorVoltage = Robot.pdp.getBatteryVoltage() * speed;
 	}
 
 	/**

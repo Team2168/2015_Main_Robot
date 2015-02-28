@@ -1,3 +1,5 @@
+//FIXME: Re-add Radians to GyroSpi
+
 package org.team2168.commands.drivetrain.PIDCommands;
 
 import org.team2168.Robot;
@@ -57,8 +59,9 @@ public class DriveTrajectoryPath extends Command {
 	        
 	        //double goalHeading = followerLeft.getHeading();
 	        double goalHeading = 0;
-	        double observedHeading = Robot.drivetrain.gyroSPI.getAngleRadians(); //radians
+	        //double observedHeading = Robot.drivetrain.gyroSPI.getAngleRadians(); //radians
 
+	        double observedHeading = 0;
 	        double angleDiffRads = Util.getDifferenceInAngleRadians(observedHeading, goalHeading);
 	        double angleDiff = Math.toDegrees(angleDiffRads);
 	        
