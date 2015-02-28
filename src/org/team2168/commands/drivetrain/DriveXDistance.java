@@ -30,7 +30,7 @@ public class DriveXDistance extends Command{
 	double errsum = 0;
 	double olderrsum = 0;
 	
-	
+	double lastRotateOutput;
 	
 	/**
 	 * Move the drivetrain forward the specified distance.
@@ -41,6 +41,7 @@ public class DriveXDistance extends Command{
 		this.distanceGoal = distance;
 		this.speed = RobotMap.autoNormalSpeed;
 		this.powerShift = 1;
+		this.lastRotateOutput = 0;
 	}
 	
 	public DriveXDistance(double distance, double speed) {
@@ -56,7 +57,7 @@ public class DriveXDistance extends Command{
 	protected void initialize() {
 		finished = false;
 		Robot.drivetrain.tankDrive(0, 0);
-		Robot.drivetrain.resetPosition();;
+		Robot.drivetrain.resetPosition();
 		
 		//reset controller
 		Robot.drivetrain.imu.reset();
@@ -69,32 +70,34 @@ public class DriveXDistance extends Command{
 		angle = Robot.drivetrain.gyroSPI.getAngleDeg();
 		
 		Robot.drivetrain.driveTrainPosController.setSetPoint(endDistance);
+		Robot.drivetrain.driveTrainPosController.setMaxPosOutput(speed);
+		Robot.drivetrain.driveTrainPosController.setMinPosOutput(-speed);
 		Robot.drivetrain.rotateController.setSetPoint(angle);
 		
-		
-		drivingForward = Robot.drivetrain.getAveragedDistance() < endDistance;
-		
-		//don't drive if the destination position is really close to our
-		//current position.
-		finished = Math.abs(distanceGoal) < 0.1;
-		
-		
-		//modify speeds based on power shift, - means put more power to left side, + means put more power to right side
-		//this power shift helps accommodate for unequal power in drivetrains
-		
-		if (powerShift > 1) //reduce left speed so right power is increased
-		{
-			rightSpeed = speed;
-			leftSpeed = speed - speed*Math.abs(powerShift%1);
-		}
-		
-		else if (powerShift < 1) //reduce right speed so left if increased
-		{
-			rightSpeed = speed - speed*Math.abs(powerShift%1);
-			leftSpeed = speed;
-		}
-		
-		Robot.drivetrain.rotateController.setSetPoint(Robot.drivetrain.gyroSPI.getAngleDeg());
+//		
+//		drivingForward = Robot.drivetrain.getAveragedDistance() < endDistance;
+//		
+//		//don't drive if the destination position is really close to our
+//		//current position.
+//		finished = Math.abs(distanceGoal) < 0.1;
+//		
+//		
+//		//modify speeds based on power shift, - means put more power to left side, + means put more power to right side
+//		//this power shift helps accommodate for unequal power in drivetrains
+//		
+//		if (powerShift > 1) //reduce left speed so right power is increased
+//		{
+//			rightSpeed = speed;
+//			leftSpeed = speed - speed*Math.abs(powerShift%1);
+//		}
+//		
+//		else if (powerShift < 1) //reduce right speed so left if increased
+//		{
+//			rightSpeed = speed - speed*Math.abs(powerShift%1);
+//			leftSpeed = speed;
+//		}
+//		
+//		Robot.drivetrain.rotateController.setSetPoint(Robot.drivetrain.gyroSPI.getAngleDeg());
 		
 		Robot.drivetrain.driveTrainPosController.Enable();
 		Robot.drivetrain.rotateController.Enable();
@@ -102,7 +105,8 @@ public class DriveXDistance extends Command{
 
 	protected void execute() {
 
-		
+		lastRotateOutput = Robot.drivetrain.rotateController.getControlOutput();
+		double headingCorrection = (Robot.drivetrain.rotateController.getControlOutput()) + lastRotateOutput;
 		
 		Robot.drivetrain.tankDrive(Robot.drivetrain.driveTrainPosController.getControlOutput(), Robot.drivetrain.driveTrainPosController.getControlOutput());
 //		
@@ -111,62 +115,7 @@ public class DriveXDistance extends Command{
 //		//displacement error
 //		double currentDistance = Robot.drivetrain.getAveragedDistance();
 //		double distError = this.distanceGoal - currentDistance;
-//
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
+
 //		//angle error
 //		double turnError = Robot.drivetrain.gyroSPI.getAngleDeg() - angle;
 //		double steeringAdjust = pTurn  * turnError;

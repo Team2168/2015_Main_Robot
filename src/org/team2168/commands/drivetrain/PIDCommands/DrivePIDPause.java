@@ -25,6 +25,7 @@ public class DrivePIDPause extends Command {
 		Robot.drivetrain.rightSpeedController.Pause();
 		Robot.drivetrain.leftSpeedController.Pause();
 		Robot.drivetrain.rotateController.Pause();
+		Robot.drivetrain.driveTrainPosController.Pause();
     }
 
     // Called repeatedly when this Command is scheduled to run

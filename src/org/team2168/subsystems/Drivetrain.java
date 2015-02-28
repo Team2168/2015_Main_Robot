@@ -39,7 +39,7 @@ public class Drivetrain extends Subsystem {
 	
 	//declare position/speed controllers
 	public PIDPosition driveTrainPosController;
-	public PIDSpeed rotateController;
+	public PIDPosition rotateController;
 
 	//declare speed controllers
 	public PIDSpeed rightSpeedController;
@@ -96,7 +96,7 @@ public class Drivetrain extends Subsystem {
 		imu = new IMU(drivetrainLeftEncoder,drivetrainRightEncoder,RobotMap.wheelbase);
 		
 		//DriveStraight Controller
-		rotateController = new PIDSpeed(
+		rotateController = new PIDPosition(
 				"RotationController",
 				RobotMap.rotatePositionP,
 				RobotMap.rotatePositionI,
