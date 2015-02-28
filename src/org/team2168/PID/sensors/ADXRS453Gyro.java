@@ -33,14 +33,14 @@ public class ADXRS453Gyro implements PIDSensorInterface {
 	static final byte ADXRS453_REG_SN_LOW   =  (byte) 0x10;
 
 	//angle integration
-	private volatile double currentRate;
+	public volatile double currentRate;
 	private volatile double lastRate;
-	private volatile double deltaTime;
-	private volatile double currentTime;
+	public volatile double deltaTime;
+	public volatile double currentTime;
 	private volatile double lastTime;
 	private volatile double angle;
-	private volatile double driftRate;
-	private volatile double accumulatedRate;
+	public volatile double driftRate;
+	public volatile double accumulatedRate;
 	
 	//other gyro register data
 	private volatile int id;
@@ -51,8 +51,8 @@ public class ADXRS453Gyro implements PIDSensorInterface {
 	private volatile boolean calibrate;
 	private volatile boolean stopCalibrating;
 	private volatile boolean firstLoop;
-        private volatile double timeElapsed;
-        private static double CALIBRATION_PERIOD = 10.0; //seconds
+	public volatile double timeElapsed;
+	private static double CALIBRATION_PERIOD = 10.0; //seconds
 
 	private SPI spi;
 
@@ -207,6 +207,10 @@ public class ADXRS453Gyro implements PIDSensorInterface {
 			data[3] |= PARITY_BIT;
 	}
 
+	/**
+	 * 
+	 * @return gyro rate in deg/s
+	 */
 	private double getSensorData() {
 		byte[] command = new byte[DATA_SIZE];
 		byte[] data = new byte[DATA_SIZE];
@@ -301,12 +305,12 @@ public class ADXRS453Gyro implements PIDSensorInterface {
 			if(firstLoop) {
 				driftRate = 0.0;
 				accumulatedRate = 0.0;
-                                timeElapsed = 0.0;
+				timeElapsed = 0.0;
 				firstLoop = false;
 			}
 			
 			timeElapsed += deltaTime;
-			accumulatedRate += currentRate;
+			accumulatedRate += currentRate * deltaTime;
 			driftRate = accumulatedRate / timeElapsed; //angle/S
 			
 			if(timeElapsed >= CALIBRATION_PERIOD || stopCalibrating) {

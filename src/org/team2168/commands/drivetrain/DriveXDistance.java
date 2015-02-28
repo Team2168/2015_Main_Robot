@@ -108,7 +108,12 @@ public class DriveXDistance extends Command{
 		lastRotateOutput = Robot.drivetrain.rotateController.getControlOutput();
 		double headingCorrection = (Robot.drivetrain.rotateController.getControlOutput()) + lastRotateOutput;
 		
-		Robot.drivetrain.tankDrive(Robot.drivetrain.driveTrainPosController.getControlOutput(), Robot.drivetrain.driveTrainPosController.getControlOutput());
+		if (headingCorrection > 0) {
+			Robot.drivetrain.tankDrive(Robot.drivetrain.driveTrainPosController.getControlOutput() - headingCorrection, Robot.drivetrain.driveTrainPosController.getControlOutput() + headingCorrection);	
+		}else{
+			Robot.drivetrain.tankDrive(Robot.drivetrain.driveTrainPosController.getControlOutput() - headingCorrection, Robot.drivetrain.driveTrainPosController.getControlOutput() + headingCorrection);	
+		}
+		
 //		
 //		//TODO set the margin of error
 //		

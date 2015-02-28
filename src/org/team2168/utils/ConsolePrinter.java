@@ -8,6 +8,7 @@ import java.util.TimerTask;
 import org.team2168.OI;
 import org.team2168.Robot;
 import org.team2168.RobotMap;
+import org.team2168.PID.sensors.ADXRS453Gyro;
 import org.team2168.subsystems.Drivetrain;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -100,6 +101,12 @@ public class ConsolePrinter {
 			
 			SmartDashboard.putNumber("Operator Left Trigger Raw Value", OI.getInstance().operatorJoystick.getLeftTriggerAxisRaw());
 			SmartDashboard.putNumber("Operator Right Trigger Raw Value", OI.getInstance().operatorJoystick.getRightTriggerAxisRaw());
+			
+			SmartDashboard.putNumber("Angle", Robot.drivetrain.gyroSPI.getAngle());
+			SmartDashboard.putNumber("Accumulated Rate", Robot.drivetrain.gyroSPI.accumulatedRate);
+			SmartDashboard.putNumber("Current Rate", Robot.drivetrain.gyroSPI.currentRate);
+			SmartDashboard.putNumber("Current Time", Robot.drivetrain.gyroSPI.timeElapsed);
+			SmartDashboard.putNumber("Drift Rate", Robot.drivetrain.gyroSPI.driftRate);
 			
 			
 //				    	//file log
