@@ -48,10 +48,11 @@ public class NPointAverager {
 		averagerArray[arrayPos] = value;
 		arrayPos++;
 
-		if (arrayPos>=averagerSize) {		//Is equal or greater to
-			arrayPos=0;						// averagorSize because array is
-		}									// zero indexed. Rolls over index
-		// position.
+		if (arrayPos >= averagerSize) {
+			//Is equal or greater to averagorSize because array is
+			//zero indexed. Rolls over index position.
+			arrayPos=0;
+		}
 	}
 
 }
