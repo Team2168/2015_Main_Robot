@@ -2,7 +2,7 @@ package org.team2168.subsystems;
 
 import org.team2168.OI;
 import org.team2168.RobotMap;
-import org.team2168.commands.intake.DriveIntakeWithJoystick;
+import org.team2168.commands.intake.IntakeOrientWithJoystick;
 import org.team2168.utils.Util;
 
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -164,7 +164,7 @@ public class Intake extends Subsystem {
 	 */
 	public void initDefaultCommand() {
 		//setDefaultCommand(new SetIntakeWheelSpeed());
-		setDefaultCommand(new DriveIntakeWithJoystick(OI.operatorJoystick));
+		setDefaultCommand(new IntakeOrientWithJoystick(OI.operatorJoystick));
 	}
 
 	/**
