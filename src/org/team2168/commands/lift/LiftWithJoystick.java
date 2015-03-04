@@ -33,20 +33,22 @@ public class LiftWithJoystick extends Command {
 	protected void execute() {
 		joyval = joystick.getRightStickRaw_Y();
 		if (Math.abs(joyval) < RobotMap.LIFT_MIN_SPEED)
-			joyval = 0;
+			joyval = 0.0;
 		
-		if (joyval > 0 && !Robot.lift.isFullyRaised()) {
+		if (joyval > 0.0 && Robot.lift.canTravelUp()) {
+			//Commanded to raise lift
 			Robot.lift.disableBrake();
 			Robot.lift.drive(joyval);
-		}
-		else if (joyval < 0 && !Robot.lift.isFullyLowered()) {
+		} else if (joyval < 0.0 && Robot.lift.canTravelDown()) {
+			//Commanded to lower lift
 			Robot.lift.disableBrake();
 			Robot.lift.drive(joyval);
-		}
-		else
-		{
+		} else {
+			//We're either w/in deadband speed or the lift is at
+			//  one end of travel and can't be commanded further.
+			//  Stop motion.
 			Robot.lift.enableBrake();
-			Robot.lift.drive(0);
+			Robot.lift.drive(0.0);
 		}
 		
 	}
