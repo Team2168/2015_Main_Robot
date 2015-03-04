@@ -19,13 +19,19 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * The lift subsystem.
  */
 public class Lift extends Subsystem {
-
+	private static final double DESTINATION_TOL = 1.0; //inches
+	private static final double DEBOUNCE_TIME = 0.06;  //seconds
+	
 	private static Lift instance = null;
 	private Victor intakeMotor;
 	private DoubleSolenoid liftBrake;
-	private static final double DESTINATION_TOL = 1.0; //inches
 
 	private volatile double motorVoltage;
+	private double lastCommand = 0.0;
+	private double lastRaisedState = false;
+	private double lastLoweredState = false;
+	private Debouncer raisedLatch;
+	private Debouncer loweredLatch;
 
 	private static final boolean MOTOR_INVERTED = false;
 
@@ -64,6 +70,9 @@ public class Lift extends Subsystem {
 
 		fullyRaised = new DigitalInput(RobotMap.LIFT_RAISED_SENSOR);
 		fullyLowered = new DigitalInput(RobotMap.LIFT_LOWERED_SENSOR);
+		
+		raisedLatch = new Debouncer(DEBOUNCE_TIME);
+		loweredLatch = new Debouncer(DEBOUNCE_TIME);
 	}
 
 	/**
@@ -102,6 +111,7 @@ public class Lift extends Subsystem {
 			speed = -speed;
 
 		intakeMotor.set(speed);
+		lastCommand = speed;
 		motorVoltage = Robot.pdp.getBatteryVoltage() * speed;
 	}
 
@@ -145,7 +155,6 @@ public class Lift extends Subsystem {
 				setPositionDelta(ABSvalue, false);
 			}
 		} else {
-
 			if (position > RobotMap.MAX_LIFT_HEIGHT) {
 				double distanceToDrive = 76 - getPosition();
 				double ABSvalue = Math.abs(distanceToDrive);
@@ -181,7 +190,7 @@ public class Lift extends Subsystem {
 		if (delta > 1) {
 			if (direction) {
 				intakeMotor.set(RobotMap.LIFT_MOVING_SPEED);
-			}else {
+			} else {
 				intakeMotor.set(-RobotMap.LIFT_MOVING_SPEED);
 			}
 		}
@@ -244,7 +253,7 @@ public class Lift extends Subsystem {
 	 */
 	public boolean isFullyLowered() {
 		//return !fullyLowered.get();
-		return false;
+		return false; //TODO: replace once the sensor is installed.
 	}
 
 	/**
@@ -253,5 +262,49 @@ public class Lift extends Subsystem {
 	 */
 	public boolean isFullyRaised() {
 		return !fullyRaised.get();
+	}
+	
+	/**
+	 * It's possible that the drive has overshot the magnet for the
+	 *   fully raised sensor.
+	 * This method uses command history and the fully raised sensor to
+	 *   determine if it's safe to allow travel in the upward direction.
+	 *   
+	 * @return true if the drive can travel upward.
+	 */
+	public boolean canTravelUp() {
+		boolean activeLowerCommand = lastCommand < -RobotMap.LIFT_MIN_SPEED;
+		
+		//We want to latch in the "fully raised" state. This can be
+		//  reduced to the following:
+		//    - we are currently sensing that we're "fully raised"
+		//    - we previously sensed we were fully raised and we have
+		//        yet to receive a command to lower the lift.
+		lastRaisedState = raisedLatch.update(isFullyRaised()
+			|| (lastRaisedState && !activeLowerCommand);
+		
+		return !lastRaisedState;
+	}
+	
+	/**
+	 * It's possible that the drive has overshot the magnet for the
+	 *   fully lowered sensor.
+	 * This method uses command history and the fully lowered sensor to
+	 *   determine if it's safe to allow travel in the downward direction.
+	 *   
+	 * @return true if the drive can travel downward.
+	 */
+	public boolean canTravelDown() {
+		boolean activeRaiseCommand = lastCommand > RobotMap.LIFT_MIN_SPEED;
+		
+		//We want to latch in the "fully lowered" state. This can be
+		//  reduced to the following:
+		//    - we are currently sensing that we're "fully lowered"
+		//    - we previously sensed we were fully lowered and we have
+		//        yet to receive a command to raise the lift.
+		lastLoweredState = loweredLatch.update(isFullyLowered()
+			|| (lastLoweredState && !activeRaiseCommand);
+		
+		return !lastLoweredState;
 	}
 }
