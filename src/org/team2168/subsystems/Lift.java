@@ -243,7 +243,8 @@ public class Lift extends Subsystem {
 	 * @return true if the lift is at its highest position along travel.
 	 */
 	public boolean isFullyLowered() {
-		return fullyLowered.get();
+		//return !fullyLowered.get();
+		return false;
 	}
 
 	/**
@@ -251,6 +252,6 @@ public class Lift extends Subsystem {
 	 * @return true if the lift is at its lowest position along travel.
 	 */
 	public boolean isFullyRaised() {
-		return fullyRaised.get();
+		return !fullyRaised.get();
 	}
 }

@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class LiftWithJoystick extends Command {
 
 	F310 joystick;
+	private double joyval;
 	
 	public LiftWithJoystick(F310 joystick) {
 		this.joystick = joystick;
@@ -30,17 +31,24 @@ public class LiftWithJoystick extends Command {
 	 * Called repeatedly when this Command is scheduled to run
 	 */
 	protected void execute() {
+		joyval = joystick.getRightStickRaw_Y();
+		if (Math.abs(joyval) < RobotMap.LIFT_MIN_SPEED)
+			joyval = 0;
 		
-		if(Math.abs(joystick.getRightStickRaw_Y()) > RobotMap.LIFT_MIN_SPEED) 
-		{
+		if (joyval > 0 && !Robot.lift.isFullyRaised()) {
 			Robot.lift.disableBrake();
-			Robot.lift.drive(joystick.getRightStickRaw_Y()); 
+			Robot.lift.drive(joyval);
+		}
+		else if (joyval < 0 && !Robot.lift.isFullyLowered()) {
+			Robot.lift.disableBrake();
+			Robot.lift.drive(joyval);
 		}
 		else
 		{
 			Robot.lift.enableBrake();
 			Robot.lift.drive(0);
 		}
+		
 	}
 
 	/**
