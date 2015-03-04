@@ -187,11 +187,11 @@ public class RobotMap {
 	public static final double driveTrainRightSpeedI = 1.0526;  
 	public static final double driveTrainRightSpeedD = 0.0543;
 
-	public static final double driveTrainLeftPositionP = 0.002;
+	public static final double driveTrainLeftPositionP = 0.2;
 	public static final double driveTrainLeftPositionI = 0.0001412646174233;
 	public static final double driveTrainLeftPositionD = 0.0074778888124088;
 
-	public static final double driveTrainRightPositionP = 0.002;
+	public static final double driveTrainRightPositionP = 0.2;
 	public static final double driveTrainRightPositionI = 0.0001412646174233;
 	public static final double driveTrainRightPositionD = 0.0074778888124088;
 

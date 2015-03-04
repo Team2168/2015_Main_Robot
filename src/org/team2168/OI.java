@@ -88,7 +88,7 @@ public class OI {
         
         commandsTestJoystick.ButtonStart().whenPressed(new DriveTrajectoryPath(Robot.drivePath.getLeftWheelTrajectory(), Robot.drivePath.getRightWheelTrajectory(), 1.0, 0));
         commandsTestJoystick.ButtonBack().whenPressed(new DrivePIDPause());
-        commandsTestJoystick.ButtonRightBumper().whenPressed(new DriveXDistance(5,0.3,1));
+        commandsTestJoystick.ButtonRightBumper().whenPressed(new DriveXDistance(18,0.2,1));
          
         
 	}
