@@ -60,11 +60,13 @@ public class RobotMap {
 	public final static int DRIVETRAIN_RIGHT_ENCODER_B = 3;
 	public final static int LIFT_ENCODER_A = 4;
 	public final static int LIFT_ENCODER_B = 5;
-	public final static int WINCH_ENCODER_A = 6;
-	public final static int WINCH_ENCODER_B = 7;
+	public final static int LIFT_LOWERED_SENSOR = 6;
+	public final static int LIFT_RAISED_SENSOR = 7;
 	public final static int LEFT_TOTE_SWITCH = 8;
 	public final static int RIGHT_TOTE_SWITCH = 9;
-	public static final int PracticeBotJumper = 24; //on MXP
+	public static final int PRACTICE_BOT_JUMPER = 24; //on MXP
+	//public final static int WINCH_ENCODER_A = 6;
+	//public final static int WINCH_ENCODER_B = 7;
 
 
 	//Analog Input Channels////////////////////////////////////////////////////
@@ -155,7 +157,7 @@ public class RobotMap {
 	public final static double PRESS_SENSOR_HIGH_PRESSURE = 150.0;
 
 	public final static double INTAKE_WHEEL_SPEED = 0.5;
-	public final static double INTAKE_TOTE_ENGAGE_VOLTAGE = 0.80;
+	public final static double INTAKE_TOTE_ENGAGE_VOLTAGE = 1.4;
 	public final static double INTAKE_TOTE_STOP_VOLTAGE = 2.65;
 	public final static boolean PRINT_SD_DEBUG_DATA = true;
 	public final static long SmartDashThreadPeriod = 100; //ms

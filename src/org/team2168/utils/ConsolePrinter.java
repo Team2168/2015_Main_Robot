@@ -82,7 +82,7 @@ public class ConsolePrinter {
 			SmartDashboard.putNumber("DTLeft3MotorCurrent", Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_3_PDP));
 
 			SmartDashboard.putNumber("Lift Encoder Position", Robot.lift.getPosition());
-			SmartDashboard.putNumber("Lift Encoder Rage", Robot.lift.liftEncoder.getRate());
+			SmartDashboard.putNumber("Lift Encoder Rage", Robot.lift.getRate());
 
 			SmartDashboard.putNumber("Lift Motor Current", Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_PDP));
 			SmartDashboard.putNumber("Lift Motor Voltage", Robot.lift.getMotorVoltage());
@@ -92,15 +92,16 @@ public class ConsolePrinter {
 
 			SmartDashboard.putNumber("Left Stick Raw Value", OI.getInstance().driverJoystick.getLeftStickRaw_Y());
 			SmartDashboard.putNumber("Right Stick Raw Value", OI.getInstance().driverJoystick.getRightStickRaw_Y());
-			
+
 			SmartDashboard.putNumber("Left Trigger Raw Value", OI.getInstance().driverJoystick.getLeftTriggerAxisRaw());
 			SmartDashboard.putNumber("Right Trigger Raw Value", OI.getInstance().driverJoystick.getRightTriggerAxisRaw());
-			
+
 			SmartDashboard.putNumber("Operator Left Stick Raw Value", OI.getInstance().operatorJoystick.getLeftStickRaw_Y());
 			SmartDashboard.putNumber("Operator Right Stick Raw Value", OI.getInstance().operatorJoystick.getRightStickRaw_Y());
-			
+
 			SmartDashboard.putNumber("Operator Left Trigger Raw Value", OI.getInstance().operatorJoystick.getLeftTriggerAxisRaw());
 			SmartDashboard.putNumber("Operator Right Trigger Raw Value", OI.getInstance().operatorJoystick.getRightTriggerAxisRaw());
+
 			
 			SmartDashboard.putNumber("Angle", Robot.drivetrain.gyroSPI.getAngle());
 			SmartDashboard.putNumber("Accumulated Rate", Robot.drivetrain.gyroSPI.accumulatedRate);

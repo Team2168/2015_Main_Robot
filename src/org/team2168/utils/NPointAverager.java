@@ -14,9 +14,12 @@ public class NPointAverager {
 
 	/**
 	 * Constructor for end point average class
-	 * @param n the size of end point average
+	 * @param n the size of N point average (>= 1)
 	 */
 	public NPointAverager(int n) {
+		if(n < 1) {
+			n = 1;
+		}
 		averagerSize = n;
 		averagerArray = new double[averagerSize];
 	}
@@ -26,13 +29,13 @@ public class NPointAverager {
 	 * @return the Average
 	 */
 	public double getAverage(){
-		double holder = 0;
+		double sum = 0;
 
 		for(int i = 0; i<averagerSize; i++){
-			holder+=averagerArray[i];
+			sum += averagerArray[i];
 		}
 
-		return holder/averagerSize;
+		return sum/averagerSize;
 	}
 
 	/**
@@ -45,10 +48,11 @@ public class NPointAverager {
 		averagerArray[arrayPos] = value;
 		arrayPos++;
 
-		if (arrayPos>=averagerSize) {		//Is equal or greater to
-			arrayPos=0;						// averagorSize because array is
-		}									// zero indexed. Rolls over index
-		// position.
+		if (arrayPos >= averagerSize) {
+			//Is equal or greater to averagorSize because array is
+			//zero indexed. Rolls over index position.
+			arrayPos=0;
+		}
 	}
 
 }

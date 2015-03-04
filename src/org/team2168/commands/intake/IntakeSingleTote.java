@@ -16,7 +16,6 @@ public class IntakeSingleTote extends CommandGroup {
 	public IntakeSingleTote() {
 		//TODO: This sequence needs more testing!
 		addSequential(new DisengageIntake());
-		addSequential(new DriveIntakeToVoltage(RobotMap.INTAKE_TOTE_ENGAGE_VOLTAGE, LESS_THAN));
 		addSequential(new DriveIntakeToVoltage(RobotMap.INTAKE_TOTE_ENGAGE_VOLTAGE, GREATER_THAN));
 		addSequential(new EngageIntake());
 		addSequential(new DriveIntakeToVoltage(RobotMap.INTAKE_TOTE_STOP_VOLTAGE, GREATER_THAN));

@@ -7,7 +7,9 @@ import org.team2168.PID.controllers.PIDPosition;
 import org.team2168.PID.sensors.AverageEncoder;
 import org.team2168.commands.lift.LiftWithJoystick;
 import org.team2168.utils.TCPSocketSender;
+import org.team2168.utils.Util;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Victor;
@@ -26,10 +28,17 @@ public class Lift extends Subsystem {
 	private volatile double motorVoltage;
 
 	private static final boolean MOTOR_INVERTED = false;
-	
-	public AverageEncoder liftEncoder;
+
+	private AverageEncoder liftEncoder;
 	public PIDPosition liftController;
+<<<<<<< HEAD
 	
+=======
+
+	private static DigitalInput fullyRaised;
+	private static DigitalInput fullyLowered;
+
+>>>>>>> refs/remotes/origin/master
 	TCPSocketSender TCPliftPosController;
 
 	/**
@@ -58,6 +67,8 @@ public class Lift extends Subsystem {
 		TCPliftPosController = new TCPSocketSender(RobotMap.TCPServerLiftPos, liftController);
 		TCPliftPosController.start();
 
+		fullyRaised = new DigitalInput(RobotMap.LIFT_RAISED_SENSOR);
+		fullyLowered = new DigitalInput(RobotMap.LIFT_LOWERED_SENSOR);
 	}
 
 	/**
@@ -79,11 +90,9 @@ public class Lift extends Subsystem {
 	}
 
 	/**
-	 *
-	 * @return
+	 * @return the voltage the motor is being commanded to drive at (1.0 to -1.0).
 	 */
-	public double getMotorVoltage()
-	{
+	public double getMotorVoltage() {
 		return motorVoltage;
 	}
 
@@ -93,6 +102,7 @@ public class Lift extends Subsystem {
 	 * @param speed value from -1.0 to 1.0, positive drives the lift up.
 	 */
 	public void drive(double speed) {
+		speed = Util.limit(speed, -1.0, 1.0);
 		if (MOTOR_INVERTED)
 			speed = -speed;
 
@@ -107,6 +117,15 @@ public class Lift extends Subsystem {
 	 */
 	public double getPosition() {
 		return liftEncoder.getPos();
+	}
+
+	/**
+	 * Get the lifts rate of travel
+	 *
+	 * @return lift rate in (TODO: units/s)
+	 */
+	public double getRate() {
+		return liftEncoder.getRate();
 	}
 
 	/**
@@ -193,26 +212,6 @@ public class Lift extends Subsystem {
 	}
 
 	/**
-	 * Identifies when the lift is at its highest position along travel.
-	 *
-	 * @return true when at upper hard stop
-	 */
-	public boolean upperHardStop() {
-		// TODO: use sensor value
-		return false;
-	}
-
-	/**
-	 * Identifies when the lift is at its lowest position along travel.
-	 *
-	 * @return true when at the lower hard stop
-	 */
-	public boolean lowerHardStop() {
-		// TODO: use sensor value
-		return false;
-	}
-
-	/**
 	 * Enables the pneumatic brake
 	 */
 	public void enableBrake() {
@@ -242,5 +241,21 @@ public class Lift extends Subsystem {
 	 */
 	public boolean isBrakeDisabled() {
 		return liftBrake.get() == Value.kReverse;
+	}
+
+	/**
+	 * Get the state of the fully raised sensor.
+	 * @return true if the lift is at its highest position along travel.
+	 */
+	public boolean isFullyLowered() {
+		return fullyLowered.get();
+	}
+
+	/**
+	 * Get the state of the fully lowered sensor.
+	 * @return true if the lift is at its lowest position along travel.
+	 */
+	public boolean isFullyRaised() {
+		return fullyRaised.get();
 	}
 }

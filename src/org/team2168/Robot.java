@@ -65,7 +65,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void robotInit() {
 		//Instantiate sensors
-		practiceBot = new DigitalInput(RobotMap.PracticeBotJumper);
+		practiceBot = new DigitalInput(RobotMap.PRACTICE_BOT_JUMPER);
 		accel = new BuiltInAccelerometer();
 		pdp = new PowerDistribution(RobotMap.PDPThreadPeriod);
 		pdp.startThread();
