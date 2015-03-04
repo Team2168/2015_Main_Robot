@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Lift extends Subsystem {
 
 	private static Lift instance = null;
-	private Victor intakeMotor;
+	private Victor liftMotor;
 	private DoubleSolenoid liftBrake;
 	private static final double DESTINATION_TOL = 1.0; //inches
 
@@ -42,7 +42,7 @@ public class Lift extends Subsystem {
 	 * being created.
 	 */
 	private Lift() {
-		intakeMotor = new Victor(RobotMap.LIFT_MOTOR);
+		liftMotor = new Victor(RobotMap.LIFT_MOTOR);
 		liftEncoder = new AverageEncoder(RobotMap.LIFT_ENCODER_A,
 				RobotMap.LIFT_ENCODER_B, RobotMap.liftEncoderPulsePerRot,
 				RobotMap.liftEncoderDistPerTick,
@@ -101,7 +101,21 @@ public class Lift extends Subsystem {
 		if (MOTOR_INVERTED)
 			speed = -speed;
 
-		intakeMotor.set(speed);
+		if (Math.abs(speed) < RobotMap.LIFT_MIN_SPEED)
+			speed = 0;
+		
+		if (speed > 0 && !Robot.lift.isFullyRaised()) {
+			Robot.lift.disableBrake();
+		}
+		else if (speed < 0 && !Robot.lift.isFullyLowered()) {
+			Robot.lift.disableBrake();
+		}
+		else
+		{
+			Robot.lift.enableBrake();
+		}
+		
+		liftMotor.set(speed);
 		motorVoltage = Robot.pdp.getBatteryVoltage() * speed;
 	}
 
@@ -180,9 +194,9 @@ public class Lift extends Subsystem {
 	private void setPositionDelta(double delta, boolean direction) {
 		if (delta > 1) {
 			if (direction) {
-				intakeMotor.set(RobotMap.LIFT_MOVING_SPEED);
+				liftMotor.set(RobotMap.LIFT_MOVING_SPEED);
 			}else {
-				intakeMotor.set(-RobotMap.LIFT_MOVING_SPEED);
+				liftMotor.set(-RobotMap.LIFT_MOVING_SPEED);
 			}
 		}
 	}
@@ -243,7 +257,7 @@ public class Lift extends Subsystem {
 	 * @return true if the lift is at its highest position along travel.
 	 */
 	public boolean isFullyLowered() {
-		return fullyLowered.get();
+		return !fullyLowered.get();
 	}
 
 	/**
@@ -251,6 +265,6 @@ public class Lift extends Subsystem {
 	 * @return true if the lift is at its lowest position along travel.
 	 */
 	public boolean isFullyRaised() {
-		return fullyRaised.get();
+		return !fullyRaised.get();
 	}
 }

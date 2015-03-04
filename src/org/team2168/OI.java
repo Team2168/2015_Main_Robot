@@ -10,6 +10,7 @@ import org.team2168.commands.intake.SetIntakeSpeed;
 import org.team2168.commands.intake.StopIntakeWheels;
 import org.team2168.commands.lift.DisableBrake;
 import org.team2168.commands.lift.EnableBrake;
+import org.team2168.commands.lift.ZeroLift;
 import org.team2168.commands.pusher.PushTotes;
 import org.team2168.commands.pusher.RetractPusher;
 import org.team2168.utils.F310;
@@ -71,6 +72,7 @@ public class OI {
 		//        commandsTestJoystick.ButtonB().whenPressed(new LiftPIDPause());
 		//        commandsTestJoystick.ButtonRightBumper().whenPressed(new DriveXDistance(180,0.3,-1.20));
 		//
+		commandsTestJoystick.ButtonA().whenPressed(new ZeroLift());
 
 
 	}
