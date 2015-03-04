@@ -11,8 +11,12 @@ import org.team2168.commands.intake.SetIntakeSpeed;
 import org.team2168.commands.intake.StopIntakeWheels;
 import org.team2168.commands.lift.DisableBrake;
 import org.team2168.commands.lift.EnableBrake;
+<<<<<<< HEAD
 import org.team2168.commands.lift.PIDCommands.LiftPIDPause;
 import org.team2168.commands.lift.PIDCommands.LiftPIDPosition;
+=======
+import org.team2168.commands.lift.ZeroLift;
+>>>>>>> refs/remotes/origin/autoCommands
 import org.team2168.commands.pusher.PushTotes;
 import org.team2168.commands.pusher.RetractPusher;
 import org.team2168.utils.F310;
@@ -90,7 +94,8 @@ public class OI {
         commandsTestJoystick.ButtonBack().whenPressed(new DrivePIDPause());
         commandsTestJoystick.ButtonRightBumper().whenPressed(new DriveXDistance(18,0.2,1));
          
-        
+		commandsTestJoystick.ButtonA().whenPressed(new ZeroLift());
+
 	}
 
 	/**
