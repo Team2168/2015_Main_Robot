@@ -11,12 +11,10 @@ import org.team2168.commands.intake.SetIntakeSpeed;
 import org.team2168.commands.intake.StopIntakeWheels;
 import org.team2168.commands.lift.DisableBrake;
 import org.team2168.commands.lift.EnableBrake;
-<<<<<<< HEAD
+import org.team2168.commands.lift.LiftOneTote;
 import org.team2168.commands.lift.PIDCommands.LiftPIDPause;
 import org.team2168.commands.lift.PIDCommands.LiftPIDPosition;
-=======
 import org.team2168.commands.lift.ZeroLift;
->>>>>>> refs/remotes/origin/autoCommands
 import org.team2168.commands.pusher.PushTotes;
 import org.team2168.commands.pusher.RetractPusher;
 import org.team2168.utils.F310;
@@ -61,7 +59,7 @@ public class OI {
 		//OPERATOR JOYSTICK BUTTON MAP/////////////////////////////////////////////
 		operatorJoystick.ButtonA().whenPressed(new DriveLiftToSetPosition(RobotMap.MIN_LIFT_HEIGHT));
 		//operatorJoystick.ButtonY().whenPressed(new DriveLiftToSetPosition(RobotMap.LIFT_ABOVE_TOTE));
-		//operatorJoystick.ButtonB.whenPressed(new EngageGripper());
+		operatorJoystick.ButtonRightDPad().whenPressed(new EngageGripper());
 		operatorJoystick.ButtonLeftDPad().whenPressed(new ReleaseGripper());
 		operatorJoystick.ButtonRightBumper().whenPressed(new EngageIntake());
 		operatorJoystick.ButtonLeftBumper().whenPressed(new DisengageIntake());
@@ -82,18 +80,11 @@ public class OI {
         pnuematicTestJoystick.ButtonLeftBumper().whenPressed(new EngageIntake());
         pnuematicTestJoystick.ButtonRightBumper().whenPressed(new DisengageIntake());
         
-        
-        commandsTestJoystick.ButtonA().whenPressed(new LiftPIDPosition());
+        commandsTestJoystick.ButtonStart().whenPressed(new LiftOneTote());
+        commandsTestJoystick.ButtonX().whenPressed(new LiftPIDPosition());
         commandsTestJoystick.ButtonB().whenPressed(new LiftPIDPause());
-        // commandsTestJoystick.ButtonX().whenPressed(new DrivePath());
-        commandsTestJoystick.ButtonX().whenPressed(new DriveLeftPIDPath(Robot.path.smoothLeftVelocity));
-        commandsTestJoystick.ButtonY().whenPressed(new DriveRightPIDPath(Robot.path.smoothRightVelocity));
-        commandsTestJoystick.ButtonLeftBumper().whenPressed(new DrivePIDPath(Robot.path.smoothLeftVelocity, Robot.path.smoothRightVelocity));
-        
-        commandsTestJoystick.ButtonStart().whenPressed(new DriveTrajectoryPath(Robot.drivePath.getLeftWheelTrajectory(), Robot.drivePath.getRightWheelTrajectory(), 1.0, 0));
         commandsTestJoystick.ButtonBack().whenPressed(new DrivePIDPause());
         commandsTestJoystick.ButtonRightBumper().whenPressed(new DriveXDistance(18,0.2,1));
-         
 		commandsTestJoystick.ButtonA().whenPressed(new ZeroLift());
 
 	}

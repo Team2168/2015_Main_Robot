@@ -101,8 +101,6 @@ public class ConsolePrinter {
 
 			SmartDashboard.putNumber("Operator Left Trigger Raw Value", OI.getInstance().operatorJoystick.getLeftTriggerAxisRaw());
 			SmartDashboard.putNumber("Operator Right Trigger Raw Value", OI.getInstance().operatorJoystick.getRightTriggerAxisRaw());
-<<<<<<< HEAD
-
 			
 			SmartDashboard.putNumber("Angle", Robot.drivetrain.gyroSPI.getAngle());
 			SmartDashboard.putNumber("Accumulated Rate", Robot.drivetrain.gyroSPI.accumulatedRate);

@@ -205,9 +205,13 @@ public class RobotMap {
 	double iTurn = 0.00001;
 	double pDrive = 0;
 	
-	public static final double liftPUp = 0.0098;
-	public static final double liftIUp = 0.0124;
-	public static final double liftDUp = 0.0005418310445973070;
+	//public static final double liftPUp = 0.0098;
+	//public static final double liftIUp = 0.0124;
+	//public static final double liftDUp = 0.0005418310445973070;
+	
+	public static final double liftPUp = 0.30;
+	public static final double liftIUp = 0.0080; 
+	public static final double liftDUp = 0.0002573;
 	
 //	public static final double liftPUp = 0.0590;
 //	public static final double liftIUp = 0.0110;

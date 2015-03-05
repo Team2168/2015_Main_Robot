@@ -1129,7 +1129,15 @@ public class PIDPosition implements TCPMessageInterface {
 			if(co < maxNegOutput)
 				co = maxNegOutput;
 
-
+			//FIXME : Make apart of method
+			if(Math.abs(err) < 0.5)
+			{
+				co = 0;
+				this.isFinished = true;
+			}
+			else
+				this.isFinished = false;
+			
 			// update clock with current time for next loop
 			clock = currentTime;
 			olderr = err;

@@ -31,14 +31,10 @@ public class Lift extends Subsystem {
 
 	private AverageEncoder liftEncoder;
 	public PIDPosition liftController;
-<<<<<<< HEAD
-	
-=======
 
 	private static DigitalInput fullyRaised;
 	private static DigitalInput fullyLowered;
 
->>>>>>> refs/remotes/origin/master
 	TCPSocketSender TCPliftPosController;
 
 	/**
@@ -60,7 +56,7 @@ public class Lift extends Subsystem {
 		liftController = new PIDPosition("LiftPID", RobotMap.liftPUp, 
 				RobotMap.liftIUp, RobotMap.liftDUp, liftEncoder,
     			RobotMap.liftPIDPeriod);
-//		liftController.setEnDerivFilter(true, RobotMap.liftNUp);
+		liftController.setEnDerivFilter(true, 74.1117);
 		liftController.startThread();
 
 		//start TCP Servers for DEBUGING ONLY

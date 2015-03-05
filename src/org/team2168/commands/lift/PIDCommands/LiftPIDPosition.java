@@ -32,15 +32,15 @@ public class LiftPIDPosition extends Command {
 	protected void initialize() {
 		Robot.lift.liftController.reset();
 		Robot.lift.liftController.Enable();
+		Robot.lift.liftController.setSetPoint(setPoint);
     }
 
     // Called repeatedly when this Command is scheduled to run
     
 	protected void execute() {
 		
-		
-		//Robot.lift.liftController.setSetPoint(setPoint);
 		Robot.lift.drive(Robot.lift.liftController.getControlOutput());
+		
 		
 		
     }
@@ -49,7 +49,7 @@ public class LiftPIDPosition extends Command {
     
 	protected boolean isFinished() {
 		//TODO Should the command be stopped????????!?!?!?!?!? after PID is tuned
-    	return Robot.lift.liftController.isEnabled() == false;
+    	return Robot.lift.liftController.isFinished();
     }
 
     // Called once after isFinished returns true
