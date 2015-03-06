@@ -15,7 +15,9 @@ public class MotorCalibration extends Command {
 	private double completeOscillations;
 	private boolean isFinished;
 	private int motorNumber;
-
+	
+	private double lastEncoderValue;
+	
     public MotorCalibration(int motorNumber) {
         if(motorNumber == RobotMap.DRIVETRAIN_LEFT_MOTOR_1 
         		|| motorNumber == RobotMap.DRIVETRAIN_LEFT_MOTOR_2
@@ -23,10 +25,12 @@ public class MotorCalibration extends Command {
         		|| motorNumber == RobotMap.DRIVETRAIN_RIGHT_MOTOR_1
         		|| motorNumber == RobotMap.DRIVETRAIN_RIGHT_MOTOR_2
         		|| motorNumber == RobotMap.DRIVETRAIN_RIGHT_MOTOR_3) {
+        	System.out.println("Calibrating a drive train motor");
         	requires(Robot.drivetrain);
         	this.motorNumber = motorNumber;
         }
         if(motorNumber == RobotMap.INTAKE_LEFT_MOTOR || motorNumber == RobotMap.INTAKE_RIGHT_MOTOR) {
+        	System.out.println("Calibrating a ");
         	requires(Robot.intake);
         	this.motorNumber = motorNumber;
         }
@@ -54,6 +58,10 @@ public class MotorCalibration extends Command {
     protected void execute() {
     	if (motorNumber == RobotMap.DRIVETRAIN_LEFT_MOTOR_1) {
     		Robot.drivetrain.driveLeft1(oscillatingValue);
+    		if ( !(((lastEncoderValue - Robot.drivetrain.getLeftPosition()) > 0) && (oscillatingValue > 0))) {
+    			System.out.println("Encoder or Motor not working. PWM Channel : " + RobotMap.DRIVETRAIN_LEFT_MOTOR_1);
+    		}else if (!((lastEncoderValue - Robot.drivetrain.getLeftPosition() < 0) && (oscillatingValue < 0)))
+   
     	}
     	if (motorNumber == RobotMap.DRIVETRAIN_LEFT_MOTOR_2) {
     		Robot.drivetrain.driveLeft2(oscillatingValue);
