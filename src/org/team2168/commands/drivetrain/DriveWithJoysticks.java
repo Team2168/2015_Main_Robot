@@ -27,8 +27,8 @@ public class DriveWithJoysticks extends Command {
 	 * Called repeatedly when this Command is scheduled to run
 	 */
 	protected void execute() {
-		Robot.drivetrain.tankDrive(0.5 * joystick.getLeftStickRaw_Y(),
-				0.5 * joystick.getRightStickRaw_Y());
+		Robot.drivetrain.tankDrive(0.65 * joystick.getLeftStickRaw_Y(),
+				0.65 * joystick.getRightStickRaw_Y());
 	}
 
 	/**
