@@ -50,6 +50,8 @@ public class ConsolePrinter {
 			//			SmartDashboard.putNumber("GYRO DeltTime:", Robot.drivetrain.gyroSPI.getDeltatime());
 			//			SmartDashboard.putNumber("GYRO Rate:", Robot.drivetrain.gyroSPI.getRate());
 			SmartDashboard.putNumber("GYRO Angle SPI:", Robot.drivetrain.getHeading());
+			SmartDashboard.putNumber("GYRO reInits:", Robot.gyroReinits);
+			SmartDashboard.putBoolean("Gyro calibrating: ", Robot.gyroCalibrating);
 			//			SmartDashboard.putNumber("GYRO Status:", Robot.drivetrain.gyroSPI.getStatus());
 			//			SmartDashboard.putNumber("GYRO ID:", Robot.drivetrain.gyroSPI.getID());
 			//			SmartDashboard.putNumber("GYRO Temp:", Robot.drivetrain.gyroSPI.getTemp());
@@ -89,7 +91,7 @@ public class ConsolePrinter {
 
 
 			SmartDashboard.putString("AutoName", Robot.getAutoName());
-			
+
 			SmartDashboard.putNumber("Tote IR (V)", Robot.intake.getAveragedRawToteDistance());
 
 			SmartDashboard.putNumber("Left Stick Raw Value", OI.getInstance().driverJoystick.getLeftStickRaw_Y());
@@ -130,8 +132,8 @@ public class ConsolePrinter {
 
 			SmartDashboard.putBoolean("Intake Wheels In", Robot.intake.isIntakeWheelsIn());
 			SmartDashboard.putBoolean("Intake Wheels Out", Robot.intake.isIntakeWheelsOut());
-			
-			
+
+
 			SmartDashboard.putBoolean("DT Left 1 Self Test", Robot.drivetrain.leftSelfTest1);
 			SmartDashboard.putBoolean("DT Left 2 Self Test", Robot.drivetrain.leftSelfTest2);
 			SmartDashboard.putBoolean("DT Left 3 Self Test", Robot.drivetrain.leftSelfTest3);

@@ -6,7 +6,6 @@ import org.team2168.PID.trajectory.Path;
 import org.team2168.commands.auto.AutoLiftOneTote;
 import org.team2168.commands.auto.AutoLiftThreeTotes;
 import org.team2168.commands.drivetrain.DriveXDistance;
-import org.team2168.commands.lift.ZeroLift;
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.Gripper;
 import org.team2168.subsystems.Intake;
@@ -63,10 +62,10 @@ public class Robot extends IterativeRobot {
 	public static Path drivePath;
 
 	private static boolean matchStarted = false;
-	private int gyroReinits;
+	public static int gyroReinits;
 	private double lastAngle;
 	private Debouncer gyroDriftDetector = new Debouncer(1.0);
-	private boolean gyroCalibrating = false;
+	public static boolean gyroCalibrating = false;
 	private boolean lastGyroCalibrating = false;
 	private double curAngle = 0.0;
 
@@ -123,6 +122,8 @@ public class Robot extends IterativeRobot {
 
 		autoSelectInit();
 
+		drivetrain.calibrateGyro();
+
 		System.out.println("Bot Finished Loading.");
 	}
 
@@ -131,7 +132,6 @@ public class Robot extends IterativeRobot {
 	 * to reset subsystems before shutting down.
 	 */
 	public void disabledInit() {
-		drivetrain.calibrateGyro();
 	}
 
 	/**
@@ -158,9 +158,9 @@ public class Robot extends IterativeRobot {
 		if (autonomousCommand != null) {
 			autonomousCommand.start();
 		}
-		
+
 		Scheduler.getInstance().enable();
-		
+
 	}
 
 	/**
@@ -179,6 +179,9 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+		matchStarted = true;
+		drivetrain.stopGyroCalibrating();
+
 		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
 		}
@@ -251,10 +254,10 @@ public class Robot extends IterativeRobot {
 		// Center_RotDrvFwdHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
 		// autoChooser.addObject("ShootStraight_2BallDrvFwd", new
 		// ShootStraight_2Ball_DrvFwd());
-		
-		
+
+
 		SmartDashboard.putData("Autonomous Mode Chooser", autoChooser);
-		
+
 	}
 
 	public static String getAutoName() {
@@ -264,7 +267,7 @@ public class Robot extends IterativeRobot {
 			return "None";
 		}
 	}
-	
+
 	public void pathPlanner() {
 		long start = System.currentTimeMillis();
 		// create waypoint path
