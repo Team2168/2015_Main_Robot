@@ -37,6 +37,8 @@ public class Lift extends Subsystem {
 
 	TCPSocketSender TCPliftPosController;
 
+	public boolean liftSelfTest = false;
+
 	/**
 	 * A private constructor to prevent multiple instances of the subsystem from
 	 * being created.

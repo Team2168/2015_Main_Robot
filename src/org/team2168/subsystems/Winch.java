@@ -17,6 +17,8 @@ public class Winch extends Subsystem {
 	private static Victor winchMotor;
 	//	private static Encoder winchEncoder;
 
+	public boolean winchSelfTest = false;
+
 	private static final boolean MOTOR_INVERED = false;
 
 	/**

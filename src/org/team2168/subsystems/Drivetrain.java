@@ -46,18 +46,25 @@ public class Drivetrain extends Subsystem {
 	public PIDSpeed leftSpeedController;
 
 	//output voltage...ONLY FOR DEBUGGING PURPOSES, SHOULD BE REMOVED FOR COMPITITION
-	private volatile double leftMotor1Voltage;
-	private volatile double leftMotor2Voltage;
-	private volatile double leftMotor3Voltage;
-	private volatile double rightMotor1Voltage;
-	private volatile double rightMotor2Voltage;
-	private volatile double rightMotor3Voltage;
+	private double leftMotor1Voltage;
+	private double leftMotor2Voltage;
+	private double leftMotor3Voltage;
+	private double rightMotor1Voltage;
+	private double rightMotor2Voltage;
+	private double rightMotor3Voltage;
 
 	//declare TCP severs...ONLY FOR DEBUGGING PURPOSES, SHOULD BE REMOVED FOR COMPITITION
 	TCPSocketSender TCPdrivePosController;
 	TCPSocketSender TCPrightSpeedController;
 	TCPSocketSender TCPleftSpeedController;
 	TCPSocketSender TCProtateController;
+
+	public boolean leftSelfTest1 = false;
+	public boolean leftSelfTest2 = false;
+	public boolean leftSelfTest3 = false;
+	public boolean rightSelfTest1 = false;
+	public boolean rightSelfTest2 = false;
+	public boolean rightSelfTest3 = false;
 
 	/**
 	 * This method instantiates the motors.
@@ -74,7 +81,6 @@ public class Drivetrain extends Subsystem {
 
 		gyroSPI = new ADXRS453Gyro();
 		gyroSPI.startThread();
-
 
 		drivetrainRightEncoder = new AverageEncoder(
 				RobotMap.DRIVETRAIN_RIGHT_ENCODER_A,
@@ -479,5 +485,4 @@ public class Drivetrain extends Subsystem {
 		}
 		return speed;
 	}
-
 }

@@ -37,6 +37,9 @@ public class Intake extends Subsystem {
 	private static final boolean LEFT_INVERTED = false;
 	private static final boolean RIGHT_INVERTED = true;
 
+	public boolean leftIntakeSelfTest = false;
+	public boolean rightIntakeSelfTest = false;
+
 	/**
 	 * A private constructor to prevent multiple instances of the subsystem
 	 * from being created.

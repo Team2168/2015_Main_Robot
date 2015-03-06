@@ -121,53 +121,53 @@ public class ConsolePrinter {
 			SmartDashboard.putBoolean("Chanel Fourteen Trip", Robot.pdp.isChanelFourteenTrip());
 			SmartDashboard.putBoolean("Chanel Fifteen Trip", Robot.pdp.isChanelFifteenTrip());
 			SmartDashboard.putBoolean("Chanel Sixteen Trip", Robot.pdp.isChanelSixteenTrip());
-			
+
 			SmartDashboard.putBoolean("Brake Enabled", Robot.lift.isBrakeEnabled());
 			SmartDashboard.putBoolean("Brake Disabled", Robot.lift.isBrakeDisabled());
-			
+
 			SmartDashboard.putBoolean("Intake Engaged", Robot.intake.isIntakeEngaged());
 			SmartDashboard.putBoolean("Intake Disabled", Robot.intake.isIntakeDisengaged());
-			
+
 			SmartDashboard.putBoolean("Gripper Engaged", Robot.gripper.isGripperEngaged());
 			SmartDashboard.putBoolean("Gripper Disable", Robot.gripper.isGripperDisengaged());
-			
-			SmartDashboard.putNumber("Match Time:", DriverStation.getInstance().getMatchTime();
-			
-			
-							    	//file log
-							    	log.println(Timer.getFPGATimestamp() + "\t" +
-							    			Robot.drivetrain.getLeft1MotorVoltage() + "\t" +
-							    			Robot.drivetrain.getLeft2MotorVoltage() + "\t" +
-							    			Robot.drivetrain.getLeft3MotorVoltage() + "\t" +
-			
-											Robot.drivetrain.getRight1MotorVoltage() + "\t" +
-											Robot.drivetrain.getRight2MotorVoltage() + "\t" +
-											Robot.drivetrain.getRight3MotorVoltage() + "\t" +
-			
-											Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP) + "\t" +
-											Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP) + "\t" +
-											Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_3_PDP) + "\t" +
-			
-											Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP) + "\t" +
-											Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP) + "\t" +
-											Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_3_PDP) + "\t" +
-											
-											Robot.drivetrain.gyroSPI.getRate() + "\t" + 
-											Robot.drivetrain.gyroSPI.getPos() + "\t" + 
-											
-											Robot.drivetrain.drivetrainLeftEncoder.getPos() + "\t" +
-											Robot.drivetrain.drivetrainLeftEncoder.getRate() + "\t" +
-			
-											Robot.drivetrain.drivetrainRightEncoder.getPos() + "\t" +
-											Robot.drivetrain.drivetrainRightEncoder.getRate() + "\t" +
-			
-											Robot.lift.getMotorVoltage() + "\t" +
-											Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_PDP) + "\t" +
-											Robot.lift.getPosition() + "\t" +
-											Robot.lift.liftEncoder.getRawRate() + "\t"
 
-							    			);
-							    	log.flush();
+			SmartDashboard.putNumber("Match Time:", DriverStation.getInstance().getMatchTime());
+
+
+			//file log
+			log.println(Timer.getFPGATimestamp() + "\t" +
+					Robot.drivetrain.getLeft1MotorVoltage() + "\t" +
+					Robot.drivetrain.getLeft2MotorVoltage() + "\t" +
+					Robot.drivetrain.getLeft3MotorVoltage() + "\t" +
+
+					Robot.drivetrain.getRight1MotorVoltage() + "\t" +
+					Robot.drivetrain.getRight2MotorVoltage() + "\t" +
+					Robot.drivetrain.getRight3MotorVoltage() + "\t" +
+
+					Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP) + "\t" +
+					Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP) + "\t" +
+					Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_3_PDP) + "\t" +
+
+					Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP) + "\t" +
+					Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP) + "\t" +
+					Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_3_PDP) + "\t" +
+
+					Robot.drivetrain.gyroSPI.getRate() + "\t" +
+					Robot.drivetrain.gyroSPI.getPos() + "\t" +
+
+					Robot.drivetrain.drivetrainLeftEncoder.getPos() + "\t" +
+					Robot.drivetrain.drivetrainLeftEncoder.getRate() + "\t" +
+
+					Robot.drivetrain.drivetrainRightEncoder.getPos() + "\t" +
+					Robot.drivetrain.drivetrainRightEncoder.getRate() + "\t" +
+
+					Robot.lift.getMotorVoltage() + "\t" +
+					Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_PDP) + "\t" +
+					Robot.lift.getPosition() + "\t" +
+					Robot.lift.liftEncoder.getRawRate() + "\t"
+
+					);
+			log.flush();
 
 
 		}
