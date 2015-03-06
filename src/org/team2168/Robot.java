@@ -5,6 +5,7 @@ import org.team2168.PID.trajectory.LoadPathFile;
 import org.team2168.PID.trajectory.Path;
 import org.team2168.commands.auto.AutoLiftOneTote;
 import org.team2168.commands.auto.AutoLiftThreeTotes;
+import org.team2168.commands.drivetrain.DriveXDistance;
 import org.team2168.commands.lift.ZeroLift;
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.Gripper;
@@ -52,7 +53,7 @@ public class Robot extends IterativeRobot {
 	public static BuiltInAccelerometer accel;
 
 	// Auto command objects
-	Command autonomousCommand;
+	static Command autonomousCommand;
 	Command driveWithJoystick;
 	SendableChooser autoChooser;
 
@@ -245,13 +246,25 @@ public class Robot extends IterativeRobot {
 		autoChooser.addDefault("Do Nothing", new ZeroLift());
 		autoChooser.addObject("One Tote", new AutoLiftOneTote());
 		autoChooser.addObject("Three Tote", new AutoLiftThreeTotes());
+		autoChooser.addObject("Push Tote", new DriveXDistance(7, 0.4));
 		// autoChooser.addObject("Center_RotDrvFwdHotGoal_1Ball", new
 		// Center_RotDrvFwdHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
 		// autoChooser.addObject("ShootStraight_2BallDrvFwd", new
 		// ShootStraight_2Ball_DrvFwd());
+		
+		
 		SmartDashboard.putData("Autonomous Mode Chooser", autoChooser);
+		
 	}
 
+	public static String getAutoName() {
+		if (autonomousCommand != null) {
+			return autonomousCommand.getName();
+		} else {
+			return "None";
+		}
+	}
+	
 	public void pathPlanner() {
 		long start = System.currentTimeMillis();
 		// create waypoint path

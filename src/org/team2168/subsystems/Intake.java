@@ -40,6 +40,8 @@ public class Intake extends Subsystem {
 	public boolean leftIntakeSelfTest = false;
 	public boolean rightIntakeSelfTest = false;
 
+	public boolean intakeDirection = false;
+	
 	/**
 	 * A private constructor to prevent multiple instances of the subsystem
 	 * from being created.
@@ -108,6 +110,13 @@ public class Intake extends Subsystem {
 	 * @param speed 1 to 0 (Tote Out) 0 to -1 (Tote In)
 	 */
 	public void setIntakeSpeed(double speed) {
+		
+		if (speed > 0) {
+			this.intakeDirection = true;
+		}else{
+			this.intakeDirection = false;
+		}
+		
 		setLeftIntakeSpeed(speed);
 		setRightIntakeSpeed(speed);
 	}
@@ -187,4 +196,13 @@ public class Intake extends Subsystem {
 	public boolean isIntakeDisengaged() {
 		return rightLeftIntake.get() == Value.kReverse;
 	}
+	
+	public boolean isIntakeWheelsIn() {
+		return this.intakeDirection;
+	}
+	
+	public boolean isIntakeWheelsOut() {
+		return this.intakeDirection;
+	}
+	
 }

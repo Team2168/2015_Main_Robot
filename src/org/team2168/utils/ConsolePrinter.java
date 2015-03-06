@@ -88,6 +88,8 @@ public class ConsolePrinter {
 			SmartDashboard.putNumber("Lift Motor Voltage", Robot.lift.getMotorVoltage());
 
 
+			SmartDashboard.putString("AutoName", Robot.getAutoName());
+			
 			SmartDashboard.putNumber("Tote IR (V)", Robot.intake.getAveragedRawToteDistance());
 
 			SmartDashboard.putNumber("Left Stick Raw Value", OI.getInstance().driverJoystick.getLeftStickRaw_Y());
@@ -105,17 +107,17 @@ public class ConsolePrinter {
 			SmartDashboard.putBoolean("Lift Lowered", Robot.lift.isFullyLowered());
 			SmartDashboard.putBoolean("Lift Raised", Robot.lift.isFullyRaised());
 
-			SmartDashboard.putBoolean("Left Motor One Trip", Robot.pdp.isLeftMotorOneTrip());
-			SmartDashboard.putBoolean("Left Motor Two Trip", Robot.pdp.isLeftMotorTwoTrip());
-			SmartDashboard.putBoolean("Left Motor Three Trip", Robot.pdp.isLeftMotorThreeTrip());
+			SmartDashboard.putBoolean("Left Motor One Trip", !Robot.pdp.isLeftMotorOneTrip());
+			SmartDashboard.putBoolean("Left Motor Two Trip", !Robot.pdp.isLeftMotorTwoTrip());
+			SmartDashboard.putBoolean("Left Motor Three Trip", !Robot.pdp.isLeftMotorThreeTrip());
 
-			SmartDashboard.putBoolean("Right Motor One Trip", Robot.pdp.isRightMotorOneTrip());
-			SmartDashboard.putBoolean("Right Motor Two Trip", Robot.pdp.isRightMotorTwoTrip());
-			SmartDashboard.putBoolean("Right Motor Three Trip", Robot.pdp.isRightMotorThreeTrip());
+			SmartDashboard.putBoolean("Right Motor One Trip", !Robot.pdp.isRightMotorOneTrip());
+			SmartDashboard.putBoolean("Right Motor Two Trip", !Robot.pdp.isRightMotorTwoTrip());
+			SmartDashboard.putBoolean("Right Motor Three Trip", !Robot.pdp.isRightMotorThreeTrip());
 
-			SmartDashboard.putBoolean("Lift Motor Trip", Robot.pdp.isLiftMotorTrip());
-			SmartDashboard.putBoolean("Intake Left Motor Trip", Robot.pdp.isIntakeLeftMotorTrip());
-			SmartDashboard.putBoolean("Intake Right Motor Trip", Robot.pdp.isIntakeLeftMotorTrip());
+			SmartDashboard.putBoolean("Lift Motor Trip", !Robot.pdp.isLiftMotorTrip());
+			SmartDashboard.putBoolean("Intake Left Motor Trip", !Robot.pdp.isIntakeLeftMotorTrip());
+			SmartDashboard.putBoolean("Intake Right Motor Trip", !Robot.pdp.isIntakeLeftMotorTrip());
 
 			SmartDashboard.putBoolean("Brake Enabled", Robot.lift.isBrakeEnabled());
 			SmartDashboard.putBoolean("Brake Disabled", Robot.lift.isBrakeDisabled());
@@ -126,7 +128,10 @@ public class ConsolePrinter {
 			SmartDashboard.putBoolean("Gripper Engaged", Robot.gripper.isGripperEngaged());
 			SmartDashboard.putBoolean("Gripper Disable", Robot.gripper.isGripperDisengaged());
 
-
+			SmartDashboard.putBoolean("Intake Wheels In", Robot.intake.isIntakeWheelsIn());
+			SmartDashboard.putBoolean("Intake Wheels Out", Robot.intake.isIntakeWheelsOut());
+			
+			
 			SmartDashboard.putBoolean("DT Left 1 Self Test", Robot.drivetrain.leftSelfTest1);
 			SmartDashboard.putBoolean("DT Left 2 Self Test", Robot.drivetrain.leftSelfTest2);
 			SmartDashboard.putBoolean("DT Left 3 Self Test", Robot.drivetrain.leftSelfTest3);

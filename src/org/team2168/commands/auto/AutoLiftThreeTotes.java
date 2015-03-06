@@ -40,5 +40,6 @@ public class AutoLiftThreeTotes extends CommandGroup {
     	addSequential(new AutoOneTote());
     	
     	
+    	
     }
 }
