@@ -67,7 +67,7 @@ public class ADXRS453Gyro implements PIDSensorInterface {
 
 	public  ADXRS453Gyro() {
 		//run at 333Hz loop
-		this.period = 3;
+		this.period = (long)3;
 
 		spi = new SPI(Port.kOnboardCS0);
 		spi.setClockRate(4000000); //4 MHz (rRIO max, gyro can go high)
@@ -194,8 +194,8 @@ public class ADXRS453Gyro implements PIDSensorInterface {
 		spi.read(false, data, DATA_SIZE);
 
 		short registerValue = 0;
-		registerValue = (short) (((data[1]) << 11) |
-				(data[2] << 3) |
+		registerValue = (short) (((short)(data[1]) << 11) |
+				((short)data[2] << 3) |
 				((short)(data[3] >> 5)));
 
 		return registerValue;
