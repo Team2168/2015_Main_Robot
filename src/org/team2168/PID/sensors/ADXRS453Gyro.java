@@ -322,7 +322,7 @@ public class ADXRS453Gyro implements PIDSensorInterface {
 			accumulatedRate += currentRate * deltaTime;
 			driftRate = accumulatedRate / timeElapsed; //angle/S
 
-			if(timeElapsed >= CALIBRATION_PERIOD || stopCalibrating) {
+			if (timeElapsed >= CALIBRATION_PERIOD || stopCalibrating) {
 				//finish calibration sequence
 				calibrate = false;
 				reset();
