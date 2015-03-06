@@ -438,6 +438,13 @@ public class Drivetrain extends Subsystem {
 	}
 
 	/**
+	 * Call to stop an active gyro calibration sequence.
+	 */
+	public void stopGyroCalibrating() {
+		gyroSPI.stopCalibrating();
+	}
+
+	/**
 	 * A  simple rate limiter.
 	 * http://www.chiefdelphi.com/forums/showpost.php?p=1212189&postcount=3
 	 *

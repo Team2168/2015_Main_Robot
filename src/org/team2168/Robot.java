@@ -131,6 +131,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void disabledInit() {
 		autonomousCommand = (Command) autoChooser.getSelected();
+		drivetrain.calibrateGyro();
 	}
 
 	/**
@@ -150,6 +151,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousInit() {
 		matchStarted = true;
+		drivetrain.stopGyroCalibrating();
 
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null) {
