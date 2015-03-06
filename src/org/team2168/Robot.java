@@ -131,7 +131,6 @@ public class Robot extends IterativeRobot {
 	 * to reset subsystems before shutting down.
 	 */
 	public void disabledInit() {
-		autonomousCommand = (Command) autoChooser.getSelected();
 		drivetrain.calibrateGyro();
 	}
 
@@ -139,6 +138,7 @@ public class Robot extends IterativeRobot {
 	 * This method runs periodically when the robot is disabled
 	 */
 	public void disabledPeriodic() {
+		autonomousCommand = (Command) autoChooser.getSelected();
 		// Kill all active commands
 		Scheduler.getInstance().removeAll();
 		Scheduler.getInstance().disable();
@@ -243,10 +243,10 @@ public class Robot extends IterativeRobot {
 	private void autoSelectInit() {
 		// NOTE: ONLY ADD AutoCommandGroup objects to this chooser!
 		autoChooser = new SendableChooser();
-		autoChooser.addDefault("Do Nothing", new ZeroLift());
+		autoChooser.addDefault("Push Tote", new DriveXDistance(12, 0.4));
 		autoChooser.addObject("One Tote", new AutoLiftOneTote());
 		autoChooser.addObject("Three Tote", new AutoLiftThreeTotes());
-		autoChooser.addObject("Push Tote", new DriveXDistance(7, 0.4));
+		//autoChooser.addObject("Push Tote", new DriveXDistance(12, 0.4));
 		// autoChooser.addObject("Center_RotDrvFwdHotGoal_1Ball", new
 		// Center_RotDrvFwdHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
 		// autoChooser.addObject("ShootStraight_2BallDrvFwd", new
