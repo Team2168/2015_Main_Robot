@@ -56,7 +56,7 @@ public class Lift extends Subsystem {
 				RobotMap.LIFT_BRAKE_DOUBLE_SOLENOID_REVERSE);
 
 		liftController = new PIDPosition("LiftPID", RobotMap.liftPUp,
-				RobotMap.liftIUp, RobotMap.liftDUp, liftEncoder,
+				RobotMap.liftIUp, RobotMap.liftDUp, RobotMap.liftPDw, RobotMap.liftIDw, RobotMap.liftDDw, liftEncoder,
 				RobotMap.liftPIDPeriod);
 		liftController.setEnDerivFilter(true, 74.1117);
 		liftController.startThread();

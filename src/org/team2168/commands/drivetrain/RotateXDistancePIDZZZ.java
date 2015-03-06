@@ -1,5 +1,5 @@
 
-package org.team2168.commands.lift.PIDCommands;
+package org.team2168.commands.drivetrain;
 
 import org.team2168.Robot;
 
@@ -11,49 +11,36 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  * @author Vittorio
  */
-public class LiftPIDPosition extends Command {
+public class RotateXDistancePIDZZZ extends Command {
 
 	private double setPoint;
-	private double speed;
 	
-    public LiftPIDPosition() {
+    public RotateXDistancePIDZZZ() {
         // Use requires() here to declare subsystem dependencies
-    	requires(Robot.lift);
-    	this.setPoint = Robot.lift.liftController.getSetPoint();
+    	requires(Robot.drivetrain);
+    	this.setPoint = Robot.drivetrain.rotateController.getSetPoint();
     }
 
-    public LiftPIDPosition(double setPoint){
+    public RotateXDistancePIDZZZ(double setPoint){
  	   this();
- 	   this.speed = 1;
  	   this.setPoint = setPoint;
     }
-    
-    public LiftPIDPosition(double setPoint, double speed){
-  	   this();
-  	   this.speed = speed;
-  	   this.setPoint = setPoint;
-     }
-     
 
 
     // Called just before this Command runs the first time
     
 	protected void initialize() {
-		Robot.lift.liftController.reset();
-		Robot.lift.liftController.setSetPoint(setPoint);
-		Robot.lift.liftController.setMaxPosOutput(speed);
-		Robot.lift.liftController.setMaxNegOutput(-speed);
-		
-		Robot.lift.liftController.Enable();
+		Robot.drivetrain.rotateController.reset();
+		Robot.drivetrain.rotateController.Enable();
+		Robot.drivetrain.rotateController.setSetPoint(setPoint);
     }
 
     // Called repeatedly when this Command is scheduled to run
     
 	protected void execute() {
 		
-		Robot.lift.drive(Robot.lift.liftController.getControlOutput());
-		
-		
+		Robot.drivetrain.tankDrive(Robot.drivetrain.rotateController.getControlOutput(),Robot.drivetrain.rotateController.getControlOutput());
+	
 		
     }
 
@@ -61,14 +48,14 @@ public class LiftPIDPosition extends Command {
     
 	protected boolean isFinished() {
 		//TODO Should the command be stopped????????!?!?!?!?!? after PID is tuned
-    	return Robot.lift.liftController.isFinished();
+    	return Robot.drivetrain.rotateController.isFinished();
 		//return false;
     }
 
     // Called once after isFinished returns true
     
 	protected void end() {
-		Robot.lift.liftController.Pause();
+		Robot.drivetrain.rotateController.Pause();
     }
 
     // Called when another command which requires one or more of the same
