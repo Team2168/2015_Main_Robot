@@ -105,38 +105,18 @@ public class ConsolePrinter {
 			SmartDashboard.putBoolean("Lift Lowered", Robot.lift.isFullyLowered());
 			SmartDashboard.putBoolean("Lift Raised", Robot.lift.isFullyRaised());
 
-<<<<<<< HEAD
-			SmartDashboard.putBoolean("Chanel One Trip", Robot.pdp.isChanelOneTrip());
-			SmartDashboard.putBoolean("Chanel Two Trip", Robot.pdp.isChanelTwoTrip());
-			SmartDashboard.putBoolean("Chanel Three Trip", Robot.pdp.isChanelThreeTrip());
-			SmartDashboard.putBoolean("Chanel Four Trip", Robot.pdp.isChanelFourTrip());
-			SmartDashboard.putBoolean("Chanel Five Trip", Robot.pdp.isChanelFiveTrip());
-			SmartDashboard.putBoolean("Chanel Six Trip", Robot.pdp.isChanelSixTrip());
-			SmartDashboard.putBoolean("Chanel Seven Trip", Robot.pdp.isChanelSevenTrip());
-			SmartDashboard.putBoolean("Chanel Eight Trip", Robot.pdp.isChanelEightTrip());
-			SmartDashboard.putBoolean("Chanel Nine Trip", Robot.pdp.isChanelNineTrip());
-			SmartDashboard.putBoolean("Chanel Ten Trip", Robot.pdp.isChanelTenTrip());
-			SmartDashboard.putBoolean("Chanel Eleven Trip", Robot.pdp.isChanelElevenTrip());
-			SmartDashboard.putBoolean("Chanel Twelve Trip", Robot.pdp.isChanelTwelveTrip());
-			SmartDashboard.putBoolean("Chanel Thirteen Trip", Robot.pdp.isChanelThirteenTrip());
-			SmartDashboard.putBoolean("Chanel Fourteen Trip", Robot.pdp.isChanelFourteenTrip());
-			SmartDashboard.putBoolean("Chanel Fifteen Trip", Robot.pdp.isChanelFifteenTrip());
-			SmartDashboard.putBoolean("Chanel Sixteen Trip", Robot.pdp.isChanelSixteenTrip());
-
-=======
 			SmartDashboard.putBoolean("Left Motor One Trip", Robot.pdp.isLeftMotorOneTrip());
 			SmartDashboard.putBoolean("Left Motor Two Trip", Robot.pdp.isLeftMotorTwoTrip());
 			SmartDashboard.putBoolean("Left Motor Three Trip", Robot.pdp.isLeftMotorThreeTrip());
-			
+
 			SmartDashboard.putBoolean("Right Motor One Trip", Robot.pdp.isRightMotorOneTrip());
 			SmartDashboard.putBoolean("Right Motor Two Trip", Robot.pdp.isRightMotorTwoTrip());
 			SmartDashboard.putBoolean("Right Motor Three Trip", Robot.pdp.isRightMotorThreeTrip());
-			
+
 			SmartDashboard.putBoolean("Lift Motor Trip", Robot.pdp.isLiftMotorTrip());
 			SmartDashboard.putBoolean("Intake Left Motor Trip", Robot.pdp.isIntakeLeftMotorTrip());
 			SmartDashboard.putBoolean("Intake Right Motor Trip", Robot.pdp.isIntakeLeftMotorTrip());
-			
->>>>>>> origin/MotorCalibration
+
 			SmartDashboard.putBoolean("Brake Enabled", Robot.lift.isBrakeEnabled());
 			SmartDashboard.putBoolean("Brake Disabled", Robot.lift.isBrakeDisabled());
 
@@ -145,10 +125,9 @@ public class ConsolePrinter {
 
 			SmartDashboard.putBoolean("Gripper Engaged", Robot.gripper.isGripperEngaged());
 			SmartDashboard.putBoolean("Gripper Disable", Robot.gripper.isGripperDisengaged());
-<<<<<<< HEAD
+
 
 			SmartDashboard.putNumber("Match Time:", DriverStation.getInstance().getMatchTime());
-
 
 			//file log
 			log.println(Timer.getFPGATimestamp() + "\t" +
@@ -184,45 +163,6 @@ public class ConsolePrinter {
 
 					);
 			log.flush();
-=======
-			
-			SmartDashboard.putNumber("Match Time:", DriverStation.getInstance().getMatchTime());
-			
-							    	//file log
-							    	log.println(Timer.getFPGATimestamp() + "\t" +
-							    			Robot.drivetrain.getLeft1MotorVoltage() + "\t" +
-							    			Robot.drivetrain.getLeft2MotorVoltage() + "\t" +
-							    			Robot.drivetrain.getLeft3MotorVoltage() + "\t" +
-			
-											Robot.drivetrain.getRight1MotorVoltage() + "\t" +
-											Robot.drivetrain.getRight2MotorVoltage() + "\t" +
-											Robot.drivetrain.getRight3MotorVoltage() + "\t" +
-			
-											Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_1_PDP) + "\t" +
-											Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_2_PDP) + "\t" +
-											Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_LEFT_MOTOR_3_PDP) + "\t" +
-			
-											Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP) + "\t" +
-											Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP) + "\t" +
-											Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_3_PDP) + "\t" +
-											
-											Robot.drivetrain.gyroSPI.getRate() + "\t" + 
-											Robot.drivetrain.gyroSPI.getPos() + "\t" + 
-											
-											Robot.drivetrain.drivetrainLeftEncoder.getPos() + "\t" +
-											Robot.drivetrain.drivetrainLeftEncoder.getRate() + "\t" +
-			
-											Robot.drivetrain.drivetrainRightEncoder.getPos() + "\t" +
-											Robot.drivetrain.drivetrainRightEncoder.getRate() + "\t" +
-			
-											Robot.lift.getMotorVoltage() + "\t" +
-											Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_PDP) + "\t" +
-											Robot.lift.getPosition() + "\t" +
-											Robot.lift.liftEncoder.getRawRate() + "\t"
-
-							    			);
-							    	log.flush();
->>>>>>> origin/MotorCalibration
 
 
 		}
