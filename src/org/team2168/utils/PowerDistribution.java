@@ -121,113 +121,64 @@ public class PowerDistribution {
 		return totalPower;
 	}
 	
-	public boolean isChanelOneTrip() {
+	public boolean isRightMotorThreeTrip() {
+		if (channelError[0] == 2)
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean isRightMotorTwoTrip() {
 		if (channelError[1] == 2)
 			return true;
 		else
 			return false;
 	}
 	
-	public boolean isChanelTwoTrip() {
-		if (channelError[2] == 2)
+	public boolean isRightMotorOneTrip() {
+		if (channelError[2] == 2) 
 			return true;
 		else
 			return false;
 	}
 	
-	public boolean isChanelThreeTrip() {
-		if (channelError[3] == 2) 
-			return true;
-		else
-			return false;
-	}
-	
-	public boolean isChanelFourTrip() {
+	public boolean isIntakeRightMotorTrip() {
 		if (channelError[4] == 2) 
 			return true;
 		else
 			return false;
 	}
 	
-	public boolean isChanelFiveTrip() {
-		if (channelError[5] == 2) 
-			return true;
-		else
-			return false;
-	}
-	
-	public boolean isChanelSixTrip() {
-		if (channelError[6] == 2) 
-			return true;
-		else
-			return false;
-	}
-	
-	public boolean isChanelSevenTrip() {
-		if (channelError[7] == 2) 
-			return true;
-		else
-			return false;
-	}
-	
-	public boolean isChanelEightTrip() {
-		if (channelError[8] == 2) 
-			return true;
-		else
-			return false;
-	}
-	
-	public boolean isChanelNineTrip() {
-		if (channelError[9] == 2) 
-			return true;
-		else
-			return false;
-	}
-	
-	public boolean isChanelTenTrip() {
-		if (channelError[10] == 2) 
-			return true;
-		else
-			return false;
-	}
-	
-	public boolean isChanelElevenTrip() {
+	public boolean isIntakeLeftMotorTrip() {
 		if (channelError[11] == 2) 
 			return true;
 		else
 			return false;
 	}
 	
-	public boolean isChanelTwelveTrip() {
-		if (channelError[12] == 2) 
+	public boolean isLiftMotorTrip() {
+		if (channelError[12] == 2)
 			return true;
 		else
 			return false;
 	}
 	
-	public boolean isChanelThirteenTrip() {
-		if (channelError[13] == 2)
+	public boolean isLeftMotorOneTrip() {
+		if (channelError[13] == 2) 
 			return true;
 		else
 			return false;
 	}
 	
-	public boolean isChanelFourteenTrip() {
+	public boolean isLeftMotorTwoTrip() {
 		if (channelError[14] == 2) 
 			return true;
 		else
 			return false;
 	}
 	
-	public boolean isChanelFifteenTrip() {
+	public boolean isLeftMotorThreeTrip() {
 		if (channelError[15] == 2) 
-			return true;
-		else
-			return false;
-	}
-	
-	public boolean isChanelSixteenTrip() {
-		if (channelError[16] == 2) 
 			return true;
 		else
 			return false;
