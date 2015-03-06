@@ -3,6 +3,7 @@ package org.team2168.subsystems;
 import org.team2168.OI;
 import org.team2168.RobotMap;
 import org.team2168.commands.winch.WinchWithJoystick;
+import org.team2168.utils.Util;
 
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -53,12 +54,11 @@ public class Winch extends Subsystem {
 	 *            Value from -1.0 to 1.0, positive values winch inward.
 	 */
 	public void drive(double speed) {
-
-		double temp = speed;
+		speed = Util.limit(speed);
 		if (MOTOR_INVERED)
-			temp = -speed;
+			speed = -speed;
 
-		winchMotor.set(temp);
+		winchMotor.set(speed);
 	}
 
 	/**

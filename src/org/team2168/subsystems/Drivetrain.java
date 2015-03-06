@@ -10,6 +10,7 @@ import org.team2168.PID.sensors.AverageEncoder;
 import org.team2168.PID.sensors.IMU;
 import org.team2168.commands.drivetrain.DriveWithJoysticks;
 import org.team2168.utils.TCPSocketSender;
+import org.team2168.utils.Util;
 
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
@@ -27,7 +28,7 @@ public class Drivetrain extends Subsystem {
 	private SpeedController rightMotor2;
 	private SpeedController leftMotor3;
 	private SpeedController rightMotor3;
-	
+
 	public AverageEncoder drivetrainLeftEncoder;
 	public AverageEncoder drivetrainRightEncoder;
 	public ADXRS453Gyro gyroSPI;
@@ -93,7 +94,7 @@ public class Drivetrain extends Subsystem {
 				RobotMap.drivePosReturnType, RobotMap.driveAvgEncoderVal);
 
 		imu = new IMU(drivetrainLeftEncoder,drivetrainRightEncoder,RobotMap.wheelbase);
-		
+
 		//DriveStraight Controller
 		rotateController = new PIDPosition(
 				"RotationController",
@@ -104,27 +105,27 @@ public class Drivetrain extends Subsystem {
 				RobotMap.driveTrainPIDPeriod);
 
 		driveTrainPosController = new PIDPosition(
-				"driveTrainPosController", 
+				"driveTrainPosController",
 				RobotMap.driveTrainRightPositionP,
-				RobotMap.driveTrainRightPositionI, 
-				RobotMap.driveTrainRightPositionD, 
+				RobotMap.driveTrainRightPositionI,
+				RobotMap.driveTrainRightPositionD,
 				imu,
 				RobotMap.driveTrainPIDPeriod);
 
 		//Spawn new PID Controller
 		rightSpeedController = new PIDSpeed(
-				"RightSpeedController", 
+				"RightSpeedController",
 				RobotMap.driveTrainRightSpeedP,
-				RobotMap.driveTrainRightSpeedI, 
-				RobotMap.driveTrainRightSpeedD, 
+				RobotMap.driveTrainRightSpeedI,
+				RobotMap.driveTrainRightSpeedD,
 				drivetrainRightEncoder,
 				RobotMap.driveTrainPIDPeriod);
 
 		leftSpeedController = new PIDSpeed(
-				"LeftSpeedController", 
+				"LeftSpeedController",
 				RobotMap.driveTrainLeftSpeedP,
-				RobotMap.driveTrainLeftSpeedI, 
-				RobotMap.driveTrainLeftSpeedD, 
+				RobotMap.driveTrainLeftSpeedI,
+				RobotMap.driveTrainLeftSpeedD,
 				drivetrainLeftEncoder,
 				RobotMap.driveTrainPIDPeriod);
 
@@ -132,8 +133,8 @@ public class Drivetrain extends Subsystem {
 		//add min and max output defaults and set array size
 		rightSpeedController.setSIZE(RobotMap.drivetrainPIDArraySize);
 		leftSpeedController.setSIZE(RobotMap.drivetrainPIDArraySize);
-		driveTrainPosController.setSIZE(RobotMap.drivetrainPIDArraySize);	
-		rotateController.setSIZE(RobotMap.drivetrainPIDArraySize); 
+		driveTrainPosController.setSIZE(RobotMap.drivetrainPIDArraySize);
+		rotateController.setSIZE(RobotMap.drivetrainPIDArraySize);
 
 		//start controller threads
 		rightSpeedController.startThread();
@@ -233,6 +234,7 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveLeft1(double speed) {
+		speed = Util.limit(speed);
 		if (LEFT_INVERTED)
 			speed = -speed;
 
@@ -245,6 +247,7 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveLeft2(double speed) {
+		speed = Util.limit(speed);
 		if (LEFT_INVERTED)
 			speed = -speed;
 
@@ -257,7 +260,7 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveLeft3(double speed) {
-
+		speed = Util.limit(speed);
 		if (LEFT_INVERTED)
 			speed = -speed;
 
@@ -280,6 +283,7 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveRight1(double speed) {
+		speed = Util.limit(speed);
 		if (RIGHT_INVERTED)
 			speed = -speed;
 
@@ -292,6 +296,7 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveRight2(double speed) {
+		speed = Util.limit(speed);
 		if (RIGHT_INVERTED)
 			speed = -speed;
 
@@ -304,6 +309,7 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveRight3(double speed) {
+		speed = Util.limit(speed);
 		if (RIGHT_INVERTED)
 			speed = -speed;
 
@@ -402,24 +408,24 @@ public class Drivetrain extends Subsystem {
 	public void resetGyro() {
 		gyroSPI.reset();
 	}
-	
-	 /**
-     * A  simple rate limiter.
-     * http://www.chiefdelphi.com/forums/showpost.php?p=1212189&postcount=3
-     * 
-     * @param input the input value (speed from command/joystick)
+
+	/**
+	 * A  simple rate limiter.
+	 * http://www.chiefdelphi.com/forums/showpost.php?p=1212189&postcount=3
+	 *
+	 * @param input the input value (speed from command/joystick)
 	 * @param speed the speed currently being traveled at
 	 * @param limit the rate limit
 	 * @return the new output speed (rate limited)
-     */
-    public static double rateLimit(double input, double speed, double limit) {
-    	return rateLimit(input, speed, limit, limit);
-    }
-    
-    /**
+	 */
+	public static double rateLimit(double input, double speed, double limit) {
+		return rateLimit(input, speed, limit, limit);
+	}
+
+	/**
 	 * A simple rate limiter.
 	 * http://www.chiefdelphi.com/forums/showpost.php?p=1212189&postcount=3
-	 * 
+	 *
 	 * @param input the input value (speed from command/joystick)
 	 * @param speed the speed currently being traveled at
 	 * @param posRateLimit the rate limit for accelerating
@@ -431,25 +437,25 @@ public class Drivetrain extends Subsystem {
 		if (input > 0) {
 			if (input > (speed + posRateLimit)) {
 				//Accelerating positively
-		        speed = speed + posRateLimit;
+				speed = speed + posRateLimit;
 			} else if (input < (speed - negRateLimit)) {
-				//Decelerating positively 
-		        speed = speed - negRateLimit;
+				//Decelerating positively
+				speed = speed - negRateLimit;
 			} else {
-		        speed = input;
+				speed = input;
 			}
 		} else {
 			if (input < (speed - posRateLimit)) {
 				//Accelerating negatively
-		        speed = speed - posRateLimit;
+				speed = speed - posRateLimit;
 			} else if (input > (speed + negRateLimit)) {
 				//Decelerating negatively
-		        speed = speed + negRateLimit;
+				speed = speed + negRateLimit;
 			} else {
-		        speed = input;
+				speed = input;
 			}
 		}
 		return speed;
 	}
-	
+
 }

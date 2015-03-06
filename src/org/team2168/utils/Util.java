@@ -58,6 +58,15 @@ public class Util {
 	}
 
 	/**
+	 * Coerce a number within a range of 1.0 to -1.0
+	 * @param value the number to constrain
+	 * @return the supplied value constrained from 1.0 to -1.0
+	 */
+	public static double limit(double value) {
+		return limit(value, -1.0, 1.0);
+	}
+
+	/**
 	 * Returns the array of substrings obtained by dividing the given input
 	 * string at each occurrence of the given delimiter.
 	 */
@@ -102,74 +111,74 @@ public class Util {
 	public static double intercept(double slope, double x, double y) {
 		return y - (slope * x);
 	}
-	
+
 	/**
-	   * Get the difference in angle between two angles.
-	   *
-	   * @param from The first angle
-	   * @param to The second angle
-	   * @return The change in angle from the first argument necessary to line up
-	   * with the second. Always between -Pi and Pi
-	   */
-	  public static double getDifferenceInAngleRadians(double from, double to) {
-	    return boundAngleNegPiToPiRadians(to - from);
-	  }
+	 * Get the difference in angle between two angles.
+	 *
+	 * @param from The first angle
+	 * @param to The second angle
+	 * @return The change in angle from the first argument necessary to line up
+	 * with the second. Always between -Pi and Pi
+	 */
+	public static double getDifferenceInAngleRadians(double from, double to) {
+		return boundAngleNegPiToPiRadians(to - from);
+	}
 
-	  /**
-	   * Get the difference in angle between two angles.
-	   *
-	   * @param from The first angle
-	   * @param to The second angle
-	   * @return The change in angle from the first argument necessary to line up
-	   * with the second. Always between -180 and 180
-	   */
-	  public static double getDifferenceInAngleDegrees(double from, double to) {
-	    return boundAngleNeg180to180Degrees(to - from);
-	  }
+	/**
+	 * Get the difference in angle between two angles.
+	 *
+	 * @param from The first angle
+	 * @param to The second angle
+	 * @return The change in angle from the first argument necessary to line up
+	 * with the second. Always between -180 and 180
+	 */
+	public static double getDifferenceInAngleDegrees(double from, double to) {
+		return boundAngleNeg180to180Degrees(to - from);
+	}
 
-	  public static double boundAngle0to360Degrees(double angle) {
-	    // Naive algorithm
-	    while (angle >= 360.0) {
-	      angle -= 360.0;
-	    }
-	    while (angle < 0.0) {
-	      angle += 360.0;
-	    }
-	    return angle;
-	  }
+	public static double boundAngle0to360Degrees(double angle) {
+		// Naive algorithm
+		while (angle >= 360.0) {
+			angle -= 360.0;
+		}
+		while (angle < 0.0) {
+			angle += 360.0;
+		}
+		return angle;
+	}
 
-	  public static double boundAngleNeg180to180Degrees(double angle) {
-	    // Naive algorithm
-	    while (angle >= 180.0) {
-	      angle -= 360.0;
-	    }
-	    while (angle < -180.0) {
-	      angle += 360.0;
-	    }
-	    return angle;
-	  }
+	public static double boundAngleNeg180to180Degrees(double angle) {
+		// Naive algorithm
+		while (angle >= 180.0) {
+			angle -= 360.0;
+		}
+		while (angle < -180.0) {
+			angle += 360.0;
+		}
+		return angle;
+	}
 
-	  public static double boundAngle0to2PiRadians(double angle) {
-	    // Naive algorithm
-	    while (angle >= 2.0 * Math.PI) {
-	      angle -= 2.0 * Math.PI;
-	    }
-	    while (angle < 0.0) {
-	      angle += 2.0 * Math.PI;
-	    }
-	    return angle;
-	  }
+	public static double boundAngle0to2PiRadians(double angle) {
+		// Naive algorithm
+		while (angle >= 2.0 * Math.PI) {
+			angle -= 2.0 * Math.PI;
+		}
+		while (angle < 0.0) {
+			angle += 2.0 * Math.PI;
+		}
+		return angle;
+	}
 
-	  public static double boundAngleNegPiToPiRadians(double angle) {
-	    // Naive algorithm
-	    while (angle >= Math.PI) {
-	      angle -= 2.0 * Math.PI;
-	    }
-	    while (angle < -Math.PI) {
-	      angle += 2.0 * Math.PI;
-	    }
-	    return angle;
-	  }
+	public static double boundAngleNegPiToPiRadians(double angle) {
+		// Naive algorithm
+		while (angle >= Math.PI) {
+			angle -= 2.0 * Math.PI;
+		}
+		while (angle < -Math.PI) {
+			angle += 2.0 * Math.PI;
+		}
+		return angle;
+	}
 
 	/**
 	 * A simple low-overhead filter.

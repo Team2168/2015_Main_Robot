@@ -53,9 +53,9 @@ public class Lift extends Subsystem {
 		liftBrake = new DoubleSolenoid(RobotMap.PCM_CAN_ID, RobotMap.LIFT_BRAKE_DOUBLE_SOLENOID_FORWARD,
 				RobotMap.LIFT_BRAKE_DOUBLE_SOLENOID_REVERSE);
 
-		liftController = new PIDPosition("LiftPID", RobotMap.liftPUp, 
+		liftController = new PIDPosition("LiftPID", RobotMap.liftPUp,
 				RobotMap.liftIUp, RobotMap.liftDUp, liftEncoder,
-    			RobotMap.liftPIDPeriod);
+				RobotMap.liftPIDPeriod);
 		liftController.setEnDerivFilter(true, 74.1117);
 		liftController.startThread();
 
@@ -98,8 +98,8 @@ public class Lift extends Subsystem {
 	 * @param speed value from -1.0 to 1.0, positive drives the lift up.
 	 */
 	public void drive(double speed) {
-		//speed = Util.limit(speed, -1.0, 1.0);
-		
+		speed = Util.limit(speed);
+
 		if (speed > RobotMap.LIFT_MIN_SPEED && !Robot.lift.isFullyRaised()) {
 			//Traveling up
 			Robot.lift.disableBrake();
@@ -107,15 +107,15 @@ public class Lift extends Subsystem {
 		else if (speed < -RobotMap.LIFT_MIN_SPEED && !Robot.lift.isFullyLowered()) {
 			//Traveling down
 			Robot.lift.disableBrake();
-		} 
+		}
 		else {
 			speed = 0.0;
 			Robot.lift.enableBrake();
 		}
-		
+
 		if (MOTOR_INVERTED)
 			speed = -speed;
-		
+
 		liftMotor.set(speed);
 		System.out.println(speed);
 		motorVoltage = Robot.pdp.getBatteryVoltage() * speed;

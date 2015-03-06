@@ -81,6 +81,7 @@ public class Intake extends Subsystem {
 	 * @param speed 1 to 0 (Tote Out) 0 to -1 (Tote In)
 	 */
 	public void setLeftIntakeSpeed(double speed) {
+		speed = Util.limit(speed);
 		if (LEFT_INVERTED)
 			speed = -speed;
 
@@ -92,6 +93,7 @@ public class Intake extends Subsystem {
 	 * @param speed 1 to 0 (Tote Out) 0 to -1 (Tote In)
 	 */
 	public void setRightIntakeSpeed(double speed) {
+		speed = Util.limit(speed);
 		if (RIGHT_INVERTED)
 			speed  = -speed;
 
