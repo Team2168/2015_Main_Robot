@@ -119,6 +119,7 @@ public class Lift extends Subsystem {
 		liftMotor.set(speed);
 		System.out.println(speed);
 		motorVoltage = Robot.pdp.getBatteryVoltage() * speed;
+
 	}
 
 	/**
