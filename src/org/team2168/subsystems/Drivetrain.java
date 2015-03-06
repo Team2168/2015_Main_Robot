@@ -46,12 +46,12 @@ public class Drivetrain extends Subsystem {
 	public PIDSpeed leftSpeedController;
 
 	//output voltage...ONLY FOR DEBUGGING PURPOSES, SHOULD BE REMOVED FOR COMPITITION
-	private double leftMotor1Voltage;
-	private double leftMotor2Voltage;
-	private double leftMotor3Voltage;
-	private double rightMotor1Voltage;
-	private double rightMotor2Voltage;
-	private double rightMotor3Voltage;
+	private volatile double leftMotor1Voltage;
+	private volatile double leftMotor2Voltage;
+	private volatile double leftMotor3Voltage;
+	private volatile double rightMotor1Voltage;
+	private volatile double rightMotor2Voltage;
+	private volatile double rightMotor3Voltage;
 
 	//declare TCP severs...ONLY FOR DEBUGGING PURPOSES, SHOULD BE REMOVED FOR COMPITITION
 	TCPSocketSender TCPdrivePosController;
