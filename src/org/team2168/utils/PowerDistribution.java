@@ -205,6 +205,13 @@ public class PowerDistribution {
 			return false;
 	}
 	
+	public boolean isChanelThirteenTrip() {
+		if (channelError[13] == 2)
+			return true;
+		else
+			return false;
+	}
+	
 	public boolean isChanelFourteenTrip() {
 		if (channelError[14] == 2) 
 			return true;

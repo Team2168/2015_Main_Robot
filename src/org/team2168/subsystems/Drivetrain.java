@@ -29,9 +29,9 @@ public class Drivetrain extends Subsystem {
 	private SpeedController leftMotor3;
 	private SpeedController rightMotor3;
 
-	private AverageEncoder drivetrainLeftEncoder;
-	private AverageEncoder drivetrainRightEncoder;
-	private ADXRS453Gyro gyroSPI;
+	public AverageEncoder drivetrainLeftEncoder;
+	public AverageEncoder drivetrainRightEncoder;
+	public ADXRS453Gyro gyroSPI;
 	public IMU imu;
 
 	private static final boolean LEFT_INVERTED = false;
