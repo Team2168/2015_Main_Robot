@@ -157,6 +157,9 @@ public class Robot extends IterativeRobot {
 		if (autonomousCommand != null) {
 			autonomousCommand.start();
 		}
+		
+		Scheduler.getInstance().enable();
+		
 	}
 
 	/**
@@ -178,6 +181,7 @@ public class Robot extends IterativeRobot {
 		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
 		}
+		Scheduler.getInstance().enable();
 	}
 
 	/**
