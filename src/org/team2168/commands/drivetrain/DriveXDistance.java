@@ -34,7 +34,7 @@ public class DriveXDistance extends Command{
 
 	/**
 	 * Move the drivetrain forward the specified distance.
-	 * @param distance in inches
+	 * @param distance in feet
 	 */
 	public DriveXDistance(double distance) {
 		requires(Robot.drivetrain);

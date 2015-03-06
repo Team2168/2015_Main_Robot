@@ -350,7 +350,7 @@ public class Drivetrain extends Subsystem {
 
 	/**
 	 * Get the distance traveled by the left wheels.
-	 * @return distance traveled in inches.
+	 * @return distance traveled in feet.
 	 */
 	public double getLeftPosition() {
 		return drivetrainLeftEncoder.getPos();
@@ -358,7 +358,7 @@ public class Drivetrain extends Subsystem {
 
 	/**
 	 * Get the distance traveled by the right wheels.
-	 * @return distance traveled in inches
+	 * @return distance traveled in feet.
 	 */
 	public double getRightPosition() {
 		return drivetrainRightEncoder.getPos();
@@ -422,6 +422,13 @@ public class Drivetrain extends Subsystem {
 	 */
 	public boolean isGyroCalibrated() {
 		return gyroSPI.hasCompletedCalibration();
+	}
+
+	/**
+	 * @return true if the gyro is being calibrated.
+	 */
+	public boolean isGyroCalibrating() {
+		return gyroSPI.isCalibrating();
 	}
 
 	/**
