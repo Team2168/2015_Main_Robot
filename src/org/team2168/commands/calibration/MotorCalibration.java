@@ -85,8 +85,9 @@ public class MotorCalibration extends Command {
 	 */
 	protected void end() {
 		double rate;
+		boolean passed = false;
 
-		//Stop the motor
+		//Stop driving the motor
 		setSpeed(0.0);
 
 		//calculate our rate of travel
@@ -95,38 +96,51 @@ public class MotorCalibration extends Command {
 		//Check if we passed
 		switch(motorNumber) {
 		case RobotMap.DRIVETRAIN_RIGHT_MOTOR_1:
-			Robot.drivetrain.rightSelfTest1 = (rate >= DRIVETRAIN_MIN_RATE);
+			passed = (rate >= DRIVETRAIN_MIN_RATE);
+			Robot.drivetrain.rightSelfTest1 &= passed;
 			break;
 		case RobotMap.DRIVETRAIN_RIGHT_MOTOR_2:
-			Robot.drivetrain.rightSelfTest2 = (rate >= DRIVETRAIN_MIN_RATE);
+			passed = (rate >= DRIVETRAIN_MIN_RATE);
+			Robot.drivetrain.rightSelfTest2 &= passed;
 			break;
 		case RobotMap.DRIVETRAIN_RIGHT_MOTOR_3:
-			Robot.drivetrain.rightSelfTest3 = (rate >= DRIVETRAIN_MIN_RATE);
+			passed = (rate >= DRIVETRAIN_MIN_RATE);
+			Robot.drivetrain.rightSelfTest3 &= passed;
 			break;
 		case RobotMap.DRIVETRAIN_LEFT_MOTOR_1:
-			Robot.drivetrain.leftSelfTest1 = (rate >= DRIVETRAIN_MIN_RATE);
+			passed = (rate >= DRIVETRAIN_MIN_RATE);
+			Robot.drivetrain.leftSelfTest1 &= passed;
 			break;
 		case RobotMap.DRIVETRAIN_LEFT_MOTOR_2:
-			Robot.drivetrain.leftSelfTest2 = (rate >= DRIVETRAIN_MIN_RATE);
+			passed = (rate >= DRIVETRAIN_MIN_RATE);
+			Robot.drivetrain.leftSelfTest2 &= passed;
 			break;
 		case RobotMap.DRIVETRAIN_LEFT_MOTOR_3:
-			Robot.drivetrain.leftSelfTest3 = (rate >= DRIVETRAIN_MIN_RATE);
+			passed = (rate >= DRIVETRAIN_MIN_RATE);
+			Robot.drivetrain.leftSelfTest3 &= passed;
 			break;
 		case RobotMap.LIFT_MOTOR:
-			Robot.lift.liftSelfTest = (rate >= LIFT_MIN_RATE);
+			passed = (rate >= LIFT_MIN_RATE);
+			Robot.lift.liftSelfTest &= passed;
 			break;
 		case RobotMap.WINCH_MOTOR:
-			Robot.winch.winchSelfTest = true;
+			passed = true;
+			Robot.winch.winchSelfTest &= passed;
 			break;
 		case RobotMap.INTAKE_LEFT_MOTOR:
-			Robot.intake.leftIntakeSelfTest = true;
+			passed = true;
+			Robot.intake.leftIntakeSelfTest &= passed;
 			break;
 		case RobotMap.INTAKE_RIGHT_MOTOR:
-			Robot.intake.rightIntakeSelfTest = true;
+			passed = true;
+			Robot.intake.rightIntakeSelfTest &= passed;
 			break;
 		default:
 			break;
 		}
+
+		System.out.println("  Self Test: Motor on PWM_" + motorNumber
+				+ "passed test: " + passed + " with rate of " + rate);
 	}
 
 	/**
