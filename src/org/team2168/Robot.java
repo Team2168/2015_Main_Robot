@@ -4,6 +4,10 @@ package org.team2168;
 import org.team2168.PID.pathplanner.FalconPathPlanner;
 import org.team2168.PID.trajectory.LoadPathFile;
 import org.team2168.PID.trajectory.Path;
+import org.team2168.commands.Sleep;
+import org.team2168.commands.auto.AutoLiftOneTote;
+import org.team2168.commands.auto.AutoLiftThreeTotes;
+import org.team2168.commands.lift.ZeroLift;
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.Gripper;
 import org.team2168.subsystems.Intake;
@@ -22,6 +26,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.tables.ITable;
 
 /**
@@ -59,6 +65,8 @@ public class Robot extends IterativeRobot {
 	
 	public static Path drivePath;
 
+	SendableChooser autoChooser;
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -106,10 +114,27 @@ public class Robot extends IterativeRobot {
 			System.out.println(drivePath.getRightWheelTrajectory().getSegment(s));
 		}
 		
+		autoSelectInit();
+		
 		System.out.println("Bot Finished Loading.");
 	}
 
 
+	/**
+	 * Creates Autonomous mode chooser.
+	 */
+	private void autoSelectInit() {
+		//NOTE: ONLY ADD AutoCommandGroup objects to this chooser!
+		autoChooser = new SendableChooser();
+		autoChooser.addDefault("Do Nothing", new ZeroLift());
+		autoChooser.addObject("One Tote", new AutoLiftOneTote());
+		autoChooser.addObject("Three Tote", new AutoLiftThreeTotes());
+		//autoChooser.addObject("Center_RotDrvFwdHotGoal_1Ball", new Center_RotDrvFwdHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
+		//autoChooser.addObject("ShootStraight_2BallDrvFwd", new ShootStraight_2Ball_DrvFwd());
+		SmartDashboard.putData("Autonomous Mode Chooser", autoChooser);
+	}
+
+	
 	/**
 	 * This method runs periodically when the robot is disabled
 	 */
@@ -121,6 +146,7 @@ public class Robot extends IterativeRobot {
 	 * This method initializes the autonomous commands
 	 */
 	public void autonomousInit() {
+		
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null) {
 			autonomousCommand.start();
@@ -131,6 +157,7 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
+		autonomousCommand = (Command) autoChooser.getSelected();
 		Scheduler.getInstance().run();
 	}
 
@@ -152,6 +179,7 @@ public class Robot extends IterativeRobot {
 	 * to reset subsystems before shutting down.
 	 */
 	public void disabledInit() {
+		autonomousCommand = (Command) autoChooser.getSelected();
 		Robot.drivetrain.gyroSPI.calibrate();
 	}
 

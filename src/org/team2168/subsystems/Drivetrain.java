@@ -402,4 +402,54 @@ public class Drivetrain extends Subsystem {
 	public void resetGyro() {
 		gyroSPI.reset();
 	}
+	
+	 /**
+     * A  simple rate limiter.
+     * http://www.chiefdelphi.com/forums/showpost.php?p=1212189&postcount=3
+     * 
+     * @param input the input value (speed from command/joystick)
+	 * @param speed the speed currently being traveled at
+	 * @param limit the rate limit
+	 * @return the new output speed (rate limited)
+     */
+    public static double rateLimit(double input, double speed, double limit) {
+    	return rateLimit(input, speed, limit, limit);
+    }
+    
+    /**
+	 * A simple rate limiter.
+	 * http://www.chiefdelphi.com/forums/showpost.php?p=1212189&postcount=3
+	 * 
+	 * @param input the input value (speed from command/joystick)
+	 * @param speed the speed currently being traveled at
+	 * @param posRateLimit the rate limit for accelerating
+	 * @param negRateLimit the rate limit for decelerating
+	 * @return the new output speed (rate limited)
+	 */
+	public static double rateLimit(double input, double speed,
+			double posRateLimit, double negRateLimit) {
+		if (input > 0) {
+			if (input > (speed + posRateLimit)) {
+				//Accelerating positively
+		        speed = speed + posRateLimit;
+			} else if (input < (speed - negRateLimit)) {
+				//Decelerating positively 
+		        speed = speed - negRateLimit;
+			} else {
+		        speed = input;
+			}
+		} else {
+			if (input < (speed - posRateLimit)) {
+				//Accelerating negatively
+		        speed = speed - posRateLimit;
+			} else if (input > (speed + negRateLimit)) {
+				//Decelerating negatively
+		        speed = speed + negRateLimit;
+			} else {
+		        speed = input;
+			}
+		}
+		return speed;
+	}
+	
 }

@@ -98,25 +98,26 @@ public class Lift extends Subsystem {
 	 * @param speed value from -1.0 to 1.0, positive drives the lift up.
 	 */
 	public void drive(double speed) {
-		speed = Util.limit(speed, -1.0, 1.0);
-		if (MOTOR_INVERTED)
-			speed = -speed;
-
-		if (Math.abs(speed) < RobotMap.LIFT_MIN_SPEED)
-			speed = 0;
+		//speed = Util.limit(speed, -1.0, 1.0);
 		
-		if (speed > 0 && !Robot.lift.isFullyRaised()) {
+		if (speed > RobotMap.LIFT_MIN_SPEED && !Robot.lift.isFullyRaised()) {
+			//Traveling up
 			Robot.lift.disableBrake();
 		}
-		else if (speed < 0 && !Robot.lift.isFullyLowered()) {
+		else if (speed < -RobotMap.LIFT_MIN_SPEED && !Robot.lift.isFullyLowered()) {
+			//Traveling down
 			Robot.lift.disableBrake();
-		}
-		else
-		{
+		} 
+		else {
+			speed = 0.0;
 			Robot.lift.enableBrake();
 		}
 		
+		if (MOTOR_INVERTED)
+			speed = -speed;
+		
 		liftMotor.set(speed);
+		System.out.println(speed);
 		motorVoltage = Robot.pdp.getBatteryVoltage() * speed;
 	}
 

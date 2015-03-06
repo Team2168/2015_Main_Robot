@@ -110,7 +110,6 @@ public class RobotMap {
 	public static final double autoNormalSpeed = 0.5;
 	public static final double wheelbase = 2; //units must match PositionReturnType (feet)
 
-
 	/*************************************************************************
 	 *                              LIFT PARAMETERS
 	 *************************************************************************/

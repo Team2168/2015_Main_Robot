@@ -107,6 +107,9 @@ public class ConsolePrinter {
 			SmartDashboard.putNumber("Current Rate", Robot.drivetrain.gyroSPI.currentRate);
 			SmartDashboard.putNumber("Current Time", Robot.drivetrain.gyroSPI.timeElapsed);
 			SmartDashboard.putNumber("Drift Rate", Robot.drivetrain.gyroSPI.driftRate);
+
+			SmartDashboard.putBoolean("Lift Lowered", Robot.lift.isFullyLowered());
+			SmartDashboard.putBoolean("Lift Raised", Robot.lift.isFullyRaised());
 			
 			
 //				    	//file log

@@ -32,7 +32,7 @@ public class ZeroLift extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.lift.isFullyLowered();
+    	return Robot.lift.isFullyLowered();
     }
 
     // Called once after isFinished returns true

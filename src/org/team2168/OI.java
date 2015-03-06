@@ -19,6 +19,7 @@ import org.team2168.commands.pusher.PushTotes;
 import org.team2168.commands.pusher.RetractPusher;
 import org.team2168.utils.F310;
 import org.team2168.commands.drivetrain.DriveXDistance;
+import org.team2168.commands.drivetrain.RotateXDistance;
 import org.team2168.commands.drivetrain.PIDCommands.DriveLeftPIDPath;
 import org.team2168.commands.drivetrain.PIDCommands.DrivePIDPath;
 import org.team2168.commands.drivetrain.PIDCommands.DrivePIDPause;
@@ -86,7 +87,9 @@ public class OI {
         commandsTestJoystick.ButtonBack().whenPressed(new DrivePIDPause());
         commandsTestJoystick.ButtonRightBumper().whenPressed(new DriveXDistance(18,0.2,1));
 		commandsTestJoystick.ButtonA().whenPressed(new ZeroLift());
-
+		commandsTestJoystick.ButtonY().whenPressed(new RotateXDistance(90));
+		
+		
 	}
 
 	/**
