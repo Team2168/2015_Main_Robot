@@ -4,7 +4,6 @@ package org.team2168;
 import org.team2168.PID.pathplanner.FalconPathPlanner;
 import org.team2168.PID.trajectory.LoadPathFile;
 import org.team2168.PID.trajectory.Path;
-import org.team2168.commands.Sleep;
 import org.team2168.commands.auto.AutoLiftOneTote;
 import org.team2168.commands.auto.AutoLiftThreeTotes;
 import org.team2168.commands.lift.ZeroLift;
@@ -21,14 +20,11 @@ import org.team2168.utils.PowerDistribution;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.tables.ITable;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -54,7 +50,7 @@ public class Robot extends IterativeRobot {
 	ConsolePrinter printer;  //SmartDash printer
 
 	public static BuiltInAccelerometer accel;
-	
+
 	// Auto command objects
 	Command autonomousCommand;
 	Command driveWithJoystick;
@@ -62,11 +58,11 @@ public class Robot extends IterativeRobot {
 	private static DigitalInput practiceBot;
 	public static FalconPathPlanner path;
 
-	
+
 	public static Path drivePath;
 
 	SendableChooser autoChooser;
-	
+
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -89,16 +85,16 @@ public class Robot extends IterativeRobot {
 
 		// instantiate the command used for the autonomous period
 		// autonomousCommand = new ExampleCommand();
-		
+
 		pathPlanner();
-		
+
 		drivePath = LoadPathFile.readFile("/home/lvuser/2168StraightPath.txt");
-		
-		
-        //create thread to write dashboard variables
+
+
+		//create thread to write dashboard variables
 		printer = new ConsolePrinter(RobotMap.SmartDashThreadPeriod);
 		printer.startThread();
-		
+
 		oi = OI.getInstance();
 
 		System.out.println(drivePath.getLeftWheelTrajectory().getNumSegments());
@@ -108,14 +104,14 @@ public class Robot extends IterativeRobot {
 		for (int s = 0; s <= drivePath.getLeftWheelTrajectory().getNumSegments(); s++) {
 			System.out.println(drivePath.getLeftWheelTrajectory().getSegment(s));
 		}
-		
+
 		System.out.println("Right Wheel Trajectory");
 		for (int s = 0; s <= drivePath.getRightWheelTrajectory().getNumSegments(); s++) {
 			System.out.println(drivePath.getRightWheelTrajectory().getSegment(s));
 		}
-		
+
 		autoSelectInit();
-		
+
 		System.out.println("Bot Finished Loading.");
 	}
 
@@ -134,7 +130,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Autonomous Mode Chooser", autoChooser);
 	}
 
-	
+
 	/**
 	 * This method runs periodically when the robot is disabled
 	 */
@@ -146,7 +142,7 @@ public class Robot extends IterativeRobot {
 	 * This method initializes the autonomous commands
 	 */
 	public void autonomousInit() {
-		
+
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null) {
 			autonomousCommand.start();
@@ -180,7 +176,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void disabledInit() {
 		autonomousCommand = (Command) autoChooser.getSelected();
-		Robot.drivetrain.gyroSPI.calibrate();
+		Robot.drivetrain.calibrateGyro();
 	}
 
 	/**
@@ -206,7 +202,7 @@ public class Robot extends IterativeRobot {
 	public static boolean isPracticeRobot() {
 		return !practiceBot.get();
 	}
-	
+
 	public void pathPlanner()
 	{
 		long start = System.currentTimeMillis();
@@ -214,13 +210,13 @@ public class Robot extends IterativeRobot {
 		double[][] waypoints = new double[][]{
 				{4, 6},
 				{4, 16}
-		}; 
+		};
 
 		double totalTime = 5; //seconds
 		double timeStep = 0.07; //period of control loop on Rio, seconds
 		double robotTrackWidth = 2; //distance between left and right wheels, feet
 
-		
+
 		path = new FalconPathPlanner(waypoints);
 		path.calculate(totalTime, timeStep, robotTrackWidth);
 

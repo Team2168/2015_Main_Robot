@@ -29,9 +29,9 @@ public class Drivetrain extends Subsystem {
 	private SpeedController leftMotor3;
 	private SpeedController rightMotor3;
 
-	public AverageEncoder drivetrainLeftEncoder;
-	public AverageEncoder drivetrainRightEncoder;
-	public ADXRS453Gyro gyroSPI;
+	private AverageEncoder drivetrainLeftEncoder;
+	private AverageEncoder drivetrainRightEncoder;
+	private ADXRS453Gyro gyroSPI;
 	public IMU imu;
 
 	private static final boolean LEFT_INVERTED = false;
@@ -407,6 +407,21 @@ public class Drivetrain extends Subsystem {
 	 */
 	public void resetGyro() {
 		gyroSPI.reset();
+	}
+
+	/**
+	 * Calibrate gyro.
+	 * This should only be called if the robot will be stationary for the calibration period.
+	 */
+	public void calibrateGyro() {
+		gyroSPI.calibrate();
+	}
+
+	/**
+	 * @return true if the gyro completed its previous calibration sequence.
+	 */
+	public boolean isGyroCalibrated() {
+		return gyroSPI.hasCompletedCalibration();
 	}
 
 	/**
