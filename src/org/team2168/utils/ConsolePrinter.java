@@ -128,7 +128,6 @@ public class ConsolePrinter {
 			
 			SmartDashboard.putNumber("Match Time:", DriverStation.getInstance().getMatchTime());
 			
-			
 							    	//file log
 							    	log.println(Timer.getFPGATimestamp() + "\t" +
 							    			Robot.drivetrain.getLeft1MotorVoltage() + "\t" +
