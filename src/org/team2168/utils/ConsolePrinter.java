@@ -10,6 +10,7 @@ import org.team2168.Robot;
 import org.team2168.RobotMap;
 import org.team2168.subsystems.Drivetrain;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -120,6 +121,18 @@ public class ConsolePrinter {
 			SmartDashboard.putBoolean("Chanel Fourteen Trip", Robot.pdp.isChanelFourteenTrip());
 			SmartDashboard.putBoolean("Chanel Fifteen Trip", Robot.pdp.isChanelFifteenTrip());
 			SmartDashboard.putBoolean("Chanel Sixteen Trip", Robot.pdp.isChanelSixteenTrip());
+			
+			SmartDashboard.putBoolean("Brake Enabled", Robot.lift.isBrakeEnabled());
+			SmartDashboard.putBoolean("Brake Disabled", Robot.lift.isBrakeDisabled());
+			
+			SmartDashboard.putBoolean("Intake Engaged", Robot.intake.isIntakeEngaged());
+			SmartDashboard.putBoolean("Intake Disabled", Robot.intake.isIntakeDisengaged());
+			
+			SmartDashboard.putBoolean("Gripper Engaged", Robot.gripper.isGripperEngaged());
+			SmartDashboard.putBoolean("Gripper Disable", Robot.gripper.isGripperDisengaged());
+			
+			SmartDashboard.putNumber("Match Time:", DriverStation.getInstance().getMatchTime();
+			
 			
 							    	//file log
 							    	log.println(Timer.getFPGATimestamp() + "\t" +
