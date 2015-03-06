@@ -27,8 +27,7 @@ public class PowerDistribution {
 	private volatile double temp;
 
 	public static final int NUM_OF_PDP_CHANNELS = 16;
-
-
+	
 	public PowerDistribution(long period) {
 		this.period = period;
 		pdp = new PowerDistributionPanel();
@@ -96,5 +95,141 @@ public class PowerDistribution {
 		public void run() {
 			console.run();
 		}
+	}
+	
+	/**
+	 * Gets total Current
+	 * @return Total Current
+	 */
+	public double getTotalCurrent() {
+		return totalCurrent;
+	}
+	
+	/**
+	 * Gets total Energy
+	 * @return Total Energy
+	 */
+	public double totalEnergy() {
+		return totalEnergy;
+	}
+
+	/**
+	 * Gets total Power
+	 * @return Total Power
+	 */
+	public double totalPower() {
+		return totalPower;
+	}
+	
+	public boolean isChanelOneTrip() {
+		if (channelError[1] == 2)
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean isChanelTwoTrip() {
+		if (channelError[2] == 2)
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean isChanelThreeTrip() {
+		if (channelError[3] == 2) 
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean isChanelFourTrip() {
+		if (channelError[4] == 2) 
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean isChanelFiveTrip() {
+		if (channelError[5] == 2) 
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean isChanelSixTrip() {
+		if (channelError[6] == 2) 
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean isChanelSevenTrip() {
+		if (channelError[7] == 2) 
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean isChanelEightTrip() {
+		if (channelError[8] == 2) 
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean isChanelNineTrip() {
+		if (channelError[9] == 2) 
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean isChanelTenTrip() {
+		if (channelError[10] == 2) 
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean isChanelElevenTrip() {
+		if (channelError[11] == 2) 
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean isChanelTwelveTrip() {
+		if (channelError[12] == 2) 
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean isChanelThirteenTrip() {
+		if (channelError[13] == 2)
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean isChanelFourteenTrip() {
+		if (channelError[14] == 2) 
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean isChanelFifteenTrip() {
+		if (channelError[15] == 2) 
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean isChanelSixteenTrip() {
+		if (channelError[16] == 2) 
+			return true;
+		else
+			return false;
 	}
 }

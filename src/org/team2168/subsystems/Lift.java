@@ -29,7 +29,7 @@ public class Lift extends Subsystem {
 
 	private static final boolean MOTOR_INVERTED = false;
 
-	private AverageEncoder liftEncoder;
+	public AverageEncoder liftEncoder;
 	public PIDPosition liftController;
 
 	private static DigitalInput fullyRaised;
