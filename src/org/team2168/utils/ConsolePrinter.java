@@ -127,6 +127,17 @@ public class ConsolePrinter {
 			SmartDashboard.putBoolean("Gripper Disable", Robot.gripper.isGripperDisengaged());
 
 
+			SmartDashboard.putBoolean("DT Left 1 Self Test", Robot.drivetrain.leftSelfTest1);
+			SmartDashboard.putBoolean("DT Left 2 Self Test", Robot.drivetrain.leftSelfTest2);
+			SmartDashboard.putBoolean("DT Left 3 Self Test", Robot.drivetrain.leftSelfTest3);
+			SmartDashboard.putBoolean("DT Right 1 Self Test", Robot.drivetrain.rightSelfTest1);
+			SmartDashboard.putBoolean("DT Right 2 Self Test", Robot.drivetrain.rightSelfTest2);
+			SmartDashboard.putBoolean("DT Right 3 Self Test", Robot.drivetrain.rightSelfTest3);
+			SmartDashboard.putBoolean("Intake Left Self Test", Robot.intake.leftIntakeSelfTest);
+			SmartDashboard.putBoolean("Intake Right Self Test", Robot.intake.rightIntakeSelfTest);
+			SmartDashboard.putBoolean("Lift Self Test", Robot.lift.liftSelfTest);
+
+
 			SmartDashboard.putNumber("Match Time:", DriverStation.getInstance().getMatchTime());
 
 			//file log
