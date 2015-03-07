@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj.command.Command;
 public class RotateXDistancePIDZZZ extends Command {
 
 	private double setPoint;
+	private double speed;
+	
 	
     public RotateXDistancePIDZZZ() {
         // Use requires() here to declare subsystem dependencies
@@ -23,23 +25,33 @@ public class RotateXDistancePIDZZZ extends Command {
 
     public RotateXDistancePIDZZZ(double setPoint){
  	   this();
+ 	   this.speed = 1;
  	   this.setPoint = setPoint;
     }
 
+    public RotateXDistancePIDZZZ(double setPoint, double speed){
+  	   this();
+  	   this.speed = speed;
+  	   this.setPoint = setPoint;
+     }
 
     // Called just before this Command runs the first time
     
 	protected void initialize() {
 		Robot.drivetrain.rotateController.reset();
-		Robot.drivetrain.rotateController.Enable();
 		Robot.drivetrain.rotateController.setSetPoint(setPoint);
+		Robot.drivetrain.rotateController.setMaxPosOutput(speed);
+		Robot.drivetrain.rotateController.setMaxNegOutput(-speed);
+		Robot.drivetrain.gyroSPI.reset();
+		Robot.drivetrain.rotateController.Enable();
+		
     }
 
     // Called repeatedly when this Command is scheduled to run
     
 	protected void execute() {
 		
-		Robot.drivetrain.tankDrive(Robot.drivetrain.rotateController.getControlOutput(),Robot.drivetrain.rotateController.getControlOutput());
+		Robot.drivetrain.tankDrive(Robot.drivetrain.rotateController.getControlOutput(),-Robot.drivetrain.rotateController.getControlOutput());
 	
 		
     }

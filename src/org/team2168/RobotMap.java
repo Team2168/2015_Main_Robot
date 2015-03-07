@@ -213,8 +213,8 @@ public class RobotMap {
 	public static final double liftDUp = 0.0002573;
 	
 	public static final double liftPDw = 0.35;
-	public static final double liftIDw = 0.0080; 
-	public static final double liftDDw = 0.0002573;
+	public static final double liftIDw = 0.010; 
+	public static final double liftDDw = 0.0002073;
 	
 	
 //	public static final double liftPUp = 0.0590;

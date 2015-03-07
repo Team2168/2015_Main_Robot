@@ -7,6 +7,7 @@ import org.team2168.commands.gripper.ReleaseGripper;
 import org.team2168.commands.intake.DisengageIntake;
 import org.team2168.commands.intake.EngageIntake;
 import org.team2168.commands.intake.IntakeSingleTote;
+import org.team2168.commands.intake.OpenWhenSensed;
 import org.team2168.commands.intake.SetIntakeSpeed;
 import org.team2168.commands.intake.StopIntakeWheels;
 import org.team2168.commands.lift.DisableBrake;
@@ -18,8 +19,10 @@ import org.team2168.commands.lift.ZeroLift;
 import org.team2168.commands.pusher.PushTotes;
 import org.team2168.commands.pusher.RetractPusher;
 import org.team2168.utils.F310;
+import org.team2168.commands.calibration.TestAllMotors;
 import org.team2168.commands.drivetrain.DriveXDistance;
 import org.team2168.commands.drivetrain.RotateXDistance;
+import org.team2168.commands.drivetrain.RotateXDistancePIDZZZ;
 import org.team2168.commands.drivetrain.PIDCommands.DriveLeftPIDPath;
 import org.team2168.commands.drivetrain.PIDCommands.DrivePIDPath;
 import org.team2168.commands.drivetrain.PIDCommands.DrivePIDPause;
@@ -84,10 +87,11 @@ public class OI {
         commandsTestJoystick.ButtonStart().whenPressed(new LiftOneTote());
         commandsTestJoystick.ButtonX().whenPressed(new LiftPIDPosition());
         commandsTestJoystick.ButtonB().whenPressed(new LiftPIDPause());
-        commandsTestJoystick.ButtonBack().whenPressed(new DrivePIDPause());
+        commandsTestJoystick.ButtonBack().whenPressed(new OpenWhenSensed());
         commandsTestJoystick.ButtonRightBumper().whenPressed(new DriveXDistance(18,0.2,1));
+        commandsTestJoystick.ButtonLeftBumper().whenPressed(new TestAllMotors());
 		commandsTestJoystick.ButtonA().whenPressed(new ZeroLift());
-		commandsTestJoystick.ButtonY().whenPressed(new RotateXDistance(90));
+		commandsTestJoystick.ButtonY().whenPressed(new RotateXDistancePIDZZZ(45, 0.4));
 		
 		
 	}

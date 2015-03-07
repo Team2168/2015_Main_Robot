@@ -28,13 +28,13 @@ public class TestAllMotors extends CommandGroup {
 		addSequential(new MotorCalibration(RobotMap.DRIVETRAIN_LEFT_MOTOR_3, FORWARD));
 		addSequential(new MotorCalibration(RobotMap.DRIVETRAIN_LEFT_MOTOR_3, REVERSE));
 
-		addSequential(new MotorCalibration(RobotMap.LIFT_MOTOR, FORWARD));
-		addSequential(new MotorCalibration(RobotMap.LIFT_MOTOR, REVERSE));
-
-		addSequential(new MotorCalibration(RobotMap.INTAKE_RIGHT_MOTOR, FORWARD));
-		addSequential(new MotorCalibration(RobotMap.INTAKE_RIGHT_MOTOR, REVERSE));
-
-		addSequential(new MotorCalibration(RobotMap.INTAKE_LEFT_MOTOR, FORWARD));
-		addSequential(new MotorCalibration(RobotMap.INTAKE_LEFT_MOTOR, REVERSE));
+//		addSequential(new MotorCalibration(RobotMap.LIFT_MOTOR, FORWARD));
+//		addSequential(new MotorCalibration(RobotMap.LIFT_MOTOR, REVERSE));
+//
+//		addSequential(new MotorCalibration(RobotMap.INTAKE_RIGHT_MOTOR, FORWARD));
+//		addSequential(new MotorCalibration(RobotMap.INTAKE_RIGHT_MOTOR, REVERSE));
+//
+//		addSequential(new MotorCalibration(RobotMap.INTAKE_LEFT_MOTOR, FORWARD));
+//		addSequential(new MotorCalibration(RobotMap.INTAKE_LEFT_MOTOR, REVERSE));
 	}
 }

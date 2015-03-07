@@ -1123,12 +1123,30 @@ public class PIDPosition implements TCPMessageInterface {
 			// save control output for graphing
 			coNotSaturated = co;
 
+			
+			//deadband compensation
+			if(co < minPosOutput && co >= 0) //controller in pos deadband
+			{
+				errsum = (minPosOutput / i) - prop - deriv;
+				integ = errsum * i;
+				co = prop + deriv + integ;
+			}
+			else if (co > minNegOutput && co <= 0) //controller in neg deadband)
+			{
+				errsum = (minNegOutput / i) - prop - deriv;
+				integ = errsum * i;
+				co = prop + deriv + integ;
+			}
+			
+			
 			//Saturation
 			if(co > maxPosOutput)
 				co = maxPosOutput;
 			if(co < maxNegOutput)
 				co = maxNegOutput;
 
+			
+			
 			//FIXME : Make apart of method
 			if(Math.abs(err) < 0.2)
 			{
