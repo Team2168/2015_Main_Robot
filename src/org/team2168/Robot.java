@@ -6,6 +6,7 @@ import org.team2168.PID.trajectory.Path;
 import org.team2168.commands.auto.Auto_NoTote_DoNothing;
 import org.team2168.commands.auto.Auto_NoTote_DriveForward;
 import org.team2168.commands.auto.Auto_OneTote_Rotate90Push;
+import org.team2168.commands.auto.Auto_ThreeToteStack;
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.Gripper;
 import org.team2168.subsystems.Intake;
@@ -36,7 +37,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 
 	public static OI oi;
-
 	// Subsystem objects
 	public static Drivetrain drivetrain;
 	public static Intake intake;
@@ -246,10 +246,10 @@ public class Robot extends IterativeRobot {
 	private void autoSelectInit() {
 		// NOTE: ONLY ADD AutoCommandGroup objects to this chooser!
 		autoChooser = new SendableChooser();
-		autoChooser.addDefault("No Tote _ Drive Forward", new Auto_NoTote_DriveForward());
+		autoChooser.addDefault("dEFAULT", new Auto_OneTote_Rotate90Push());
 		autoChooser.addObject("No Tote _ Do Nothing", new Auto_NoTote_DoNothing());
 		autoChooser.addObject("One Tote _ Rotate Push Fwd", new Auto_OneTote_Rotate90Push());
-
+		autoChooser.addObject("Three Tote", new Auto_ThreeToteStack());
 
 		SmartDashboard.putData("Autonomous Mode Chooser", autoChooser);
 

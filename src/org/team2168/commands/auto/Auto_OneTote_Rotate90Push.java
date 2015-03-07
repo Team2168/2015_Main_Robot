@@ -24,7 +24,7 @@ public class Auto_OneTote_Rotate90Push extends CommandGroup {
     	//Intakes the tote
     	addSequential(new IntakeSingleTote(),2);
     	
-    	addParallel(new SetIntakeSpeed(-0.5),3);
+    	addParallel(new SetIntakeSpeed(0.5),3);
     	
     	//Rotates 90 
     	addSequential(new RotateXDistancePIDZZZ(90, 0.4),4);
