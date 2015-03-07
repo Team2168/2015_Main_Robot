@@ -5,6 +5,7 @@ import org.team2168.PID.trajectory.LoadPathFile;
 import org.team2168.PID.trajectory.Path;
 import org.team2168.commands.auto.Auto_NoTote_DoNothing;
 import org.team2168.commands.auto.Auto_NoTote_DriveForward;
+import org.team2168.commands.auto.Auto_OneTote_Rotate90Push;
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.Gripper;
 import org.team2168.subsystems.Intake;
@@ -247,6 +248,7 @@ public class Robot extends IterativeRobot {
 		autoChooser = new SendableChooser();
 		autoChooser.addDefault("No Tote _ Drive Forward", new Auto_NoTote_DriveForward());
 		autoChooser.addObject("No Tote _ Do Nothing", new Auto_NoTote_DoNothing());
+		autoChooser.addObject("One Tote _ Rotate Push Fwd", new Auto_OneTote_Rotate90Push());
 
 
 		SmartDashboard.putData("Autonomous Mode Chooser", autoChooser);
