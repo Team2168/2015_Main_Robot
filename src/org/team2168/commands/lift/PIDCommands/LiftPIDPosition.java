@@ -70,6 +70,7 @@ public class LiftPIDPosition extends Command {
     
 	protected void end() {
 		Robot.lift.liftController.Pause();
+		Robot.lift.drive(0);
     }
 
     // Called when another command which requires one or more of the same
