@@ -1148,7 +1148,7 @@ public class PIDPosition implements TCPMessageInterface {
 			
 			
 			//FIXME : Make apart of method
-			if(Math.abs(err) < 0.2)
+			if(Math.abs(err) < acceptErrorDiff)
 			{
 				co = 0;
 				this.isFinished = true;

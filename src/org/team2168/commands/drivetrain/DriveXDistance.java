@@ -63,8 +63,11 @@ public class DriveXDistance extends Command{
 		Robot.drivetrain.driveTrainPosController.setSetPoint(endDistance);
 		Robot.drivetrain.driveTrainPosController.setMaxPosOutput(speed);
 		Robot.drivetrain.driveTrainPosController.setMinPosOutput(-speed);
+		Robot.drivetrain.driveTrainPosController.setAcceptErrorDiff(0.1); //feet
 		Robot.drivetrain.rotateController.setSetPoint(angle);
-
+		
+		
+		
 		// 		//This code helps offset uneven left/right gearbox power, like a feedworward term
 		//		//modify speeds based on power shift, - means put more power to left side, + means put more power to right side
 		//		//this power shift helps accommodate for unequal power in drivetrains
