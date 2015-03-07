@@ -14,34 +14,41 @@ import edu.wpi.first.wpilibj.command.Command;
 public class RotateXDistancePIDZZZ extends Command {
 
 	private double setPoint;
-	private double speed;
-	
+	private double maxSpeed;
+	private double minSpeed;
 	
     public RotateXDistancePIDZZZ() {
         // Use requires() here to declare subsystem dependencies
     	requires(Robot.drivetrain);
     	this.setPoint = Robot.drivetrain.rotateController.getSetPoint();
+    	this.maxSpeed = 1;
+    	this.minSpeed = 0;
     }
 
     public RotateXDistancePIDZZZ(double setPoint){
  	   this();
- 	   this.speed = 1;
  	   this.setPoint = setPoint;
     }
 
-    public RotateXDistancePIDZZZ(double setPoint, double speed){
-  	   this();
-  	   this.speed = speed;
-  	   this.setPoint = setPoint;
+    public RotateXDistancePIDZZZ(double setPoint, double maxSpeed){
+  	   this(setPoint);
+  	   this.maxSpeed = maxSpeed;
      }
+    
+    public RotateXDistancePIDZZZ(double setPoint, double maxSpeed, double minSpeed){
+   	   this(setPoint, maxSpeed);
+   	   this.minSpeed = minSpeed;
+      }    
 
     // Called just before this Command runs the first time
     
 	protected void initialize() {
 		Robot.drivetrain.rotateController.reset();
 		Robot.drivetrain.rotateController.setSetPoint(setPoint);
-		Robot.drivetrain.rotateController.setMaxPosOutput(speed);
-		Robot.drivetrain.rotateController.setMaxNegOutput(-speed);
+		Robot.drivetrain.rotateController.setMaxPosOutput(maxSpeed);
+		Robot.drivetrain.rotateController.setMaxNegOutput(-maxSpeed);
+		Robot.drivetrain.rotateController.setMinPosOutput(minSpeed);
+		Robot.drivetrain.rotateController.setMinNegOutput(-minSpeed);
 		Robot.drivetrain.gyroSPI.reset();
 		Robot.drivetrain.rotateController.Enable();
 		

@@ -12,7 +12,7 @@ public class DriveXDistance extends Command{
 	private double endDistance;
 	private boolean finished;
 	private double angle;
-	private boolean drivingForward = false;
+
 	private double powerShift;
 
 	double rightSpeed = 0;
@@ -20,15 +20,6 @@ public class DriveXDistance extends Command{
 
 	static final double DIST_ERROR_TOLERANCE_INCH = 1;
 	static final double TURN_ERROR_TOLERANCE_DEG =1;
-
-	double pTurn = 0.001;
-	double iTurn = 0.00001;
-	double pDrive = 0;
-
-
-	//integral
-	double errsum = 0;
-	double olderrsum = 0;
 
 	double lastRotateOutput;
 
@@ -74,14 +65,7 @@ public class DriveXDistance extends Command{
 		Robot.drivetrain.driveTrainPosController.setMinPosOutput(-speed);
 		Robot.drivetrain.rotateController.setSetPoint(angle);
 
-		//
-		//		drivingForward = Robot.drivetrain.getAveragedDistance() < endDistance;
-		//
-		//		//don't drive if the destination position is really close to our
-		//		//current position.
-		//		finished = Math.abs(distanceGoal) < 0.1;
-		//
-		//
+		// 		//This code helps offset uneven left/right gearbox power, like a feedworward term
 		//		//modify speeds based on power shift, - means put more power to left side, + means put more power to right side
 		//		//this power shift helps accommodate for unequal power in drivetrains
 		//
@@ -110,69 +94,6 @@ public class DriveXDistance extends Command{
 
 		Robot.drivetrain.tankDrive(Robot.drivetrain.driveTrainPosController.getControlOutput()+headingCorrection, Robot.drivetrain.driveTrainPosController.getControlOutput()-headingCorrection);
 
-
-		//
-		//		//TODO set the margin of error
-		//
-		//		//displacement error
-		//		double currentDistance = Robot.drivetrain.getAveragedDistance();
-		//		double distError = this.distanceGoal - currentDistance;
-
-		//		//angle error
-		//		double turnError = Robot.drivetrain.gyroSPI.getAngleDeg() - angle;
-		//		double steeringAdjust = pTurn  * turnError;
-		//
-		//
-		//		// calculate integral gain by summing past errors
-		//		errsum = turnError + olderrsum;
-		//		double integ = iTurn * errsum;
-		//
-		//		// save old ErrorSum for use in next loop
-		//		olderrsum += errsum;
-		//
-		////		//Calculate driving speed
-		////		if (distError < DIST_ERROR_TOLERANCE_INCH)
-		////		{
-		////
-		////			leftSpeed = leftSpeed*pDrive*distError;
-		////			rightSpeed = rightSpeed*pDrive*distError;
-		////
-		////		}
-		//
-		//		//make the left/right motors go less fast, to correct angle
-		//		//if the current angle is less than -tolerance, increase left and decrease right, Pgain is neg
-		//		//if the current angle is greater than +tolerance, increase right, and decrease left, Pgain is pos
-		////		if (turnError < -TURN_ERROR_TOLERANCE_DEG || turnError > TURN_ERROR_TOLERANCE_DEG)
-		////		{
-		//				leftSpeed = leftSpeed + Robot.drivetrain.rotateController.getControlOutput();
-		//				rightSpeed = rightSpeed - Robot.drivetrain.rotateController.getControlOutput();;
-		////		}
-		//
-		//
-		//		//Determine if we are finished
-		//		//check if the robot is at, or past our destination position
-		//		if (finished || (drivingForward && currentDistance >= endDistance) || (!drivingForward && currentDistance <= endDistance))
-		//		{
-		//			//we're there, stop
-		//			Robot.drivetrain.tankDrive(0, 0);
-		//			finished = true;
-		//		}
-		//		else if(currentDistance < endDistance)
-		//			//Drive forward
-		//			Robot.drivetrain.tankDrive(leftSpeed,rightSpeed); //use ratelimiter
-
-
-		//		System.out.println("Right Speed: " + rightSpeed +
-		//				" Left Speed: " + leftSpeed +
-		//				" Angle = " + Robot.drivetrain.gyroSPI.getAngleDeg() +
-		//				" Distance = " + Robot.drivetrain.imu.getPos() +
-		////				" Angle Error = " + turnError +
-		//				" Dist Error = " + Robot.drivetrain.driveTrainPosController.getError()
-		////				" turnGain = "  + turnError +
-		////				" driveGain = " + pDrive*distError
-		//				);
-
-		//System.out.println(drivetrain.getRightTicks() + " " + drivetrain.getAveragedEncoderDistance());
 	}
 
 
