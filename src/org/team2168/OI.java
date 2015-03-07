@@ -1,7 +1,6 @@
 package org.team2168;
 
 
-import org.team2168.commandgroups.DriveLiftToSetPosition;
 import org.team2168.commands.gripper.EngageGripper;
 import org.team2168.commands.gripper.ReleaseGripper;
 import org.team2168.commands.intake.DisengageIntake;
@@ -57,14 +56,12 @@ public class OI {
 
 
 		//DRIVER JOYSTICK BUTTON MAP///////////////////////////////////////////////
-		//driverJoystick.ButtonA().whenPressed(new PushTotes());
-		//driverJoystick.ButtonB().whenPressed(new RetractPusher());
+
 
 		//OPERATOR JOYSTICK BUTTON MAP/////////////////////////////////////////////
-		operatorJoystick.ButtonA().whenPressed(new DriveLiftToSetPosition(RobotMap.MIN_LIFT_HEIGHT));
-		//operatorJoystick.ButtonY().whenPressed(new DriveLiftToSetPosition(RobotMap.LIFT_ABOVE_TOTE));
 		operatorJoystick.ButtonRightDPad().whenPressed(new EngageGripper());
 		operatorJoystick.ButtonLeftDPad().whenPressed(new ReleaseGripper());
+		
 		operatorJoystick.ButtonRightBumper().whenPressed(new EngageIntake());
 		operatorJoystick.ButtonLeftBumper().whenPressed(new DisengageIntake());
 		operatorJoystick.ButtonStart().whenPressed(new PushTotes());

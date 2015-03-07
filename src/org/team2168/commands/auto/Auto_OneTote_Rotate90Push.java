@@ -2,6 +2,7 @@ package org.team2168.commands.auto;
 
 import org.team2168.commands.drivetrain.DriveXDistance;
 import org.team2168.commands.drivetrain.RotateXDistance;
+import org.team2168.commands.drivetrain.RotateXDistancePIDZZZ;
 import org.team2168.commands.intake.IntakeSingleTote;
 import org.team2168.commands.intake.SetIntakeSpeed;
 import org.team2168.commands.lift.LiftOneTote;
@@ -12,12 +13,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutoLiftThreeTotes extends CommandGroup {
+public class Auto_OneTote_Rotate90Push extends CommandGroup {
     
-	private static final double OUTTAKE_TIME_ELAPSED = 3;
-	private static final double AMOUNT_TO_DRIVE = 7;
-	
-    public  AutoLiftThreeTotes() {
+    public  Auto_OneTote_Rotate90Push() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -34,12 +32,21 @@ public class AutoLiftThreeTotes extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
+
+    	//Zeros the lift
+    	addSequential(new ZeroLift(),2);
+    	addSequential(new ZeroLift(),2);
     	
-    	addSequential(new ZeroLift());
-    	addSequential(new AutoOneTote());
-    	addSequential(new AutoOneTote());
+    	//Intakes the tote
+    	addSequential(new IntakeSingleTote(),2);
     	
+    	addParallel(new SetIntakeSpeed(-0.5),3);
     	
+    	//Rotates 90 
+    	addSequential(new RotateXDistancePIDZZZ(90, 0.4),4);
+    	
+    	//Drive 5 feet
+    	addSequential(new DriveXDistance(15, 0.4),10);
     	
     }
 }

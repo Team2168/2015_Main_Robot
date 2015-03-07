@@ -3,9 +3,8 @@ package org.team2168;
 import org.team2168.PID.pathplanner.FalconPathPlanner;
 import org.team2168.PID.trajectory.LoadPathFile;
 import org.team2168.PID.trajectory.Path;
-import org.team2168.commands.auto.AutoLiftOneTote;
-import org.team2168.commands.auto.AutoLiftThreeTotes;
-import org.team2168.commands.drivetrain.DriveXDistance;
+import org.team2168.commands.auto.Auto_NoTote_DoNothing;
+import org.team2168.commands.auto.Auto_NoTote_DriveForward;
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.Gripper;
 import org.team2168.subsystems.Intake;
@@ -246,14 +245,8 @@ public class Robot extends IterativeRobot {
 	private void autoSelectInit() {
 		// NOTE: ONLY ADD AutoCommandGroup objects to this chooser!
 		autoChooser = new SendableChooser();
-		autoChooser.addDefault("Push Tote", new DriveXDistance(12, 0.4));
-		autoChooser.addObject("One Tote", new AutoLiftOneTote());
-		autoChooser.addObject("Three Tote", new AutoLiftThreeTotes());
-		//autoChooser.addObject("Push Tote", new DriveXDistance(12, 0.4));
-		// autoChooser.addObject("Center_RotDrvFwdHotGoal_1Ball", new
-		// Center_RotDrvFwdHotGoal_1Ball(RobotMap.VisionTimeOutSecs.getDouble()));
-		// autoChooser.addObject("ShootStraight_2BallDrvFwd", new
-		// ShootStraight_2Ball_DrvFwd());
+		autoChooser.addDefault("No Tote _ Drive Forward", new Auto_NoTote_DriveForward());
+		autoChooser.addObject("No Tote _ Do Nothing", new Auto_NoTote_DoNothing());
 
 
 		SmartDashboard.putData("Autonomous Mode Chooser", autoChooser);

@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutoLiftOneTote extends CommandGroup {
+public class Auto_NoTote_DoNothing extends CommandGroup {
     
-    public  AutoLiftOneTote() {
+    public  Auto_NoTote_DoNothing() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -31,17 +31,7 @@ public class AutoLiftOneTote extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
 
-    	//Zeros the lift
-    	addSequential(new ZeroLift());
-    	
-    	//Intakes the tote
-    	addSequential(new IntakeSingleTote());
-    	
-    	//Rotates 90 
-    	addSequential(new RotateXDistance(90));
-    	
-    	//Drive 5 feet
-    	addSequential(new DriveXDistance(5));
+    	//just sit in auto
     	
     }
 }
