@@ -7,6 +7,7 @@ import org.team2168.commands.auto.Auto_NoTote_DoNothing;
 import org.team2168.commands.auto.Auto_NoTote_DriveForward;
 import org.team2168.commands.auto.Auto_OneTote_Rotate90Push;
 import org.team2168.commands.auto.Auto_ThreeToteNoBin;
+import org.team2168.commands.auto.Auto_ThreeToteOneBin;
 import org.team2168.commands.auto.Auto_ThreeToteStack;
 import org.team2168.commands.auto.Auto_TwoToteStack;
 import org.team2168.subsystems.Drivetrain;
@@ -248,12 +249,13 @@ public class Robot extends IterativeRobot {
 	private void autoSelectInit() {
 		// NOTE: ONLY ADD AutoCommandGroup objects to this chooser!
 		autoChooser = new SendableChooser();
-		autoChooser.addDefault("dEFAULT", new Auto_OneTote_Rotate90Push());
+		//autoChooser.addDefault("dEFAULT", new Auto_OneTote_Rotate90Push());
 		autoChooser.addObject("No Tote _ Do Nothing", new Auto_NoTote_DoNothing());
 		autoChooser.addObject("One Tote _ Rotate Push Fwd", new Auto_OneTote_Rotate90Push());
 		autoChooser.addObject("Three Tote", new Auto_ThreeToteStack());
 		autoChooser.addObject("Two Tote", new Auto_TwoToteStack());
-		autoChooser.addObject("Three Tote No Bin", new Auto_ThreeToteNoBin());
+		autoChooser.addObject("Three Tote No Bin", new Auto_ThreeToteOneBin());
+		autoChooser.addDefault("Three Tote No Bin", new Auto_ThreeToteNoBin());
 		
 		SmartDashboard.putData("Autonomous Mode Chooser", autoChooser);
 
