@@ -92,9 +92,6 @@ public class Robot extends IterativeRobot {
 		gripper = Gripper.getInstance();
 		pusher = Pusher.getInstance();
 
-		// instantiate the command used for the autonomous period
-		// autonomousCommand = new ExampleCommand();
-
 		pathPlanner();
 
 		drivePath = LoadPathFile.readFile("/home/lvuser/2168StraightPath.txt");
@@ -163,7 +160,6 @@ public class Robot extends IterativeRobot {
 		}
 
 		Scheduler.getInstance().enable();
-
 	}
 
 	/**
@@ -178,13 +174,10 @@ public class Robot extends IterativeRobot {
 	 * This method initializes the teleop commands
 	 */
 	public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-		// teleop starts running. If you want the autonomous to
-		// continue until interrupted by another command, remove
-		// this line or comment it out.
 		matchStarted = true;
 		drivetrain.stopGyroCalibrating();
 
+		//Kill the auto command if it's still running.
 		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
 		}
@@ -247,20 +240,22 @@ public class Robot extends IterativeRobot {
 	 * Creates Autonomous mode chooser.
 	 */
 	private void autoSelectInit() {
-		// NOTE: ONLY ADD AutoCommandGroup objects to this chooser!
 		autoChooser = new SendableChooser();
-		//autoChooser.addDefault("dEFAULT", new Auto_OneTote_Rotate90Push());
 		autoChooser.addObject("No Tote _ Do Nothing", new Auto_NoTote_DoNothing());
+		autoChooser.addObject("Drive Forward" , new Auto_NoTote_DriveForward());
 		autoChooser.addObject("One Tote _ Rotate Push Fwd", new Auto_OneTote_Rotate90Push());
 		autoChooser.addObject("Three Tote", new Auto_ThreeToteStack());
 		autoChooser.addObject("Two Tote", new Auto_TwoToteStack());
-		autoChooser.addObject("Three Tote No Bin", new Auto_ThreeToteOneBin());
-		autoChooser.addDefault("Three Tote No Bin", new Auto_ThreeToteNoBin());
-		
-		SmartDashboard.putData("Autonomous Mode Chooser", autoChooser);
+		autoChooser.addObject("Three Tote One Bin", new Auto_ThreeToteOneBin());
+		autoChooser.addDefault("Three Tote No Bins", new Auto_ThreeToteNoBin());
 
+		SmartDashboard.putData("Autonomous Mode Chooser", autoChooser);
 	}
 
+	/**
+	 * Get the name of an autonomous mode command.
+	 * @return the name of the auto command.
+	 */
 	public static String getAutoName() {
 		if (autonomousCommand != null) {
 			return autonomousCommand.getName();
