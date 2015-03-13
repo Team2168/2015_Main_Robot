@@ -57,7 +57,7 @@ public class Robot extends IterativeRobot {
 	// Auto command objects
 	static Command autonomousCommand;
 	Command driveWithJoystick;
-	SendableChooser autoChooser;
+	public static SendableChooser autoChooser;
 
 	private static DigitalInput practiceBot;
 	public static FalconPathPlanner path;
@@ -93,6 +93,7 @@ public class Robot extends IterativeRobot {
 		pusher = Pusher.getInstance();
 
 		pathPlanner();
+		autoSelectInit();
 
 		drivePath = LoadPathFile.readFile("/home/lvuser/2168StraightPath.txt");
 
@@ -120,7 +121,7 @@ public class Robot extends IterativeRobot {
 					.getSegment(s));
 		}
 
-		autoSelectInit();
+		
 
 		drivetrain.calibrateGyro();
 
@@ -249,7 +250,7 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("Three Tote One Bin", new Auto_ThreeToteOneBin());
 		autoChooser.addDefault("Three Tote No Bins", new Auto_ThreeToteNoBin());
 
-		SmartDashboard.putData("Autonomous Mode Chooser", autoChooser);
+		
 	}
 
 	/**

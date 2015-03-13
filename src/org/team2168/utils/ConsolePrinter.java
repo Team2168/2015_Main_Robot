@@ -43,6 +43,8 @@ public class ConsolePrinter {
 
 	public void print() {
 		if (RobotMap.PRINT_SD_DEBUG_DATA) {
+			SmartDashboard.putData("Autonomous Mode Chooser", Robot.autoChooser);
+			
 			SmartDashboard.putNumber("Left Encoder Distance",Drivetrain.getInstance().getLeftPosition());
 			SmartDashboard.putNumber("Right Encoder Distance:",Drivetrain.getInstance().getRightPosition());
 			SmartDashboard.putBoolean("isPracticeBot", Robot.isPracticeRobot());
