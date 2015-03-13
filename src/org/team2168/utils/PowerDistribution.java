@@ -27,8 +27,7 @@ public class PowerDistribution {
 	private volatile double temp;
 
 	public static final int NUM_OF_PDP_CHANNELS = 16;
-
-
+	
 	public PowerDistribution(long period) {
 		this.period = period;
 		pdp = new PowerDistributionPanel();
@@ -96,5 +95,92 @@ public class PowerDistribution {
 		public void run() {
 			console.run();
 		}
+	}
+	
+	/**
+	 * Gets total Current
+	 * @return Total Current
+	 */
+	public double getTotalCurrent() {
+		return totalCurrent;
+	}
+	
+	/**
+	 * Gets total Energy
+	 * @return Total Energy
+	 */
+	public double totalEnergy() {
+		return totalEnergy;
+	}
+
+	/**
+	 * Gets total Power
+	 * @return Total Power
+	 */
+	public double totalPower() {
+		return totalPower;
+	}
+	
+	public boolean isRightMotorThreeTrip() {
+		if (channelError[0] == 2)
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean isRightMotorTwoTrip() {
+		if (channelError[1] == 2)
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean isRightMotorOneTrip() {
+		if (channelError[2] == 2) 
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean isIntakeRightMotorTrip() {
+		if (channelError[4] == 2) 
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean isIntakeLeftMotorTrip() {
+		if (channelError[11] == 2) 
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean isLiftMotorTrip() {
+		if (channelError[12] == 2)
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean isLeftMotorOneTrip() {
+		if (channelError[13] == 2) 
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean isLeftMotorTwoTrip() {
+		if (channelError[14] == 2) 
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean isLeftMotorThreeTrip() {
+		if (channelError[15] == 2) 
+			return true;
+		else
+			return false;
 	}
 }

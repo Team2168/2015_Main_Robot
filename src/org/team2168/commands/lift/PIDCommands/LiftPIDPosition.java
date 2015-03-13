@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class LiftPIDPosition extends Command {
 
 	private double setPoint;
+	private double speed;
 	
     public LiftPIDPosition() {
         // Use requires() here to declare subsystem dependencies
@@ -23,14 +24,27 @@ public class LiftPIDPosition extends Command {
 
     public LiftPIDPosition(double setPoint){
  	   this();
+ 	   this.speed = 1;
  	   this.setPoint = setPoint;
     }
+    
+    public LiftPIDPosition(double setPoint, double speed){
+  	   this();
+  	   this.speed = speed;
+  	   this.setPoint = setPoint;
+     }
+     
 
 
     // Called just before this Command runs the first time
     
 	protected void initialize() {
 		Robot.lift.liftController.reset();
+		Robot.lift.liftController.setSetPoint(setPoint);
+		Robot.lift.liftController.setMaxPosOutput(speed);
+		Robot.lift.liftController.setMaxNegOutput(-speed);
+		Robot.lift.liftController.setAcceptErrorDiff(0.2); //inches
+		
 		Robot.lift.liftController.Enable();
     }
 
@@ -38,18 +52,9 @@ public class LiftPIDPosition extends Command {
     
 	protected void execute() {
 		
-		//TODO to check logic on robot for filtering set points.
-		
-		//disengage
-		if (!Robot.lift.liftController.isFinished())
-			Robot.lift.disableBrake();
-		
-		//Robot.lift.liftController.setSetPoint(setPoint);
 		Robot.lift.drive(Robot.lift.liftController.getControlOutput());
 		
-		//set the brake
-		if (Robot.lift.liftController.isFinished())
-			Robot.lift.enableBrake();
+		
 		
     }
 
@@ -57,13 +62,15 @@ public class LiftPIDPosition extends Command {
     
 	protected boolean isFinished() {
 		//TODO Should the command be stopped????????!?!?!?!?!? after PID is tuned
-    	return Robot.lift.liftController.isEnabled() == false;
+    	return Robot.lift.liftController.isFinished();
+		//return false;
     }
 
     // Called once after isFinished returns true
     
 	protected void end() {
 		Robot.lift.liftController.Pause();
+		Robot.lift.drive(0);
     }
 
     // Called when another command which requires one or more of the same

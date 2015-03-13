@@ -3,13 +3,14 @@ package org.team2168.subsystems;
 import org.team2168.OI;
 import org.team2168.Robot;
 import org.team2168.RobotMap;
-import org.team2168.PIDController.sensors.ADXRS453Gyro;
-import org.team2168.PIDController.sensors.AverageEncoder;
-import org.team2168.PIDController.sensors.FalconGyro;
-import org.team2168.PIDControllers.PIDPosition;
-import org.team2168.PIDControllers.PIDSpeed;
+import org.team2168.PID.controllers.PIDPosition;
+import org.team2168.PID.controllers.PIDSpeed;
+import org.team2168.PID.sensors.ADXRS453Gyro;
+import org.team2168.PID.sensors.AverageEncoder;
+import org.team2168.PID.sensors.IMU;
 import org.team2168.commands.drivetrain.DriveWithJoysticks;
 import org.team2168.utils.TCPSocketSender;
+import org.team2168.utils.Util;
 
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
@@ -30,16 +31,17 @@ public class Drivetrain extends Subsystem {
 
 	public AverageEncoder drivetrainLeftEncoder;
 	public AverageEncoder drivetrainRightEncoder;
-	public FalconGyro gyroAnalog;
 	public ADXRS453Gyro gyroSPI;
+	public IMU imu;
 
 	private static final boolean LEFT_INVERTED = false;
 	private static final boolean RIGHT_INVERTED = true;
 
 	//declare position/speed controllers
-	public PIDPosition rightPosController;
-	public PIDPosition leftPosController;
+	public PIDPosition driveTrainPosController;
 	public PIDPosition rotateController;
+
+	//declare speed controllers
 	public PIDSpeed rightSpeedController;
 	public PIDSpeed leftSpeedController;
 
@@ -52,11 +54,17 @@ public class Drivetrain extends Subsystem {
 	private volatile double rightMotor3Voltage;
 
 	//declare TCP severs...ONLY FOR DEBUGGING PURPOSES, SHOULD BE REMOVED FOR COMPITITION
-	TCPSocketSender TCPrightPosController;
+	TCPSocketSender TCPdrivePosController;
 	TCPSocketSender TCPrightSpeedController;
-	TCPSocketSender TCPleftPosController;
 	TCPSocketSender TCPleftSpeedController;
 	TCPSocketSender TCProtateController;
+
+	public boolean leftSelfTest1 = false;
+	public boolean leftSelfTest2 = false;
+	public boolean leftSelfTest3 = false;
+	public boolean rightSelfTest1 = false;
+	public boolean rightSelfTest2 = false;
+	public boolean rightSelfTest3 = false;
 
 	/**
 	 * This method instantiates the motors.
@@ -73,7 +81,6 @@ public class Drivetrain extends Subsystem {
 
 		gyroSPI = new ADXRS453Gyro();
 		gyroSPI.startThread();
-		gyroAnalog = new FalconGyro(RobotMap.DRIVE_GYRO);
 
 		drivetrainRightEncoder = new AverageEncoder(
 				RobotMap.DRIVETRAIN_RIGHT_ENCODER_A,
@@ -92,6 +99,8 @@ public class Drivetrain extends Subsystem {
 				RobotMap.driveEncodingType, RobotMap.driveSpeedReturnType,
 				RobotMap.drivePosReturnType, RobotMap.driveAvgEncoderVal);
 
+		imu = new IMU(drivetrainLeftEncoder,drivetrainRightEncoder,RobotMap.wheelbase);
+
 		//DriveStraight Controller
 		rotateController = new PIDPosition(
 				"RotationController",
@@ -99,6 +108,14 @@ public class Drivetrain extends Subsystem {
 				RobotMap.rotatePositionI,
 				RobotMap.rotatePositionD,
 				gyroSPI,
+				RobotMap.driveTrainPIDPeriod);
+
+		driveTrainPosController = new PIDPosition(
+				"driveTrainPosController",
+				RobotMap.driveTrainRightPositionP,
+				RobotMap.driveTrainRightPositionI,
+				RobotMap.driveTrainRightPositionD,
+				imu,
 				RobotMap.driveTrainPIDPeriod);
 
 		//Spawn new PID Controller
@@ -110,14 +127,6 @@ public class Drivetrain extends Subsystem {
 				drivetrainRightEncoder,
 				RobotMap.driveTrainPIDPeriod);
 
-		rightPosController = new PIDPosition(
-				"RightPositionController",
-				RobotMap.driveTrainRightPositionP,
-				RobotMap.driveTrainRightPositionI,
-				RobotMap.driveTrainRightPositionD,
-				drivetrainRightEncoder,
-				RobotMap.driveTrainPIDPeriod);
-
 		leftSpeedController = new PIDSpeed(
 				"LeftSpeedController",
 				RobotMap.driveTrainLeftSpeedP,
@@ -126,37 +135,25 @@ public class Drivetrain extends Subsystem {
 				drivetrainLeftEncoder,
 				RobotMap.driveTrainPIDPeriod);
 
-		leftPosController = new PIDPosition(
-				"LeftPositionController",
-				RobotMap.driveTrainLeftPositionP,
-				RobotMap.driveTrainLeftPositionI,
-				RobotMap.driveTrainLeftPositionD,
-				drivetrainLeftEncoder,
-				RobotMap.driveTrainPIDPeriod);
 
 		//add min and max output defaults and set array size
 		rightSpeedController.setSIZE(RobotMap.drivetrainPIDArraySize);
 		leftSpeedController.setSIZE(RobotMap.drivetrainPIDArraySize);
-		rightPosController.setSIZE(RobotMap.drivetrainPIDArraySize);
-		leftPosController.setSIZE(RobotMap.drivetrainPIDArraySize);
+		driveTrainPosController.setSIZE(RobotMap.drivetrainPIDArraySize);
 		rotateController.setSIZE(RobotMap.drivetrainPIDArraySize);
 
 		//start controller threads
 		rightSpeedController.startThread();
-		rightPosController.startThread();
 		leftSpeedController.startThread();
-		leftPosController.startThread();
+		driveTrainPosController.startThread();
 		rotateController.startThread();
 
 		//start TCP Servers for DEBUGING ONLY
-		TCPrightPosController = new TCPSocketSender(RobotMap.TCPServerRightDrivetrainPos, rightPosController);
-		TCPrightPosController.start();
+		TCPdrivePosController = new TCPSocketSender(RobotMap.TCPServerDrivetrainPos, driveTrainPosController);
+		TCPdrivePosController.start();
 
 		TCPrightSpeedController = new TCPSocketSender(RobotMap.TCPServerRightDrivetrainSpeed, rightSpeedController);
 		TCPrightSpeedController.start();
-
-		TCPleftPosController = new TCPSocketSender(RobotMap.TCPServerLeftDrivetrainPos, leftPosController);
-		TCPleftPosController.start();
 
 		TCPleftSpeedController = new TCPSocketSender(RobotMap.TCPServerLeftDrivetrainSpeed, leftSpeedController);
 		TCPleftSpeedController.start();
@@ -243,6 +240,7 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveLeft1(double speed) {
+		speed = Util.limit(speed);
 		if (LEFT_INVERTED)
 			speed = -speed;
 
@@ -255,6 +253,7 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveLeft2(double speed) {
+		speed = Util.limit(speed);
 		if (LEFT_INVERTED)
 			speed = -speed;
 
@@ -267,6 +266,7 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveLeft3(double speed) {
+		speed = Util.limit(speed);
 		if (LEFT_INVERTED)
 			speed = -speed;
 
@@ -289,6 +289,7 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveRight1(double speed) {
+		speed = Util.limit(speed);
 		if (RIGHT_INVERTED)
 			speed = -speed;
 
@@ -301,6 +302,7 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveRight2(double speed) {
+		speed = Util.limit(speed);
 		if (RIGHT_INVERTED)
 			speed = -speed;
 
@@ -313,13 +315,13 @@ public class Drivetrain extends Subsystem {
 	 * @param speed the speed to drive the motor (-1 to 1, positive is forward, negative is backwards)
 	 */
 	public void driveRight3(double speed) {
+		speed = Util.limit(speed);
 		if (RIGHT_INVERTED)
 			speed = -speed;
 
 		rightMotor3.set(speed);
 		rightMotor3Voltage = Robot.pdp.getBatteryVoltage() * speed;
 	}
-
 	/**
 	 * Drive the motors on the left right side of the chassis.
 	 * @param speed the speed to drive the motors (-1 to 1, positive is forward, negative is backwards)
@@ -354,7 +356,7 @@ public class Drivetrain extends Subsystem {
 
 	/**
 	 * Get the distance traveled by the left wheels.
-	 * @return distance traveled in inches.
+	 * @return distance traveled in feet.
 	 */
 	public double getLeftPosition() {
 		return drivetrainLeftEncoder.getPos();
@@ -362,7 +364,7 @@ public class Drivetrain extends Subsystem {
 
 	/**
 	 * Get the distance traveled by the right wheels.
-	 * @return distance traveled in inches
+	 * @return distance traveled in feet.
 	 */
 	public double getRightPosition() {
 		return drivetrainRightEncoder.getPos();
@@ -411,5 +413,83 @@ public class Drivetrain extends Subsystem {
 	 */
 	public void resetGyro() {
 		gyroSPI.reset();
+	}
+
+	/**
+	 * Calibrate gyro.
+	 * This should only be called if the robot will be stationary for the calibration period.
+	 */
+	public void calibrateGyro() {
+		gyroSPI.calibrate();
+	}
+
+	/**
+	 * @return true if the gyro completed its previous calibration sequence.
+	 */
+	public boolean isGyroCalibrated() {
+		return gyroSPI.hasCompletedCalibration();
+	}
+
+	/**
+	 * @return true if the gyro is being calibrated.
+	 */
+	public boolean isGyroCalibrating() {
+		return gyroSPI.isCalibrating();
+	}
+
+	/**
+	 * Call to stop an active gyro calibration sequence.
+	 */
+	public void stopGyroCalibrating() {
+		gyroSPI.stopCalibrating();
+	}
+
+	/**
+	 * A  simple rate limiter.
+	 * http://www.chiefdelphi.com/forums/showpost.php?p=1212189&postcount=3
+	 *
+	 * @param input the input value (speed from command/joystick)
+	 * @param speed the speed currently being traveled at
+	 * @param limit the rate limit
+	 * @return the new output speed (rate limited)
+	 */
+	public static double rateLimit(double input, double speed, double limit) {
+		return rateLimit(input, speed, limit, limit);
+	}
+
+	/**
+	 * A simple rate limiter.
+	 * http://www.chiefdelphi.com/forums/showpost.php?p=1212189&postcount=3
+	 *
+	 * @param input the input value (speed from command/joystick)
+	 * @param speed the speed currently being traveled at
+	 * @param posRateLimit the rate limit for accelerating
+	 * @param negRateLimit the rate limit for decelerating
+	 * @return the new output speed (rate limited)
+	 */
+	public static double rateLimit(double input, double speed,
+			double posRateLimit, double negRateLimit) {
+		if (input > 0) {
+			if (input > (speed + posRateLimit)) {
+				//Accelerating positively
+				speed = speed + posRateLimit;
+			} else if (input < (speed - negRateLimit)) {
+				//Decelerating positively
+				speed = speed - negRateLimit;
+			} else {
+				speed = input;
+			}
+		} else {
+			if (input < (speed - posRateLimit)) {
+				//Accelerating negatively
+				speed = speed - posRateLimit;
+			} else if (input > (speed + negRateLimit)) {
+				//Decelerating negatively
+				speed = speed + negRateLimit;
+			} else {
+				speed = input;
+			}
+		}
+		return speed;
 	}
 }

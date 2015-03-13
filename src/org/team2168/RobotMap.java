@@ -1,6 +1,6 @@
 package org.team2168;
 
-import org.team2168.PIDController.sensors.AverageEncoder;
+import org.team2168.PID.sensors.AverageEncoder;
 
 import edu.wpi.first.wpilibj.CounterBase;
 
@@ -99,16 +99,16 @@ public class RobotMap {
 	public static final int driveEncoderPulsePerRot = (int) (drivePulsePerRotation * driveGearRatio); //pulse per rotation * gear ratio
 	public static final double driveEncoderDistPerTick = (Math.PI * driveWheelDiameter/driveEncoderPulsePerRot);
 	public static final CounterBase.EncodingType driveEncodingType = CounterBase.EncodingType.k4X; //count rising and falling edges on both channels
-	public static final AverageEncoder.PositionReturnType drivePosReturnType = AverageEncoder.PositionReturnType.INCH;
-	public static final AverageEncoder.SpeedReturnType driveSpeedReturnType = AverageEncoder.SpeedReturnType.RPM;
-	public static final int driveEncoderMinRate = 10;
-	public static final int driveEncoderMinPeriod = 10;
+	public static final AverageEncoder.PositionReturnType drivePosReturnType = AverageEncoder.PositionReturnType.FEET;
+	public static final AverageEncoder.SpeedReturnType driveSpeedReturnType = AverageEncoder.SpeedReturnType.FPS;
+	public static final int driveEncoderMinRate = 0;
+	public static final int driveEncoderMinPeriod = 1;
 	public static final boolean leftDriveTrainEncoderReverse = false;
 	public static final boolean rightDriveTrainEncoderReverse = true;
 	public static final int driveAvgEncoderVal = 5;
 	public static final double minDriveSpeed =  0.2;
 	public static final double autoNormalSpeed = 0.5;
-
+	public static final double wheelbase = 2; //units must match PositionReturnType (feet)
 
 	/*************************************************************************
 	 *                              LIFT PARAMETERS
@@ -124,8 +124,8 @@ public class RobotMap {
 	public static final CounterBase.EncodingType liftEncodingType = CounterBase.EncodingType.k4X; //count rising and falling edges on both channels
 	public static final AverageEncoder.PositionReturnType liftPosReturnType = AverageEncoder.PositionReturnType.INCH;
 	public static final AverageEncoder.SpeedReturnType liftSpeedReturnType = AverageEncoder.SpeedReturnType.RPM;
-	public static final int liftEncoderMinRate = 5;
-	public static final int liftEncoderMinPeriod = 5;
+	public static final int liftEncoderMinRate = 10;
+	public static final int liftEncoderMinPeriod = 10;
 	public static final boolean liftEncoderReverse = false;
 	public static final int liftAvgEncoderVal = 5;
 
@@ -156,8 +156,8 @@ public class RobotMap {
 	public final static double PRESS_SENSOR_HIGH_PRESSURE = 150.0;
 
 	public final static double INTAKE_WHEEL_SPEED = 0.5;
-	public final static double INTAKE_TOTE_ENGAGE_VOLTAGE = 1.4;
-	public final static double INTAKE_TOTE_STOP_VOLTAGE = 2.65;
+	public final static double INTAKE_TOTE_ENGAGE_VOLTAGE = 1.25;
+	public final static double INTAKE_TOTE_STOP_VOLTAGE = 2.5;
 	public final static boolean PRINT_SD_DEBUG_DATA = true;
 	public final static long SmartDashThreadPeriod = 100; //ms
 
@@ -174,57 +174,63 @@ public class RobotMap {
 	 *                            PID Parameters
 	 *************************************************************************/
 	//period to run PID loops on drive train
-	public static final long driveTrainPIDPeriod = 100;//100ms loop
+	public static final long driveTrainPIDPeriod = 20;//70ms loop
 	public static final int drivetrainPIDArraySize = 50;
 
 	//PID Gains for Left & Right Speed and Position
 	//Bandwidth =
-	//Phase Margin =
-	public static final double driveTrainLeftSpeedP =  0.002;
-	public static final double driveTrainLeftSpeedI =  0.0001;
-	public static final double driveTrainLeftSpeedD =  0.0001;
+	//Phase Margin = 
+	public static final double driveTrainLeftSpeedP =  0.4779;
+	public static final double driveTrainLeftSpeedI =  1.0526; 
+	public static final double driveTrainLeftSpeedD =  0.0543;
 
-	public static final double driveTrainRightSpeedP = 0.002;
-	public static final double driveTrainRightSpeedI = 0.0001;
-	public static final double driveTrainRightSpeedD = 0.0001;
+	public static final double driveTrainRightSpeedP = 0.4779;
+	public static final double driveTrainRightSpeedI = 1.0526;  
+	public static final double driveTrainRightSpeedD = 0.0543;
 
-	public static final double driveTrainLeftPositionP = 0.002;
+	public static final double driveTrainLeftPositionP = 0.2;
 	public static final double driveTrainLeftPositionI = 0.0001412646174233;
 	public static final double driveTrainLeftPositionD = 0.0074778888124088;
 
-	public static final double driveTrainRightPositionP = 0.002;
+	public static final double driveTrainRightPositionP = 0.2;
 	public static final double driveTrainRightPositionI = 0.0001412646174233;
 	public static final double driveTrainRightPositionD = 0.0074778888124088;
 
-	public static final double rotatePositionP = 0.0001;
-	public static final double rotatePositionI = 0.00001;
+	public static final double rotatePositionP = 0.02;
+	public static final double rotatePositionI = 0.002;
 	public static final double rotatePositionD = 0.0;
 
 	double pTurn = 0.001;
 	double iTurn = 0.00001;
 	double pDrive = 0;
-
-	public static final double liftPUp = 0.002;
-	public static final double liftIUp = 0.0001;
-	public static final double liftDUp = 0.0001;
-
-	public static final double liftPDw = 0.002;
-	public static final double liftIDw = 0.0001;
-	public static final double liftDDw = 0.0001;
-
-	public static final long liftPIDPeriod = 100; //100ms
-
+	
+	//public static final double liftPUp = 0.0098;
+	//public static final double liftIUp = 0.0124;
+	//public static final double liftDUp = 0.0005418310445973070;
+	
+	public static final double liftPUp = 0.25;
+	public static final double liftIUp = 0.0080; 
+	public static final double liftDUp = 0.0002573;
+	
+	public static final double liftPDw = 0.35;
+	public static final double liftIDw = 0.010; 
+	public static final double liftDDw = 0.0002073;
+	
+	
+//	public static final double liftPUp = 0.0590;
+//	public static final double liftIUp = 0.0110;
+//	public static final double liftDUp = 0.0017;
+//	public static final double liftNUp = 10.7300;
+	
+	public static final long liftPIDPeriod = 20; //100ms
+	
 	/****************************************************************
 	 *                TCP Servers  (ONLY FOR DEBUGGING)             *
 	 ****************************************************************/
-	public static final int TCPServerRightDrivetrainPos = 1180;
-	public static final int TCPServerRightDrivetrainSpeed = 1181;
-	public static final int TCPServerLeftDrivetrainPos = 1182;
+	public static final int TCPServerDrivetrainPos = 1180;
+	public static final int TCPServerRotateController = 1181;
+	public static final int TCPServerRightDrivetrainSpeed = 1182;
 	public static final int TCPServerLeftDrivetrainSpeed = 1183;
-	public static final int TCPServerRotateController = 1184;
-	public static final int TCPServerShooterSpeedAft = 1185;
-	public static final int TCPServerShooterSpeedFwd = 1186;
-	public static final int TCPServerLiftPos = 1187;
-
+	public static final int TCPServerLiftPos = 1184;
 
 }

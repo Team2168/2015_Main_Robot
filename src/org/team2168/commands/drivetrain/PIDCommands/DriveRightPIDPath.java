@@ -10,14 +10,8 @@ public class DriveRightPIDPath extends Command {
 	
 	private double[][] setPoint;
 
-    public DriveRightPIDPath() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    	requires(Robot.drivetrain);
-    }
-    
    public DriveRightPIDPath(double[][] setPoint){
-	   this();
+	   requires(Robot.drivetrain);
 	   this.setPoint = setPoint;
 	   
    }

@@ -1,10 +1,8 @@
 package org.team2168.commands.drivetrain;
 
-import org.team2168.OI;
 import org.team2168.Robot;
 import org.team2168.utils.F310;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -13,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveWithJoysticks extends Command {
 
 	F310 joystick;
-	
+
 	public DriveWithJoysticks(F310 joystick) {
 		this.joystick = joystick;
 		requires(Robot.drivetrain);
@@ -29,8 +27,8 @@ public class DriveWithJoysticks extends Command {
 	 * Called repeatedly when this Command is scheduled to run
 	 */
 	protected void execute() {
-		Robot.drivetrain.tankDrive(joystick.getLeftStickRaw_Y(),
-				joystick.getRightStickRaw_Y());
+		Robot.drivetrain.tankDrive(0.8 * joystick.getLeftStickRaw_Y(),
+				0.8 * joystick.getRightStickRaw_Y());
 	}
 
 	/**

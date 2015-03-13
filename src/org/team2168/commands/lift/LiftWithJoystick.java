@@ -30,17 +30,7 @@ public class LiftWithJoystick extends Command {
 	 * Called repeatedly when this Command is scheduled to run
 	 */
 	protected void execute() {
-		
-		if(Math.abs(joystick.getRightStickRaw_Y()) > RobotMap.LIFT_MIN_SPEED) 
-		{
-			Robot.lift.disableBrake();
-			Robot.lift.drive(joystick.getRightStickRaw_Y()); 
-		}
-		else
-		{
-			Robot.lift.enableBrake();
-			Robot.lift.drive(0);
-		}
+		Robot.lift.drive(joystick.getRightStickRaw_Y()); 
 	}
 
 	/**

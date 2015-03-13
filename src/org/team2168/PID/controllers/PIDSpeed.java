@@ -1,12 +1,16 @@
-package org.team2168.PIDControllers;
+package org.team2168.PID.controllers;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.TimerTask;
 
-import org.team2168.PIDController.sensors.PIDSensorInterface;
+import org.team2168.PID.sensors.PIDSensorInterface;
 import org.team2168.commands.drivetrain.PIDCommands.DrivePIDPause;
 import org.team2168.commands.drivetrain.PIDCommands.DriveRightPIDSpeed;
 import org.team2168.utils.TCPMessageInterface;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -123,6 +127,9 @@ public class PIDSpeed implements TCPMessageInterface {
 	private volatile double acceptErrorDiff; // allowable error (in units of
 												// setpoint)
 
+	
+	private double diff;
+	
 	// tread executor
 	java.util.Timer executor;
 	long period;
@@ -143,6 +150,11 @@ public class PIDSpeed implements TCPMessageInterface {
 	int setPointArrayCounter;
 	double[] setPointArray;
 	
+	private double int_d_term;
+	private double lastDeriv;
+	private volatile double n;
+	
+	PrintWriter log;
 	
 
 	/**
@@ -242,8 +254,20 @@ public class PIDSpeed implements TCPMessageInterface {
 		setPointByArray = false;
 		setPointArrayCounter = 0;
 		setPointArray = null;
+	
+		this.diff = 0;
+		this.n = 0;
 		
-
+		try {
+			this.log = new PrintWriter("/home/lvuser/"+this.name+".txt", "UTF-8");
+			this.log.println("time: \tcperr: \tsp: \terr: \tpterm: \twindup: \terrsum: \titerm: \tdterm: \toutput \toutputBeforInteg \tcounstat \texctime");
+				} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -993,7 +1017,7 @@ public class PIDSpeed implements TCPMessageInterface {
 	 * method in a periodic thread.
 	 */
 	private synchronized void calculate() {
-		runTime = System.currentTimeMillis();
+		runTime = Timer.getFPGATimestamp();
 
 		if (enable) {
 			// poll encoder
@@ -1023,13 +1047,10 @@ public class PIDSpeed implements TCPMessageInterface {
 				setPointByArray=false;
 
 			// if setpoint is 0, set output to zero
-			if (sp == 0) {
-				co = 0;
-			} else // setpoint is not zero... so we do PID calc
-			{
-
-				// calculate error between current position and setpoint
-				err = sp - cp;
+			//if (sp == 0) {
+			//	co = 0;
+			//} else // setpoint is not zero... so we do PID calc
+			//{
 
 				// if gain schedule has been enabled, make sure we use
 				// proper PID gains
@@ -1042,160 +1063,87 @@ public class PIDSpeed implements TCPMessageInterface {
 					i = iGain;
 					d = dGain;
 				}
-
-				// calculate proportional gain
-				prop = p * err;
-
-				// calculate integral gain by summing past errors
-				errsum = err + olderrsum;
-				integ = i * errsum;
-
-				// save for use in next loop
-				olderrsum += errsum;
+				
+				// calculate error between current position and setpoint
+				err = sp - cp;
 
 				// calculate derivative gain d/dt
-				executionTime = System.currentTimeMillis() - clock; // time
-																	// between
-																	// loops
+				double currentTime = Timer.getFPGATimestamp();
+				executionTime = currentTime - clock; // time
+				
 
-				// prevent divide by zero error, by disabiling deriv term
-				// if execution time is zero.
-				if (executionTime >= 0) {
-					deriv = d * ((err - olderr) / (executionTime)); // delta
-																	// error/delta
-																	// time
+				//integral
+				boolean windup = false;
+				errsum = errsum + (olderr * executionTime);
+				integ = i*errsum; //final integral term
+				
+				deriv = 0;
 
-				} else {
-					deriv = 0;
+				//deriv term
+				if(enDerivFilter)
+				{
+					//Derivative filtering using forward euler integration
+					int_d_term = int_d_term + (lastDeriv * executionTime);
+					deriv = ((d*err) - int_d_term)*n;
+					lastDeriv = deriv;
 				}
-				// update clock with current time for next loop
-				clock = System.currentTimeMillis();
+				else
+				{
+					// prevent divide by zero error, by disabiling deriv term
+					// if execution time is zero.
+					diff = 0;
+					if (executionTime > 0) 
+						diff = (err - olderr) /executionTime; // delta
+					else 
+						diff = 0;
 
-				// filter derivative noise using euler filter method
-				// if filtering is enabled
-				double filteredDeriv = 0;
-				if (enDerivFilter) {
-					filteredDeriv = (1 - r) * filterDerivOld + r * deriv;
-					filterDerivOld = filteredDeriv;
-					deriv = filteredDeriv;
+					deriv = d*diff;
 				}
 
+				//proportional term
+				prop = p*err;
+				
+		
 				// calculate new control output based on filtering
 				co = prop + integ + deriv;
-
+				
+				
+				//integral anti-windup control via clamping
+				//essentially assume error is zero in this case
+				if((co > maxPosOutput || co < maxNegOutput  ) && (Math.signum(co) == Math.signum(i*err)))
+				{
+					errsum = errsum - (olderr * executionTime);
+					integ = i*errsum;
+					co = prop + integ + deriv;
+					windup = true;
+				}
+				
 				// save control output for graphing
 				coNotSaturated = co;
 
-				// The below statements allow us to condition the output
-				// of our controller so that it perfoms better than
-				// a standard PID controller.
+				//Saturation
+				if(co > maxPosOutput)
+					co = maxPosOutput;
+				if(co < maxNegOutput)
+					co = maxNegOutput;
 
-				// if there is an integral term we prevent integral windup
-				// and clamp the output to the max output value to
-				// prevent output saturation
-				// clamp output to min and max output value to prevent
 
-				if (i != 0) {
-					// clamp to max values
-					// if (co > maxPosOutput)
-					// {
-					// integ = maxPosOutput - prop - deriv;
-					// System.out.println("one.one");
-					// }
-					//
-					if (co < maxNegOutput) {
-						integ = maxNegOutput - prop - deriv;
-						// System.out.println("one.two");
-					}
-
-					// prevent integral windup
-					// if (co > maxPosOutput)
-					// {
-					// errsum = integ / i;
-					// System.out.println("one.three");
-					// }
-
-					if (co < maxNegOutput) {
-						errsum = integ / i;
-						// System.out.println("one.four");
-					}
-					// generate new control output based on min and max and
-					// integral windup.
-					co = prop + integ + deriv;
-					olderrsum = errsum;
-
-					// System.out.println("one");
-				} else {
-					// no integral term so dont need to prevent windup
-					// we can just clamp to max/min value to prevent
-					// saturation
-					if (co > maxPosOutput)
-						co = maxPosOutput;
-					if (co < maxNegOutput)
-						co = maxNegOutput;
-
-					// System.out.println("two");
-				}
-
-				// check to see if we met our setpoint
-				// if current value is within exceptable range make control
-				// output last
-				// output value and stop integrating error
-
-				if (Math.abs(err) <= acceptErrorDiff) {
-
-					integ = coOld - prop - deriv;
-					co = coOld;
-
-					errsum = olderrsum;
-					olderrsum = olderrsum; // stop accumulating error
-
-					// System.out.println("three");
-
-				}
-
-				// if (Math.abs(err) <= acceptErrorDiff)
-				// {
-				// co = coOld; //keeps wheel spinning at old rate
-				// olderrsum = errsum; //stop accumulating error
-				//
-				// System.out.println("three");
-				//
-				// } else
-				// {
-				//
-				// // there is still a significant error
-				// // we now check if output signal is below
-				// // the deadband, if it is, we increase the
-				// // output above deadband
-				// // to drive the motor
-				//
-				// if (err > 0 && coNotSaturated < minPosOutput
-				// && co < (maxPosOutput - minPosOutput))
-				// {
-				// co = coOld + prop + integ + deriv;
-				// System.out.println("four");
-				//
-				// }
-				// if (err < 0 && coNotSaturated < maxNegOutput
-				// && co < (maxNegOutput - minNegOutput))
-				//
-				// {
-				// co = coOld + prop + integ + deriv;
-				// System.out.println("five");
-				// }
-				//
-				// }
+				// update clock with current time for next loop
+				clock = currentTime;
+				olderr = err;
+				
+			//	System.out.println("time: " + currentTime + "\tcperr: " + cp + "\tsp: " + sp + "\terr: " + err + "\tpterm: " + prop + "\twindup: " + windup + "\terrsum: " + errsum +"\titerm: " + integ + "\tdterm: " + deriv + "\toutput" + co + "\texctime" + executionTime );
+				log.println(currentTime + "\t " + cp + "\t" + sp + "\t " + err + "\t" + prop + "\t" + windup + "\t" + errsum +"\t" + integ + "\t" + deriv + "\t" + co + "\t" + executionTime );
 
 				coOld = co;
+				
+				//Feed forward term
+				co += coOld;
 
-				// see if setpoint is reached
-				atSpeed();
-
-			}
+				
 		}
 
-		runTime = System.currentTimeMillis() - runTime;
+		runTime = Timer.getFPGATimestamp() - runTime;
 	}
 
 	/**

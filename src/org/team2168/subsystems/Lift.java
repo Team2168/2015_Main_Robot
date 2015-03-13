@@ -3,8 +3,8 @@ package org.team2168.subsystems;
 import org.team2168.OI;
 import org.team2168.Robot;
 import org.team2168.RobotMap;
-import org.team2168.PIDController.sensors.AverageEncoder;
-import org.team2168.PIDControllers.PIDPosition;
+import org.team2168.PID.controllers.PIDPosition;
+import org.team2168.PID.sensors.AverageEncoder;
 import org.team2168.commands.lift.LiftWithJoystick;
 import org.team2168.utils.TCPSocketSender;
 import org.team2168.utils.Util;
@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Lift extends Subsystem {
 
 	private static Lift instance = null;
-	private Victor intakeMotor;
+	private Victor liftMotor;
 	private DoubleSolenoid liftBrake;
 	private static final double DESTINATION_TOL = 1.0; //inches
 
@@ -29,7 +29,7 @@ public class Lift extends Subsystem {
 
 	private static final boolean MOTOR_INVERTED = false;
 
-	private AverageEncoder liftEncoder;
+	public AverageEncoder liftEncoder;
 	public PIDPosition liftController;
 
 	private static DigitalInput fullyRaised;
@@ -37,12 +37,14 @@ public class Lift extends Subsystem {
 
 	TCPSocketSender TCPliftPosController;
 
+	public boolean liftSelfTest = false;
+
 	/**
 	 * A private constructor to prevent multiple instances of the subsystem from
 	 * being created.
 	 */
 	private Lift() {
-		intakeMotor = new Victor(RobotMap.LIFT_MOTOR);
+		liftMotor = new Victor(RobotMap.LIFT_MOTOR);
 		liftEncoder = new AverageEncoder(RobotMap.LIFT_ENCODER_A,
 				RobotMap.LIFT_ENCODER_B, RobotMap.liftEncoderPulsePerRot,
 				RobotMap.liftEncoderDistPerTick,
@@ -54,8 +56,9 @@ public class Lift extends Subsystem {
 				RobotMap.LIFT_BRAKE_DOUBLE_SOLENOID_REVERSE);
 
 		liftController = new PIDPosition("LiftPID", RobotMap.liftPUp,
-				RobotMap.liftIUp, RobotMap.liftDUp, liftEncoder,
+				RobotMap.liftIUp, RobotMap.liftDUp, RobotMap.liftPDw, RobotMap.liftIDw, RobotMap.liftDDw, liftEncoder,
 				RobotMap.liftPIDPeriod);
+		liftController.setEnDerivFilter(true, 74.1117);
 		liftController.startThread();
 
 		//start TCP Servers for DEBUGING ONLY
@@ -97,12 +100,28 @@ public class Lift extends Subsystem {
 	 * @param speed value from -1.0 to 1.0, positive drives the lift up.
 	 */
 	public void drive(double speed) {
-		speed = Util.limit(speed, -1.0, 1.0);
+		speed = Util.limit(speed);
+
+		if (speed > RobotMap.LIFT_MIN_SPEED && !Robot.lift.isFullyRaised()) {
+			//Traveling up
+			Robot.lift.disableBrake();
+		}
+		else if (speed < -RobotMap.LIFT_MIN_SPEED && !Robot.lift.isFullyLowered()) {
+			//Traveling down
+			Robot.lift.disableBrake();
+		}
+		else {
+			speed = 0.0;
+			Robot.lift.enableBrake();
+		}
+
 		if (MOTOR_INVERTED)
 			speed = -speed;
 
-		intakeMotor.set(speed);
+		liftMotor.set(speed);
+		System.out.println(speed);
 		motorVoltage = Robot.pdp.getBatteryVoltage() * speed;
+
 	}
 
 	/**
@@ -180,9 +199,9 @@ public class Lift extends Subsystem {
 	private void setPositionDelta(double delta, boolean direction) {
 		if (delta > 1) {
 			if (direction) {
-				intakeMotor.set(RobotMap.LIFT_MOVING_SPEED);
+				liftMotor.set(RobotMap.LIFT_MOVING_SPEED);
 			}else {
-				intakeMotor.set(-RobotMap.LIFT_MOVING_SPEED);
+				liftMotor.set(-RobotMap.LIFT_MOVING_SPEED);
 			}
 		}
 	}
@@ -243,7 +262,7 @@ public class Lift extends Subsystem {
 	 * @return true if the lift is at its highest position along travel.
 	 */
 	public boolean isFullyLowered() {
-		return fullyLowered.get();
+		return !fullyLowered.get();
 	}
 
 	/**
@@ -251,6 +270,6 @@ public class Lift extends Subsystem {
 	 * @return true if the lift is at its lowest position along travel.
 	 */
 	public boolean isFullyRaised() {
-		return fullyRaised.get();
+		return !fullyRaised.get();
 	}
 }
