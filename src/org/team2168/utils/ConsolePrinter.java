@@ -44,6 +44,7 @@ public class ConsolePrinter {
 	public void print() {
 		if (RobotMap.PRINT_SD_DEBUG_DATA) {
 			SmartDashboard.putData("Autonomous Mode Chooser", Robot.autoChooser);
+			SmartDashboard.putNumber("gameClock", (int)DriverStation.getInstance().getMatchTime());
 			
 			SmartDashboard.putNumber("Left Encoder Distance",Drivetrain.getInstance().getLeftPosition());
 			SmartDashboard.putNumber("Right Encoder Distance:",Drivetrain.getInstance().getRightPosition());
@@ -53,7 +54,7 @@ public class ConsolePrinter {
 			//			SmartDashboard.putNumber("GYRO Rate:", Robot.drivetrain.gyroSPI.getRate());
 			SmartDashboard.putNumber("GYRO Angle SPI:", Robot.drivetrain.getHeading());
 			SmartDashboard.putNumber("GYRO reInits:", Robot.gyroReinits);
-			SmartDashboard.putBoolean("Gyro calibrating: ", Robot.gyroCalibrating);
+			SmartDashboard.putBoolean("Gyro Cal Status", !Robot.gyroCalibrating);
 			//			SmartDashboard.putNumber("GYRO Status:", Robot.drivetrain.gyroSPI.getStatus());
 			//			SmartDashboard.putNumber("GYRO ID:", Robot.drivetrain.gyroSPI.getID());
 			//			SmartDashboard.putNumber("GYRO Temp:", Robot.drivetrain.gyroSPI.getTemp());
@@ -146,9 +147,9 @@ public class ConsolePrinter {
 			SmartDashboard.putBoolean("Intake Right Self Test", Robot.intake.rightIntakeSelfTest);
 			SmartDashboard.putBoolean("Lift Self Test", Robot.lift.liftSelfTest);
 
+			
 
-			SmartDashboard.putNumber("Match Time:", DriverStation.getInstance().getMatchTime());
-
+			
 			//file log
 			log.println(Timer.getFPGATimestamp() + "\t" +
 					Robot.drivetrain.getLeft1MotorVoltage() + "\t" +
