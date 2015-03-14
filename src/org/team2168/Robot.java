@@ -15,7 +15,7 @@ import org.team2168.subsystems.Gripper;
 import org.team2168.subsystems.Intake;
 import org.team2168.subsystems.Lift;
 import org.team2168.subsystems.Pneumatics;
-import org.team2168.subsystems.Pusher;
+import org.team2168.subsystems.ARCB;
 import org.team2168.subsystems.Winch;
 import org.team2168.utils.ConsolePrinter;
 import org.team2168.utils.Debouncer;
@@ -24,6 +24,7 @@ import org.team2168.utils.PowerDistribution;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -47,8 +48,8 @@ public class Robot extends IterativeRobot {
 	public static Winch winch;
 	public static Gripper gripper;
 	public static Pneumatics pneumatics;
-	public static Pusher pusher;
-
+	public static ARCB binGrabber;
+	
 	public static PowerDistribution pdp; // Power Monitor
 	ConsolePrinter printer; // SmartDash printer
 
@@ -90,7 +91,7 @@ public class Robot extends IterativeRobot {
 		lift = Lift.getInstance();
 		winch = Winch.getInstance();
 		gripper = Gripper.getInstance();
-		pusher = Pusher.getInstance();
+		binGrabber = ARCB.getInstance();
 
 		pathPlanner();
 		autoSelectInit();

@@ -1,4 +1,4 @@
-package org.team2168.commands.pusher;
+package org.team2168.commands.arcb;
 
 import org.team2168.Robot;
 
@@ -7,12 +7,12 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class PushTotes extends Command {
+public class ARCBDeploy extends Command {
 
-    public PushTotes() {
+    public ARCBDeploy() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.pusher);
+    	requires(Robot.binGrabber);
     }
 
     // Called just before this Command runs the first time
@@ -21,7 +21,7 @@ public class PushTotes extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.pusher.pushOut();
+    	Robot.binGrabber.retract();
     }
 
     // Make this return true when this Command no longer needs to run execute()
