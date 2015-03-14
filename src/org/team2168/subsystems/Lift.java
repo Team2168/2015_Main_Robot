@@ -45,6 +45,8 @@ public class Lift extends Subsystem {
 	 */
 	private Lift() {
 		liftMotor = new Victor(RobotMap.LIFT_MOTOR);
+		liftMotor.setExpiration(0.1);
+		liftMotor.setSafetyEnabled(true);
 		liftEncoder = new AverageEncoder(RobotMap.LIFT_ENCODER_A,
 				RobotMap.LIFT_ENCODER_B, RobotMap.liftEncoderPulsePerRot,
 				RobotMap.liftEncoderDistPerTick,

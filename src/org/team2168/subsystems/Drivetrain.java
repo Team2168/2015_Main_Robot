@@ -22,12 +22,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Drivetrain extends Subsystem {
 
 	private static Drivetrain instance = null;
-	private SpeedController leftMotor1;
-	private SpeedController rightMotor1;
-	private SpeedController leftMotor2;
-	private SpeedController rightMotor2;
-	private SpeedController leftMotor3;
-	private SpeedController rightMotor3;
+	private Talon leftMotor1;
+	private Talon rightMotor1;
+	private Talon leftMotor2;
+	private Talon rightMotor2;
+	private Talon leftMotor3;
+	private Talon rightMotor3;
 
 	public AverageEncoder drivetrainLeftEncoder;
 	public AverageEncoder drivetrainRightEncoder;
@@ -73,12 +73,33 @@ public class Drivetrain extends Subsystem {
 	private Drivetrain() {
 		//leftMotor1 = new Talon(RobotMap.DRIVETRAIN_LEFT_MOTOR_1);
 		leftMotor1 = new Talon(RobotMap.DRIVETRAIN_LEFT_MOTOR_1);
+		leftMotor1.setExpiration(0.1);
+		leftMotor1.setSafetyEnabled(true);
+		
 		rightMotor1 = new Talon(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1);
+		rightMotor1.setExpiration(0.1);
+		rightMotor1.setSafetyEnabled(true);
+		
+		
 		leftMotor2 = new Talon(RobotMap.DRIVETRAIN_LEFT_MOTOR_2);
+		leftMotor2.setExpiration(0.1);
+		leftMotor2.setSafetyEnabled(true);
+		
+		
 		rightMotor2 = new Talon(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2);
+		rightMotor2.setExpiration(0.1);
+		rightMotor2.setSafetyEnabled(true);
+		
+		
 		leftMotor3 = new Talon(RobotMap.DRIVETRAIN_LEFT_MOTOR_3);
+		leftMotor3.setExpiration(0.1);
+		leftMotor3.setSafetyEnabled(true);
+		
+		
 		rightMotor3 = new Talon(RobotMap.DRIVETRAIN_RIGHT_MOTOR_3);
-
+		rightMotor3.setExpiration(0.1);
+		rightMotor3.setSafetyEnabled(true);
+		
 		gyroSPI = new ADXRS453Gyro();
 		gyroSPI.startThread();
 
