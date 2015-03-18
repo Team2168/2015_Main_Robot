@@ -17,7 +17,9 @@ import org.team2168.commands.lift.PIDCommands.LiftPIDPosition;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- *
+ *This command drives in a straight line and performs a three
+ *tote stack atonomously. This autonomous assumes the robot is
+ *placed holding 1 tote, and that 2 bins are moved by partners
  */
 public class Auto_ThreeToteNoBin extends CommandGroup {
     
@@ -32,38 +34,34 @@ public class Auto_ThreeToteNoBin extends CommandGroup {
     	addSequential(new EngageGripper(),2);
     	
     	
-    	//Wiat for partner to move both bin out of the way
+    	//Wait for partner to move both bin out of the way
     	addSequential(new Sleep(), 1.25);
     	
     	
-    	//lift 1st tote above can height
+    	//lift 1st tote above tote height
     	addSequential(new DisengageIntake(),2);
-    	//addSequential(new LiftPIDPosition(20, 1), 2.5); // raise 1st tote tote above next tote
-    	addParallel(new LiftPIDPosition(15, 1), 1.2); // raise 1st tote above next tote    	
+    	addParallel(new LiftPIDPosition(15, 0.7), 1.2); // raise 1st tote above next tote    	
+    	addSequential(new Sleep(), 1.3); //sleep so that tote clears IR sensor before next command runs
     	
-    	
-    	addSequential(new Sleep(), 1.3); //change to wait until no 
-    	
-    	//bin is out of way so drive to next tote faster
+    	    
+    	//Drive to second tote while intaking
     	addParallel(new IntakeSingleTote(),5);
-    	
-    	
-    	addSequential(new DriveXDistance(13, 0.6),3); //drive slow to move bin
-    	//aquired 2nd tote, so now we lift
-    	addSequential(new LiftPIDPosition(1, 0.8), 1); // lower 1st tote onto 2nd tote
+    	addSequential(new DriveXDistance(13, 0.6),3);
+
+    	//intake second tote
+    	addSequential(new LiftPIDPosition(0, 0.7), 1); // lower 1st tote onto 2nd tote
     	addSequential(new ZeroLift(),2);
     	addSequential(new ZeroLift(),2);
-    	addSequential(new Sleep(), 0.2); //TODO : Why do we need this?
-    	addSequential(new DisengageIntake(),2);
-    	//addSequential(new LiftPIDPosition(35, 1), 2.5); // raise 2nd tote above garbage can
-    	addParallel(new LiftPIDPosition(16, 1), 1.2); // raise 1st tote above next tote 
     	
-    	addSequential(new Sleep(), 1.3);
+    	//lift 2nd tote
+    	addSequential(new DisengageIntake(),2); //let go of tote before lifting
+    	addParallel(new LiftPIDPosition(16, 0.7), 1.2); // raise 2nd tote above next tote 
+    	addSequential(new Sleep(), 1.3); //sleep so that tote clears IR sensor before next command runs
     	
-    	//bin is out of way so drive to next tote faster
+    	
+    	//bin is out of way so drive to next tote while intaking
     	addParallel(new IntakeSingleTote(),5);
-    	//TODO : WHyare this drive distance different than the previouse drive distance of 6.5
-    	addSequential(new DriveXDistance(10, 0.6),1.7); //drive slow to move bin
+    	addSequential(new DriveXDistance(10, 0.6),1.7); 
     	
     	
     	//Acquired 3rd tote so just drive to auto zone
@@ -73,15 +71,15 @@ public class Auto_ThreeToteNoBin extends CommandGroup {
     	
     	
     	//at auto zone, so lets lower stack
-    	addSequential(new LiftPIDPosition(1, 0.8), 2); // lower 2tote stack onto 3rd tote
+    	addSequential(new LiftPIDPosition(0, 0.7), 2); // lower 2tote stack onto 3rd tote
     	addSequential(new ZeroLift(),2);
     	addSequential(new ZeroLift(),2);
     	
     	//release set
     	addSequential(new DisengageIntake(),2);
     	addSequential(new ReleaseGripper(),2);
-    	//addSequential(new DriveXDistance(-0.4, 0.5),2); //drive slow with statck
-    	
+    	//addSequential(new DriveXDistance(-0.2, 1),2); //drive slow with statck
+    
     	//DONE
     	
 

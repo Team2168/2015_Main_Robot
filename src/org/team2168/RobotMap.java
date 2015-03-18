@@ -156,7 +156,7 @@ public class RobotMap {
 	public final static double PRESS_SENSOR_HIGH_PRESSURE = 150.0;
 
 	public final static double INTAKE_WHEEL_SPEED = 0.5;
-	public final static double INTAKE_TOTE_ENGAGE_VOLTAGE = 1.25;
+	public final static double INTAKE_TOTE_ENGAGE_VOLTAGE = 1.05;
 	public final static double INTAKE_TOTE_STOP_VOLTAGE = 2.5;
 	public final static boolean PRINT_SD_DEBUG_DATA = true;
 	public final static long SmartDashThreadPeriod = 100; //ms
@@ -204,23 +204,14 @@ public class RobotMap {
 	double iTurn = 0.00001;
 	double pDrive = 0;
 	
-	//public static final double liftPUp = 0.0098;
-	//public static final double liftIUp = 0.0124;
-	//public static final double liftDUp = 0.0005418310445973070;
-	
-	public static final double liftPUp = 0.25;
+	public static final double liftPUp = 0.12;
 	public static final double liftIUp = 0.0080; 
 	public static final double liftDUp = 0.0002573;
 	
-	public static final double liftPDw = 0.35;
-	public static final double liftIDw = 0.010; 
-	public static final double liftDDw = 0.0002073;
+	public static final double liftPDw = 0.12;
+	public static final double liftIDw = 0.05; 
+	public static final double liftDDw = 0.02573;
 	
-	
-//	public static final double liftPUp = 0.0590;
-//	public static final double liftIUp = 0.0110;
-//	public static final double liftDUp = 0.0017;
-//	public static final double liftNUp = 10.7300;
 	
 	public static final long liftPIDPeriod = 20; //100ms
 	

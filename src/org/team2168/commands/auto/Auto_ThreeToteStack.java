@@ -40,14 +40,10 @@ public class Auto_ThreeToteStack extends CommandGroup {
     	addSequential(new EngageIntake());
     	//addParllel(new DriveIntakeSpeedIndepemdt(1, -1);
     	addParallel(new SetIntakeSpeed(-1));
-    	addSequential(new DriveXDistance(6, 0.2),5); //drive slow to move bin
-    	
-    	
-    	addSequential(new Sleep(),3); //let partners remove totes
-    	
+    	addSequential(new DriveXDistance(8, 0.4),4); //drive slow to move bin
     	//bin is out of way so drive to next tote faster
     	addParallel(new IntakeSingleTote(),5);
-    	addSequential(new DriveXDistance(6.5, 0.4),2.5); //drive fast to get tote
+    	addSequential(new DriveXDistance(4, 0.4),2.5); //drive fast to get tote
     	
     	
     	//aquired 2nd tote, so now we lift
