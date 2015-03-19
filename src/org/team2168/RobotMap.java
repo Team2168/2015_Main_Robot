@@ -36,7 +36,8 @@ public class RobotMap {
 	public final static int DRIVETRAIN_LEFT_MOTOR_3_PDP = 15;
 	public final static int INTAKE_LEFT_MOTOR_PDP = 11;
 	public final static int INTAKE_RIGHT_MOTOR_PDP = 4;
-	public final static int LIFT_MOTOR_PDP = 12;
+	public final static int LIFT_LEFT_MOTOR_PDP = 12;
+	public final static int LIFT_RIGHT_MOTOR_PDP = 3;
 	public final static int WINCH_MOTOR_PDP = 10;
 	public final static int DIO_POWER = 6;
 	public final static int PCM_POWER = 9;
@@ -166,7 +167,7 @@ public class RobotMap {
 	 *************************************************************************/
 	public final static long PDPThreadPeriod = 50; //ms
 	public final static double WARNING_CURRENT_LIMIT = 35;  //amps
-	public final static double STALL_CURRENT_LIMIT = 80;  //amps
+	public final static double STALL_CURRENT_LIMIT = 50;  //amps
 	public final static double MAIN_BREAKER_TRIP_TEMP = 150;  //farenheit
 
 

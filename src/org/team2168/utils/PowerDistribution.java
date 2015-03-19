@@ -62,6 +62,7 @@ public class PowerDistribution {
 		for(int i=0; i<NUM_OF_PDP_CHANNELS; i++)
 		{
 			batteryVoltage = pdp.getVoltage();
+			
 			channelCurrent[i] = pdp.getCurrent(i);
 			channelError[i] = 0; //no Error
 
@@ -69,8 +70,9 @@ public class PowerDistribution {
 				channelError[i] = 1; //warning
 			else if (channelCurrent[i] > RobotMap.STALL_CURRENT_LIMIT)
 				channelError[i] = 2; //danger
+			
+			
 		}
-
 
 		totalCurrent = pdp.getTotalCurrent();
 		totalEnergy = pdp.getTotalEnergy();
@@ -156,8 +158,15 @@ public class PowerDistribution {
 			return false;
 	}
 	
-	public boolean isLiftMotorTrip() {
+	public boolean isLiftLeftMotorTrip() {
 		if (channelError[12] == 2)
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean isLiftRightMotorTrip() {
+		if (channelError[3] == 2)
 			return true;
 		else
 			return false;

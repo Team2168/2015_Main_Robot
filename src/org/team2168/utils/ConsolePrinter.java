@@ -50,17 +50,13 @@ public class ConsolePrinter {
 			SmartDashboard.putNumber("Right Encoder Distance:",Drivetrain.getInstance().getRightPosition());
 			SmartDashboard.putBoolean("isPracticeBot", Robot.isPracticeRobot());
 
-			//			SmartDashboard.putNumber("GYRO DeltTime:", Robot.drivetrain.gyroSPI.getDeltatime());
-			//			SmartDashboard.putNumber("GYRO Rate:", Robot.drivetrain.gyroSPI.getRate());
+			SmartDashboard.putNumber("GYRO Driftrate:", Robot.drivetrain.gyroSPI.driftRate);
+			SmartDashboard.putNumber("GYRO Rate:", Robot.drivetrain.gyroSPI.getRate());
 			SmartDashboard.putNumber("GYRO Angle SPI:", Robot.drivetrain.getHeading());
 			SmartDashboard.putNumber("GYRO reInits:", Robot.gyroReinits);
 			SmartDashboard.putBoolean("Gyro Cal Status", !Robot.gyroCalibrating);
-			//			SmartDashboard.putNumber("GYRO Status:", Robot.drivetrain.gyroSPI.getStatus());
-			//			SmartDashboard.putNumber("GYRO ID:", Robot.drivetrain.gyroSPI.getID());
-			//			SmartDashboard.putNumber("GYRO Temp:", Robot.drivetrain.gyroSPI.getTemp());
-
-			//			SmartDashboard.putString("Gyro Message Bin:", Robot.drivetrain.gyroSPI.getMessageBin());
-			//			SmartDashboard.putString("Gyro Rate Bin:", Robot.drivetrain.gyroSPI.getRateBin());
+			SmartDashboard.putNumber("GYRO Status:", Robot.drivetrain.gyroSPI.getStatus());
+			SmartDashboard.putNumber("GYRO Temp:", Robot.drivetrain.gyroSPI.getTemp());
 
 
 			SmartDashboard.putNumber("Accel X:", Robot.accel.getX());
@@ -76,6 +72,9 @@ public class ConsolePrinter {
 			SmartDashboard.putNumber("DTLeft3MotorVoltage", Robot.drivetrain.getLeft3MotorVoltage());
 
 			SmartDashboard.putNumber("Battery Voltage", Robot.pdp.getBatteryVoltage());
+			SmartDashboard.putNumber("totalCurrent", Robot.pdp.getTotalCurrent());
+			SmartDashboard.putNumber("pcmCurrent", Robot.pdp.getChannelCurrent(RobotMap.PCM_POWER));
+
 
 
 			SmartDashboard.putNumber("DTRight1MotorCurrent", Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP));
@@ -89,7 +88,8 @@ public class ConsolePrinter {
 			SmartDashboard.putNumber("Lift Encoder Position", Robot.lift.getPosition());
 			SmartDashboard.putNumber("Lift Encoder Rate", Robot.lift.getRate());
 
-			SmartDashboard.putNumber("Lift Motor Current", Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_PDP));
+			SmartDashboard.putNumber("Lift Left Motor Current", Robot.pdp.getChannelCurrent(RobotMap.LIFT_LEFT_MOTOR_PDP));
+			SmartDashboard.putNumber("Lift Right Motor Current", Robot.pdp.getChannelCurrent(RobotMap.LIFT_RIGHT_MOTOR_PDP));
 			SmartDashboard.putNumber("Lift Motor Voltage", Robot.lift.getMotorVoltage());
 
 
@@ -120,7 +120,8 @@ public class ConsolePrinter {
 			SmartDashboard.putBoolean("Right Motor Two Trip", !Robot.pdp.isRightMotorTwoTrip());
 			SmartDashboard.putBoolean("Right Motor Three Trip", !Robot.pdp.isRightMotorThreeTrip());
 
-			SmartDashboard.putBoolean("Lift Motor Trip", !Robot.pdp.isLiftMotorTrip());
+			SmartDashboard.putBoolean("Left Lift Motor Trip", !Robot.pdp.isLiftLeftMotorTrip());
+			SmartDashboard.putBoolean("Right Lift Motor Trip", !Robot.pdp.isLiftRightMotorTrip());
 			SmartDashboard.putBoolean("Intake Left Motor Trip", !Robot.pdp.isIntakeLeftMotorTrip());
 			SmartDashboard.putBoolean("Intake Right Motor Trip", !Robot.pdp.isIntakeLeftMotorTrip());
 
@@ -178,7 +179,7 @@ public class ConsolePrinter {
 					Robot.drivetrain.drivetrainRightEncoder.getRate() + "\t" +
 
 					Robot.lift.getMotorVoltage() + "\t" +
-					Robot.pdp.getChannelCurrent(RobotMap.LIFT_MOTOR_PDP) + "\t" +
+					Robot.pdp.getChannelCurrent(RobotMap.LIFT_LEFT_MOTOR_PDP) + "\t" +
 					Robot.lift.getPosition() + "\t" +
 					Robot.lift.liftEncoder.getRawRate() + "\t"
 
