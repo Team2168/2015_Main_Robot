@@ -1,6 +1,7 @@
 package org.team2168.commands.auto;
 
 import org.team2168.commands.Sleep;
+import org.team2168.commands.arcb.ARCBDeploy;
 import org.team2168.commands.drivetrain.DriveXDistance;
 import org.team2168.commands.drivetrain.DriveXDistanceUntilObject;
 import org.team2168.commands.drivetrain.RotateAboutRightWheel;
@@ -12,8 +13,8 @@ import org.team2168.commands.intake.DisengageIntake;
 import org.team2168.commands.intake.DriveIntakeWheelIndependt;
 import org.team2168.commands.intake.EngageIntake;
 import org.team2168.commands.intake.IntakeSingleTote;
-import org.team2168.commands.intake.IntakeSingleToteForAuto;
 import org.team2168.commands.intake.SetIntakeSpeed;
+import org.team2168.commands.intake.WaitForIntakeToClearObject;
 import org.team2168.commands.intake.WaitForObjectInIntake;
 import org.team2168.commands.lift.LiftOneTote;
 import org.team2168.commands.lift.ZeroLift;
@@ -22,11 +23,14 @@ import org.team2168.commands.lift.PIDCommands.LiftPIDPosition;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
+ * This command performs a 3 tote / 3 bin auto by intake and outtaking
+ * bins
  *
  */
-public class Auto_ThreeToteStack extends CommandGroup {
+public class Auto_ThreeToteStackKnockingBin extends CommandGroup {
     
-    public  Auto_ThreeToteStack() { 
+    public  Auto_ThreeToteStackKnockingBin() { 
+    	
     	//Start with first tote in robot
     	addParallel(new IntakeSingleTote(),5);
     	
@@ -34,59 +38,54 @@ public class Auto_ThreeToteStack extends CommandGroup {
     	addSequential(new ZeroLift(),2);
     	addSequential(new ZeroLift(),2);
     	addSequential(new EngageGripper(),2);
-    	//addSequential(new ARCBDeploy(), 2);
+    	addSequential(new ARCBDeploy(), 2);
     	
     	//lift 1st tote above can height
     	addSequential(new DisengageIntake(),2);
-    	addSequential(new LiftPIDPosition(35, 1), 1.8);  
+    	addSequential(new LiftPIDPosition(27, 1), 3);
     	
-
     	
-    	//Roll 1st bin out of the way towards right using intake wheels
-    	addSequential(new EngageIntake());
-    	addParallel(new DriveIntakeWheelIndependt(-1, 1)); //drive bin to right
-    	addSequential(new DriveXDistanceUntilObject(6.5, 0.5), 2.5); //drive slow to move bin
-    	//addSequential(new DriveXDistance(3, 0.3),4); //drive slow to move bin
-    	
-    	//total time is 3.3 seconds
+    	//intake 1st bin
+    	addParallel(new IntakeSingleTote(),5);
+    	addSequential(new DriveXDistance(6.8, 0.7),4);
+    	addSequential(new WaitForObjectInIntake());
+    	addSequential(new DriveXDistance(-4, 1), 1);
+    	addSequential(new RotateAboutRightWheel(50, 1),4);
+    	addParallel(new SetIntakeSpeed(-1), 2); //release bin
+    	addSequential(new WaitForIntakeToClearObject(), 2);
+    	addSequential(new RotateAboutRightWheel(-70, 1),4);
     	
     	//bin is out of way so drive to next tote faster
-    	addParallel(new IntakeSingleToteForAuto(),5);
-    	addSequential(new DriveXDistance(3.95, 0.6),2); //drive fast to get tote // 
-    	
-    	//total time is 5.3 seconds, used to be 9 seconds
-    	
-    	//saved 3.7
-    	
+    	addParallel(new IntakeSingleTote(),5);
+    	addSequential(new DriveXDistance(6, 0.7),4);
+
+    	   	
     	//aquired 2nd tote, so now we lift
-    	addSequential(new WaitForObjectInIntake());
     	addSequential(new LiftPIDPosition(0, 0.7), 3); // lower 1st tote onto 2nd tote
     	addSequential(new ZeroLift(),2);
     	addSequential(new ZeroLift(),2);
-    	addSequential(new LiftPIDPosition(35, 1), 1.8); // raise 2nd tote above garbage can
+    	addSequential(new DisengageIntake(),2);
+    	addSequential(new LiftPIDPosition(45, 1), 3); // raise 2nd tote above garbage can
     	
-    	//saved 1.2 seconds
     	
-    	//Roll 2nd bin out of the way towards right
-    	addSequential(new EngageIntake());
-    	addParallel(new DriveIntakeWheelIndependt(-1, 1)); //drive been to right
-    	addSequential(new DriveXDistance(7, 0.5),2.5); //drive slow to move bin
-    	//addSequential(new DriveXDistance(3, 0.3),4); //drive slow to move bin
+    	//intake 2nd bin
+    	addParallel(new IntakeSingleTote(),5);
+    	addSequential(new DriveXDistanceUntilObject(3, 0.3),4);
+    	addSequential(new RotateXDistancePIDZZZ(45, 0.4),1.5);
+    	addParallel(new SetIntakeSpeed(-1), 2); //release bin
+    	addSequential(new WaitForIntakeToClearObject(), 2);
+    	addSequential(new RotateXDistancePIDZZZ(-45, 0.4),1.5);
     	
-    	//saved 0.5 seconds
    
     	//bin is out of way so drive to next tote faster
-    	addParallel(new IntakeSingleToteForAuto(),5);
-    	addSequential(new DriveXDistanceUntilObject(5.45, 0.6),2);
+    	addParallel(new IntakeSingleTote(),5);
+    	addSequential(new DriveXDistanceUntilObject(4, 0.6),2.5);
     	
-    	//saved 0.5 seconds
     	
     	//Acquired 3rd tote so just drive to auto zone
     	addParallel(new SetIntakeSpeed(0.5),2);
-    	addSequential(new RotateXDistancePIDZZZ(90, 1), 1.3);
+    	addSequential(new RotateAboutRightWheel(95, 1), 7);
     	addParallel(new DriveXDistance(16, 1),4.2); //drive fast with stack
-    	
-    	//save 2.7 seconds
     	
     	
     	//at auto zone, so lets lower stack

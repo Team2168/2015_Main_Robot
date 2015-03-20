@@ -1,6 +1,7 @@
 package org.team2168;
 
 
+import org.team2168.commands.TestCommand;
 import org.team2168.commands.gripper.EngageGripper;
 import org.team2168.commands.gripper.ReleaseGripper;
 import org.team2168.commands.intake.DisengageIntake;
@@ -81,8 +82,9 @@ public class OI {
         pnuematicTestJoystick.ButtonLeftBumper().whenPressed(new EngageIntake());
         pnuematicTestJoystick.ButtonRightBumper().whenPressed(new DisengageIntake());
         
-        commandsTestJoystick.ButtonStart().whenPressed(new LiftOneTote());
-        commandsTestJoystick.ButtonX().whenPressed(new LiftPIDPosition());
+        commandsTestJoystick.ButtonStart().whenPressed(new TestCommand());
+        
+        //commandsTestJoystick.ButtonX().whenPressed(new LiftPIDPosition());
         commandsTestJoystick.ButtonB().whenPressed(new LiftPIDPause());
         commandsTestJoystick.ButtonBack().whenPressed(new OpenWhenSensed());
         commandsTestJoystick.ButtonRightBumper().whenPressed(new DriveXDistance(18,0.2,1));
