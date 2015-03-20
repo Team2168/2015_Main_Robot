@@ -26,6 +26,7 @@ import org.team2168.utils.PowerDistribution;
 
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
@@ -66,6 +67,12 @@ public class Robot extends IterativeRobot {
 	private static DigitalInput practiceBot;
 	public static FalconPathPlanner path;
 
+	//LED light interface
+	private static DigitalOutput gripperEngagedLED;
+	private static DigitalOutput intakeEngagedLED;
+	private static DigitalOutput intakeWheelsActiveLED;
+	private static DigitalOutput robotDisabledLED;
+
 	public static Path drivePath;
 
 	private static boolean matchStarted = false;
@@ -86,6 +93,12 @@ public class Robot extends IterativeRobot {
 		accel = new BuiltInAccelerometer();
 		pdp = new PowerDistribution(RobotMap.PDPThreadPeriod);
 		pdp.startThread();
+
+		//Instantiate outputs
+		gripperEngagedLED = new DigitalOutput(RobotMap.LEDS_GRIPPER_ENGAGED);
+		intakeEngagedLED = new DigitalOutput(RobotMap.LEDS_INTAKE_ENGAGED);
+		intakeWheelsActiveLED = new DigitalOutput(RobotMap.LEDS_INTAKE_WHEELS_ACTIVE);
+		robotDisabledLED = new DigitalOutput(RobotMap.LEDS_ROBOT_DISABLED);
 
 		// Instantiate subsystems
 		pneumatics = Pneumatics.getInstance();
@@ -125,9 +138,8 @@ public class Robot extends IterativeRobot {
 					.getSegment(s));
 		}
 
-		
-
 		drivetrain.calibrateGyro();
+		updateLEDs(false);
 
 		System.out.println("Bot Finished Loading.");
 	}
@@ -150,6 +162,7 @@ public class Robot extends IterativeRobot {
 
 		// Check to see if the gyro is drifting, if it is re-initialize it.
 		gyroReinit();
+		updateLEDs(false);
 	}
 
 	/**
@@ -173,6 +186,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		autonomousCommand = (Command) autoChooser.getSelected();
 		Scheduler.getInstance().run();
+		updateLEDs(true);
 	}
 
 	/**
@@ -194,6 +208,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		updateLEDs(true);
 	}
 
 	/**
@@ -287,5 +302,17 @@ public class Robot extends IterativeRobot {
 
 		System.out.println("Time in ms: "
 				+ (System.currentTimeMillis() - start));
+	}
+	
+	/**
+	 * Update the digital outputs which interface to the arduino driving the LED strips.
+	 * 
+	 * @param enabled true if the robot is enabled (auto or teleop mode)
+	 */
+	private static void updateLEDs(boolean enabled) {
+		robotDisabledLED.set(!enabled);
+		gripperEngagedLED.set(gripper.isGripperEngaged());
+		intakeEngagedLED.set(intake.isIntakeEngaged());
+		intakeWheelsActiveLED.set(intake.isRightSpinning() || intake.isLeftSpinning());
 	}
 }
