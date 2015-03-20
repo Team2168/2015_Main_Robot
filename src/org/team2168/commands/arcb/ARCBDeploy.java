@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ARCBDeploy extends Command {
+public class ARCBDeployRight extends Command {
 
-    public ARCBDeploy() {
+    public ARCBDeployRight() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.binGrabber);
@@ -21,12 +21,12 @@ public class ARCBDeploy extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.binGrabber.deploy();
+    	Robot.binGrabber.extendRight();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return Robot.binGrabber.isRightExtended();
     }
 
     // Called once after isFinished returns true
