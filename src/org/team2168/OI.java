@@ -1,6 +1,5 @@
 package org.team2168;
 
-
 import org.team2168.commands.arcb.ARCBDeploy;
 import org.team2168.commands.arcb.ARCBDeployLeft;
 import org.team2168.commands.arcb.ARCBDeployRight;
@@ -89,6 +88,7 @@ public class OI {
 		commandsTestJoystick.ButtonBack().whenPressed(new OpenWhenSensed());
 		commandsTestJoystick.ButtonRightBumper().whenPressed(new DriveXDistance(18,0.2,1));
 		commandsTestJoystick.ButtonLeftBumper().whenPressed(new TestAllMotors());
+
 		commandsTestJoystick.ButtonA().whenPressed(new ZeroLift());
 		commandsTestJoystick.ButtonY().whenPressed(new RotateXDistancePIDZZZ(45, 0.4));
 

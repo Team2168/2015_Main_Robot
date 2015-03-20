@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * This command just waits until the lift intake doesn't have an object
  */
-public class WaitForIntakeToClearObject extends Command {
+public class WaitForObjectInIntake extends Command {
 
-	public WaitForIntakeToClearObject() {
+	public WaitForObjectInIntake() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 	}
@@ -25,7 +25,7 @@ public class WaitForIntakeToClearObject extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return Robot.intake.getAveragedRawToteDistance() > RobotMap.INTAKE_TOTE_STOP_VOLTAGE;
+		return Robot.intake.getAveragedRawToteDistance() > RobotMap.INTAKE_TOTE_ENGAGE_VOLTAGE;
 	}
 
 	// Called once after isFinished returns true
