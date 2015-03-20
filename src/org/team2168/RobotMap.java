@@ -69,7 +69,7 @@ public class RobotMap {
 	public final static int LEDS_GRIPPER_ENGAGED = 10;      //MXP pin 11
 	public final static int LEDS_INTAKE_ENGAGED = 11;       //MXP pin 13
 	public final static int LEDS_INTAKE_WHEELS_ACTIVE = 12; //MXP pin 15
-	public final static int LEDS_ROBOT_ENABLED = 13;        //MXP pin 17
+	public final static int LEDS_ROBOT_DISABLED = 13;       //MXP pin 17
 	public static final int PRACTICE_BOT_JUMPER = 24;       //MXP pin 32
 
 
