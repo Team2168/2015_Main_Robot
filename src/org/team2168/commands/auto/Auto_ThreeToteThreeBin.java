@@ -40,7 +40,7 @@ public class Auto_ThreeToteThreeBin extends CommandGroup {
     	//addSequential(new LiftPIDPosition(15, 1), 1.2); // raise 1st tote tote above next tote
     	   	
     	//rotate and grab bin 1st
-    	addSequential(new ARCBDeploy());
+    	addSequential(new ARCBDeployRight());
     	addSequential(new RotateXDistancePIDZZZ(-55, 0.4),2);
     	addSequential(new DriveXDistance(7, 0.5),1); //drive slow to move bin
     	addSequential(new RotateXDistancePIDZZZ(45, 0.4),2);
@@ -93,6 +93,7 @@ public class Auto_ThreeToteThreeBin extends CommandGroup {
     	addSequential(new DriveXDistance(6, 0.7),3); //intake second tote
     	
     	//Acquired 3rd tote so just drive to auto zone
+    	addSequential(new ARCBDeployLeft());
     	addParallel(new SetIntakeSpeed(0.5),2);
     	addSequential(new RotateXDistancePIDZZZ(85, 0.4),1.3);
     	addParallel(new DriveXDistance(16, 1),4.2); //drive slow with stack
