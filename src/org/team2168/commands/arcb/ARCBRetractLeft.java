@@ -9,9 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ARCBRetract extends Command {
 
-    public ARCBRetract() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+    public ARCBRetractLeft() {
     	requires(Robot.binGrabber);
     }
 
@@ -21,12 +19,12 @@ public class ARCBRetract extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.binGrabber.retract();
+    	Robot.binGrabber.retractLeft();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return Robot.binGrabber.isLeftRetracted();
     }
 
     // Called once after isFinished returns true
