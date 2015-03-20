@@ -1,8 +1,6 @@
-package org.team2168.commands.auto;
+package org.team2168.commands.arcb;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import org.team2168.commands.arcb.ARCBDeployLeft;
-import org.team2168.commands.arcb.ARCBDeployRight;
 
 /**
  * Extends both of the ARCB arms.
@@ -10,7 +8,7 @@ import org.team2168.commands.arcb.ARCBDeployRight;
 public class ARCBDeploy extends CommandGroup {
 
 	public ARCBDeploy() {
-    addSequential(new ARCBDeployLeft());
-    addSequential(new ARCBDeployRight());
+		addSequential(new ARCBDeployLeft());
+		addSequential(new ARCBDeployRight());
 	}
 }

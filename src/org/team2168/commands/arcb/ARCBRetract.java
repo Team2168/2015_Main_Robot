@@ -1,8 +1,6 @@
-package org.team2168.commands.auto;
+package org.team2168.commands.arcb;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import org.team2168.commands.arcb.ARCBRetractLeft;
-import org.team2168.commands.arcb.ARCBRetractRight;
 
 /**
  * Retracts both of the ARCB arms.
@@ -10,7 +8,7 @@ import org.team2168.commands.arcb.ARCBRetractRight;
 public class ARCBRetract extends CommandGroup {
 
 	public ARCBRetract() {
-    addSequential(new ARCBRetractLeft());
-    addSequential(new ARCBRetractRight());
+		addSequential(new ARCBRetractLeft());
+		addSequential(new ARCBRetractRight());
 	}
 }
