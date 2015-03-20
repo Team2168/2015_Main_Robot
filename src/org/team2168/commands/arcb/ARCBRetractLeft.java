@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ARCBRetract extends Command {
+public class ARCBRetractLeft extends Command {
 
     public ARCBRetractLeft() {
     	requires(Robot.binGrabber);
