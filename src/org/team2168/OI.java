@@ -21,6 +21,7 @@ import org.team2168.commands.intake.StopIntakeWheels;
 import org.team2168.commands.lift.DisableBrake;
 import org.team2168.commands.lift.EnableBrake;
 import org.team2168.commands.lift.LiftOneTote;
+import org.team2168.commands.lift.LiftWithJoystickUNSAFE;
 import org.team2168.commands.lift.ZeroLift;
 import org.team2168.commands.lift.PIDCommands.LiftPIDPause;
 import org.team2168.commands.lift.PIDCommands.LiftPIDPosition;
@@ -90,9 +91,10 @@ public class OI {
 		commandsTestJoystick.ButtonBack().whenPressed(new OpenWhenSensed());
 		commandsTestJoystick.ButtonRightBumper().whenPressed(new DriveXDistance(18,0.2,1));
 		commandsTestJoystick.ButtonLeftBumper().whenPressed(new TestAllMotors());
-
+		commandsTestJoystick.ButtonRightTrigger().whenPressed(new IntakeSingleTote());
 		commandsTestJoystick.ButtonA().whenPressed(new ZeroLift());
 		commandsTestJoystick.ButtonY().whenPressed(new RotateXDistancePIDZZZ(45, 0.4));
+		commandsTestJoystick.ButtonLeftDPad().whenPressed(new LiftWithJoystickUNSAFE(commandsTestJoystick));
 
 
 	}

@@ -8,6 +8,7 @@ import java.util.TimerTask;
 import org.team2168.OI;
 import org.team2168.Robot;
 import org.team2168.RobotMap;
+import org.team2168.commands.lift.PIDCommands.LiftPIDPosition;
 import org.team2168.subsystems.Drivetrain;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -148,8 +149,9 @@ public class ConsolePrinter {
 			SmartDashboard.putBoolean("Intake Right Self Test", Robot.intake.rightIntakeSelfTest);
 			SmartDashboard.putBoolean("Lift Self Test", Robot.lift.liftSelfTest);
 
-			
-
+			SmartDashboard.putBoolean("autoMode", Robot.isAutoMode());
+			SmartDashboard.putBoolean("left lift over current", LiftPIDPosition.leftMotorOverCurrent());
+			SmartDashboard.putBoolean("right lift over current", LiftPIDPosition.rightMotorOverCurrent());
 			
 			//file log
 			log.println(Timer.getFPGATimestamp() + "\t" +

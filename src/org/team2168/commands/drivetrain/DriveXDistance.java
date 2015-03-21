@@ -63,7 +63,7 @@ public class DriveXDistance extends Command{
 		Robot.drivetrain.driveTrainPosController.setSetPoint(endDistance);
 		Robot.drivetrain.driveTrainPosController.setMaxPosOutput(speed);
 		Robot.drivetrain.driveTrainPosController.setMinPosOutput(-speed);
-		Robot.drivetrain.driveTrainPosController.setAcceptErrorDiff(0.1); //feet
+		Robot.drivetrain.driveTrainPosController.setAcceptErrorDiff(0.3); //feet
 		Robot.drivetrain.rotateController.setSetPoint(angle);
 		
 		
@@ -96,7 +96,7 @@ public class DriveXDistance extends Command{
 		double headingCorrection = (Robot.drivetrain.rotateController.getControlOutput()) + lastRotateOutput;
 
 		Robot.drivetrain.tankDrive(Robot.drivetrain.driveTrainPosController.getControlOutput()+headingCorrection, Robot.drivetrain.driveTrainPosController.getControlOutput()-headingCorrection);
-
+		//finished = Robot.drivetrain.driveTrainPosController.isFinished();
 	}
 
 

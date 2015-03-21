@@ -47,7 +47,7 @@ public class Auto_ThreeToteStackRollingBins extends CommandGroup {
     	//Roll 1st bin out of the way towards right using intake wheels
     	addSequential(new EngageIntake());
     	addParallel(new DriveIntakeWheelIndependt(-1, 1)); //drive bin to right
-    	addSequential(new DriveXDistanceUntilObject(6.5, 0.35), 2.5); //drive slow to move bin
+    	addSequential(new DriveXDistance(6.5, 0.35), 2.5); //drive slow to move bin
     	//addSequential(new DriveXDistance(3, 0.3),4); //drive slow to move bin
     	
     	//total time is 3.3 seconds

@@ -2,8 +2,11 @@
 package org.team2168.commands.lift.PIDCommands;
 
 import org.team2168.Robot;
+import org.team2168.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 
@@ -58,12 +61,20 @@ public class LiftPIDPosition extends Command {
 		
     }
 
-    // Make this return true when this Command no longer needs to run execute()
-    
+    /*
+     * Make this return true when this Command no longer needs to run execute()
+     */
 	protected boolean isFinished() {
+		//Check if the lift is drawing too much current. If it does, kill the SCHEDULER!
+		if(Robot.isAutoMode() &&
+				(leftMotorOverCurrent() || rightMotorOverCurrent())) {
+			//Kill the scheduler :(
+			Scheduler.getInstance().disable();
+			Scheduler.getInstance().removeAll();
+		}
+		
 		//TODO Should the command be stopped????????!?!?!?!?!? after PID is tuned
     	return Robot.lift.liftController.isFinished();
-		//return false;
     }
 
     // Called once after isFinished returns true
@@ -79,4 +90,22 @@ public class LiftPIDPosition extends Command {
 	protected void interrupted() {
     	end();
     }
+	
+	/**
+	 * 
+	 * @return true when the left intake motor is over current
+	 */
+	public static boolean leftMotorOverCurrent() {
+		return Robot.pdp.getChannelCurrent(RobotMap.INTAKE_LEFT_MOTOR_PDP)
+				> RobotMap.INTAKE_OVER_CURRENT;
+	}
+	
+	/**
+	 * 
+	 * @return true when the right intake motor is over current
+	 */
+	public static boolean rightMotorOverCurrent() {
+		return Robot.pdp.getChannelCurrent(RobotMap.INTAKE_RIGHT_MOTOR_PDP)
+				> RobotMap.INTAKE_OVER_CURRENT;
+	}
 }

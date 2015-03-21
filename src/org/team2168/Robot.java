@@ -76,6 +76,7 @@ public class Robot extends IterativeRobot {
 	public static boolean gyroCalibrating = false;
 	private boolean lastGyroCalibrating = false;
 	private double curAngle = 0.0;
+	private static boolean autoMode = false;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -149,6 +150,8 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().removeAll();
 		Scheduler.getInstance().disable();
 
+		autoMode = false;
+		
 		// Check to see if the gyro is drifting, if it is re-initialize it.
 		gyroReinit();
 	}
@@ -174,6 +177,8 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		autonomousCommand = (Command) autoChooser.getSelected();
 		Scheduler.getInstance().run();
+		
+		autoMode = true;
 	}
 
 	/**
@@ -188,6 +193,8 @@ public class Robot extends IterativeRobot {
 			autonomousCommand.cancel();
 		}
 		Scheduler.getInstance().enable();
+		
+		autoMode = false;
 	}
 
 	/**
@@ -247,17 +254,17 @@ public class Robot extends IterativeRobot {
 	 */
 	private void autoSelectInit() {
 		autoChooser = new SendableChooser();
-		autoChooser.addDefault("No Tote _ Do Nothing", new Auto_NoTote_DoNothing());
+		//autoChooser.addDefault("No Tote _ Do Nothing", new Auto_NoTote_DoNothing());
 		autoChooser.addObject("Drive Forward" , new Auto_NoTote_DriveForward());
-		autoChooser.addObject("One Tote _ Rotate Push Fwd", new Auto_OneTote_Rotate90Push());
+		autoChooser.addDefault("One Tote _ Rotate Push Fwd", new Auto_OneTote_Rotate90Push());
 		autoChooser.addObject("Three Tote", new Auto_ThreeToteStack());
 		autoChooser.addObject("Two Tote", new Auto_TwoToteStack());
 		autoChooser.addObject("Three Tote One Bin", new Auto_ThreeToteOneBin());
 		autoChooser.addObject("Three Tote Three Bin", new Auto_ThreeToteThreeBin());
-		autoChooser.addObject("Three Tote Three Bin Inaking", new Auto_ThreeToteStackIntakingBins());
+		//autoChooser.addObject("Three Tote Three Bin Inaking", new Auto_ThreeToteStackIntakingBins());
 		autoChooser.addObject("Three Tote Three Bin Rolling", new Auto_ThreeToteStackRollingBins());
-		//autoChooser.addDefault("Three Tote No Bins", new Auto_ThreeToteNoBin());
-		autoChooser.addObject("Three Tote THree Bin Knocking", new Auto_ThreeToteStackKnockingBin());
+		autoChooser.addObject("Three Tote No Bins", new Auto_ThreeToteNoBin());
+		//autoChooser.addObject("Three Tote THree Bin Knocking", new Auto_ThreeToteStackKnockingBin());
 		
 		
 	}
@@ -289,5 +296,9 @@ public class Robot extends IterativeRobot {
 
 		System.out.println("Time in ms: "
 				+ (System.currentTimeMillis() - start));
+	}
+	
+	public static boolean isAutoMode() {
+		return autoMode;
 	}
 }
