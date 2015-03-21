@@ -247,7 +247,7 @@ public class Robot extends IterativeRobot {
 	 */
 	private void autoSelectInit() {
 		autoChooser = new SendableChooser();
-		autoChooser.addObject("No Tote _ Do Nothing", new Auto_NoTote_DoNothing());
+		autoChooser.addDefault("No Tote _ Do Nothing", new Auto_NoTote_DoNothing());
 		autoChooser.addObject("Drive Forward" , new Auto_NoTote_DriveForward());
 		autoChooser.addObject("One Tote _ Rotate Push Fwd", new Auto_OneTote_Rotate90Push());
 		autoChooser.addObject("Three Tote", new Auto_ThreeToteStack());
@@ -256,7 +256,7 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("Three Tote Three Bin", new Auto_ThreeToteThreeBin());
 		autoChooser.addObject("Three Tote Three Bin Inaking", new Auto_ThreeToteStackIntakingBins());
 		autoChooser.addObject("Three Tote Three Bin Rolling", new Auto_ThreeToteStackRollingBins());
-		autoChooser.addDefault("Three Tote No Bins", new Auto_ThreeToteNoBin());
+		//autoChooser.addDefault("Three Tote No Bins", new Auto_ThreeToteNoBin());
 		autoChooser.addObject("Three Tote THree Bin Knocking", new Auto_ThreeToteStackKnockingBin());
 		
 		

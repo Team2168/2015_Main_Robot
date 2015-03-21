@@ -96,7 +96,7 @@ public class RobotMap {
 	 *************************************************************************/
 	//TODO: Verify gear ratio
 	private static final int drivePulsePerRotation = 256; //encoder ticks per rotation
-	private static final double driveGearRatio = 22.0/15.0; //ratio between wheel over encoder
+	private static final double driveGearRatio = 24.0/15.0; //ratio between wheel over encoder
 	private static final double driveWheelDiameter = 6;
 	public static final int driveEncoderPulsePerRot = (int) (drivePulsePerRotation * driveGearRatio); //pulse per rotation * gear ratio
 	public static final double driveEncoderDistPerTick = (Math.PI * driveWheelDiameter/driveEncoderPulsePerRot);
@@ -118,7 +118,7 @@ public class RobotMap {
 
 	//1.4 inch pully shaft
 	//TODO: UPDATE THESE WITH CORRECT VALUES
-	private static final int liftPulsePerRotation = 256; //encoder ticks per rotation
+	private static final int liftPulsePerRotation = 128; //encoder ticks per rotation
 	private static final double liftGearRatio = 1/1; //ratio between wheel over encoder
 	private static final double liftWheelDiameter = 1.4;
 	public static final int liftEncoderPulsePerRot = (int) (liftPulsePerRotation * liftGearRatio); //pulse per rotation * gear ratio

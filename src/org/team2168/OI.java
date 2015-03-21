@@ -15,6 +15,7 @@ import org.team2168.commands.intake.DisengageIntake;
 import org.team2168.commands.intake.EngageIntake;
 import org.team2168.commands.intake.IntakeSingleTote;
 import org.team2168.commands.intake.OpenWhenSensed;
+import org.team2168.commands.intake.OperatorIntakeSingleTote;
 import org.team2168.commands.intake.SetIntakeSpeed;
 import org.team2168.commands.intake.StopIntakeWheels;
 import org.team2168.commands.lift.DisableBrake;
@@ -42,6 +43,7 @@ public class OI {
 
 	/**
 	 * A private constructor, to prevent multiple instances of this class from existing.
+
 	 */
 	private OI() {
 		driverJoystick = new F310(RobotMap.DRIVER_JOYSTICK);
@@ -64,7 +66,7 @@ public class OI {
 		operatorJoystick.ButtonStart().whenPressed(new ARCBDeploy());
 		operatorJoystick.ButtonBack().whenPressed(new ARCBRetract());
 
-		operatorJoystick.ButtonRightTrigger().whenPressed(new IntakeSingleTote());
+		operatorJoystick.ButtonRightTrigger().whenPressed(new OperatorIntakeSingleTote());
 		operatorJoystick.ButtonRightTrigger().whenReleased(new StopIntakeWheels());
 		operatorJoystick.ButtonLeftTrigger().whileHeld(new SetIntakeSpeed(-RobotMap.INTAKE_WHEEL_SPEED));
 		operatorJoystick.ButtonLeftTrigger().whenReleased(new StopIntakeWheels());
