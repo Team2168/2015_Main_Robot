@@ -122,11 +122,19 @@ public class Lift extends Subsystem {
 			speed = -speed;
 
 		liftMotor.set(speed);
-		System.out.println(speed);
+		//System.out.println(speed);
 		motorVoltage = Robot.pdp.getBatteryVoltage() * speed;
 
 	}
 
+	/**
+	 * This drives the lift without releasing the break, DONT USEE THIS METHOD
+	 * @param speed
+	 */
+	public void driveNoSafety(double speed) {
+		liftMotor.set(speed);
+	}
+	
 	/**
 	 * Get the lifts position along travel.
 	 *

@@ -2,23 +2,23 @@ package org.team2168.subsystems;
 
 import org.team2168.RobotMap;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- * The drivetrain subsystem.
+ * The ARCB subsystem. Extends and retracts the bin arms.
+ *
+ * This class requires the following wiring:
+ *   - the right arm is on the M+ output
+ *   - the left arm is on the M- output
  */
 public class ARCB extends Subsystem {
 
-
 	private static ARCB instance = null;
-	private static DoubleSolenoid pushSolenoid;
-
+	private static Relay solenoids;
 
 	private ARCB() {
-		pushSolenoid = new DoubleSolenoid(RobotMap.PCM_CAN_ID,
-				RobotMap.PUSHER_SOLENOID_FORWARD, RobotMap.PUSHER_SOLENOID_REVERSE);
+		solenoids = new Relay(RobotMap.ARCB_RELAY);
 	}
 
 	public static ARCB getInstance() {
@@ -29,36 +29,78 @@ public class ARCB extends Subsystem {
 	}
 
 	/**
-	 * Enables the pusher to push the totes out
+	 * Retracts the left arm.
 	 */
-	public void retract() {
-		pushSolenoid.set(Value.kReverse);
+	public void retractLeft() {
+		if(isRightRetracted()) {
+			solenoids.set(Relay.Value.kOff);
+		} else {
+			solenoids.set(Relay.Value.kForward);
+		}
 	}
 
 	/**
-	 * Retracts the pusher to intake totes again
+	 * Extends the left arm.
 	 */
-	public void deploy() {
-		pushSolenoid.set(Value.kForward);
+	public void extendLeft() {
+		if(isRightRetracted()) {
+			solenoids.set(Relay.Value.kReverse);
+		} else {
+			solenoids.set(Relay.Value.kOn);
+		}
 	}
 
 	/**
-	 * Returnes if retracted
-	 * @return True when retracted
+	 * Retracts the right arm.
 	 */
-	public boolean isRetract() {
-		return pushSolenoid.get() == Value.kForward;
+	public void retractRight() {
+		if(isLeftRetracted()) {
+			solenoids.set(Relay.Value.kOff);
+		} else {
+			solenoids.set(Relay.Value.kReverse);
+		}
 	}
-	
+
 	/**
-	 * Returnes if deployed
-	 * @return True when deployed
+	 * Extends the right arm.
 	 */
-	public boolean isDeployed() {
-		return pushSolenoid.get() == Value.kReverse;
+	public void extendRight() {
+		if(isLeftRetracted()) {
+			solenoids.set(Relay.Value.kForward);
+		} else {
+			solenoids.set(Relay.Value.kOn);
+		}
 	}
-	
-	
+
+	/**
+	 * @return True when the left arm is retracted
+	 */
+	public boolean isLeftRetracted() {
+		return solenoids.get() == Relay.Value.kOff || solenoids.get() == Relay.Value.kForward;
+	}
+
+	/**
+	 * @return True when the left arm is extended
+	 */
+	public boolean isLeftExtended() {
+		return !isLeftRetracted();
+	}
+
+	/**
+	 * @return True when the right arm is retracted
+	 */
+	public boolean isRightRetracted() {
+		return solenoids.get() == Relay.Value.kOff || solenoids.get() == Relay.Value.kReverse;
+	}
+
+	/**
+	 * @return True when the right arm is extended
+	 */
+	public boolean isRightExtended() {
+		return !isRightRetracted();
+	}
+
+
 	public void initDefaultCommand() {
 	}
 

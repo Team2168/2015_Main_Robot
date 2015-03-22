@@ -1,18 +1,16 @@
-package org.team2168.commands.intake;
+package org.team2168.commands.arcb;
 
 import org.team2168.Robot;
-import org.team2168.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * This command just waits until the lift intake doesn't have an object
+ *
  */
-public class WaitForIntakeToClearObject extends Command {
+public class ARCBDeployLeft extends Command {
 
-	public WaitForIntakeToClearObject() {
-		// Use requires() here to declare subsystem dependencies
-		// eg. requires(chassis);
+	public ARCBDeployLeft() {
+		requires(Robot.binGrabber);
 	}
 
 	// Called just before this Command runs the first time
@@ -21,11 +19,12 @@ public class WaitForIntakeToClearObject extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
+		Robot.binGrabber.extendLeft();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return Robot.intake.getAveragedRawToteDistance() > RobotMap.INTAKE_TOTE_STOP_VOLTAGE;
+		return Robot.binGrabber.isLeftExtended();
 	}
 
 	// Called once after isFinished returns true

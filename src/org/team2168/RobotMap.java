@@ -50,8 +50,9 @@ public class RobotMap {
 	public final static int GRIPPER_DOUBLE_SOLENOID_REVERSE = 3;
 	public final static int LIFT_BRAKE_DOUBLE_SOLENOID_FORWARD = 4;
 	public final static int LIFT_BRAKE_DOUBLE_SOLENOID_REVERSE = 5;
-	public final static int PUSHER_SOLENOID_FORWARD = 6;
-	public final static int PUSHER_SOLENOID_REVERSE = 7;
+	
+	//Relay Channels///////////////////////////////////////////////////////////
+	public final static int ARCB_RELAY = 0;
 
 	//Digital IO Channels//////////////////////////////////////////////////////
 	//Channels 0-9 on RoboRio
@@ -98,7 +99,7 @@ public class RobotMap {
 	 *************************************************************************/
 	//TODO: Verify gear ratio
 	private static final int drivePulsePerRotation = 256; //encoder ticks per rotation
-	private static final double driveGearRatio = 22.0/15.0; //ratio between wheel over encoder
+	private static final double driveGearRatio = 24.0/15.0; //ratio between wheel over encoder
 	private static final double driveWheelDiameter = 6;
 	public static final int driveEncoderPulsePerRot = (int) (drivePulsePerRotation * driveGearRatio); //pulse per rotation * gear ratio
 	public static final double driveEncoderDistPerTick = (Math.PI * driveWheelDiameter/driveEncoderPulsePerRot);
@@ -120,7 +121,7 @@ public class RobotMap {
 
 	//1.4 inch pully shaft
 	//TODO: UPDATE THESE WITH CORRECT VALUES
-	private static final int liftPulsePerRotation = 256; //encoder ticks per rotation
+	private static final int liftPulsePerRotation = 128; //encoder ticks per rotation
 	private static final double liftGearRatio = 1/1; //ratio between wheel over encoder
 	private static final double liftWheelDiameter = 1.4;
 	public static final int liftEncoderPulsePerRot = (int) (liftPulsePerRotation * liftGearRatio); //pulse per rotation * gear ratio
@@ -133,6 +134,7 @@ public class RobotMap {
 	public static final boolean liftEncoderReverse = false;
 	public static final int liftAvgEncoderVal = 5;
 
+	public static final double LIFT_OVER_CURRENT = 60.0; //amps
 
 	//TODO Find correct height for the lift at the following positions:
 	//Height of lift where it is above the tote ready to lower onto it

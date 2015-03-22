@@ -40,13 +40,13 @@ public class Auto_ThreeToteNoBin extends CommandGroup {
     	
     	//lift 1st tote above tote height
     	addSequential(new DisengageIntake(),2);
-    	addParallel(new LiftPIDPosition(15, 0.7), 1.2); // raise 1st tote above next tote    	
-    	addSequential(new Sleep(), 1.3); //sleep so that tote clears IR sensor before next command runs
+    	addParallel(new LiftPIDPosition(15, 1), 2); // raise 1st tote above next tote    	
+    	addSequential(new Sleep(), 1.2); //sleep so that tote clears IR sensor before next command runs
     	
     	    
     	//Drive to second tote while intaking
     	addParallel(new IntakeSingleTote(),5);
-    	addSequential(new DriveXDistance(13, 0.6),3);
+    	addSequential(new DriveXDistance(13, 0.6),2.5);
 
     	//intake second tote
     	addSequential(new LiftPIDPosition(0, 0.7), 1); // lower 1st tote onto 2nd tote
@@ -55,8 +55,8 @@ public class Auto_ThreeToteNoBin extends CommandGroup {
     	
     	//lift 2nd tote
     	addSequential(new DisengageIntake(),2); //let go of tote before lifting
-    	addParallel(new LiftPIDPosition(16, 0.7), 1.2); // raise 2nd tote above next tote 
-    	addSequential(new Sleep(), 1.3); //sleep so that tote clears IR sensor before next command runs
+    	addParallel(new LiftPIDPosition(16, 1), 2); // raise 2nd tote above next tote 
+    	addSequential(new Sleep(), 1.2); //sleep so that tote clears IR sensor before next command runs
     	
     	
     	//bin is out of way so drive to next tote while intaking
