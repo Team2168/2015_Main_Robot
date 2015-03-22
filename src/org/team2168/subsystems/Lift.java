@@ -47,7 +47,7 @@ public class Lift extends Subsystem {
 		liftMotor = new Victor(RobotMap.LIFT_MOTOR);
 		liftMotor.setExpiration(0.1);
 		liftMotor.setSafetyEnabled(true);
-		
+
 		liftEncoder = new AverageEncoder(RobotMap.LIFT_ENCODER_A,
 				RobotMap.LIFT_ENCODER_B, RobotMap.liftEncoderPulsePerRot,
 				RobotMap.liftEncoderDistPerTick,
@@ -134,7 +134,7 @@ public class Lift extends Subsystem {
 	public void driveNoSafety(double speed) {
 		liftMotor.set(speed);
 	}
-	
+
 	/**
 	 * Get the lifts position along travel.
 	 *
@@ -282,5 +282,19 @@ public class Lift extends Subsystem {
 	 */
 	public boolean isFullyRaised() {
 		return !fullyRaised.get();
+	}
+
+	/**
+	 * @return true if lift is lowering
+	 */
+	public boolean isLiftLowering() {
+		return liftController.isEnabled() && (liftController.getError() < 0);
+	}
+
+	/**
+	 * @return true if the lift is raising
+	 */
+	public boolean isLiftRaising() {
+		return liftController.isEnabled() && (liftController.getError() > 0);
 	}
 }

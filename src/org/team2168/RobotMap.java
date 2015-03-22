@@ -134,7 +134,8 @@ public class RobotMap {
 	public static final boolean liftEncoderReverse = false;
 	public static final int liftAvgEncoderVal = 5;
 
-	public static final double LIFT_OVER_CURRENT = 60.0; //amps
+	public static final double LIFT_OVER_CURRENT_RAISE = 60.0; //amps
+	public static final double LIFT_OVER_CURRENT_LOWER = 42.0; //amps
 	public static final double LIFT_STALL_PERIOD = 0.1; //seconds stall can be sustained for
 
 	//TODO Find correct height for the lift at the following positions:

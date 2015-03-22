@@ -63,8 +63,15 @@ public class ZeroLift extends Command {
 	 * @return true when the left intake motor is over current
 	 */
 	public static boolean leftMotorOverCurrent() {
-		return Robot.pdp.getChannelCurrent(RobotMap.LIFT_LEFT_MOTOR_PDP)
-				> RobotMap.LIFT_OVER_CURRENT;
+		if(Robot.lift.isLiftLowering()) {
+			//If the lift is lowering, use the smaller current limit
+			return Robot.pdp.getChannelCurrent(RobotMap.LIFT_LEFT_MOTOR_PDP)
+					> RobotMap.LIFT_OVER_CURRENT_LOWER;
+		} else {
+			//otherwise default to using the higher (raise) current limit
+			return Robot.pdp.getChannelCurrent(RobotMap.LIFT_LEFT_MOTOR_PDP)
+					> RobotMap.LIFT_OVER_CURRENT_RAISE;
+		}
 	}
 
 	/**
@@ -72,8 +79,15 @@ public class ZeroLift extends Command {
 	 * @return true when the right intake motor is over current
 	 */
 	public static boolean rightMotorOverCurrent() {
-		return Robot.pdp.getChannelCurrent(RobotMap.LIFT_RIGHT_MOTOR_PDP)
-				> RobotMap.LIFT_OVER_CURRENT;
+		if(Robot.lift.isLiftLowering()) {
+			//If the lift is lowering, use the smaller current limit
+			return Robot.pdp.getChannelCurrent(RobotMap.LIFT_RIGHT_MOTOR_PDP)
+					> RobotMap.LIFT_OVER_CURRENT_LOWER;
+		} else {
+			//otherwise default to using the higher (raise) current limit
+			return Robot.pdp.getChannelCurrent(RobotMap.LIFT_RIGHT_MOTOR_PDP)
+					> RobotMap.LIFT_OVER_CURRENT_RAISE;
+		}
 	}
 
 	public static boolean liftStalled() {
