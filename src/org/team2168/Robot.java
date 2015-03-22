@@ -313,7 +313,7 @@ public class Robot extends IterativeRobot {
 	 * @param enabled true if the robot is enabled (auto or teleop mode)
 	 */
 	private static void updateLEDs(boolean enabled) {
-		robotDisabledLED.set(!enabled);
+		robotDisabledLED.set(enabled);
 		gripperEngagedLED.set(gripper.isGripperEngaged());
 		intakeEngagedLED.set(intake.isIntakeEngaged());
 		intakeWheelsActiveLED.set(intake.isRightSpinning() || intake.isLeftSpinning());
