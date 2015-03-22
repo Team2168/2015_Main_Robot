@@ -82,7 +82,7 @@ public class Auto_ThreeToteStackRollingBins extends CommandGroup {
     	addSequential(new EngageIntake(),2);
     	addParallel(new SetIntakeSpeed(0.5),2);
     	addSequential(new RotateAboutRightWheel(85, 1), 1.1);
-    	addParallel(new DriveXDistance(16, 1),4.2); //drive fast with stack
+    	addParallel(new DriveXDistance(16, 1), 1.4); //drive fast with stack
     	
     	
     	//at auto zone, so lets lower stack
