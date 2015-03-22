@@ -29,6 +29,7 @@ public class Intake extends Subsystem {
 	//TODO: calibrate this value
 	private static final double TOTE_SENSOR_AVG_GAIN = 0.8;
 	private static final double CM_TO_INCH =  0.393701;
+	private static final double MOTOR_SPIN_DEADBAND = 0.15;
 
 	//Intake sensor won't return voltages smaller than:
 	//TODO: calibrate this value
@@ -204,5 +205,18 @@ public class Intake extends Subsystem {
 	public boolean isIntakeWheelsOut() {
 		return this.intakeDirection;
 	}
+
+	/**
+	 * @return true if the right motor is spinning
+	 */	
+	public boolean isRightSpinning() {
+		return Math.abs(rightMotor.get()) >= MOTOR_SPIN_DEADBAND;
+	}
 	
+	/**
+	 * @return true if the left motor is spinning
+	 */
+	public boolean isLeftSpinning() {
+		return Math.abs(leftMotor.get()) >= MOTOR_SPIN_DEADBAND;
+	}
 }

@@ -9,17 +9,15 @@ import org.team2168.commands.auto.Auto_OneTote_Rotate90Push;
 import org.team2168.commands.auto.Auto_ThreeToteNoBin;
 import org.team2168.commands.auto.Auto_ThreeToteOneBin;
 import org.team2168.commands.auto.Auto_ThreeToteStack;
-import org.team2168.commands.auto.Auto_ThreeToteStackIntakingBins;
-import org.team2168.commands.auto.Auto_ThreeToteStackKnockingBin;
 import org.team2168.commands.auto.Auto_ThreeToteStackRollingBins;
 import org.team2168.commands.auto.Auto_ThreeToteThreeBin;
 import org.team2168.commands.auto.Auto_TwoToteStack;
+import org.team2168.subsystems.ARCB;
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.Gripper;
 import org.team2168.subsystems.Intake;
 import org.team2168.subsystems.Lift;
 import org.team2168.subsystems.Pneumatics;
-import org.team2168.subsystems.ARCB;
 import org.team2168.subsystems.Winch;
 import org.team2168.utils.ConsolePrinter;
 import org.team2168.utils.Debouncer;
@@ -27,13 +25,12 @@ import org.team2168.utils.PowerDistribution;
 
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -53,7 +50,7 @@ public class Robot extends IterativeRobot {
 	public static Gripper gripper;
 	public static Pneumatics pneumatics;
 	public static ARCB binGrabber;
-	
+
 	public static PowerDistribution pdp; // Power Monitor
 	ConsolePrinter printer; // SmartDash printer
 
@@ -66,6 +63,12 @@ public class Robot extends IterativeRobot {
 
 	private static DigitalInput practiceBot;
 	public static FalconPathPlanner path;
+
+	//LED light interface
+	private static DigitalOutput gripperEngagedLED;
+	private static DigitalOutput intakeEngagedLED;
+	private static DigitalOutput intakeWheelsActiveLED;
+	private static DigitalOutput robotDisabledLED;
 
 	public static Path drivePath;
 
@@ -88,6 +91,12 @@ public class Robot extends IterativeRobot {
 		accel = new BuiltInAccelerometer();
 		pdp = new PowerDistribution(RobotMap.PDPThreadPeriod);
 		pdp.startThread();
+
+		//Instantiate outputs
+		gripperEngagedLED = new DigitalOutput(RobotMap.LEDS_GRIPPER_ENGAGED);
+		intakeEngagedLED = new DigitalOutput(RobotMap.LEDS_INTAKE_ENGAGED);
+		intakeWheelsActiveLED = new DigitalOutput(RobotMap.LEDS_INTAKE_WHEELS_ACTIVE);
+		robotDisabledLED = new DigitalOutput(RobotMap.LEDS_ROBOT_DISABLED);
 
 		// Instantiate subsystems
 		pneumatics = Pneumatics.getInstance();
@@ -127,9 +136,8 @@ public class Robot extends IterativeRobot {
 					.getSegment(s));
 		}
 
-		
-
 		drivetrain.calibrateGyro();
+		updateLEDs(false);
 
 		System.out.println("Bot Finished Loading.");
 	}
@@ -151,9 +159,10 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().disable();
 
 		autoMode = false;
-		
+
 		// Check to see if the gyro is drifting, if it is re-initialize it.
 		gyroReinit();
+		updateLEDs(false);
 	}
 
 	/**
@@ -177,7 +186,8 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		autonomousCommand = (Command) autoChooser.getSelected();
 		Scheduler.getInstance().run();
-		
+
+		updateLEDs(true);
 		autoMode = true;
 	}
 
@@ -193,7 +203,7 @@ public class Robot extends IterativeRobot {
 			autonomousCommand.cancel();
 		}
 		Scheduler.getInstance().enable();
-		
+
 		autoMode = false;
 	}
 
@@ -202,6 +212,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		updateLEDs(true);
 	}
 
 	/**
@@ -264,7 +275,7 @@ public class Robot extends IterativeRobot {
 		//autoChooser.addObject("Three Tote Three Bin Inaking", new Auto_ThreeToteStackIntakingBins());
 		autoChooser.addObject("Three Tote Three Bin Rolling", new Auto_ThreeToteStackRollingBins());
 		autoChooser.addObject("Three Tote No Bins", new Auto_ThreeToteNoBin());
-		//autoChooser.addObject("Three Tote THree Bin Knocking", new Auto_ThreeToteStackKnockingBin());	
+		//autoChooser.addObject("Three Tote THree Bin Knocking", new Auto_ThreeToteStackKnockingBin());
 	}
 
 	/**
@@ -295,7 +306,23 @@ public class Robot extends IterativeRobot {
 		System.out.println("Time in ms: "
 				+ (System.currentTimeMillis() - start));
 	}
-	
+
+	/**
+	 * Update the digital outputs which interface to the arduino driving the LED strips.
+	 *
+	 * @param enabled true if the robot is enabled (auto or teleop mode)
+	 */
+	private static void updateLEDs(boolean enabled) {
+		robotDisabledLED.set(enabled);
+		gripperEngagedLED.set(gripper.isGripperEngaged());
+		intakeEngagedLED.set(intake.isIntakeEngaged());
+		intakeWheelsActiveLED.set(intake.isRightSpinning() || intake.isLeftSpinning());
+	}
+
+	/**
+	 *
+	 * @return true if the robot is in auto mode
+	 */
 	public static boolean isAutoMode() {
 		return autoMode;
 	}
