@@ -81,7 +81,7 @@ public class Auto_ThreeToteStackRollingBins extends CommandGroup {
     	//Acquired 3rd tote so just drive to auto zone
     	addSequential(new EngageIntake(),2);
     	addParallel(new SetIntakeSpeed(0.5),2);
-    	addSequential(new RotateAboutRightWheel(95, 1), 2);
+    	addSequential(new RotateAboutRightWheel(85, 1), 1.1);
     	addParallel(new DriveXDistance(16, 1),4.2); //drive fast with stack
     	
     	

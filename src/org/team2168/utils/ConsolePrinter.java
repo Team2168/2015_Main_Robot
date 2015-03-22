@@ -152,6 +152,7 @@ public class ConsolePrinter {
 			SmartDashboard.putBoolean("autoMode", Robot.isAutoMode());
 			SmartDashboard.putBoolean("left lift over current", LiftPIDPosition.leftMotorOverCurrent());
 			SmartDashboard.putBoolean("right lift over current", LiftPIDPosition.rightMotorOverCurrent());
+			SmartDashboard.putBoolean("lift stalled", LiftPIDPosition.liftStalled());
 			
 			//file log
 			log.println(Timer.getFPGATimestamp() + "\t" +

@@ -131,7 +131,7 @@ public class RobotMap {
 	public static final boolean liftEncoderReverse = false;
 	public static final int liftAvgEncoderVal = 5;
 
-	public static final double INTAKE_OVER_CURRENT = 60; //amps
+	public static final double LIFT_OVER_CURRENT = 60.0; //amps
 
 	//TODO Find correct height for the lift at the following positions:
 	//Height of lift where it is above the tote ready to lower onto it
