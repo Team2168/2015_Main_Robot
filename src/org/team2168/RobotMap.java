@@ -50,7 +50,7 @@ public class RobotMap {
 	public final static int GRIPPER_DOUBLE_SOLENOID_REVERSE = 3;
 	public final static int LIFT_BRAKE_DOUBLE_SOLENOID_FORWARD = 4;
 	public final static int LIFT_BRAKE_DOUBLE_SOLENOID_REVERSE = 5;
-	
+
 	//Relay Channels///////////////////////////////////////////////////////////
 	public final static int ARCB_RELAY = 0;
 
@@ -135,6 +135,7 @@ public class RobotMap {
 	public static final int liftAvgEncoderVal = 5;
 
 	public static final double LIFT_OVER_CURRENT = 60.0; //amps
+	public static final double LIFT_STALL_PERIOD = 0.1; //seconds stall can be sustained for
 
 	//TODO Find correct height for the lift at the following positions:
 	//Height of lift where it is above the tote ready to lower onto it
@@ -170,7 +171,7 @@ public class RobotMap {
 	/*************************************************************************
 	 *                            Electrical Parameters
 	 *************************************************************************/
-	public final static long PDPThreadPeriod = 50; //ms
+	public final static long PDPThreadPeriod = 20; //ms
 	public final static double WARNING_CURRENT_LIMIT = 35;  //amps
 	public final static double STALL_CURRENT_LIMIT = 50;  //amps
 	public final static double MAIN_BREAKER_TRIP_TEMP = 150;  //farenheit
@@ -185,13 +186,13 @@ public class RobotMap {
 
 	//PID Gains for Left & Right Speed and Position
 	//Bandwidth =
-	//Phase Margin = 
+	//Phase Margin =
 	public static final double driveTrainLeftSpeedP =  0.4779;
-	public static final double driveTrainLeftSpeedI =  1.0526; 
+	public static final double driveTrainLeftSpeedI =  1.0526;
 	public static final double driveTrainLeftSpeedD =  0.0543;
 
 	public static final double driveTrainRightSpeedP = 0.4779;
-	public static final double driveTrainRightSpeedI = 1.0526;  
+	public static final double driveTrainRightSpeedI = 1.0526;
 	public static final double driveTrainRightSpeedD = 0.0543;
 
 	public static final double driveTrainLeftPositionP = 0.2;
@@ -209,18 +210,18 @@ public class RobotMap {
 	double pTurn = 0.001;
 	double iTurn = 0.00001;
 	double pDrive = 0;
-	
+
 	public static final double liftPUp = 0.12;
-	public static final double liftIUp = 0.0080; 
+	public static final double liftIUp = 0.0080;
 	public static final double liftDUp = 0.0002573;
-	
+
 	public static final double liftPDw = 0.12;
-	public static final double liftIDw = 0.05; 
+	public static final double liftIDw = 0.05;
 	public static final double liftDDw = 0.02573;
-	
-	
+
+
 	public static final long liftPIDPeriod = 20; //100ms
-	
+
 	/****************************************************************
 	 *                TCP Servers  (ONLY FOR DEBUGGING)             *
 	 ****************************************************************/
