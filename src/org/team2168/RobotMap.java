@@ -121,18 +121,18 @@ public class RobotMap {
 
 	//1.4 inch pully shaft
 	//TODO: UPDATE THESE WITH CORRECT VALUES
-	private static final int liftPulsePerRotation = 128; //encoder ticks per rotation
+	private static final int liftPulsePerRotation = 256; //encoder ticks per rotation
 	private static final double liftGearRatio = 1/1; //ratio between wheel over encoder
 	private static final double liftWheelDiameter = 1.4;
 	public static final int liftEncoderPulsePerRot = (int) (liftPulsePerRotation * liftGearRatio); //pulse per rotation * gear ratio
 	public static final double liftEncoderDistPerTick = (Math.PI * liftWheelDiameter/liftPulsePerRotation);
 	public static final CounterBase.EncodingType liftEncodingType = CounterBase.EncodingType.k4X; //count rising and falling edges on both channels
 	public static final AverageEncoder.PositionReturnType liftPosReturnType = AverageEncoder.PositionReturnType.INCH;
-	public static final AverageEncoder.SpeedReturnType liftSpeedReturnType = AverageEncoder.SpeedReturnType.RPM;
+	public static final AverageEncoder.SpeedReturnType liftSpeedReturnType = AverageEncoder.SpeedReturnType.IPS;
 	public static final int liftEncoderMinRate = 10;
 	public static final int liftEncoderMinPeriod = 10;
 	public static final boolean liftEncoderReverse = false;
-	public static final int liftAvgEncoderVal = 5;
+	public static final int liftAvgEncoderVal = 1;
 
 	public static final double LIFT_OVER_CURRENT_RAISE = 60.0; //amps
 	public static final double LIFT_OVER_CURRENT_LOWER = 42.0; //amps
@@ -167,7 +167,7 @@ public class RobotMap {
 	public final static double INTAKE_TOTE_ENGAGE_VOLTAGE = 1.05;
 	public final static double INTAKE_TOTE_STOP_VOLTAGE = 2.5;
 	public final static boolean PRINT_SD_DEBUG_DATA = true;
-	public final static long SmartDashThreadPeriod = 100; //ms
+	public final static long SmartDashThreadPeriod = 5; //ms
 
 	/*************************************************************************
 	 *                            Electrical Parameters

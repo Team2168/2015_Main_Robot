@@ -1,6 +1,7 @@
 package org.team2168.PID.sensors;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Timer;
 
 /**
  * This class extends the basic WPI encoder class. Its purpose is to provide a
@@ -17,8 +18,8 @@ public class AverageEncoder extends Encoder implements PIDSensorInterface {
     private int arrayPos = 0; // Next array position to put values to be
     // averaged
 
-    long timeNow;
-    long oldTime;
+    double timeNow;
+    double oldTime;
     double countNow;
     double countBefore;
     double rate;
@@ -134,38 +135,36 @@ public class AverageEncoder extends Encoder implements PIDSensorInterface {
     //
 
     public double getRate() {
-//        // getRate
-//        timeNow = System.currentTimeMillis();
-//        countNow = super.get();
-//        rate = (countNow - countBefore) / (timeNow - oldTime); // counts per
-//        // millisecond
-//        oldTime = timeNow;
-//        countBefore = countNow;
-//        
-//
-//        switch (speedReturnType.value) {
-//        case SpeedReturnType.IPS_val:
-//            putData(rate * distPerTick * 1000);
-//            break;
-//        case SpeedReturnType.FPS_val:
-//            putData(rate * distPerTick * 1000 / 12); // feet per second
-//            break;
-//        case SpeedReturnType.RPM_val:
-//            putData(rate * 1000 * 60 / PPR); // ticks per minute... rpm
-//            break;
-//        case SpeedReturnType.PERIOD_val:
-//            putData(super.getPeriod()); // ticks per minute... rpm
-//            break;
-//        default:
-//            // should be unreachable
-//            putData(0);
-//            break;
-//
-//        }
-//
-//        //return getAverage(); // ticks per minute... rpm
+        // getRate
+        timeNow = Timer.getFPGATimestamp();
+        countNow = super.getDistance();
+        rate = (countNow - countBefore) / (timeNow - oldTime); // inch per seconds
+        oldTime = timeNow;
+        countBefore = countNow;
         
-        return getRawRate();//work around until issue is fixed
+
+        switch (speedReturnType.value) {
+        case SpeedReturnType.IPS_val:
+        	putData(rate);
+            break;
+        case SpeedReturnType.FPS_val:
+            putData(rate / 12); // feet per second
+            break;
+        case SpeedReturnType.RPM_val:
+            putData(( rate * 60 ) / (PPR * distPerTick)); // ticks per minute... rpm
+            break;
+        case SpeedReturnType.PERIOD_val:
+            putData(super.getPeriod()); // ticks per minute... rpm
+            break;
+        default:
+            // should be unreachable
+            putData(0);
+            break;
+
+        }
+
+        return getAverage(); // ticks per minute... rpm
+        
     }
 
     public double getPos() {
