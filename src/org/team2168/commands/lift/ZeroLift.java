@@ -25,6 +25,7 @@ public class ZeroLift extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		Robot.lift.resetStalled();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -35,11 +36,12 @@ public class ZeroLift extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		//Check if the lift is drawing too much current. If it does, kill the SCHEDULER!
-		stalled.update(Robot.isAutoMode() &&
-				(leftMotorOverCurrent() || rightMotorOverCurrent()));
+//		//Check if the lift is drawing too much current. If it does, kill the SCHEDULER!
+//		stalled.update(Robot.isAutoMode() &&
+//				(leftMotorOverCurrent() || rightMotorOverCurrent()));
 
-		if(stalled.getStatus()) {
+//		if(stalled.getStatus()) {
+		if(Robot.isAutoMode() && Robot.lift.isStalled() && Robot.lift.isLiftLowering()) {
 			//Kill the scheduler :(
 			Scheduler.getInstance().disable();
 			Scheduler.getInstance().removeAll();

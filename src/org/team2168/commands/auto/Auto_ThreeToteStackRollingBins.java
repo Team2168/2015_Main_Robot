@@ -54,15 +54,16 @@ public class Auto_ThreeToteStackRollingBins extends CommandGroup {
     	
     	//bin is out of way so drive to next tote faster
     	addParallel(new IntakeSingleToteForAuto(), 5);
-    	addSequential(new DriveXDistance(4.15, 0.6), 1.6); //drive fast to get tote // 
+    	addSequential(new DriveXDistance(4.25, 0.6), 1.6); //drive fast to get tote // 
     	
     	//total time is 5.3 seconds
     	
     	//aquired 2nd tote, so now we lift
-    	addSequential(new WaitForObjectInIntake(), 2);
+    	addSequential(new WaitForObjectInIntake());
     	addSequential(new LiftPIDPosition(0, 1), 1.2); // lower 1st tote onto 2nd tote
     	addSequential(new ZeroLift(), 2);
     	addSequential(new ZeroLift(), 2);
+    	addSequential(new DisengageIntake());
     	addSequential(new LiftPIDPosition(34, 1), 1.5); // raise 2nd tote above garbage can
     	
     	

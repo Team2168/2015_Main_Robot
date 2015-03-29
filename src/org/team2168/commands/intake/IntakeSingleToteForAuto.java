@@ -20,6 +20,6 @@ public class IntakeSingleToteForAuto extends CommandGroup {
 		addSequential(new EngageIntake());
 		addSequential(new DriveIntakeToVoltage(RobotMap.INTAKE_TOTE_STOP_VOLTAGE, GREATER_THAN));
 		addSequential(new StopIntakeWheels());
-		addSequential(new DisengageIntake());
+		//addSequential(new DisengageIntake());
 	}
 }

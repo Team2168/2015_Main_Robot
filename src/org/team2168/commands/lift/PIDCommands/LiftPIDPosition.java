@@ -48,6 +48,8 @@ public class LiftPIDPosition extends Command {
 		Robot.lift.liftController.setMaxNegOutput(-speed);
 		Robot.lift.liftController.setAcceptErrorDiff(0.5); //inches
 
+		Robot.lift.resetStalled();
+		
 		Robot.lift.liftController.Enable();
 	}
 
@@ -62,10 +64,12 @@ public class LiftPIDPosition extends Command {
 	 */
 	protected boolean isFinished() {
 		//Check if the lift is drawing too much current. If it does, kill the SCHEDULER!
-		stalled.update(Robot.isAutoMode() &&
-				(leftMotorOverCurrent() || rightMotorOverCurrent()));
+		//stalled.update(Robot.isAutoMode() &&
+		//		(leftMotorOverCurrent() || rightMotorOverCurrent()));
+		
 
-		if(stalled.getStatus()) {
+		//if(stalled.getStatus()) {
+		if(Robot.isAutoMode() && Robot.lift.isStalled() && Robot.lift.isLiftLowering())  {
 			//Kill the scheduler :(
 			Scheduler.getInstance().disable();
 			Scheduler.getInstance().removeAll();

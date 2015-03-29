@@ -6,6 +6,8 @@ import org.team2168.commands.arcb.ARCBDeployRight;
 import org.team2168.commands.arcb.ARCBRetract;
 import org.team2168.commands.arcb.ARCBRetractLeft;
 import org.team2168.commands.arcb.ARCBRetractRight;
+import org.team2168.commands.arcb.ArmDeploy;
+import org.team2168.commands.arcb.ArmRelease;
 import org.team2168.commands.calibration.TestAllMotors;
 import org.team2168.commands.drivetrain.DriveXDistance;
 import org.team2168.commands.drivetrain.RotateXDistancePIDZZZ;
@@ -14,6 +16,8 @@ import org.team2168.commands.gripper.ReleaseGripper;
 import org.team2168.commands.intake.DisengageIntake;
 import org.team2168.commands.intake.EngageIntake;
 import org.team2168.commands.intake.IntakeSingleTote;
+import org.team2168.commands.intake.IntakeSingleToteStartClosed;
+import org.team2168.commands.intake.IntakeSingleToteStartOpen;
 import org.team2168.commands.intake.OpenWhenSensed;
 import org.team2168.commands.intake.OperatorIntakeSingleTote;
 import org.team2168.commands.intake.SetIntakeSpeed;
@@ -64,12 +68,12 @@ public class OI {
 
 		operatorJoystick.ButtonRightBumper().whenPressed(new EngageIntake());
 		operatorJoystick.ButtonLeftBumper().whenPressed(new DisengageIntake());
-		operatorJoystick.ButtonStart().whenPressed(new ARCBDeploy());
-		operatorJoystick.ButtonBack().whenPressed(new ARCBRetract());
+		operatorJoystick.ButtonStart().whenPressed(new ArmDeploy());
+		operatorJoystick.ButtonBack().whenPressed(new ArmRelease());
 
-		operatorJoystick.ButtonRightTrigger().whenPressed(new OperatorIntakeSingleTote());
+		operatorJoystick.ButtonRightTrigger().whenPressed(new IntakeSingleToteStartClosed());
 		operatorJoystick.ButtonRightTrigger().whenReleased(new StopIntakeWheels());
-		operatorJoystick.ButtonLeftTrigger().whileHeld(new SetIntakeSpeed(-RobotMap.INTAKE_WHEEL_SPEED));
+		operatorJoystick.ButtonLeftTrigger().whenPressed(new IntakeSingleToteStartOpen());
 		operatorJoystick.ButtonLeftTrigger().whenReleased(new StopIntakeWheels());
 
 
@@ -86,7 +90,7 @@ public class OI {
 		pnuematicTestJoystick.ButtonStart().whenReleased(new ARCBRetractRight());
 
 		commandsTestJoystick.ButtonStart().whenPressed(new LiftOneTote());
-		commandsTestJoystick.ButtonX().whenPressed(new LiftPIDPosition());
+		commandsTestJoystick.ButtonX().whenPressed(new LiftPIDPosition(31));
 		commandsTestJoystick.ButtonB().whenPressed(new LiftPIDPause());
 		commandsTestJoystick.ButtonBack().whenPressed(new OpenWhenSensed());
 		commandsTestJoystick.ButtonRightBumper().whenPressed(new DriveXDistance(18,0.2,1));

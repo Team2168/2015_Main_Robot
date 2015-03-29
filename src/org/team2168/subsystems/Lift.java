@@ -6,6 +6,7 @@ import org.team2168.RobotMap;
 import org.team2168.PID.controllers.PIDPosition;
 import org.team2168.PID.sensors.AverageEncoder;
 import org.team2168.commands.lift.LiftWithJoystick;
+import org.team2168.utils.Debouncer;
 import org.team2168.utils.TCPSocketSender;
 import org.team2168.utils.Util;
 
@@ -38,6 +39,8 @@ public class Lift extends Subsystem {
 	TCPSocketSender TCPliftPosController;
 
 	public boolean liftSelfTest = false;
+	
+	private Debouncer stalledLatch;
 
 	/**
 	 * A private constructor to prevent multiple instances of the subsystem from
@@ -68,6 +71,8 @@ public class Lift extends Subsystem {
 		TCPliftPosController = new TCPSocketSender(RobotMap.TCPServerLiftPos, liftController);
 		TCPliftPosController.start();
 
+		stalledLatch = new Debouncer(RobotMap.LIFT_STALL_PERIOD);
+		
 		fullyRaised = new DigitalInput(RobotMap.LIFT_RAISED_SENSOR);
 		fullyLowered = new DigitalInput(RobotMap.LIFT_LOWERED_SENSOR);
 	}
@@ -150,7 +155,7 @@ public class Lift extends Subsystem {
 	 * @return lift rate in (TODO: units/s)
 	 */
 	public double getRate() {
-		return liftEncoder.getRate();
+		return liftEncoder.getRawRate();
 	}
 
 	/**
@@ -296,5 +301,18 @@ public class Lift extends Subsystem {
 	 */
 	public boolean isLiftRaising() {
 		return liftController.isEnabled() && (liftController.getError() > 0);
+	}
+	
+	/**
+	 * 
+	 * @return true if the position hasn't changed in a while
+	 */
+	public boolean isStalled() {
+		return stalledLatch.update((Math.abs(liftEncoder.getRawRate()) < RobotMap.LIFT_STALL_RATE)
+				&& Math.abs(liftController.getControlOutput()) > 0.2); //inches/sec
+	}
+	
+	public void resetStalled() {
+		stalledLatch.reset();
 	}
 }

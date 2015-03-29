@@ -27,7 +27,15 @@ public class ARCB extends Subsystem {
 		}
 		return instance;
 	}
-
+	
+	public void _retractArm() {
+		solenoids.set(Relay.Value.kOff);
+	}
+	
+	public void _deployArm() {
+		solenoids.set(Relay.Value.kForward);
+	}
+	
 	/**
 	 * Retracts the left arm.
 	 */
