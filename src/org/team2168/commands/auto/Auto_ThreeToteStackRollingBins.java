@@ -59,10 +59,11 @@ public class Auto_ThreeToteStackRollingBins extends CommandGroup {
     	//total time is 5.3 seconds
     	
     	//aquired 2nd tote, so now we lift
-    	addSequential(new WaitForObjectInIntake(), 2);
+    	addSequential(new WaitForObjectInIntake()); // if 2nd tote is not seen, auto will stop
     	addSequential(new LiftPIDPosition(0, 1), 1.2); // lower 1st tote onto 2nd tote
     	addSequential(new ZeroLift(), 2);
     	addSequential(new ZeroLift(), 2);
+    	addSequential(new DisengageIntake());
     	addSequential(new LiftPIDPosition(34, 1), 1.5); // raise 2nd tote above garbage can
     	
     	
@@ -74,7 +75,7 @@ public class Auto_ThreeToteStackRollingBins extends CommandGroup {
     	
    
     	//bin is out of way so drive to next tote faster
-    	addParallel(new IntakeSingleToteForAuto(),5);
+    	addParallel(new IntakeSingleTote(),5);
     	addSequential(new DriveXDistanceUntilObject(5.45, 0.6),2.5);
     	
     	
@@ -93,7 +94,7 @@ public class Auto_ThreeToteStackRollingBins extends CommandGroup {
     	//release set
     	addSequential(new DisengageIntake(),2);
     	addSequential(new ReleaseGripper(),2);
-    	//addSequential(new DriveXDistance(-0.2, 1),2); //drive slow with statck
+    	addSequential(new DriveXDistance(-1, 1),2); //drive slow with statck
     
     	//DONE
     	
