@@ -110,7 +110,7 @@ public class Robot extends IterativeRobot {
 		pathPlanner();
 		autoSelectInit();
 
-		drivePath = LoadPathFile.readFile("/home/lvuser/2168StraightPath.txt");
+		drivePath = LoadPathFile.readFile("/home/lvuser/2168CurveAuto.txt");
 
 		// create thread to write dashboard variables
 		printer = new ConsolePrinter(RobotMap.SmartDashThreadPeriod);

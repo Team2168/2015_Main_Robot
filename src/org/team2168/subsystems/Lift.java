@@ -288,13 +288,16 @@ public class Lift extends Subsystem {
 	 * @return true if lift is lowering
 	 */
 	public boolean isLiftLowering() {
-		return liftController.isEnabled() && (liftController.getError() < 0);
+		//return liftController.isEnabled() && (liftController.getError() < 0);
+		return ((getMotorVoltage() < 0 && Math.abs(getMotorVoltage()) > RobotMap.LIFT_PWM_DEADBAND) || getRate() < 0) ;
 	}
 
 	/**
 	 * @return true if the lift is raising
 	 */
 	public boolean isLiftRaising() {
-		return liftController.isEnabled() && (liftController.getError() > 0);
+		//return liftController.isEnabled() && (liftController.getError() > 0);
+		return ((getMotorVoltage() > 0 && Math.abs(getMotorVoltage()) > RobotMap.LIFT_PWM_DEADBAND) || getRate() > 0);
 	}
+	
 }

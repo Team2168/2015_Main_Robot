@@ -136,7 +136,7 @@ public class RobotMap {
 
 	public static final double LIFT_OVER_CURRENT_RAISE = 60.0; //amps
 	public static final double LIFT_OVER_CURRENT_LOWER = 42.0; //amps
-	public static final double LIFT_STALL_PERIOD = 0.1; //seconds stall can be sustained for
+	public static final double LIFT_STALL_PERIOD = 0.75; //seconds stall can be sustained for
 
 	//TODO Find correct height for the lift at the following positions:
 	//Height of lift where it is above the tote ready to lower onto it
@@ -149,6 +149,7 @@ public class RobotMap {
 	public static final double LIFT_MOVING_SPEED = 0.5;
 	public static final int MAX_LIFT_HEIGHT = 76;
 	public static final int MIN_LIFT_HEIGHT = 0;
+	public static final double LIFT_PWM_DEADBAND = 0.2;
 
 	//TODO: find height of lift in order to be above a tote with another being carried
 	public static final double LIFT_ABOVE_TOTE = 20.0; //inches
@@ -167,7 +168,7 @@ public class RobotMap {
 	public final static double INTAKE_TOTE_ENGAGE_VOLTAGE = 1.05;
 	public final static double INTAKE_TOTE_STOP_VOLTAGE = 2.5;
 	public final static boolean PRINT_SD_DEBUG_DATA = true;
-	public final static long SmartDashThreadPeriod = 5; //ms
+	public final static long SmartDashThreadPeriod = 50; //ms
 
 	/*************************************************************************
 	 *                            Electrical Parameters
