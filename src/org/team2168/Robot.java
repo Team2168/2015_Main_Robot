@@ -316,7 +316,7 @@ public class Robot extends IterativeRobot {
 		robotDisabledLED.set(enabled);
 		gripperEngagedLED.set(gripper.isGripperEngaged());
 		intakeEngagedLED.set(intake.isIntakeEngaged());
-		intakeWheelsActiveLED.set(intake.isRightSpinning() || intake.isLeftSpinning());
+		intakeWheelsActiveLED.set(intake.isIntakeWheelsIn());
 	}
 
 	/**
