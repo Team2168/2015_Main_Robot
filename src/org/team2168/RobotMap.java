@@ -138,7 +138,8 @@ public class RobotMap {
 	public static final double LIFT_OVER_CURRENT_RAISE = 60.0; //amps
 	public static final double LIFT_OVER_CURRENT_LOWER = 42.0; //amps
 	public static final double LIFT_STALL_PERIOD = 0.75; //seconds stall can be sustained for
-
+	public static final double LIFT_STALL_RATE = -15; //if lift moves slower than this rate assume it is stalling (inch/sec)
+	
 	//TODO Find correct height for the lift at the following positions:
 	//Height of lift where it is above the tote ready to lower onto it
 	public static final double LIFT_ABOVE_TOTE_HEIGHT = 5;

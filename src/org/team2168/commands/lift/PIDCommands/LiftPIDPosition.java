@@ -63,7 +63,7 @@ public class LiftPIDPosition extends Command {
 	protected boolean isFinished() {
 		//Check if the lift is moving down too slow If it does, kill the SCHEDULER!
 		double rate = Robot.lift.getRate();
-		stalled.update(rate < 0 && rate > -15); //rate is negative, and moving slow for period of time, rate is inches/sec
+		stalled.update(rate < 0 && rate > RobotMap.LIFT_STALL_RATE); //rate is negative, and moving slow for period of time, rate is inches/sec
 
 		if(Robot.isAutoMode() && Robot.lift.isLiftLowering() && stalled.getStatus()) {
 			//Kill the scheduler :(

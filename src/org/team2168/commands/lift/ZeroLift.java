@@ -35,11 +35,11 @@ public class ZeroLift extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		//Check if the lift is drawing too much current. If it does, kill the SCHEDULER!
-		stalled.update(Robot.isAutoMode() &&
-				(leftMotorOverCurrent() || rightMotorOverCurrent()));
+		//Check if the lift is moving down too slow If it does, kill the SCHEDULER!
+		double rate = Robot.lift.getRate();
+		stalled.update(rate < 0 && rate > RobotMap.LIFT_STALL_RATE); //rate is negative, and moving slow for period of time, rate is inches/sec
 
-		if(stalled.getStatus()) {
+		if(Robot.isAutoMode() && Robot.lift.isLiftLowering() && stalled.getStatus()) {
 			//Kill the scheduler :(
 			Scheduler.getInstance().disable();
 			Scheduler.getInstance().removeAll();
