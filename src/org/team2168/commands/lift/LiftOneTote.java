@@ -28,9 +28,9 @@ public class LiftOneTote extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	addSequential(new LiftPIDPosition(0, 0.6), 4);
-    	addSequential(new Sleep(), .2);
-    	addSequential(new LiftPIDPosition(20, 1), 4);
+    	addSequential(new ZeroLift(),2);
+    	addSequential(new ZeroLift(),2);
+    	addSequential(new LiftPIDPosition(20, 0.7), 4);
     	
     }
 }

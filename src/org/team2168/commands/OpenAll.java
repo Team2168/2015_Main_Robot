@@ -1,5 +1,6 @@
 package org.team2168.commands;
 
+import org.team2168.commands.arcb.ARCBRetract;
 import org.team2168.commands.drivetrain.DriveXDistance;
 import org.team2168.commands.drivetrain.RotateAboutRightWheel;
 import org.team2168.commands.gripper.ReleaseGripper;
@@ -13,9 +14,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class TestCommand extends CommandGroup {
+public class OpenAll extends CommandGroup {
     
-    public  TestCommand() {
+    public  OpenAll() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -33,23 +34,9 @@ public class TestCommand extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	
-    	//Acquired 3rd tote so just drive to auto zone
-    	addParallel(new SetIntakeSpeed(0.5),2);
-    	addSequential(new RotateAboutRightWheel(95, 1), 7);
-    	addParallel(new DriveXDistance(16, 1),4.2); //drive fast with stack
-    	
-    	
-    	//at auto zone, so lets lower stack
-    	addSequential(new LiftPIDPosition(0, 0.7), 2); // lower 2tote stack onto 3rd tote
-    	addSequential(new ZeroLift(),2);
-    	addSequential(new ZeroLift(),2);
-    	
-    	//release set
-    	addSequential(new DisengageIntake(),2);
-    	addSequential(new ReleaseGripper(),2);
-    	//addSequential(new DriveXDistance(-0.2, 1),2); //drive slow with statck
-    
+    	addParallel(new ReleaseGripper());
+    	addParallel(new ARCBRetract());
+    	addParallel(new DisengageIntake());
     	//DONE
     	
     }
