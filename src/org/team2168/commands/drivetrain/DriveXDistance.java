@@ -12,7 +12,8 @@ public class DriveXDistance extends Command{
 	private double endDistance;
 	private boolean finished;
 	private double angle;
-
+	private double error = 0.3;
+	
 	private double powerShift;
 
 	double rightSpeed = 0;
@@ -40,9 +41,14 @@ public class DriveXDistance extends Command{
 		this.speed = speed;
 	}
 
-	public DriveXDistance(double distance, double speed, double powerShift) {
+	//public DriveXDistance(double distance, double speed, double powerShift) {
+	//	this(distance, speed);
+	//	this.powerShift = powerShift;
+	//}
+	
+	public DriveXDistance(double distance, double speed, double error) {
 		this(distance, speed);
-		this.powerShift = powerShift;
+		this.error = error;
 	}
 
 	protected void initialize() {
@@ -61,9 +67,10 @@ public class DriveXDistance extends Command{
 		angle = Robot.drivetrain.getHeading();
 
 		Robot.drivetrain.driveTrainPosController.setSetPoint(endDistance);
+		System.out.println(endDistance);
 		Robot.drivetrain.driveTrainPosController.setMaxPosOutput(speed);
 		Robot.drivetrain.driveTrainPosController.setMinPosOutput(-speed);
-		Robot.drivetrain.driveTrainPosController.setAcceptErrorDiff(0.3); //feet
+		Robot.drivetrain.driveTrainPosController.setAcceptErrorDiff(error); //feet
 		Robot.drivetrain.rotateController.setSetPoint(angle);
 		
 		
@@ -106,7 +113,7 @@ public class DriveXDistance extends Command{
 	}
 
 	protected boolean isFinished() {
-		return finished;
+		return Robot.drivetrain.driveTrainPosController.isFinished();
 	}
 
 	protected void end() {
