@@ -71,6 +71,9 @@ public class Lift extends Subsystem {
 
 		fullyRaised = new DigitalInput(RobotMap.LIFT_RAISED_SENSOR);
 		fullyLowered = new DigitalInput(RobotMap.LIFT_LOWERED_SENSOR);
+		
+		binIntakeIR = new AnalogInput(RobotMap.BIN_INTAKE_IR);
+		binUnderGripperIR = new AnalogInput(RobotMap.BIN_UNDER_GRIPPER_IR);
 	}
 
 	/**
