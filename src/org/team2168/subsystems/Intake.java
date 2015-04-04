@@ -31,7 +31,7 @@ public class Intake extends Subsystem {
 	private static final double CM_TO_INCH =  0.393701;
 	private static final double MOTOR_SPIN_DEADBAND = 0.15;
 
-	//Intake sensor won't return voltages smaller than:
+	//Intake sensor won't return voltages smaller  than:
 	//TODO: calibrate this value
 	private final static double INTAKE_TOTE_MIN_VOLTAGE = 0.5;
 

@@ -9,6 +9,7 @@ import org.team2168.commands.lift.LiftWithJoystick;
 import org.team2168.utils.TCPSocketSender;
 import org.team2168.utils.Util;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -24,12 +25,9 @@ public class Lift extends Subsystem {
 	private Victor liftMotor;
 	private DoubleSolenoid liftBrake;
 	private static final double DESTINATION_TOL = 1.0; //inches
-
-	private volatile double motorVoltage;
-
-	private static final boolean MOTOR_INVERTED = false;
-
-	public AverageEncoder liftEncoder;
+	private static AnalogInput binIntakeIR;
+	private static AnalogInput binUnderGripperIR;
+	
 	public PIDPosition liftController;
 
 	private static DigitalInput fullyRaised;
@@ -39,6 +37,9 @@ public class Lift extends Subsystem {
 
 	public boolean liftSelfTest = false;
 
+	private final static double INTAKE_BIN_MIN_VOLTAGE = 0.5;
+	private static final double CM_TO_INCH =  0.393701;
+	
 	/**
 	 * A private constructor to prevent multiple instances of the subsystem from
 	 * being created.
@@ -70,6 +71,9 @@ public class Lift extends Subsystem {
 
 		fullyRaised = new DigitalInput(RobotMap.LIFT_RAISED_SENSOR);
 		fullyLowered = new DigitalInput(RobotMap.LIFT_LOWERED_SENSOR);
+		
+		binIntakeIR = new AnalogInput(RobotMap.BIN_INTAKE_IR);
+		binUnderGripperIR = new AnalogInput(RobotMap.BIN_UNDER_GRIPPER_IR);
 	}
 
 	/**
@@ -297,4 +301,38 @@ public class Lift extends Subsystem {
 	public boolean isLiftRaising() {
 		return liftController.isEnabled() && (liftController.getError() > 0);
 	}
+	
+	public double getRawBinDistance(){
+		return Util.max(INTAKE_BIN_MIN_VOLTAGE, binIntakeIR.getVoltage() );
+	}
+	
+	//	/**
+	//	 * Gets the distance to the nearest object from the back of the intake.
+	//	 * @return the distance in inches
+	//	 */
+	//	public double getToteDistance() {
+	//		double binDistance = getRawBinDistance();
+	//
+	//		//y = 0.512x^2 - 0.8656x + 6.1888
+	//		//R^2 = 0.9985
+	//		//TODO: figure out why this isn't working
+	//		return ((0.512 * Math.pow(binDistance, 2) - 0.8656 * binDistance + 6.1888) * CM_TO_INCH);
+	//	}
+	
+	public double getRawBinUnderGripperDistance(){
+		return Util.max(INTAKE_BIN_MIN_VOLTAGE, binUnderGripperIR.getVoltage() );
+	}
+	
+	//	/**
+	//	 * Gets the distance to the nearest object from the back of the intake.
+	//	 * @return the distance in inches
+	//	 */
+	//	public double getBinUnderGripperDistance() {
+	//		double binUnderGripperDistance = getRawBinUnderGripperDistance();
+	//
+	//		//y = 0.512x^2 - 0.8656x + 6.1888
+	//		//R^2 = 0.9985
+	//		//TODO: figure out why this isn't working
+	//		return ((0.512 * Math.pow(binUnderGripperDistance, 2) - 0.8656 * binUnderGripperDistance + 6.1888) * CM_TO_INCH);
+	//	}
 }

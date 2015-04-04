@@ -78,6 +78,8 @@ public class RobotMap {
 	public final static int DRIVE_GYRO = 0;
 	public final static int SYSTEM_PRESSURE = 1;
 	public final static int INTAKE_SENSOR = 2;
+	public final static int BIN_INTAKE_IR = 3;
+	public final static int BIN_UNDER_GRIPPER_IR = 4;
 
 
 	//CAN Device IDs///////////////////////////////////////////////////////////
