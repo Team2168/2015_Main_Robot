@@ -1,8 +1,11 @@
 package org.team2168.utils;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.TimerTask;
 
 import org.team2168.OI;
@@ -31,7 +34,20 @@ public class ConsolePrinter {
 		this.executor.schedule(new ConsolePrintTask(this), 0L, this.period);
 
 		try {
-			this.log = new PrintWriter("/home/lvuser/Log.txt", "UTF-8");
+			
+			File file = new File("/home/lvuser/Logs");
+			if (!file.exists()) {
+				if (file.mkdir()) {
+					System.out.println("Log Directory is created!");
+				} else {
+					System.out.println("Failed to create Log directory!");
+				}
+			}
+			
+			
+			Date date = new Date() ;
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss") ;
+			this.log = new PrintWriter("/home/lvuser/Logs/" + dateFormat.format(date) + "-Log.txt", "UTF-8");
 			log.println("Time \t TimeofDay \t VoltageL1 \t VoltageL2 \t VoltageL3 \t VoltageR1 \t VoltageR2 \t VoltageR3 \t CurrentL1 \t CurrentL2 \t CurrentL3 \t CurrentR1 \t CurrentR2 \t CurrentR3 \t Gyrot SPI Gyro Angle \t SPI Gyro Rate \t Left Encoder Position \t Left Encoder Rate \t Right Encoder Position \t Right Encoder Rate \t Lift Voltage \t Lift Left Current \t Lift Right Current \t Lift Position \t Lift Raw Rate \t Lift Rate \t Accel X \t Accel Y \t Accel Z \t Accel Pitch \t Accel Roll ");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
