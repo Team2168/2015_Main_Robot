@@ -278,9 +278,10 @@ public class PIDPosition implements TCPMessageInterface {
 				}
 			}
 			
-			this.log = new PrintWriter("/home/lvuser/Logs/"+ dateFormat.format(date)+"-"+this.name+"-Log.txt", "UTF-8");
+			this.log = new PrintWriter("/home/lvuser/Logs/PID/"+ dateFormat.format(date)+"-"+this.name+"-Log.txt", "UTF-8");
 			this.log.println("time: \tcperr: \tsp: \terr: \tpterm: \twindup: \terrsum: \titerm: \tdterm: \toutput \toutputBeforInteg \tcounstat \texctime");
-				} catch (FileNotFoundException e) {
+			this.log.flush();
+		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
@@ -1177,7 +1178,7 @@ public class PIDPosition implements TCPMessageInterface {
 			olderr = err;
 			
 			log.println(currentTime + "\t " + cp + "\t" + sp + "\t " + err + "\t" + prop + "\t" + windup + "\t" + errsum +"\t" + integ + "\t" + deriv + "\t" + co + "\t" + executionTime );
-
+			log.flush();
 		}
 
 		runTime = Timer.getFPGATimestamp() - runTime;
