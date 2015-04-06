@@ -108,15 +108,15 @@ public class OI {
 		pnuematicTestJoystick.ButtonStart().whenPressed(new ARCBDeployRight());
 		pnuematicTestJoystick.ButtonStart().whenReleased(new ARCBRetractRight());
 
-		commandsTestJoystick.ButtonStart().whenPressed(new LiftOneTote());
+		commandsTestJoystick.ButtonStart().whenPressed(new LiftPIDPosition(0, 1));
 		commandsTestJoystick.ButtonX().whenPressed(new LiftPIDPosition());
 		commandsTestJoystick.ButtonB().whenPressed(new LiftPIDPause());
 		commandsTestJoystick.ButtonBack().whenPressed(new OpenWhenSensed());
-		commandsTestJoystick.ButtonRightBumper().whenPressed(new DriveXDistance(18,0.2,1));
+		commandsTestJoystick.ButtonRightBumper().whenPressed(new DriveXDistance(4.5, 0.5, 0.5));
 		commandsTestJoystick.ButtonLeftBumper().whenPressed(new TestAllMotors());
 		commandsTestJoystick.ButtonRightTrigger().whenPressed(new IntakeSingleTote());
 		commandsTestJoystick.ButtonA().whenPressed(new ZeroLift());
-		commandsTestJoystick.ButtonY().whenPressed(new RotateXDistancePIDZZZ(45, 0.4));
+		commandsTestJoystick.ButtonY().whenPressed(new RotateXDistancePIDZZZ(40, 0.325, 0.1, 4));
 		commandsTestJoystick.ButtonLeftDPad().whenPressed(new LiftWithJoystickUNSAFE(commandsTestJoystick));
 		
 

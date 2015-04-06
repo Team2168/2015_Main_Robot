@@ -46,7 +46,7 @@ public class LiftPIDPosition extends Command {
 		Robot.lift.liftController.setSetPoint(setPoint);
 		Robot.lift.liftController.setMaxPosOutput(speed);
 		Robot.lift.liftController.setMaxNegOutput(-speed);
-		Robot.lift.liftController.setAcceptErrorDiff(0.5); //inches
+		Robot.lift.liftController.setAcceptErrorDiff(1.5); //inches
 
 		Robot.lift.liftController.Enable();
 	}

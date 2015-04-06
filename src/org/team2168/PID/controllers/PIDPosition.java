@@ -279,7 +279,7 @@ public class PIDPosition implements TCPMessageInterface {
 			}
 			
 			this.log = new PrintWriter("/home/lvuser/Logs/PID/"+ dateFormat.format(date)+"-"+this.name+"-Log.txt", "UTF-8");
-			this.log.println("time: \tcperr: \tsp: \terr: \tpterm: \twindup: \terrsum: \titerm: \tdterm: \toutput \toutputBeforInteg \tcounstat \texctime");
+			this.log.println("time: \tTimeOfDay \tcperr: \tsp: \terr: \tpterm: \twindup: \terrsum: \titerm: \tdterm: \toutput \toutputBeforInteg \tcounstat \texctime");
 			this.log.flush();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -1177,7 +1177,9 @@ public class PIDPosition implements TCPMessageInterface {
 			clock = currentTime;
 			olderr = err;
 			
-			log.println(currentTime + "\t " + cp + "\t" + sp + "\t " + err + "\t" + prop + "\t" + windup + "\t" + errsum +"\t" + integ + "\t" + deriv + "\t" + co + "\t" + executionTime );
+
+			//System.out.println("time: " + currentTime + "\tcperr: " + cp + "\tsp: " + sp + "\terr: " + err + "\tpterm: " + prop + "\twindup: " + windup + "\terrsum: " + errsum +"\titerm: " + integ + "\tdterm: " + deriv + "\toutput" + co + "\texctime" + executionTime );
+			log.println(currentTime + "\t" +  System.currentTimeMillis() + "\t"+ cp + "\t" + sp + "\t " + err + "\t" + prop + "\t" + windup + "\t" + errsum +"\t" + integ + "\t" + deriv + "\t" + co + "\t" + executionTime );
 			log.flush();
 		}
 
