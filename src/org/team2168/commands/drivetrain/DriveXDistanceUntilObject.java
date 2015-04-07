@@ -69,7 +69,7 @@ public class DriveXDistanceUntilObject extends Command{
 		Robot.drivetrain.driveTrainPosController.setSetPoint(endDistance);
 		Robot.drivetrain.driveTrainPosController.setMaxPosOutput(speed);
 		Robot.drivetrain.driveTrainPosController.setMinPosOutput(-speed);
-		Robot.drivetrain.driveTrainPosController.setAcceptErrorDiff(0.1); //feet
+		Robot.drivetrain.driveTrainPosController.setAcceptErrorDiff(0.5); //feet
 		Robot.drivetrain.rotateController.setSetPoint(angle);
 		
 		
@@ -112,7 +112,7 @@ public class DriveXDistanceUntilObject extends Command{
 	}
 
 	protected boolean isFinished() {
-		return finished || Robot.intake.getAveragedRawToteDistance() > RobotMap.INTAKE_TOTE_ENGAGE_VOLTAGE;
+		return Robot.drivetrain.driveTrainPosController.isFinished() || Robot.intake.getAveragedRawToteDistance() > RobotMap.INTAKE_TOTE_ENGAGE_VOLTAGE;
 	}
 
 	protected void end() {
