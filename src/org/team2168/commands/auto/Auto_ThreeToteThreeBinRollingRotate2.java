@@ -41,7 +41,7 @@ public class Auto_ThreeToteThreeBinRollingRotate2 extends CommandGroup {
     	
     	//lift 1st tote above can height
     	addSequential(new DisengageIntake(),2);
-    	addParallel(new RotateXDistancePIDZZZ(-20, 0.5, 0.1, 4), 0.8);  //rotate to get bin off center
+    	addParallel(new RotateXDistancePIDZZZ(-20, 0.7, 0.1, 4), 1.3);  //rotate to get bin off center
     	addSequential(new LiftPIDPosition(34, 1), 1.3);
     	
     	//total time is 1.3 seconds
@@ -49,37 +49,40 @@ public class Auto_ThreeToteThreeBinRollingRotate2 extends CommandGroup {
     	//Roll 1st bin out of the way towards right using intake wheels
     	addSequential(new DisengageIntake(), 2);
     	addParallel(new DriveIntakeWheelIndependt(-1, 1)); //drive bin to right
+    	
     	addSequential(new DriveXDistance(3.5, 0.7, 0.5), 3); //drive slow to move bin
-    	addSequential(new RotateXDistancePIDZZZ(-40, 0.5, 0.1, 4), 1);  //rotate back
+    	addSequential(new RotateXDistancePIDZZZ(40, 0.7, 0.1, 4), 2);  //rotate back
     	addSequential(new DriveXDistance(3.5, 0.7, 0.5), 4); //drive to get back to center line
-    	addSequential(new RotateXDistancePIDZZZ(20, 0.5, 0.1, 4), 1);  //rotate back to zero
+    	addSequential(new RotateXDistancePIDZZZ(-25, 0.7, 0.1, 4), 2);  //rotate back to zero, fixed for momentum
     	//addSequential(new Sleep(),0.3);
     	//total time is 3.3 seconds
     	
     	//bin is out of way so drive to next tote faster
     	addParallel(new IntakeSingleTote(), 5);
-    	addSequential(new DriveXDistanceUntilObject(5.45, 0.6),2.5);
+    	addParallel(new LiftPIDPosition(18, 1), 1.5);
+    	addParallel(new DriveXDistance(3, 0.7, 0.5), 2);
+    	addSequential(new DriveXDistanceUntilObject(3.5, 0.3),2.5);
     	//total time is 5.3 seconds
     	
     	//aquired 2nd tote, so now we lift
     	addSequential(new WaitForObjectInIntake()); // delay to allow the intake
     	addSequential(new EngageIntake(), 2);
     	//addSequential(new StopIntakeWheels());  // if a tote shows up make sure to stop running wheels
-    	addSequential(new LiftPIDPosition(0, 1), 10); // lower 1st tote onto 2nd tote
+    	addSequential(new LiftPIDPosition(0, 1), 1.5); // lower 1st tote onto 2nd tote
     	addSequential(new ZeroLift(), 2);
     	addSequential(new ZeroLift(), 2);
     	addSequential(new DisengageIntake());
-    	addParallel(new RotateXDistancePIDZZZ(-20, 0.5, 0.1, 4), 0.8);  //rotate to get bin off center
+    	addParallel(new RotateXDistancePIDZZZ(-20, 0.5, 0.1, 4), 2);  //rotate to get bin off center
     	addSequential(new LiftPIDPosition(34, 1), 1.5); // raise 2nd tote above garbage can
     	
     	
     	//Roll 2nd bin out of the way towards right
     	addSequential(new DisengageIntake(), 2);
     	addParallel(new DriveIntakeWheelIndependt(-1, 1)); //drive bin to right
-    	addSequential(new DriveXDistance(3.5, 0.7, 0.5), 3); //drive slow to move bin
-    	addSequential(new RotateXDistancePIDZZZ(-40, 0.5, 0.1, 4), 1);  //rotate back
+    	addSequential(new DriveXDistance(4.5, 0.7, 0.5), 3); //drive slow to move bin
+    	addSequential(new RotateXDistancePIDZZZ(40, 0.7, 0.1, 4), 2);  //rotate back
     	addSequential(new DriveXDistance(3.5, 0.7, 0.5), 4); //drive to get back to center line
-    	addSequential(new RotateXDistancePIDZZZ(20, 0.5, 0.1, 4), 1);  //rotate back to zero
+    	addSequential(new RotateXDistancePIDZZZ(-25, 0.7, 0.1, 4), 2);  //rotate back to zero, fixed for momentum
 
    
     	//bin is out of way so drive to next tote faster

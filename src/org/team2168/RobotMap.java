@@ -207,9 +207,9 @@ public class RobotMap {
 	public static final double driveTrainRightPositionI = 0.0001412646174233;
 	public static final double driveTrainRightPositionD = 0.0074778888124088;
 
-	public static final double rotatePositionP = 0.02;
-	public static final double rotatePositionI = 0.002;
-	public static final double rotatePositionD = 0.0;
+	public static final double rotatePositionP = 0.045;
+	public static final double rotatePositionI = 0.001;
+	public static final double rotatePositionD = 0.0064778888124088;
 
 	double pTurn = 0.001;
 	double iTurn = 0.00001;

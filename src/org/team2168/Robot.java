@@ -12,6 +12,7 @@ import org.team2168.commands.auto.Auto_ThreeToteStack;
 import org.team2168.commands.auto.Auto_ThreeToteStackRollingBins;
 import org.team2168.commands.auto.Auto_ThreeToteThreeBin;
 import org.team2168.commands.auto.Auto_ThreeToteThreeBinRollingRotate;
+import org.team2168.commands.auto.Auto_ThreeToteThreeBinRollingRotate2;
 import org.team2168.commands.auto.Auto_TwoToteStack;
 import org.team2168.subsystems.ARCB;
 import org.team2168.subsystems.Drivetrain;
@@ -277,6 +278,7 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("Three Tote Three Bin Rolling", new Auto_ThreeToteStackRollingBins());
 		autoChooser.addObject("Three Tote No Bins", new Auto_ThreeToteNoBin());
 		autoChooser.addObject("Three Tote Rolling Bin Rotate", new Auto_ThreeToteThreeBinRollingRotate());
+		autoChooser.addObject("Three Tote Rolling Bin Rotate - V2", new Auto_ThreeToteThreeBinRollingRotate2());
 		//autoChooser.addObject("Three Tote THree Bin Knocking", new Auto_ThreeToteStackKnockingBin());
 	}
 
