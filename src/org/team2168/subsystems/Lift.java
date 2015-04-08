@@ -26,7 +26,6 @@ public class Lift extends Subsystem {
 	private static final double DESTINATION_TOL = 1.0; //inches
 
 	private volatile double motorVoltage;
-
 	private static final boolean MOTOR_INVERTED = false;
 
 	public AverageEncoder liftEncoder;
@@ -299,5 +298,4 @@ public class Lift extends Subsystem {
 		//return liftController.isEnabled() && (liftController.getError() > 0);
 		return ((getMotorVoltage() > 0 && Math.abs(getMotorVoltage()) > RobotMap.LIFT_PWM_DEADBAND) || getRate() > 0);
 	}
-	
 }
