@@ -17,6 +17,7 @@ public class RotateXDistancePIDZZZ extends Command {
 	private double maxSpeed;
 	private double minSpeed;
 	private double error = 0;  // Rotational degree error, default 0 never ends.
+	private boolean absolute = false;
 	
     public RotateXDistancePIDZZZ() {
         // Use requires() here to declare subsystem dependencies
@@ -46,9 +47,15 @@ public class RotateXDistancePIDZZZ extends Command {
     	this.error = error;
     }
     
+    public RotateXDistancePIDZZZ(double setPoint, double maxSpeed, double minSpeed, double error, boolean absolute) {
+    	this(setPoint, maxSpeed, minSpeed, error);
+    	this.absolute = absolute;
+    }
     // Called just before this Command runs the first time
     
 	protected void initialize() {
+		if (!absolute)
+			this.setPoint = this.setPoint + Robot.drivetrain.getHeading();
 		Robot.drivetrain.rotateController.reset();
 		Robot.drivetrain.rotateController.setSetPoint(setPoint);
 		Robot.drivetrain.rotateController.setMaxPosOutput(maxSpeed);
@@ -56,7 +63,7 @@ public class RotateXDistancePIDZZZ extends Command {
 		Robot.drivetrain.rotateController.setMinPosOutput(minSpeed);
 		Robot.drivetrain.rotateController.setMinNegOutput(-minSpeed);
 		Robot.drivetrain.rotateController.setAcceptErrorDiff(error);
-		Robot.drivetrain.gyroSPI.reset();
+		//Robot.drivetrain.gyroSPI.reset();
 		Robot.drivetrain.rotateController.Enable();
 		
     }
