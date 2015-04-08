@@ -25,15 +25,18 @@ public class Intake extends Subsystem {
 	private static DigitalInput leftLimitSwitch;
 	private static DigitalInput rightLimitSwitch;
 	private static AnalogInput toteDistanceSensor;
-	private static double averagedToteDistance = 0.0;
+	private static AnalogInput rcDistanceSensor;
 	//TODO: calibrate this value
-	private static final double TOTE_SENSOR_AVG_GAIN = 0.8;
+	private static final double IR_SENSOR_AVG_GAIN = 0.8;
 	private static final double CM_TO_INCH =  0.393701;
+	private static double averagedToteDistance = 0.0;
+	private static double averagedRCDistance = 0.0;
+
 	private static final double MOTOR_SPIN_DEADBAND = 0.15;
 
-	//Intake sensor won't return voltages smaller than:
+	//Intake sensor won't return voltages smaller  than:
 	//TODO: calibrate this value
-	private final static double INTAKE_TOTE_MIN_VOLTAGE = 0.5;
+	private final static double IR_SENSOR_MIN_VOLTAGE = 0.5;
 
 	private static final boolean LEFT_INVERTED = false;
 	private static final boolean RIGHT_INVERTED = true;
@@ -42,7 +45,7 @@ public class Intake extends Subsystem {
 	public boolean rightIntakeSelfTest = false;
 
 	public boolean intakeDirection = false;
-	
+
 	/**
 	 * A private constructor to prevent multiple instances of the subsystem
 	 * from being created.
@@ -55,6 +58,7 @@ public class Intake extends Subsystem {
 		leftLimitSwitch = new DigitalInput(RobotMap.LEFT_TOTE_SWITCH);
 		rightLimitSwitch = new DigitalInput(RobotMap.RIGHT_TOTE_SWITCH);
 		toteDistanceSensor = new AnalogInput(RobotMap.INTAKE_SENSOR);
+		rcDistanceSensor = new AnalogInput(RobotMap.RC_DISTANCE_SENSOR);
 	}
 
 	/**
@@ -111,13 +115,13 @@ public class Intake extends Subsystem {
 	 * @param speed 1 to 0 (Tote Out) 0 to -1 (Tote In)
 	 */
 	public void setIntakeSpeed(double speed) {
-		
+
 		if (speed > 0) {
 			this.intakeDirection = true;
 		}else{
 			this.intakeDirection = false;
 		}
-		
+
 		setLeftIntakeSpeed(speed);
 		setRightIntakeSpeed(speed);
 	}
@@ -148,16 +152,17 @@ public class Intake extends Subsystem {
 	private double getRawToteDistance() {
 		//Don't return values that are less than the TOTE_MIN_VOLTAGE.
 		// This is to prevent garbage data being sent out when nothing is in front of the sensor.
-		return Util.max(INTAKE_TOTE_MIN_VOLTAGE, toteDistanceSensor.getVoltage());
+		return Util.max(IR_SENSOR_MIN_VOLTAGE, toteDistanceSensor.getVoltage());
 	}
 
 	/**
 	 * Get the averaged voltage of the intake distance sensor
+	 * Note, this method should be called from a loop to prevent data from getting stale.
 	 * @return average value in volts
 	 */
 	public double getAveragedRawToteDistance() {
 		averagedToteDistance = Util.runningAverage(getRawToteDistance(),
-				averagedToteDistance, TOTE_SENSOR_AVG_GAIN);
+				averagedToteDistance, IR_SENSOR_AVG_GAIN);
 		return averagedToteDistance;
 	}
 
@@ -173,6 +178,30 @@ public class Intake extends Subsystem {
 	//		//TODO: figure out why this isn't working
 	//		return ((0.512 * Math.pow(toteDistance, 2) - 0.8656 * toteDistance + 6.1888) * CM_TO_INCH);
 	//	}
+
+	/**
+	 * @return the voltage value seen from the RC distance sensor
+	 */
+	public double getRawRCDistance(){
+		return Util.max(IR_SENSOR_MIN_VOLTAGE, rcDistanceSensor.getVoltage());
+	}
+
+	/**
+	 * Note, this method should be called from a loop to prevent data from getting stale.
+	 * @return the averaged voltage value seen from the RC distance sensor.
+	 */
+	public double getAveragedRawRCDistance() {
+		averagedRCDistance = Util.runningAverage(getRawRCDistance(),
+				averagedRCDistance, IR_SENSOR_AVG_GAIN);
+		return averagedRCDistance;
+	}
+
+	/**
+	 * @return true if a recycling container is present in the intake
+	 */
+	public boolean isRCInIntake() {
+		return getAveragedRawRCDistance() > RobotMap.INTAKE_RC_PRESENT_VOLTAGE;
+	}
 
 	/**
 	 * Set the default command for the subsystem
@@ -197,22 +226,22 @@ public class Intake extends Subsystem {
 	public boolean isIntakeDisengaged() {
 		return rightLeftIntake.get() == Value.kReverse;
 	}
-	
+
 	public boolean isIntakeWheelsIn() {
 		return this.intakeDirection;
 	}
-	
+
 	public boolean isIntakeWheelsOut() {
 		return this.intakeDirection;
 	}
 
 	/**
 	 * @return true if the right motor is spinning
-	 */	
+	 */
 	public boolean isRightSpinning() {
 		return Math.abs(rightMotor.get()) >= MOTOR_SPIN_DEADBAND;
 	}
-	
+
 	/**
 	 * @return true if the left motor is spinning
 	 */

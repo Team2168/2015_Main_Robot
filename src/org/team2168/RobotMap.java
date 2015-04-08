@@ -75,9 +75,12 @@ public class RobotMap {
 
 
 	//Analog Input Channels////////////////////////////////////////////////////
-	public final static int DRIVE_GYRO = 0;
-	public final static int SYSTEM_PRESSURE = 1;
+	public final static int LIFT_LOWER_STALL_SENSOR = 0;
+	public final static int RC_DISTANCE_SENSOR = 1;
 	public final static int INTAKE_SENSOR = 2;
+	//Channels 4-7 on MXP
+	public final static int DRIVE_GYRO = 4;
+	public final static int SYSTEM_PRESSURE = 5;
 
 
 	//CAN Device IDs///////////////////////////////////////////////////////////
@@ -92,7 +95,7 @@ public class RobotMap {
 	public final static int PNUEMATICS_TEST_JOYSTICK = 3;
 	public final static int COMMANDS_TEST_JOYSTICK = 4;
 	public final static int AUTO_TEST_JOYSTICK = 5;
-	
+
 
 
 	/*************************************************************************
@@ -139,7 +142,11 @@ public class RobotMap {
 	public static final double LIFT_OVER_CURRENT_LOWER = 42.0; //amps
 	public static final double LIFT_STALL_PERIOD = 0.75; //seconds stall can be sustained for
 	public static final double LIFT_STALL_RATE = -15; //if lift moves slower than this rate assume it is stalling (inch/sec)
-	
+
+	//TODO: Calibrate this voltage. Values below this value will be interpreted
+	//  as an object being in the way of the lift.
+	public static final double LIFT_LOWER_STALL_VOLTAGE = 2.5;
+
 	//TODO Find correct height for the lift at the following positions:
 	//Height of lift where it is above the tote ready to lower onto it
 	public static final double LIFT_ABOVE_TOTE_HEIGHT = 5;
@@ -169,6 +176,8 @@ public class RobotMap {
 	public final static double INTAKE_WHEEL_SPEED = 0.5;
 	public final static double INTAKE_TOTE_ENGAGE_VOLTAGE = 1.05;
 	public final static double INTAKE_TOTE_STOP_VOLTAGE = 2.5;
+	public final static double INTAKE_RC_PRESENT_VOLTAGE = 1.0;
+
 	public final static boolean PRINT_SD_DEBUG_DATA = true;
 	public final static long SmartDashThreadPeriod = 100; //ms
 
