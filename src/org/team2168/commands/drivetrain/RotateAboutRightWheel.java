@@ -16,6 +16,7 @@ public class RotateAboutRightWheel extends Command {
 	private double setPoint;
 	private double maxSpeed;
 	private double minSpeed;
+	private boolean absolute = false;
 	
     public RotateAboutRightWheel() {
         // Use requires() here to declare subsystem dependencies
@@ -40,16 +41,26 @@ public class RotateAboutRightWheel extends Command {
    	   this.minSpeed = minSpeed;
       }    
 
+    public RotateAboutRightWheel(double setPoint, double maxSpeed, double minSpeed, boolean absolute){
+    	   this(setPoint, maxSpeed, minSpeed);
+    	   this.absolute = absolute;
+       }    
+
+    
     // Called just before this Command runs the first time
     
 	protected void initialize() {
+		
+		if (!absolute)
+			this.setPoint = this.setPoint + Robot.drivetrain.getHeading();
+		
 		Robot.drivetrain.rotateController.reset();
 		Robot.drivetrain.rotateController.setSetPoint(setPoint);
 		Robot.drivetrain.rotateController.setMaxPosOutput(maxSpeed);
 		Robot.drivetrain.rotateController.setMaxNegOutput(-maxSpeed);
 		Robot.drivetrain.rotateController.setMinPosOutput(minSpeed);
 		Robot.drivetrain.rotateController.setMinNegOutput(-minSpeed);
-		Robot.drivetrain.gyroSPI.reset();
+		//Robot.drivetrain.gyroSPI.reset();
 		Robot.drivetrain.rotateController.Enable();
 		
     }
