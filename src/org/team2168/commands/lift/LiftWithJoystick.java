@@ -1,11 +1,8 @@
 package org.team2168.commands.lift;
 
-import org.team2168.OI;
 import org.team2168.Robot;
-import org.team2168.RobotMap;
 import org.team2168.utils.F310;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -13,8 +10,9 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class LiftWithJoystick extends Command {
 
-	F310 joystick;
-	
+	private F310 joystick;
+	private double speed;
+
 	public LiftWithJoystick(F310 joystick) {
 		this.joystick = joystick;
 		requires(Robot.lift);
@@ -30,7 +28,9 @@ public class LiftWithJoystick extends Command {
 	 * Called repeatedly when this Command is scheduled to run
 	 */
 	protected void execute() {
-		Robot.lift.drive(joystick.getRightStickRaw_Y()); 
+		//Send x^2 value to the lift to reduce the sensitivity of joystick control.
+		Robot.lift.drive(joystick.getRightStickRaw_Y()
+				* Math.abs(joystick.getRightStickRaw_Y()));
 	}
 
 	/**
