@@ -324,7 +324,7 @@ public class Lift extends Subsystem {
 	}
 	
 	//	/**
-	//	 * Gets the distance to the nearest object from the back of the intake.
+	//	 * Gets the distance to the nearest object ffrom under the gripper
 	//	 * @return the distance in inches
 	//	 */
 	//	public double getBinUnderGripperDistance() {
