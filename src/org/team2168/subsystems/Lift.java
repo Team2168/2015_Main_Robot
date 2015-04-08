@@ -9,6 +9,7 @@ import org.team2168.commands.lift.LiftWithJoystick;
 import org.team2168.utils.TCPSocketSender;
 import org.team2168.utils.Util;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -24,9 +25,13 @@ public class Lift extends Subsystem {
 	private Victor liftMotor;
 	private DoubleSolenoid liftBrake;
 	private static final double DESTINATION_TOL = 1.0; //inches
+	private static final double IR_SENSOR_AVG_GAIN = 0.8;
 
 	private volatile double motorVoltage;
 	private static final boolean MOTOR_INVERTED = false;
+
+	private AnalogInput liftStallSensor;
+	private static double averagedStallSensor = 0.0;
 
 	public AverageEncoder liftEncoder;
 	public PIDPosition liftController;
@@ -69,6 +74,8 @@ public class Lift extends Subsystem {
 
 		fullyRaised = new DigitalInput(RobotMap.LIFT_RAISED_SENSOR);
 		fullyLowered = new DigitalInput(RobotMap.LIFT_LOWERED_SENSOR);
+
+		liftStallSensor = new AnalogInput(RobotMap.LIFT_LOWER_STALL_SENSOR);
 	}
 
 	/**
@@ -297,5 +304,30 @@ public class Lift extends Subsystem {
 	public boolean isLiftRaising() {
 		//return liftController.isEnabled() && (liftController.getError() > 0);
 		return ((getMotorVoltage() > 0 && Math.abs(getMotorVoltage()) > RobotMap.LIFT_PWM_DEADBAND) || getRate() > 0);
+	}
+
+	/**
+	 * @return the raw voltage from the lift stall sensor
+	 */
+	public double getRawLiftStallSensorVoltage() {
+		return liftStallSensor.getVoltage();
+	}
+
+	/**
+	 * @return the averaged voltage from the lift stall sensor
+	 */
+	public double getAveragedLiftStallSensorVoltage() {
+		averagedStallSensor = Util.runningAverage(
+				getRawLiftStallSensorVoltage(),
+				averagedStallSensor, IR_SENSOR_AVG_GAIN);
+		return averagedStallSensor;
+	}
+
+	/**
+	 * @return true if there is an object below the lift in a position
+	 *   that could cause a stall condition.
+	 */
+	public boolean isLiftHittingObject() {
+		return getAveragedLiftStallSensorVoltage() < RobotMap.LIFT_LOWER_STALL_VOLTAGE;
 	}
 }

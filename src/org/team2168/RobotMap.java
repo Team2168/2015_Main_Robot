@@ -75,6 +75,7 @@ public class RobotMap {
 
 
 	//Analog Input Channels////////////////////////////////////////////////////
+	public final static int LIFT_LOWER_STALL_SENSOR = 0;
 	public final static int RC_DISTANCE_SENSOR = 1;
 	public final static int INTAKE_SENSOR = 2;
 	//Channels 4-7 on MXP
@@ -141,6 +142,10 @@ public class RobotMap {
 	public static final double LIFT_OVER_CURRENT_LOWER = 42.0; //amps
 	public static final double LIFT_STALL_PERIOD = 0.75; //seconds stall can be sustained for
 	public static final double LIFT_STALL_RATE = -15; //if lift moves slower than this rate assume it is stalling (inch/sec)
+
+	//TODO: Calibrate this voltage. Values below this value will be interpreted
+	//  as an object being in the way of the lift.
+	public static final double LIFT_LOWER_STALL_VOLTAGE = 2.5;
 
 	//TODO Find correct height for the lift at the following positions:
 	//Height of lift where it is above the tote ready to lower onto it
