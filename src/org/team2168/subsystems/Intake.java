@@ -197,6 +197,13 @@ public class Intake extends Subsystem {
 	}
 
 	/**
+	 * @return true if a recycling container is present in the intake
+	 */
+	public boolean isRCInIntake() {
+		return getAveragedRawRCDistance() > RobotMap.INTAKE_RC_PRESENT_VOLTAGE;
+	}
+
+	/**
 	 * Set the default command for the subsystem
 	 */
 	public void initDefaultCommand() {
