@@ -12,7 +12,7 @@ public class ARCBDeployRight extends Command {
     public ARCBDeployRight() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.binGrabber);
+    	requires(Robot.arcb);
     }
 
     // Called just before this Command runs the first time
@@ -21,12 +21,12 @@ public class ARCBDeployRight extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.binGrabber.extendRight();
+    	Robot.arcb.extendRight();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.binGrabber.isRightExtended();
+        return Robot.arcb.isRightExtended();
     }
 
     // Called once after isFinished returns true

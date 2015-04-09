@@ -52,7 +52,10 @@ public class RobotMap {
 	public final static int LIFT_BRAKE_DOUBLE_SOLENOID_REVERSE = 5;
 
 	//Relay Channels///////////////////////////////////////////////////////////
-	public final static int ARCB_RELAY = 0;
+	public final static int BIN_RETAINER_RELAY = 0;
+	public final static int ARCB_RELAY = 1;
+	
+	
 
 	//Digital IO Channels//////////////////////////////////////////////////////
 	//Channels 0-9 on RoboRio

@@ -5,9 +5,11 @@ import org.team2168.PID.trajectory.LoadPathFile;
 import org.team2168.PID.trajectory.Path;
 import org.team2168.commands.auto.Auto_NoTote_DoNothing;
 import org.team2168.commands.auto.Auto_NoTote_DriveForward;
+import org.team2168.commands.auto.Auto_OneBin_DriveForward;
 import org.team2168.commands.auto.Auto_OneTote_Rotate90Push;
 import org.team2168.commands.auto.Auto_ThreeToteNoBin;
 import org.team2168.commands.auto.Auto_ThreeToteOneBin;
+import org.team2168.commands.auto.Auto_ThreeToteRollingBinRide;
 import org.team2168.commands.auto.Auto_ThreeToteStack;
 import org.team2168.commands.auto.Auto_ThreeToteStackRollingBins;
 import org.team2168.commands.auto.Auto_ThreeToteThreeBin;
@@ -15,6 +17,7 @@ import org.team2168.commands.auto.Auto_ThreeToteThreeBinRollingRotate;
 import org.team2168.commands.auto.Auto_ThreeToteThreeBinRollingRotate2;
 import org.team2168.commands.auto.Auto_TwoToteStack;
 import org.team2168.subsystems.ARCB;
+import org.team2168.subsystems.BinRetainer;
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.Gripper;
 import org.team2168.subsystems.Intake;
@@ -51,7 +54,8 @@ public class Robot extends IterativeRobot {
 	public static Winch winch;
 	public static Gripper gripper;
 	public static Pneumatics pneumatics;
-	public static ARCB binGrabber;
+	public static ARCB arcb;
+	public static BinRetainer binRetainer;
 
 	public static PowerDistribution pdp; // Power Monitor
 	ConsolePrinter printer; // SmartDash printer
@@ -107,7 +111,8 @@ public class Robot extends IterativeRobot {
 		lift = Lift.getInstance();
 		winch = Winch.getInstance();
 		gripper = Gripper.getInstance();
-		binGrabber = ARCB.getInstance();
+		arcb = ARCB.getInstance();
+		binRetainer = BinRetainer.getInstance();
 
 		pathPlanner();
 		autoSelectInit();
@@ -280,6 +285,8 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("Three Tote Rolling Bin Rotate", new Auto_ThreeToteThreeBinRollingRotate());
 		autoChooser.addObject("Three Tote Rolling Bin Rotate - V2", new Auto_ThreeToteThreeBinRollingRotate2());
 		//autoChooser.addObject("Three Tote THree Bin Knocking", new Auto_ThreeToteStackKnockingBin());
+		autoChooser.addObject("Three Tote Rolling Bin RIDE", new Auto_ThreeToteRollingBinRide());
+		autoChooser.addObject("One Bin Rotate", new Auto_OneBin_DriveForward());
 	}
 
 	/**

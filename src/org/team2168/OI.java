@@ -7,6 +7,8 @@ import org.team2168.commands.arcb.ARCBDeployRight;
 import org.team2168.commands.arcb.ARCBRetract;
 import org.team2168.commands.arcb.ARCBRetractLeft;
 import org.team2168.commands.arcb.ARCBRetractRight;
+import org.team2168.commands.binRetainer.DisengageBinRetainer;
+import org.team2168.commands.binRetainer.EngageBinRetainer;
 import org.team2168.commands.calibration.TestAllMotors;
 import org.team2168.commands.drivetrain.DriveXDistance;
 import org.team2168.commands.drivetrain.RotateXDistancePIDZZZ;
@@ -68,8 +70,8 @@ public class OI {
 
 		operatorJoystick.ButtonRightBumper().whenPressed(new EngageIntake());
 		operatorJoystick.ButtonLeftBumper().whenPressed(new DisengageIntake());
-		operatorJoystick.ButtonStart().whenPressed(new ARCBDeploy());
-		operatorJoystick.ButtonBack().whenPressed(new ARCBRetract());
+		operatorJoystick.ButtonStart().whenPressed(new DisengageBinRetainer());
+		operatorJoystick.ButtonBack().whenPressed(new EngageBinRetainer());
 
 		operatorJoystick.ButtonRightTrigger().whenPressed(new OperatorIntakeSingleTote());
 		operatorJoystick.ButtonRightTrigger().whenReleased(new StopIntakeWheels());

@@ -1,4 +1,4 @@
-package org.team2168.commands.arcb;
+package org.team2168.commands.binRetainer;
 
 import org.team2168.Robot;
 
@@ -7,10 +7,12 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ARCBDeployLeft extends Command {
+public class EngageBinRetainer extends Command {
 
-	public ARCBDeployLeft() {
-		requires(Robot.arcb);
+	public EngageBinRetainer() {
+		requires(Robot.binRetainer);
+		// Use requires() here to declare subsystem dependencies
+		// eg. requires(chassis);
 	}
 
 	// Called just before this Command runs the first time
@@ -19,12 +21,12 @@ public class ARCBDeployLeft extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.arcb.extendLeft();
+		Robot.binRetainer.retractBinRetainer();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return Robot.arcb.isLeftExtended();
+		return Robot.binRetainer.isRetracted();
 	}
 
 	// Called once after isFinished returns true

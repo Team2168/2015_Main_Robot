@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ARCBRetractRight extends Command {
 
 	public ARCBRetractRight() {
-		requires(Robot.binGrabber);
+		requires(Robot.arcb);
 	}
 
 	// Called just before this Command runs the first time
@@ -19,12 +19,12 @@ public class ARCBRetractRight extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.binGrabber.retractRight();
+		Robot.arcb.retractRight();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return Robot.binGrabber.isRightRetracted();
+		return Robot.arcb.isRightRetracted();
 	}
 
 	// Called once after isFinished returns true

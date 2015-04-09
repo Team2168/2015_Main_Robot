@@ -53,7 +53,7 @@ public class Auto_ThreeToteThreeBinRollingRotate2 extends CommandGroup {
     	addSequential(new DriveXDistance(3.5, 0.7, 0.5), 3); //drive slow to move bin
     	addSequential(new RotateXDistancePIDZZZ(40, 0.7, 0.1, 4), 2);  //rotate back
     	addSequential(new DriveXDistance(3.5, 0.7, 0.5), 4); //drive to get back to center line
-    	addSequential(new RotateXDistancePIDZZZ(-25, 0.7, 0.1, 4), 2);  //rotate back to zero, fixed for momentum
+    	addSequential(new RotateXDistancePIDZZZ(-25, 0.7, 0.1, 4), 3);  //rotate back to zero, fixed for momentum
     	//addSequential(new Sleep(),0.3);
     	//total time is 3.3 seconds
     	
@@ -61,14 +61,14 @@ public class Auto_ThreeToteThreeBinRollingRotate2 extends CommandGroup {
     	addParallel(new IntakeSingleTote(), 5);
     	addParallel(new LiftPIDPosition(18, 1), 1.5);
     	addParallel(new DriveXDistance(3, 0.7, 0.5), 2);
-    	addSequential(new DriveXDistanceUntilObject(3.5, 0.3),2.5);
+    	addSequential(new DriveXDistanceUntilObject(4.5, 0.3),2.5);
     	//total time is 5.3 seconds
     	
     	//aquired 2nd tote, so now we lift
     	addSequential(new WaitForObjectInIntake()); // delay to allow the intake
     	addSequential(new EngageIntake(), 2);
     	//addSequential(new StopIntakeWheels());  // if a tote shows up make sure to stop running wheels
-    	addSequential(new LiftPIDPosition(0, 1), 1.5); // lower 1st tote onto 2nd tote
+    	addSequential(new LiftPIDPosition(0, 1), 10); // lower 1st tote onto 2nd tote
     	addSequential(new ZeroLift(), 2);
     	addSequential(new ZeroLift(), 2);
     	addSequential(new DisengageIntake());
