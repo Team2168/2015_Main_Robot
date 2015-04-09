@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 import java.util.TimerTask;
 
 import org.team2168.OI;
@@ -43,12 +44,11 @@ public class ConsolePrinter {
 					System.out.println("Failed to create Log directory!");
 				}
 			}
-			
-			
 			Date date = new Date() ;
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss") ;
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+			dateFormat.setTimeZone(TimeZone.getTimeZone("EST5EDT"));
 			this.log = new PrintWriter("/home/lvuser/Logs/" + dateFormat.format(date) + "-Log.txt", "UTF-8");
-			log.println("Time \t TimeofDay \t Disabled \t Enabled \t Auto \t Teleop \t FMS \t MatchTime \t Batt Volt \t VoltageL1 \t VoltageL2 \t VoltageL3 \t VoltageR1 \t VoltageR2 \t VoltageR3 \t CurrentL1 \t CurrentL2 \t CurrentL3 \t CurrentR1 \t CurrentR2 \t CurrentR3 \t Gyrot SPI Gyro Angle \t SPI Gyro Rate \t Left Encoder Position \t Left Encoder Rate \t Right Encoder Position \t Right Encoder Rate \t Lift Voltage \t Lift Left Current \t Lift Right Current \t Lift Position \t Lift Raw Rate \t Lift Rate \t Accel X \t Accel Y \t Accel Z \t Accel Pitch \t Accel Roll ");
+			log.println("Time \t TimeofDay \t Disabled \t Enabled \t Auto \t Teleop \t FMS \t MatchTime \t Batt Volt \t VoltageL1 \t VoltageL2 \t VoltageL3 \t VoltageR1 \t VoltageR2 \t VoltageR3 \t CurrentL1 \t CurrentL2 \t CurrentL3 \t CurrentR1 \t CurrentR2 \t CurrentR3 \t Gyrot SPI Gyro Angle \t SPI Gyro Rate \t Left Encoder Position \t Left Encoder Rate \t Right Encoder Position \t Right Encoder Rate \t Lift Voltage \t Lift Left Current \t Lift Right Current \t Lift Position \t Lift Raw Rate \t Lift Rate \t Accel X \t Accel Y \t Accel Z \t Accel Pitch \t Accel Roll \t Lift Stall IR \t Raw RC Distance");
 			log.flush();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -94,7 +94,8 @@ public class ConsolePrinter {
 			SmartDashboard.putNumber("totalCurrent", Robot.pdp.getTotalCurrent());
 			SmartDashboard.putNumber("pcmCurrent", Robot.pdp.getChannelCurrent(RobotMap.PCM_POWER));
 
-
+			SmartDashboard.putNumber("RC Tote IR", Robot.intake.getAveragedRawRCDistance());
+			SmartDashboard.putNumber("Lift Lower Stall", Robot.lift.getAveragedLiftStallSensorVoltage());
 
 			SmartDashboard.putNumber("DTRight1MotorCurrent", Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_1_PDP));
 			SmartDashboard.putNumber("DTRight2MotorCurrent", Robot.pdp.getChannelCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR_2_PDP));
@@ -220,8 +221,9 @@ public class ConsolePrinter {
 					Robot.accel.getY() + "\t" +
 					Robot.accel.getZ() + "\t" +
 					IMU.getAccPitch() + "\t" +
-					IMU.getAccRoll() + "\t"
-					
+					IMU.getAccRoll() + "\t" +
+					Robot.lift.getAveragedLiftStallSensorVoltage() + "\t" +
+					Robot.intake.getAveragedRawRCDistance()
 					);
 			log.flush();
 
