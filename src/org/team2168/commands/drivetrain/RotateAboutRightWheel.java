@@ -43,9 +43,9 @@ public class RotateAboutRightWheel extends Command {
     public RotateAboutRightWheel(double setPoint, double maxSpeed, double minSpeed, boolean absolute){
     	   this(setPoint, maxSpeed, minSpeed);
     	   this.absolute = absolute;
+
     }    
 
-    
     // Called just before this Command runs the first time
     
 	protected void initialize() {
