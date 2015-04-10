@@ -24,13 +24,18 @@ public class LiftWithJoystick extends Command {
 	protected void initialize() {
 	}
 
+	private static final double GAIN = 0.55;
+	private static final double BIAS = 0.2;
+	
 	/**
 	 * Called repeatedly when this Command is scheduled to run
 	 */
 	protected void execute() {
-		//Send x^2 value to the lift to reduce the sensitivity of joystick control.
-		Robot.lift.drive(joystick.getRightStickRaw_Y()
-				* Math.abs(joystick.getRightStickRaw_Y()));
+		double value = joystick.getRightStickRaw_Y();
+		
+		//reduce the sensitivity of joystick control.
+		value = value * (Math.abs(value) + BIAS) * GAIN;
+		Robot.lift.drive(value);
 	}
 
 	/**

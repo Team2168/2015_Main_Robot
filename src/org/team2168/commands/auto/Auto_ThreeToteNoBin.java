@@ -10,6 +10,7 @@ import org.team2168.commands.intake.DisengageIntake;
 import org.team2168.commands.intake.EngageIntake;
 import org.team2168.commands.intake.IntakeSingleTote;
 import org.team2168.commands.intake.SetIntakeSpeed;
+import org.team2168.commands.intake.WaitForObjectInIntake;
 import org.team2168.commands.lift.LiftOneTote;
 import org.team2168.commands.lift.ZeroLift;
 import org.team2168.commands.lift.PIDCommands.LiftPIDPosition;
@@ -49,7 +50,9 @@ public class Auto_ThreeToteNoBin extends CommandGroup {
     	addSequential(new DriveXDistance(13, 0.6),2.5);
 
     	//intake second tote
-    	addSequential(new LiftPIDPosition(0, 0.7), 1); // lower 1st tote onto 2nd tote
+    	addSequential(new WaitForObjectInIntake()); // delay to allow the intake
+    	addSequential(new EngageIntake(), 2);
+    	addSequential(new LiftPIDPosition(0, 1.3), 1); // lower 1st tote onto 2nd tote
     	addSequential(new ZeroLift(),2);
     	addSequential(new ZeroLift(),2);
     	
