@@ -27,8 +27,8 @@ public class Auto_OneBin_DriveForward extends CommandGroup {
     	addSequential(new EngageBinRetainer());
     	addSequential(new EngageGripper());
     	addSequential(new Sleep(), 0.1);
-    	addParallel(new LiftPIDPosition(12, 0.6 ), 1.3);
-    	addSequential(new RotateAboutLeftWheel(40, 0.7), 1.5);
+    	addParallel(new LiftPIDPosition(12, 0.6 ), 1.1);
+    	addSequential(new RotateAboutLeftWheel(40, 0.7), 1.1);
     	addSequential(new DriveXDistance(-12, 0.325), 5);
     	
     }
