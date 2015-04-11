@@ -78,13 +78,15 @@ public class Auto_ThreeToteNoBin extends CommandGroup {
     	//addParallel(new SetIntakeSpeed(0.5), 2);
     	//intake second tote
     	addSequential(new EngageIntake(), 2);
-    	addSequential(new WaitForObjectInIntake()); // delay to allow the intake
     	addParallel(new SetIntakeSpeed(0.5), 2);
+    	addSequential(new WaitForObjectInIntake()); // delay to allow the intake
     	addSequential(new RotateXDistancePIDZZZ(90, 0.4), 1.6);
-    	addParallel(new DriveXDistance(16, 1), 4.2); //drive slow with stack
+    	addParallel(new DriveXDistance(16, 1), 4.2);
     	
     	//at auto zone, so lets lower stack
     	addSequential(new Sleep(), 0.3);
+    	addSequential(new StopIntakeWheels());
+    	
     	addSequential(new LiftPIDPosition(8, 1), 1.3); // lower 2tote stack onto 3rd tote
 //    	addSequential(new ZeroLift(),2);
 //    	addSequential(new ZeroLift(),2);
@@ -93,7 +95,7 @@ public class Auto_ThreeToteNoBin extends CommandGroup {
     	addSequential(new DisengageIntake(), 2);
     	addSequential(new ReleaseGripper(), 2);
     	addSequential(new Sleep(), 0.4);
-    	addSequential(new DriveXDistance(-2, 0.5), 2); //drive slow with statck
+    	addSequential(new DriveXDistance(-2, 0.5), 2); //drive away to clear the stack
     
     	//DONE
     }
