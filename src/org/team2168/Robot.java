@@ -7,8 +7,6 @@ import org.team2168.commands.auto.Auto_NoTote_DoNothing;
 import org.team2168.commands.auto.Auto_NoTote_DriveForward;
 import org.team2168.commands.auto.Auto_OneBin_DriveForward;
 import org.team2168.commands.auto.Auto_OneTote_Rotate90Push;
-import org.team2168.commands.auto.NEChamps.Auto_ThreeToteNoBin;
-import org.team2168.commands.auto.NEChamps.Auto_ThreeToteSecondBin;
 import org.team2168.commands.auto.Auto_ThreeToteRollingBinRide;
 import org.team2168.commands.auto.Auto_ThreeToteStackRollingBins;
 import org.team2168.commands.auto.Auto_ThreeToteThreeBin;
@@ -16,8 +14,11 @@ import org.team2168.commands.auto.Auto_ThreeToteThreeBinRollingRotate;
 import org.team2168.commands.auto.Auto_ThreeToteThreeBinRollingRotate2;
 import org.team2168.commands.auto.Auto_TwoToteStack;
 import org.team2168.commands.auto.NEChamps.Auto_ThreeToteFirstBin;
+import org.team2168.commands.auto.NEChamps.Auto_ThreeToteNoBin;
+import org.team2168.commands.auto.NEChamps.Auto_ThreeToteSecondBin;
 import org.team2168.subsystems.ARCB;
 import org.team2168.subsystems.BinRetainer;
+import org.team2168.subsystems.BinSlapper;
 import org.team2168.subsystems.Drivetrain;
 import org.team2168.subsystems.Gripper;
 import org.team2168.subsystems.Intake;
@@ -56,6 +57,7 @@ public class Robot extends IterativeRobot {
 	public static Pneumatics pneumatics;
 	public static ARCB arcb;
 	public static BinRetainer binRetainer;
+	public static BinSlapper binSlapper;
 
 	public static PowerDistribution pdp; // Power Monitor
 	ConsolePrinter printer; // SmartDash printer
@@ -113,6 +115,7 @@ public class Robot extends IterativeRobot {
 		gripper = Gripper.getInstance();
 		arcb = ARCB.getInstance();
 		binRetainer = BinRetainer.getInstance();
+		binSlapper = BinSlapper.getInstance();
 
 		pathPlanner();
 		autoSelectInit();

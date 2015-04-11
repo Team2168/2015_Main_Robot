@@ -25,7 +25,9 @@ public class RobotMap {
 	public final static int INTAKE_LEFT_MOTOR = 6;
 	public final static int INTAKE_RIGHT_MOTOR = 7;
 	public final static int LIFT_MOTOR = 8;
-	public final static int WINCH_MOTOR = 9;
+	public final static int BIN_SLAPPER_MOTOR = 9;
+	//Channels 10-19 are on MXP
+	public final static int WINCH_MOTOR = 19;
 
 	//PDP Channels/////////////////////////////////////////////////////////////
 	public final static int DRIVETRAIN_RIGHT_MOTOR_1_PDP = 2;
@@ -54,8 +56,8 @@ public class RobotMap {
 	//Relay Channels///////////////////////////////////////////////////////////
 	public final static int BIN_RETAINER_RELAY = 0;
 	public final static int ARCB_RELAY = 1;
-	
-	
+
+
 
 	//Digital IO Channels//////////////////////////////////////////////////////
 	//Channels 0-9 on RoboRio
@@ -184,6 +186,7 @@ public class RobotMap {
 	public final static boolean PRINT_SD_DEBUG_DATA = true;
 	public final static long SmartDashThreadPeriod = 100; //ms
 
+
 	/*************************************************************************
 	 *                            Electrical Parameters
 	 *************************************************************************/
@@ -235,8 +238,8 @@ public class RobotMap {
 	public static final double liftIDw = 0.05;
 	public static final double liftDDw = 0.02573;
 
-
 	public static final long liftPIDPeriod = 20; //100ms
+
 
 	/****************************************************************
 	 *                TCP Servers  (ONLY FOR DEBUGGING)             *
