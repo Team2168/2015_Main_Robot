@@ -70,14 +70,14 @@ public class OI {
 
 		operatorJoystick.ButtonRightBumper().whenPressed(new EngageIntake());
 		operatorJoystick.ButtonLeftBumper().whenPressed(new DisengageIntake());
-		operatorJoystick.ButtonB().whenPressed(new DisengageBinRetainer());
-		operatorJoystick.ButtonX().whenPressed(new EngageBinRetainer());
+		operatorJoystick.ButtonX().whenPressed(new DisengageBinRetainer());
+		operatorJoystick.ButtonB().whenPressed(new EngageBinRetainer());
 
 		operatorJoystick.ButtonRightTrigger().whenPressed(new OperatorIntakeSingleTote());
 		operatorJoystick.ButtonRightTrigger().whenReleased(new StopIntakeWheels());
 		operatorJoystick.ButtonLeftTrigger().whileHeld(new SetIntakeSpeed(-RobotMap.INTAKE_WHEEL_SPEED));
 		operatorJoystick.ButtonLeftTrigger().whenReleased(new StopIntakeWheels());
-		
+		operatorJoystick.ButtonA().whenPressed(new OpenAll());
 		
 		
 		//ButtonBox////////////////////////////////////////////////////////////////////////

@@ -21,12 +21,12 @@ public class EngageBinRetainer extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.binRetainer.retractBinRetainer();
+		Robot.binRetainer.engageBinRetainer();;
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return Robot.binRetainer.isRetracted();
+		return Robot.binRetainer.isExtended();
 	}
 
 	// Called once after isFinished returns true

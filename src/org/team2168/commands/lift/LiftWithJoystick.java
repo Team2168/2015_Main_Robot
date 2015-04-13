@@ -24,7 +24,7 @@ public class LiftWithJoystick extends Command {
 	protected void initialize() {
 	}
 
-	private static final double GAIN = 0.55;
+	private static final double GAIN = 0.65;
 	private static final double BIAS = 0.2;
 	
 	/**

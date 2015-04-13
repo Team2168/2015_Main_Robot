@@ -2,6 +2,7 @@ package org.team2168.commands.auto;
 
 import org.team2168.commands.Sleep;
 import org.team2168.commands.arcb.ARCBDeploy;
+import org.team2168.commands.drivetrain.DriveWithJoysticks;
 import org.team2168.commands.drivetrain.DriveXDistance;
 import org.team2168.commands.drivetrain.DriveXDistanceUntilObject;
 import org.team2168.commands.drivetrain.RotateAboutRightWheel;
@@ -15,6 +16,7 @@ import org.team2168.commands.intake.EngageIntake;
 import org.team2168.commands.intake.IntakeSingleTote;
 import org.team2168.commands.intake.IntakeSingleToteForAuto;
 import org.team2168.commands.intake.SetIntakeSpeed;
+import org.team2168.commands.intake.StopIntakeWheels;
 import org.team2168.commands.intake.WaitForObjectInIntake;
 import org.team2168.commands.lift.LiftOneTote;
 import org.team2168.commands.lift.ZeroLift;
@@ -57,13 +59,13 @@ public class Auto_ThreeToteStackRollingBins extends CommandGroup {
     	
     	//bin is out of way so drive to next tote faster
     	addParallel(new IntakeSingleToteForAuto(), 5);
-    	addSequential(new DriveXDistance(4.15, 0.6), 1.6); //drive fast to get tote // 
+    	addSequential(new DriveXDistanceUntilObject(4.15, 0.6), 1.6); //drive fast to get tote // 
     	
     	//total time is 5.3 seconds
     	
     	//aquired 2nd tote, so now we lift
     	addSequential(new WaitForObjectInIntake()); // if 2nd tote is not seen, auto will stop
-    	addSequential(new LiftPIDPosition(0, 1), 1.2); // lower 1st tote onto 2nd tote
+    	addSequential(new LiftPIDPosition(0, 1), 1.4); // lower 1st tote onto 2nd tote
     	addSequential(new ZeroLift(), 2);
     	addSequential(new ZeroLift(), 2);
     	addSequential(new DisengageIntake());
@@ -85,23 +87,23 @@ public class Auto_ThreeToteStackRollingBins extends CommandGroup {
     	//Acquired 3rd tote so just drive to auto zone
     	addSequential(new EngageIntake(),2);
     	addParallel(new SetIntakeSpeed(0.5),2);
-    	addSequential(new RotateAboutRightWheel(85, 0.6), 1.3);
-    	addParallel(new DriveXDistance(10, 1), 1.5); //drive fast with stack
-    	
+    	addSequential(new RotateXDistancePIDZZZ(90, 0.7), 1.6);
+    	addParallel(new DriveXDistance(16, 1), 4.2);
     	
     	//at auto zone, so lets lower stack
-    	addSequential(new LiftPIDPosition(0, 1), 1.2); // lower 2tote stack onto 3rd tote
-    	addSequential(new ZeroLift(),2);
-    	addSequential(new ZeroLift(),2);
+    	addSequential(new Sleep(), 0.3);
+    	addSequential(new StopIntakeWheels());
+    	
+    	addSequential(new LiftPIDPosition(8, 1), 1.3); // lower 2tote stack onto 3rd tote
+//    	addSequential(new ZeroLift(),2);
+//    	addSequential(new ZeroLift(),2);
     	
     	//release set
-    	addSequential(new DisengageIntake(),2);
-    	addSequential(new ReleaseGripper(),2);
-    	addSequential(new DriveXDistance(-1, 1),2); //drive slow with statck
+    	addSequential(new DisengageIntake(), 2);
+    	addSequential(new ReleaseGripper(), 2);
+    	addSequential(new Sleep(), 0.4);
+    	addSequential(new DriveXDistance(-2, 0.5), 2); //drive away to clear the stack
     
     	//DONE
-    	
-
-    	
     }
 }

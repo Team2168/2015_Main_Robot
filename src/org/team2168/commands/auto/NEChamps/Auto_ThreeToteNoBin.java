@@ -1,4 +1,4 @@
-package org.team2168.commands.auto.NEChamps;
+	package org.team2168.commands.auto.NEChamps;
 
 import org.team2168.commands.Sleep;
 import org.team2168.commands.drivetrain.DriveXDistance;
@@ -49,7 +49,7 @@ public class Auto_ThreeToteNoBin extends CommandGroup {
     	
     	//Drive to second tote while intaking
     	addParallel(new IntakeSingleTote(),5);
-    	addSequential(new DriveXDistance(7, 0.7), 2.5);
+    	addSequential(new DriveXDistance(7, 0.8), 2.5);
     	addSequential(new DriveXDistanceUntilObject(13, 0.4), 2.5);
     	
     	//intake second tote
@@ -63,14 +63,14 @@ public class Auto_ThreeToteNoBin extends CommandGroup {
     	
     	//lift 2nd tote
     	addSequential(new DisengageIntake(), 2); //let go of tote before lifting
-    	addSequential(new LiftPIDPosition(16, 1), 2); // raise 2nd tote above next tote 
+    	addSequential(new LiftPIDPosition(16, 1), 1.1); // raise 2nd tote above next tote 
     	addSequential(new WaitForIntakeToClearObject()); //wait for object to clear sensor
     	
     	
     	//bin is out of way so drive to next tote while intaking
     	addParallel(new IntakeSingleTote(), 5);
     	//addSequential(new DriveXDistance(10, 0.4), 1.7);
-    	addSequential(new DriveXDistance(7, 0.7), 2.5);
+    	addSequential(new DriveXDistance(7, 0.8), 2.5);
     	addSequential(new DriveXDistanceUntilObject(13, 0.4), 2.5);
     	
     	
@@ -80,7 +80,7 @@ public class Auto_ThreeToteNoBin extends CommandGroup {
     	addSequential(new EngageIntake(), 2);
     	addParallel(new SetIntakeSpeed(0.5), 2);
     	addSequential(new WaitForObjectInIntake()); // delay to allow the intake
-    	addSequential(new RotateXDistancePIDZZZ(90, 0.4), 1.6);
+    	addSequential(new RotateXDistancePIDZZZ(90, 0.7), 1.6);
     	addParallel(new DriveXDistance(16, 1), 4.2);
     	
     	//at auto zone, so lets lower stack
@@ -94,7 +94,7 @@ public class Auto_ThreeToteNoBin extends CommandGroup {
     	//release set
     	addSequential(new DisengageIntake(), 2);
     	addSequential(new ReleaseGripper(), 2);
-    	addSequential(new Sleep(), 0.4);
+    	addSequential(new Sleep(), 0.1);
     	addSequential(new DriveXDistance(-2, 0.5), 2); //drive away to clear the stack
     
     	//DONE

@@ -1,6 +1,7 @@
 package org.team2168.commands;
 
 import org.team2168.commands.arcb.ARCBRetract;
+import org.team2168.commands.binRetainer.DisengageBinRetainer;
 import org.team2168.commands.drivetrain.DriveXDistance;
 import org.team2168.commands.drivetrain.RotateAboutRightWheel;
 import org.team2168.commands.gripper.ReleaseGripper;
@@ -35,7 +36,7 @@ public class OpenAll extends CommandGroup {
         // arm.
     	
     	addParallel(new ReleaseGripper());
-    	addParallel(new ARCBRetract());
+    	addParallel(new DisengageBinRetainer());
     	addParallel(new DisengageIntake());
     	//DONE
     	

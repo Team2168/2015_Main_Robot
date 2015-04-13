@@ -54,7 +54,7 @@ public class Auto_ThreeToteFirstBin extends CommandGroup {
     	
     	//bin is out of way so drive to next tote faster and lower lift in parallel
     	addParallel(new IntakeSingleTote());
-    	addParallel(new LiftPIDPosition(18, 1), 1.5);
+    	addParallel(new LiftPIDPosition(16, 1), 1.1); // raise 2nd tote above next tote
     	addParallel(new DriveXDistance(3, 0.7, 0.5), 2);
     	addSequential(new WaitForIntakeToClearObject());
     	addSequential(new DriveXDistanceUntilObject(13, 0.45), 2.5);
@@ -69,19 +69,20 @@ public class Auto_ThreeToteFirstBin extends CommandGroup {
     	addSequential(new ZeroLift(), 2);
     	addSequential(new ZeroLift(), 2);
     	addSequential(new DisengageIntake());
-    	addSequential(new LiftPIDPosition(34, 1), 1.5); //raise 2nd tote above garbage can
+    	addSequential(new LiftPIDPosition(16, 1), 1.3); //raise 2nd tote above garbage can
 
     	//assume 2nd bin is already removed
     	//bin is out of way so drive to next tote faster
     	addSequential(new WaitForIntakeToClearObject());    	
     	addParallel(new IntakeSingleTote(), 5);
-    	addSequential(new DriveXDistanceUntilObject(13, 0.45), 2.5);
+    	addSequential(new DriveXDistance(7, 0.7), 2.5);
+    	addSequential(new DriveXDistanceUntilObject(13, 0.4), 2.5);
 
     	//Acquired 3rd tote so just drive to auto zone
     	addSequential(new EngageIntake(), 2);
     	addParallel(new SetIntakeSpeed(0.5), 2);
     	addSequential(new WaitForObjectInIntake()); // delay to allow the intake
-    	addSequential(new RotateAboutRightWheel(90, 0.4), 1.6);
+    	addSequential(new RotateAboutRightWheel(90, 1), 1);
     	addParallel(new DriveXDistance(16, 1), 4.2);
 
     	//at auto zone, so lets lower stack
@@ -95,7 +96,7 @@ public class Auto_ThreeToteFirstBin extends CommandGroup {
     	//release set
     	addSequential(new DisengageIntake(), 2);
     	addSequential(new ReleaseGripper(), 2);
-    	addSequential(new Sleep(), 0.4);
+    	addSequential(new Sleep(), 0.1);
     	addSequential(new DriveXDistance(-2, 0.5), 2); //drive away to clear the stack
     }
 }

@@ -178,6 +178,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		matchStarted = true;
 		drivetrain.stopGyroCalibrating();
+		drivetrain.gyroSPI.reset();
 
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null) {
