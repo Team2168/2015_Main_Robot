@@ -62,7 +62,7 @@ return Math.atan2(-X, Math.sqrt(Y*Y + Z*Z)) * 180/Math.PI;
 	@Override
 	public double getPos() {
 		// TODO Auto-generated method stub
-		return leftEncoder.getPos() + rightEncoder.getPos() / 2;
+		return (leftEncoder.getPos() + rightEncoder.getPos()) / 2;
 	}
 	
 }
