@@ -1,6 +1,10 @@
 package org.team2168;
 
+import org.team2168.commands.AutoIntakeFromFloor;
+import org.team2168.commands.IntakeCanHorizontal;
+import org.team2168.commands.IntakeCanVertical;
 import org.team2168.commands.OpenAll;
+import org.team2168.commands.TransportConfig;
 import org.team2168.commands.arcb.ARCBDeploy;
 import org.team2168.commands.arcb.ARCBDeployLeft;
 import org.team2168.commands.arcb.ARCBDeployRight;
@@ -81,19 +85,28 @@ public class OI {
 		
 		
 		//ButtonBox////////////////////////////////////////////////////////////////////////
-		operatorButtonBox.Button1().whenPressed(new EngageGripper());
-		operatorButtonBox.Button2().whenPressed(new ReleaseGripper());
+		operatorButtonBox.Button1().whenPressed(new EngageGripper()); //done
+		operatorButtonBox.Button2().whenPressed(new ReleaseGripper()); //done
 		
-		operatorButtonBox.Button3().whenPressed(new ARCBDeploy());
-		operatorButtonBox.Button4().whenPressed(new ARCBRetract());
+		operatorButtonBox.Button3().whenPressed(new EngageBinRetainer()); //done
+		operatorButtonBox.Button4().whenPressed(new DisengageBinRetainer()); //done
 
-		operatorButtonBox.Button5().whenPressed(new EngageIntake());
+		operatorButtonBox.Button5().whenPressed(new EngageIntake()); 
 		operatorButtonBox.Button7().whenPressed(new DisengageIntake());
 		
 		operatorButtonBox.Button6().whenPressed(new OperatorIntakeSingleTote());
 		operatorButtonBox.Button6().whenReleased(new StopIntakeWheels());
 		operatorButtonBox.Button8().whileHeld(new SetIntakeSpeed(-RobotMap.INTAKE_WHEEL_SPEED));
 		operatorButtonBox.Button8().whenReleased(new StopIntakeWheels());
+		
+		operatorButtonBox.Button11().whileHeld(new SetIntakeSpeed(RobotMap.INTAKE_WHEEL_SPEED));
+		operatorButtonBox.Button11().whenReleased(new StopIntakeWheels());
+		
+		operatorButtonBox.Button12().whenPressed(new TransportConfig());
+		operatorButtonBox.Button13().whenPressed(new IntakeCanHorizontal());
+		operatorButtonBox.Button14().whenPressed(new IntakeCanVertical());
+		operatorButtonBox.Button15().whenPressed(new AutoIntakeFromFloor());
+		
 		
 		operatorButtonBox.Button9().whenReleased(new LiftOneTote());
 		operatorButtonBox.Button10().whenReleased(new OpenAll());
