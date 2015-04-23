@@ -17,6 +17,7 @@ import org.team2168.commands.intake.IntakeSingleTote;
 import org.team2168.commands.intake.IntakeSingleToteForAuto;
 import org.team2168.commands.intake.SetIntakeSpeed;
 import org.team2168.commands.intake.StopIntakeWheels;
+import org.team2168.commands.intake.WaitForIntakeToClearObject;
 import org.team2168.commands.intake.WaitForObjectInIntake;
 import org.team2168.commands.lift.LiftOneTote;
 import org.team2168.commands.lift.ZeroLift;
@@ -38,7 +39,7 @@ public class Auto_ThreeToteStackRollingBins extends CommandGroup {
     	addSequential(new ZeroLift(),2);
     	addSequential(new ZeroLift(),2);
     	addSequential(new EngageGripper(),2);
-    	//addSequential(new ARCBDeploy(), 2);
+
     	
     	//lift 1st tote above can height
     	addSequential(new DisengageIntake(),2);
@@ -54,7 +55,7 @@ public class Auto_ThreeToteStackRollingBins extends CommandGroup {
     	
     	addSequential(new DisengageIntake());
     	addParallel(new DriveIntakeWheelIndependt(-1, 1)); //drive bin to right
-    	addSequential(new Sleep(),0.3);
+    	addSequential(new WaitForIntakeToClearObject());
     	//total time is 3.3 seconds
     	
     	//bin is out of way so drive to next tote faster
@@ -76,12 +77,13 @@ public class Auto_ThreeToteStackRollingBins extends CommandGroup {
     	addSequential(new EngageIntake());
     	addParallel(new DriveIntakeWheelIndependt(-1, 1)); //drive been to right
     	addSequential(new DriveXDistance(7, 0.29),3.0); //drive slow to move bin
+    	addSequential(new WaitForIntakeToClearObject());
     	//addSequential(new DriveXDistance(3, 0.3),4); //drive slow to move bin
     	
    
     	//bin is out of way so drive to next tote faster
     	addParallel(new IntakeSingleTote(),5);
-    	addSequential(new DriveXDistanceUntilObject(5.45, 0.6),2.5);
+    	addSequential(new DriveXDistanceUntilObject(5, 0.6),2.5);
     	
     	
     	//Acquired 3rd tote so just drive to auto zone

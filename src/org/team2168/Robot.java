@@ -7,6 +7,7 @@ import org.team2168.commands.auto.Auto_NoTote_DoNothing;
 import org.team2168.commands.auto.Auto_NoTote_DriveForward;
 import org.team2168.commands.auto.Auto_OneBin_DriveForward;
 import org.team2168.commands.auto.Auto_OneTote_Rotate90Push;
+import org.team2168.commands.auto.NEChamps.Auto_RCCB;
 import org.team2168.commands.auto.NEChamps.Auto_ThreeToteNoBin;
 import org.team2168.commands.auto.NEChamps.Auto_ThreeToteSecondBin;
 import org.team2168.commands.auto.Auto_ThreeToteRollingBinRide;
@@ -276,20 +277,13 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("No Tote _ Do Nothing", new Auto_NoTote_DoNothing());
 		autoChooser.addObject("Drive Forward" , new Auto_NoTote_DriveForward());
 		autoChooser.addDefault("One Tote _ Rotate Push Fwd", new Auto_OneTote_Rotate90Push());
-		//autoChooser.addObject("Three Tote", new Auto_ThreeToteStack());
 		autoChooser.addObject("Two Tote", new Auto_TwoToteStack());
-		autoChooser.addObject("Three Tote One Bin", new Auto_ThreeToteFirstBin());
-		autoChooser.addObject("Three Tote Three Bin", new Auto_ThreeToteThreeBin());
-		//autoChooser.addObject("Three Tote Three Bin Inaking", new Auto_ThreeToteStackIntakingBins());
 		autoChooser.addObject("Three Tote Three Bin Rolling", new Auto_ThreeToteStackRollingBins());
 		autoChooser.addObject("Three Tote No Bins", new Auto_ThreeToteNoBin());
-		autoChooser.addObject("Three Tote Rolling Bin Rotate", new Auto_ThreeToteThreeBinRollingRotate());
-		autoChooser.addObject("Three Tote Rolling Bin Rotate - V2", new Auto_ThreeToteThreeBinRollingRotate2());
-		//autoChooser.addObject("Three Tote THree Bin Knocking", new Auto_ThreeToteStackKnockingBin());
-		autoChooser.addObject("Three Tote Rolling Bin RIDE", new Auto_ThreeToteRollingBinRide());
 		autoChooser.addObject("One Bin Rotate", new Auto_OneBin_DriveForward());
 		autoChooser.addObject("Three Tote First Bin Rotate", new Auto_ThreeToteFirstBin());
 		autoChooser.addObject("Three Tote Second Bin Rotate", new Auto_ThreeToteSecondBin());
+		autoChooser.addObject("RCCB", new Auto_RCCB());
 	}
 
 	/**
