@@ -21,6 +21,7 @@ import org.team2168.commands.gripper.ReleaseGripper;
 import org.team2168.commands.intake.DisengageIntake;
 import org.team2168.commands.intake.EngageIntake;
 import org.team2168.commands.intake.IntakeSingleTote;
+import org.team2168.commands.intake.IntakeSingleToteForAuto;
 import org.team2168.commands.intake.OpenWhenSensed;
 import org.team2168.commands.intake.OperatorIntakeSingleTote;
 import org.team2168.commands.intake.SetIntakeSpeed;
@@ -79,7 +80,7 @@ public class OI {
 
 		operatorJoystick.ButtonRightTrigger().whenPressed(new OperatorIntakeSingleTote());
 		operatorJoystick.ButtonRightTrigger().whenReleased(new StopIntakeWheels());
-		operatorJoystick.ButtonLeftTrigger().whileHeld(new SetIntakeSpeed(-RobotMap.INTAKE_WHEEL_SPEED));
+		operatorJoystick.ButtonLeftTrigger().whileHeld(new IntakeSingleToteForAuto());
 		operatorJoystick.ButtonLeftTrigger().whenReleased(new StopIntakeWheels());
 		operatorJoystick.ButtonA().whenPressed(new OpenAll());
 		

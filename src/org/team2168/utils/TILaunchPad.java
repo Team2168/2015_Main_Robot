@@ -20,8 +20,18 @@ public class TILaunchPad extends Joystick {
 	public static final int ANALOG_7 = 7;
 	public static final int ANALOG_8 = 8;
 	
+	// Gamepad axis ports
+	public static final int DIGITAL_1 = 1;
+	public static final int DIGITAL_2 = 2;
+	public static final int DIGITAL_3 = 3;
+	public static final int DIGITAL_4 = 4;
+	public static final int DIGITAL_5 = 5;
+	public static final int DIGITAL_6 = 6;
+	public static final int DIGITAL_7 = 7;
+	public static final int DIGITAL_8 = 8;
+	
 
-	// Gamepad buttons
+	// Gamepad buttonsopp[
 	public static final int BUTTON_1 = 1;
 	public static final int BUTTON_2 = 2;
 	public static final int BUTTON_3 = 3;

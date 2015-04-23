@@ -24,7 +24,7 @@ public class WaitForDrivePIDToFinish extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return Robot.drivetrain.driveTrainPosController.isFinished();
+    	return Robot.drivetrain.driveTrainPosController.isFinished() || !Robot.drivetrain.driveTrainPosController.isEnabled();
     }
 
     // Called once after isFinished returns true
