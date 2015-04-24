@@ -84,8 +84,8 @@ public class OI {
 		operatorJoystick.ButtonLeftBumper().whenPressed(new DisengageIntake());
 		operatorJoystick.ButtonX().whenPressed(new DisengageBinRetainer());
 		operatorJoystick.ButtonB().whenPressed(new EngageBinRetainer());
-		operatorJoystick.ButtonA().whenPressed(new DeployRCCB());
-		operatorJoystick.ButtonY().whenPressed(new RetractRCCB());
+		operatorJoystick.ButtonStart().whenPressed(new DeployRCCB());
+		operatorJoystick.ButtonBack().whenPressed(new RetractRCCB());
 
 		operatorJoystick.ButtonRightTrigger().whenPressed(new OperatorIntakeSingleTote());
 		operatorJoystick.ButtonRightTrigger().whenReleased(new StopIntakeWheels());
