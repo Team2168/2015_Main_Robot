@@ -92,7 +92,7 @@ public class OI {
 		operatorJoystick.ButtonLeftTrigger().whileHeld(new IntakeSingleToteForAuto());
 		operatorJoystick.ButtonLeftTrigger().whenReleased(new StopIntakeWheels());
 		operatorJoystick.ButtonA().whenPressed(new OpenAll());
-	
+		operatorJoystick.ButtonY().whenPressed(new IndexToteLandfill());
 		
 		//ButtonBox////////////////////////////////////////////////////////////////////////
 		

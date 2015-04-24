@@ -28,14 +28,14 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *tote stack atonomously. This autonomous assumes the robot is
  *placed holding 1 tote, and that the 2nd bin is removed.. This only removes the First Bin
  */
-public class Auto_RCCB_Slow extends CommandGroup {
+public class Auto_RCCB extends CommandGroup {
     
-    public  Auto_RCCB_Slow() { 
+    public  Auto_RCCB() { 
     	
-    	addSequential(new DriveXDistance(-2.5, 1, 0.2), 2); //hight setpoint for full speed drive
-    	addSequential(new Sleep(),0.3);
+    	addParallel(new DriveXDistance(-8, 1, 0.2), 0.2); //hight setpoint for full speed drive
+    	addSequential(new Sleep(),0.1);
     	addSequential(new DeployRCCB());
-    	addSequential(new Sleep(), 0.5);
+    	addSequential(new Sleep(), 0.1);
     	addSequential(new DriveXDistance(8, 1,0.5),2);
     
     	
