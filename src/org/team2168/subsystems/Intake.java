@@ -1,6 +1,7 @@
 package org.team2168.subsystems;
 
 import org.team2168.OI;
+import org.team2168.Robot;
 import org.team2168.RobotMap;
 import org.team2168.commands.intake.IntakeOrientWithJoystick;
 import org.team2168.utils.Util;
@@ -138,11 +139,7 @@ public class Intake extends Subsystem {
 	 * @return true when an object is in the intake.
 	 */
 	public boolean isTotePresent() {
-		if (leftLimitSwitch.get() || rightLimitSwitch.get()) {
-			return true;
-		}else{
-			return false;
-		}
+		return Robot.intake.getAveragedRawToteDistance() > RobotMap.INTAKE_TOTE_STOP_VOLTAGE;
 	}
 
 	/**

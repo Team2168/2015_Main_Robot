@@ -1,8 +1,4 @@
 package org.team2168;
-
-import org.team2168.commands.AutoIntakeFromFloor;
-import org.team2168.commands.IntakeCanHorizontal;
-import org.team2168.commands.IntakeCanVertical;
 import org.team2168.commands.OpenAll;
 import org.team2168.commands.TransportConfig;
 import org.team2168.commands.arcb.ARCBDeploy;
@@ -13,6 +9,15 @@ import org.team2168.commands.arcb.ARCBRetractLeft;
 import org.team2168.commands.arcb.ARCBRetractRight;
 import org.team2168.commands.binRetainer.DisengageBinRetainer;
 import org.team2168.commands.binRetainer.EngageBinRetainer;
+import org.team2168.commands.buttonBox.BinIndex;
+import org.team2168.commands.buttonBox.BinIntakeVertical;
+import org.team2168.commands.buttonBox.IndexToteHP;
+import org.team2168.commands.buttonBox.IndexToteLandfill;
+import org.team2168.commands.buttonBox.IntakeToteHP;
+import org.team2168.commands.buttonBox.IntakeToteLandfill;
+import org.team2168.commands.buttonBox.ResetCanClaw;
+import org.team2168.commands.buttonBox.Score;
+import org.team2168.commands.buttonBox.ToggleRCCBState;
 import org.team2168.commands.calibration.TestAllMotors;
 import org.team2168.commands.drivetrain.DriveXDistance;
 import org.team2168.commands.drivetrain.RotateXDistancePIDZZZ;
@@ -86,32 +91,46 @@ public class OI {
 	
 		
 		//ButtonBox////////////////////////////////////////////////////////////////////////
+		
+		// Manual Controls
 		operatorButtonBox.Button1().whenPressed(new EngageGripper()); //done
 		operatorButtonBox.Button2().whenPressed(new ReleaseGripper()); //done
-		
 		operatorButtonBox.Button3().whenPressed(new EngageBinRetainer()); //done
 		operatorButtonBox.Button4().whenPressed(new DisengageBinRetainer()); //done
-
 		operatorButtonBox.Button5().whenPressed(new EngageIntake()); 
-		operatorButtonBox.Button7().whenPressed(new DisengageIntake());
+		operatorButtonBox.Button16().whenPressed(new DisengageIntake());
 		
-		operatorButtonBox.Button6().whenPressed(new OperatorIntakeSingleTote());
-		operatorButtonBox.Button6().whenReleased(new StopIntakeWheels());
-		operatorButtonBox.Button8().whileHeld(new SetIntakeSpeed(-RobotMap.INTAKE_WHEEL_SPEED));
+		// Automatic Controls\
+		operatorButtonBox.Button6().whenPressed(new BinIndex());
+		
+		operatorButtonBox.Button8().whenPressed(new BinIntakeVertical());
 		operatorButtonBox.Button8().whenReleased(new StopIntakeWheels());
 		
-		operatorButtonBox.Button11().whileHeld(new SetIntakeSpeed(RobotMap.INTAKE_WHEEL_SPEED));
+		operatorButtonBox.Button9().whenPressed(new IndexToteHP());
+		operatorButtonBox.Button10().whenPressed(new IndexToteLandfill());
+		
+		operatorButtonBox.Button11().whenPressed(new IntakeToteHP());
 		operatorButtonBox.Button11().whenReleased(new StopIntakeWheels());
 		
-		operatorButtonBox.Button12().whenPressed(new TransportConfig());
-		operatorButtonBox.Button13().whenPressed(new IntakeCanHorizontal());
-		operatorButtonBox.Button14().whenPressed(new IntakeCanVertical());
-		operatorButtonBox.Button15().whenPressed(new AutoIntakeFromFloor());
+		operatorButtonBox.Button12().whenPressed(new IntakeToteLandfill());
+		operatorButtonBox.Button12().whenReleased(new StopIntakeWheels());
+		
+		operatorButtonBox.Button13().whenPressed(new ResetCanClaw());
+		operatorButtonBox.Button14().whenPressed(new Score());
+		operatorButtonBox.Button15().whenPressed(new ToggleRCCBState());
+		
+		operatorButtonBox.ButtonAnalog1().whenPressed(new SetIntakeSpeed(RobotMap.INTAKE_WHEEL_SPEED));
+		operatorButtonBox.ButtonAnalog2().whenPressed(new SetIntakeSpeed(-RobotMap.INTAKE_WHEEL_SPEED));
+		operatorButtonBox.ButtonAnalog3().whenPressed(new OpenAll());
 		
 		
-		operatorButtonBox.Button9().whenReleased(new LiftOneTote());
-		operatorButtonBox.Button10().whenReleased(new OpenAll());
-
+		
+		
+		
+		
+		
+		
+		
 		// Open Intake LED Input 1
 		// Close Intake LED Input 2
 		
