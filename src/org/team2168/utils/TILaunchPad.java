@@ -1,5 +1,6 @@
 package org.team2168.utils;
 
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -373,6 +374,8 @@ public class TILaunchPad extends Joystick {
 	}
 	
 	
+	
+	
 	/**
 	 * Returns an object of Button 15.
 	 */
@@ -452,6 +455,33 @@ public class TILaunchPad extends Joystick {
 	public JoystickAnalogButton ButtonAnalog8() {
 		return new JoystickAnalogButton(this, ANALOG_8, 0.5);
 	}
-
+	
+	public void setDigitalOutput1(boolean value) {
+		this.setOutput(DIGITAL_1, value);
+	}
+	
+	public void setDigitalOutput2(boolean value) {
+		this.setOutput(DIGITAL_2, value);
+	}
+	
+	public void setDigitalOutput3(boolean value) {
+		this.setOutput(DIGITAL_3, value);
+	}
+	
+	public void setDigitalOutput4(boolean value) {
+		this.setOutput(DIGITAL_4, value);
+	}
+	
+	public void setDigitalOutput5(boolean value) {
+		this.setOutput(DIGITAL_5, value);
+	}
+	
+	public void setDigitalOutput6(boolean value) {
+		this.setOutput(DIGITAL_6, value);
+	}
+	
+	public void setDigitalOutput7(boolean value) {
+		this.setOutput(DIGITAL_7, value);
+	}
 	
 }

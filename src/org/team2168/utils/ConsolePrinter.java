@@ -174,6 +174,23 @@ public class ConsolePrinter {
 			SmartDashboard.putBoolean("right lift over current", LiftPIDPosition.rightMotorOverCurrent());
 			SmartDashboard.putBoolean("lift stalled", LiftPIDPosition.liftStalled());
 			
+			// Open Intake LED Input 1
+			// Close Intake LED Input 2
+			
+			// Gripper Open LED Input 3
+			// Gripper Close LED Input 4
+			
+			// Open Retainer LED Input 5
+			// Close Retainer LED Input 6
+			
+			OI.operatorButtonBox.setDigitalOutput1(!Robot.intake.isIntakeEngaged());
+			OI.operatorButtonBox.setDigitalOutput2(!Robot.intake.isIntakeDisengaged());
+			OI.operatorButtonBox.setDigitalOutput3(!Robot.gripper.isGripperEngaged());
+			OI.operatorButtonBox.setDigitalOutput4(!Robot.gripper.isGripperDisengaged());
+			OI.operatorButtonBox.setDigitalOutput5(!Robot.binRetainer.isExtended());
+			OI.operatorButtonBox.setDigitalOutput6(!Robot.binRetainer.isRetracted());
+			
+			
 			//file log
 			log.println(Timer.getFPGATimestamp() + "\t" +
 					System.currentTimeMillis() + "\t" +

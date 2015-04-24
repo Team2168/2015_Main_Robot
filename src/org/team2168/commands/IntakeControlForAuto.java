@@ -28,9 +28,9 @@ public class IntakeControlForAuto extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	addSequential(new DisengageIntake());
-    	addSequential(new Sleep(), 2);
     	addSequential(new EngageIntake());
+    	addSequential(new Sleep(), 2);
+    	addSequential(new DisengageIntake());
     	
     }
 }

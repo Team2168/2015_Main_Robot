@@ -83,7 +83,7 @@ public class OI {
 		operatorJoystick.ButtonLeftTrigger().whileHeld(new IntakeSingleToteForAuto());
 		operatorJoystick.ButtonLeftTrigger().whenReleased(new StopIntakeWheels());
 		operatorJoystick.ButtonA().whenPressed(new OpenAll());
-		
+	
 		
 		//ButtonBox////////////////////////////////////////////////////////////////////////
 		operatorButtonBox.Button1().whenPressed(new EngageGripper()); //done
@@ -112,6 +112,15 @@ public class OI {
 		operatorButtonBox.Button9().whenReleased(new LiftOneTote());
 		operatorButtonBox.Button10().whenReleased(new OpenAll());
 
+		// Open Intake LED Input 1
+		// Close Intake LED Input 2
+		
+		// Gripper Open In Input 3
+		// Gripper Close Out Input 4
+		
+		// Open Retainer LED Input 5
+		// Close Retainer LED Input 6
+		
 		//TEST CONTROLLER BUTTON MAP///////////////////////////////////////////////
 		pnuematicTestJoystick.ButtonA().whenPressed(new EngageGripper());
 		pnuematicTestJoystick.ButtonB().whenPressed(new ReleaseGripper());
