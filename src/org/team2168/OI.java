@@ -38,6 +38,8 @@ import org.team2168.commands.lift.LiftWithJoystickUNSAFE;
 import org.team2168.commands.lift.ZeroLift;
 import org.team2168.commands.lift.PIDCommands.LiftPIDPause;
 import org.team2168.commands.lift.PIDCommands.LiftPIDPosition;
+import org.team2168.commands.rccb.DeployRCCB;
+import org.team2168.commands.rccb.RetractRCCB;
 import org.team2168.utils.F310;
 import org.team2168.utils.TILaunchPad;
 
@@ -82,6 +84,8 @@ public class OI {
 		operatorJoystick.ButtonLeftBumper().whenPressed(new DisengageIntake());
 		operatorJoystick.ButtonX().whenPressed(new DisengageBinRetainer());
 		operatorJoystick.ButtonB().whenPressed(new EngageBinRetainer());
+		operatorJoystick.ButtonA().whenPressed(new DeployRCCB());
+		operatorJoystick.ButtonY().whenPressed(new RetractRCCB());
 
 		operatorJoystick.ButtonRightTrigger().whenPressed(new OperatorIntakeSingleTote());
 		operatorJoystick.ButtonRightTrigger().whenReleased(new StopIntakeWheels());

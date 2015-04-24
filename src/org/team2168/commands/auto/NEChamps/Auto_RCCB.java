@@ -19,6 +19,7 @@ import org.team2168.commands.intake.WaitForObjectInIntake;
 import org.team2168.commands.lift.LiftOneTote;
 import org.team2168.commands.lift.ZeroLift;
 import org.team2168.commands.lift.PIDCommands.LiftPIDPosition;
+import org.team2168.commands.rccb.DeployRCCB;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -31,8 +32,11 @@ public class Auto_RCCB extends CommandGroup {
     
     public  Auto_RCCB() { 
     	
-    	addSequential(new DriveXDistance(-1, 1, 0.2), 2); //drive slow with statck
-    	addSequential(new DriveXDistance(12, 1,0.5),2);
+    	addParallel(new DriveXDistance(-8, 1, 0.2), 0.2); //hight setpoint for full speed drive
+    	addSequential(new Sleep(),0.1);
+    	addSequential(new DeployRCCB());
+    	addSequential(new Sleep(), 0.1);
+    	addSequential(new DriveXDistance(8, 1,0.5),2);
     
     	
 
