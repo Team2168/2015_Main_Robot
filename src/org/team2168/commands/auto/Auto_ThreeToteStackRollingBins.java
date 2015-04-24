@@ -1,5 +1,6 @@
 package org.team2168.commands.auto;
 
+import org.team2168.commands.IntakeControlForAuto;
 import org.team2168.commands.Sleep;
 import org.team2168.commands.arcb.ARCBDeploy;
 import org.team2168.commands.drivetrain.DriveWithJoysticks;
@@ -50,12 +51,12 @@ public class Auto_ThreeToteStackRollingBins extends CommandGroup {
     	//total time is 1.8 seconds
     	
     	//Roll 1st bin out of the way towards right using intake wheels
-    	addSequential(new EngageIntake());
+    	addParallel(new IntakeControlForAuto());
     	addParallel(new DriveIntakeWheelIndependt(-1, 1)); //drive bin to right
     	addParallel(new DriveXDistance(4.6, 0.29), 3); //drive slow to move bin
     	//addSequential(new Sleep(), 2); //do nothing while driving
     	//addSequential(new DisengageIntake());
-    	addSequential(new WaitForDrivePIDToFinish());
+    	//addSequential(new WaitForDrivePIDToFinish());
     	addParallel(new DriveIntakeWheelIndependt(-1, 1)); //drive bin to right
     	addSequential(new WaitForIntakeToClearObject());
     	//total time is 3.3 seconds
@@ -75,7 +76,7 @@ public class Auto_ThreeToteStackRollingBins extends CommandGroup {
     	
     	
     	//Roll 2nd bin out of the way towards right
-    	addSequential(new EngageIntake());
+    	addParallel(new IntakeControlForAuto());
     	addParallel(new DriveIntakeWheelIndependt(-1, 1)); //drive been to right
     	addSequential(new DriveXDistance(4.6, 0.29), 3); //drive slow to move bin
 //    	addSequential(new Sleep(), 2); //do nothing while driving
