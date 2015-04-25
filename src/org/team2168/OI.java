@@ -1,5 +1,6 @@
 package org.team2168;
 import org.team2168.commands.OpenAll;
+import org.team2168.commands.StopAndOpenIntake;
 import org.team2168.commands.TransportConfig;
 import org.team2168.commands.arcb.ARCBDeploy;
 import org.team2168.commands.arcb.ARCBDeployLeft;
@@ -27,6 +28,7 @@ import org.team2168.commands.intake.DisengageIntake;
 import org.team2168.commands.intake.EngageIntake;
 import org.team2168.commands.intake.IntakeSingleTote;
 import org.team2168.commands.intake.IntakeSingleToteForAuto;
+import org.team2168.commands.intake.IntakeSingleToteHP;
 import org.team2168.commands.intake.OpenWhenSensed;
 import org.team2168.commands.intake.OperatorIntakeSingleTote;
 import org.team2168.commands.intake.SetIntakeSpeed;
@@ -87,12 +89,16 @@ public class OI {
 		operatorJoystick.ButtonStart().whenPressed(new DeployRCCB());
 		operatorJoystick.ButtonBack().whenPressed(new RetractRCCB());
 
-		operatorJoystick.ButtonRightTrigger().whenPressed(new OperatorIntakeSingleTote());
-		operatorJoystick.ButtonRightTrigger().whenReleased(new StopIntakeWheels());
-		operatorJoystick.ButtonLeftTrigger().whileHeld(new IntakeSingleToteForAuto());
+		//operatorJoystick.ButtonRightTrigger().whenPressed(new OperatorIntakeSingleTote());
+		operatorJoystick.ButtonRightTrigger().whenPressed(new IntakeSingleToteHP());
+		operatorJoystick.ButtonRightTrigger().whenReleased(new StopAndOpenIntake());
+		
+		//operatorJoystick.ButtonLeftTrigger().whileHeld(new IntakeSingleToteForAuto());
+		operatorJoystick.ButtonLeftTrigger().whenPressed(new IntakeToteLandfill());
 		operatorJoystick.ButtonLeftTrigger().whenReleased(new StopIntakeWheels());
+		
 		operatorJoystick.ButtonA().whenPressed(new OpenAll());
-		operatorJoystick.ButtonY().whenPressed(new IndexToteLandfill());
+		operatorJoystick.ButtonY().whenPressed(new IndexToteHP());
 		
 		//ButtonBox////////////////////////////////////////////////////////////////////////
 		
