@@ -8,6 +8,7 @@ import org.team2168.commands.auto.Auto_NoTote_DriveForward;
 import org.team2168.commands.auto.Auto_OneBin_DriveForward;
 import org.team2168.commands.auto.Auto_OneTote_Rotate90Push;
 import org.team2168.commands.auto.NEChamps.Auto_RCCB;
+import org.team2168.commands.auto.NEChamps.Auto_RCCB_Fast;
 import org.team2168.commands.auto.NEChamps.Auto_RCCB_Slow;
 import org.team2168.commands.auto.NEChamps.Auto_ThreeToteNoBin;
 import org.team2168.commands.auto.NEChamps.Auto_ThreeToteSecondBin;
@@ -288,6 +289,7 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("Three Tote First Bin Rotate", new Auto_ThreeToteFirstBin());
 		autoChooser.addObject("Three Tote Second Bin Rotate", new Auto_ThreeToteSecondBin());
 		autoChooser.addObject("RCCB Slow", new Auto_RCCB_Slow());
+		autoChooser.addObject("RCCB Fast", new Auto_RCCB_Fast());
 	}
 
 	/**
