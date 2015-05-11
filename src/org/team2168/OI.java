@@ -90,8 +90,8 @@ public class OI {
 		operatorJoystick.ButtonBack().whenPressed(new RetractRCCB());
 
 		//operatorJoystick.ButtonRightTrigger().whenPressed(new OperatorIntakeSingleTote());
-		operatorJoystick.ButtonRightTrigger().whenPressed(new IntakeSingleToteHP());
-		operatorJoystick.ButtonRightTrigger().whenReleased(new StopAndOpenIntake());
+		operatorJoystick.ButtonRightTrigger().whileHeld(new IntakeSingleToteHP());
+		operatorJoystick.ButtonRightTrigger().whenReleased(new StopIntakeWheels());
 		
 		//operatorJoystick.ButtonLeftTrigger().whileHeld(new IntakeSingleToteForAuto());
 		operatorJoystick.ButtonLeftTrigger().whenPressed(new IntakeToteLandfill());
