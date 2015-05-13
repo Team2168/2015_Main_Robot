@@ -404,12 +404,9 @@ public class PIDPosition implements TCPMessageInterface {
 		this.isFinished = false;
 
 		// zero all other parameters
-		// this.acceptErrorDiff=0;
-		this.clock = 0;
 		this.co = 0;
 		this.coNotSaturated = 0;
 		this.coOld = 0;
-		this.cp = 0;
 		this.prop = 0;
 		this.deriv = 0;
 		this.integ = 0;
@@ -1181,6 +1178,13 @@ public class PIDPosition implements TCPMessageInterface {
 			//System.out.println("time: " + currentTime + "\tcperr: " + cp + "\tsp: " + sp + "\terr: " + err + "\tpterm: " + prop + "\twindup: " + windup + "\terrsum: " + errsum +"\titerm: " + integ + "\tdterm: " + deriv + "\toutput" + co + "\texctime" + executionTime );
 			log.println(currentTime + "\t" +  System.currentTimeMillis() + "\t"+ cp + "\t" + sp + "\t " + err + "\t" + prop + "\t" + windup + "\t" + errsum +"\t" + integ + "\t" + deriv + "\t" + co + "\t" + executionTime );
 			log.flush();
+		}
+		else
+		{
+			cp = encoder.getPos();
+			sp = encoder.getPos();
+			clock = Timer.getFPGATimestamp();
+			isFinished = true;
 		}
 
 		runTime = Timer.getFPGATimestamp() - runTime;
