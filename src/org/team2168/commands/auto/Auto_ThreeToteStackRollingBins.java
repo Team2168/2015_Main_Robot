@@ -46,14 +46,17 @@ public class Auto_ThreeToteStackRollingBins extends CommandGroup {
     	
     	//lift 1st tote above can height
     	addSequential(new DisengageIntake(),2);
-    	addSequential(new LiftPIDPosition(35, 1), 1.4);
+    	addSequential(new LiftPIDPosition(30.5, 1), 3);
     	
     	//total time is 1.8 seconds
     	
     	//Roll 1st bin out of the way towards right using intake wheels
-    	addSequential(new EngageIntake());
-    	addParallel(new DriveIntakeWheelIndependt(-1, 1)); //drive bin to right
-    	addSequential(new DriveXDistance(4.6, 0.35), 3); //drive slow to move bin
+    	//addSequential(new EngageIntake());
+    	//addParallel(new DriveIntakeWheelIndependt(-1, 1)); //drive bin to right
+    	
+    	addSequential(new DriveIntakeWheelIndependt(-1, 1)); //drive bin to right)
+    	addParallel(new IntakeControlForAuto());
+    	addSequential(new DriveXDistance(4.6, 0.4), 3); //drive slow to move bin
     	//addSequential(new Sleep(), 2); //do nothing while driving
     	//addSequential(new DisengageIntake());
     	//addSequential(new WaitForDrivePIDToFinish());
@@ -63,7 +66,7 @@ public class Auto_ThreeToteStackRollingBins extends CommandGroup {
     	
     	//bin is out of way so drive to next tote faster
     	addParallel(new IntakeSingleToteForAuto(), 5);
-    	addSequential(new DriveXDistanceUntilObject(3.6, 0.6), 0.7); //drive fast to get tote // 
+    	addSequential(new DriveXDistanceUntilObject(3.6, 0.65), 0.7); //drive fast to get tote // 
     	//total time is 5.3 seconds
     	
     	//aquired 2nd tote, so now we lift
@@ -72,13 +75,15 @@ public class Auto_ThreeToteStackRollingBins extends CommandGroup {
     	addSequential(new ZeroLift(), 2);
     	addSequential(new ZeroLift(), 2);
     	addSequential(new DisengageIntake());
-    	addSequential(new LiftPIDPosition(35, 1), 1.6); // raise 2nd tote above garbage can
+    	addSequential(new LiftPIDPosition(30.5, 1), 3); // raise 2nd tote above garbage can
     	
     	
     	//Roll 2nd bin out of the way towards right
-    	addSequential(new EngageIntake());
-    	addParallel(new DriveIntakeWheelIndependt(-1, 1)); //drive been to right
-    	addSequential(new DriveXDistance(4.6, 0.35), 3); //drive slow to move bin
+    	//addSequential(new EngageIntake());
+    	//addParallel(new DriveIntakeWheelIndependt(-1, 1)); //drive been to right
+    	addSequential(new DriveIntakeWheelIndependt(-1, 1)); //drive bin to right)
+    	addParallel(new IntakeControlForAuto());
+    	addSequential(new DriveXDistance(4.6, 0.4), 3); //drive slow to move bin
 //    	addSequential(new Sleep(), 2); //do nothing while driving
 //    	addSequential(new DisengageIntake());
     	//addSequential(new WaitForDrivePIDToFinish());
@@ -88,15 +93,15 @@ public class Auto_ThreeToteStackRollingBins extends CommandGroup {
     	
    
     	//bin is out of way so drive to next tote faster
-    	addParallel(new IntakeSingleTote(),5);
-    	addSequential(new DriveXDistanceUntilObject(5, 0.6),2.5);
+    	addParallel(new IntakeSingleToteForAuto(),5);
+    	addSequential(new DriveXDistanceUntilObject(5, 0.65),2.5);
     	
     	
     	//Acquired 3rd tote so just drive to auto zone
     	addSequential(new EngageIntake(),2);
     	addParallel(new SetIntakeSpeed(0.5),2);
     	//addSequential(new RotateXDistancePIDZZZ(90, 0.5), 1.6);
-    	addSequential(new RotateXDistancePIDZZZ(90, 0.35));
+    	addSequential(new RotateXDistancePIDZZZ(90, .7), 2);
     	addParallel(new DriveXDistance(9, 1), 4.2);
     	
     	//at auto zone, so lets lower stack

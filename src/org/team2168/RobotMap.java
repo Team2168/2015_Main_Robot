@@ -129,7 +129,7 @@ public class RobotMap {
 
 	//1.4 inch pully shaft
 	//TODO: UPDATE THESE WITH CORRECT VALUES
-	private static final int liftPulsePerRotation = 128; //encoder ticks per rotation
+	private static final int liftPulsePerRotation = 256; //encoder ticks per rotation
 	private static final double liftGearRatio = 1/1; //ratio between wheel over encoder
 	private static final double liftWheelDiameter = 1.4;
 	public static final int liftEncoderPulsePerRot = (int) (liftPulsePerRotation * liftGearRatio); //pulse per rotation * gear ratio
@@ -179,7 +179,7 @@ public class RobotMap {
 
 	public final static double INTAKE_WHEEL_SPEED = 1.0;
 	public final static double INTAKE_TOTE_ENGAGE_VOLTAGE = 1.05;
-	public final static double INTAKE_TOTE_STOP_VOLTAGE = 2.5;
+	public final static double INTAKE_TOTE_STOP_VOLTAGE = 2.45;
 	public final static double INTAKE_RC_PRESENT_VOLTAGE = 1.0;
 
 	public final static boolean PRINT_SD_DEBUG_DATA = true;

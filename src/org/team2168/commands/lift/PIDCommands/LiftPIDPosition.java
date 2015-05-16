@@ -18,7 +18,7 @@ public class LiftPIDPosition extends Command {
 	private double setPoint;
 	private double speed;
 	private static Debouncer stalled;
-	private static double error = 1.5;
+	private static double error = 0.7;
 	
 	public LiftPIDPosition() {
 		// Use requires() here to declare subsystem dependencies
@@ -52,6 +52,8 @@ public class LiftPIDPosition extends Command {
 		Robot.lift.liftController.setSetPoint(setPoint);
 		Robot.lift.liftController.setMaxPosOutput(speed);
 		Robot.lift.liftController.setMaxNegOutput(-speed);
+		Robot.lift.liftController.setMinPosOutput(RobotMap.LIFT_MIN_SPEED+0.2);
+		Robot.lift.liftController.setMinNegOutput(-RobotMap.LIFT_MIN_SPEED-0.2);
 		Robot.lift.liftController.setAcceptErrorDiff(error); //inches
 
 		Robot.lift.liftController.Enable();

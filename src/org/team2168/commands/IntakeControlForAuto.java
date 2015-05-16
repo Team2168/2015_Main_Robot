@@ -29,7 +29,7 @@ public class IntakeControlForAuto extends CommandGroup {
         // arm.
     	
     	addSequential(new EngageIntake());
-    	addSequential(new Sleep(), 2);
+    	addSequential(new Sleep(), 1.5);
     	addSequential(new DisengageIntake());
     	
     }
