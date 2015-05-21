@@ -23,15 +23,16 @@ public class Intake extends Subsystem {
 	private DoubleSolenoid rightLeftIntake;
 	private Victor leftMotor;
 	private Victor rightMotor;
-	private static DigitalInput leftLimitSwitch;
-	private static DigitalInput rightLimitSwitch;
 	private static AnalogInput toteDistanceSensor;
 	private static AnalogInput rcDistanceSensor;
+	private static AnalogInput rcBinAutoDectector;
+	
 	//TODO: calibrate this value
 	private static final double IR_SENSOR_AVG_GAIN = 0.8;
 	private static final double CM_TO_INCH =  0.393701;
 	private static double averagedToteDistance = 0.0;
 	private static double averagedRCDistance = 0.0;
+	private static double averagedRCBinAutoDistance = 0.0;
 
 	private static final double MOTOR_SPIN_DEADBAND = 0.15;
 
@@ -47,6 +48,8 @@ public class Intake extends Subsystem {
 
 	public boolean intakeDirection = false;
 
+	
+
 	/**
 	 * A private constructor to prevent multiple instances of the subsystem
 	 * from being created.
@@ -56,10 +59,9 @@ public class Intake extends Subsystem {
 				RobotMap.INTAKE_DOUBLE_SOLENOID_REVERSE);
 		rightMotor 	= new Victor(RobotMap.INTAKE_LEFT_MOTOR);
 		leftMotor 	= new Victor(RobotMap.INTAKE_RIGHT_MOTOR);
-		leftLimitSwitch = new DigitalInput(RobotMap.LEFT_TOTE_SWITCH);
-		rightLimitSwitch = new DigitalInput(RobotMap.RIGHT_TOTE_SWITCH);
 		toteDistanceSensor = new AnalogInput(RobotMap.INTAKE_SENSOR);
 		rcDistanceSensor = new AnalogInput(RobotMap.RC_DISTANCE_SENSOR);
+		rcBinAutoDectector = new AnalogInput(RobotMap.RC_BIN_AUTO_SENSOR);
 	}
 
 	/**
@@ -162,6 +164,12 @@ public class Intake extends Subsystem {
 				averagedToteDistance, IR_SENSOR_AVG_GAIN);
 		return averagedToteDistance;
 	}
+	
+	public double getAveragedRawRCBinAutoDistance() {
+		averagedRCBinAutoDistance = Util.runningAverage(getAveragedRawToteDistance(),
+				averagedRCBinAutoDistance, IR_SENSOR_AVG_GAIN);
+		return averagedRCBinAutoDistance;
+	}
 
 	//	/**
 	//	 * Gets the distance to the nearest object from the back of the intake.
@@ -181,6 +189,13 @@ public class Intake extends Subsystem {
 	 */
 	public double getRawRCDistance(){
 		return Util.max(IR_SENSOR_MIN_VOLTAGE, rcDistanceSensor.getVoltage());
+	}
+	
+	/**
+	 * @return the voltage value seen from the RC Bin sensor
+	 */
+	public double getRawRCBinChassisDistance(){
+		return Util.max(IR_SENSOR_MIN_VOLTAGE, rcBinAutoDectector.getVoltage());
 	}
 
 	/**

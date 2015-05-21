@@ -68,8 +68,8 @@ public class RobotMap {
 	public final static int LIFT_ENCODER_B = 5;
 	public final static int LIFT_LOWERED_SENSOR = 6;
 	public final static int LIFT_RAISED_SENSOR = 7;
-	public final static int LEFT_TOTE_SWITCH = 8;
-	public final static int RIGHT_TOTE_SWITCH = 9;
+
+	public final static int BIN_RETAINER_RAISED_SENSOR = 9;
 	//Channels 10-25 on MXP
 	public final static int LEDS_GRIPPER_ENGAGED = 10;      //MXP pin 11
 	public final static int LEDS_INTAKE_ENGAGED = 11;       //MXP pin 13
@@ -82,6 +82,8 @@ public class RobotMap {
 	public final static int LIFT_LOWER_STALL_SENSOR = 0;
 	public final static int RC_DISTANCE_SENSOR = 1;
 	public final static int INTAKE_SENSOR = 2;
+	public final static int RC_BIN_AUTO_SENSOR = 3; 
+	
 	//Channels 4-7 on MXP
 	public final static int DRIVE_GYRO = 4;
 	public final static int SYSTEM_PRESSURE = 5;

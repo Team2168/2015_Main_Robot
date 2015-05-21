@@ -117,6 +117,9 @@ public class ConsolePrinter {
 			SmartDashboard.putString("AutoName", Robot.getAutoName());
 
 			SmartDashboard.putNumber("Tote IR (V)", Robot.intake.getAveragedRawToteDistance());
+			SmartDashboard.putNumber("RC Bin Lift (V)", Robot.intake.getAveragedRawRCDistance());
+			SmartDashboard.putNumber("RC Bin Auto (V)", Robot.intake.getAveragedRawRCBinAutoDistance());
+			
 
 			SmartDashboard.putNumber("Left Stick Raw Value", OI.getInstance().driverJoystick.getLeftStickRaw_Y());
 			SmartDashboard.putNumber("Right Stick Raw Value", OI.getInstance().driverJoystick.getRightStickRaw_Y());
@@ -132,6 +135,7 @@ public class ConsolePrinter {
 
 			SmartDashboard.putBoolean("Lift Lowered", Robot.lift.isFullyLowered());
 			SmartDashboard.putBoolean("Lift Raised", Robot.lift.isFullyRaised());
+			SmartDashboard.putBoolean("RC Claw Raised", Robot.lift.isBinClawFullyRaised());
 
 			SmartDashboard.putBoolean("Left Motor One Trip", !Robot.pdp.isLeftMotorOneTrip());
 			SmartDashboard.putBoolean("Left Motor Two Trip", !Robot.pdp.isLeftMotorTwoTrip());

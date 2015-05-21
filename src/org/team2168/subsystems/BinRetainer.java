@@ -2,6 +2,7 @@ package org.team2168.subsystems;
 
 import org.team2168.RobotMap;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -16,9 +17,11 @@ public class BinRetainer extends Subsystem {
 
 	private static BinRetainer instance = null;
 	private static Relay solenoids;
+	
 
 	private BinRetainer() {
 		solenoids = new Relay(RobotMap.BIN_RETAINER_RELAY);
+		
 	}
 
 	public static BinRetainer getInstance() {
@@ -56,6 +59,8 @@ public class BinRetainer extends Subsystem {
 	public boolean isExtended() {
 		return solenoids.get() == Relay.Value.kForward;
 	}
+
+
 
 
 	public void initDefaultCommand() {

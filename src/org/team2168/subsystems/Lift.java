@@ -38,6 +38,7 @@ public class Lift extends Subsystem {
 
 	private static DigitalInput fullyRaised;
 	private static DigitalInput fullyLowered;
+	private static DigitalInput binClawFullyRaised;
 
 	TCPSocketSender TCPliftPosController;
 
@@ -74,6 +75,7 @@ public class Lift extends Subsystem {
 
 		fullyRaised = new DigitalInput(RobotMap.LIFT_RAISED_SENSOR);
 		fullyLowered = new DigitalInput(RobotMap.LIFT_LOWERED_SENSOR);
+		binClawFullyRaised = new DigitalInput(RobotMap.BIN_RETAINER_RAISED_SENSOR);
 
 		liftStallSensor = new AnalogInput(RobotMap.LIFT_LOWER_STALL_SENSOR);
 	}
@@ -110,8 +112,10 @@ public class Lift extends Subsystem {
 	 */
 	public void drive(double speed) {
 		speed = Util.limit(speed);
-
-		if (speed > RobotMap.LIFT_MIN_SPEED && !Robot.lift.isFullyRaised()) {
+		
+		if (liftEncoder.getPos() < 10 && speed > RobotMap.LIFT_MIN_SPEED && !Robot.lift.isFullyRaised() && !Robot.lift.isBinClawFullyRaised())
+			Robot.lift.disableBrake();
+		else if ((liftEncoder.getPos() < 33 && speed > RobotMap.LIFT_MIN_SPEED && !Robot.lift.isFullyRaised()) && !Robot.lift.isBinClawFullyRaised()) {
 			//Traveling up
 			Robot.lift.disableBrake();
 		}
@@ -290,6 +294,14 @@ public class Lift extends Subsystem {
 		return !fullyRaised.get();
 	}
 
+	/**
+	 * Get the state of the fully raised sensor.
+	 * @return true if the lift is at its highest position along travel.
+	 */
+	public boolean isBinClawFullyRaised() {
+		return !binClawFullyRaised.get();
+	}
+	
 	/**
 	 * @return true if lift is lowering
 	 */
