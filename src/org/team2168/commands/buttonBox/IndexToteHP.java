@@ -1,6 +1,7 @@
 package org.team2168.commands.buttonBox;
 
 import org.team2168.commands.DisengageStack;
+import org.team2168.commands.Sleep;
 import org.team2168.commands.gripper.EngageGripper;
 import org.team2168.commands.intake.DisengageIntake;
 import org.team2168.commands.intake.EngageIntake;
@@ -25,8 +26,8 @@ public class IndexToteHP extends CommandGroup {
     
     	addSequential(new EngageGripper());
     	addSequential(new DisengageIntake());
-    	
-    	addSequential(new LiftPIDPosition(15, 1), 10); // raise 1st tote above next tote    	
+    	addSequential(new Sleep(), 0.2);
+    	addSequential(new LiftPIDPosition(18, 1), 5); // raise 1st tote above next tote    	
     	
     	// DONE
     	

@@ -180,7 +180,7 @@ public class RobotMap {
 	public final static double PRESS_SENSOR_HIGH_PRESSURE = 150.0;
 
 	public final static double INTAKE_WHEEL_SPEED = 1.0;
-	public final static double INTAKE_TOTE_ENGAGE_VOLTAGE = 1.05;
+	public final static double INTAKE_TOTE_ENGAGE_VOLTAGE = 0.85;
 	public final static double INTAKE_TOTE_STOP_VOLTAGE = 2.45;
 	public final static double INTAKE_RC_PRESENT_VOLTAGE = 1.0;
 
@@ -231,7 +231,7 @@ public class RobotMap {
 	double pDrive = 0;
 
 	public static final double liftPUp = 0.12;
-	public static final double liftIUp = 0.0080;
+	public static final double liftIUp = 0.0120;
 	public static final double liftDUp = 0.0002573;
 
 	public static final double liftPDw = 0.12;
