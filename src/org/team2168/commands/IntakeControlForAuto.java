@@ -2,6 +2,7 @@ package org.team2168.commands;
 
 import org.team2168.commands.intake.DisengageIntake;
 import org.team2168.commands.intake.EngageIntake;
+import org.team2168.commands.intake.WaitForBinToPassChassis;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -29,7 +30,8 @@ public class IntakeControlForAuto extends CommandGroup {
         // arm.
     	
     	addSequential(new EngageIntake());
-    	addSequential(new Sleep(), 1.5);
+    	//addSequential(new Sleep(), 1.5);
+    	addSequential(new WaitForBinToPassChassis());
     	addSequential(new DisengageIntake());
     	
     }

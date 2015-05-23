@@ -183,6 +183,7 @@ public class RobotMap {
 	public final static double INTAKE_TOTE_ENGAGE_VOLTAGE = 0.85;
 	public final static double INTAKE_TOTE_STOP_VOLTAGE = 2.45;
 	public final static double INTAKE_RC_PRESENT_VOLTAGE = 1.0;
+	public final static double INTAKE_BIN_PASS_CHASSIS_VOLTAGE = 1.5;
 
 	public final static boolean PRINT_SD_DEBUG_DATA = true;
 	public final static long SmartDashThreadPeriod = 100; //ms

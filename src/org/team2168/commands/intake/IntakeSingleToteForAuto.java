@@ -18,7 +18,7 @@ public class IntakeSingleToteForAuto extends CommandGroup {
 		//TODO: This sequence needs more testing!
 		addSequential(new DisengageIntake());
 		addSequential(new DriveIntakeWheelIndependt(-1, 1)); //drive bin to right)
-		addSequential(new Sleep(), 0.2);
+		addSequential(new Sleep(), 0.3);
 		addSequential(new DriveIntakeToVoltage(RobotMap.INTAKE_TOTE_ENGAGE_VOLTAGE, GREATER_THAN));
 		addSequential(new EngageIntake());
 		addSequential(new DriveIntakeToVoltage(RobotMap.INTAKE_TOTE_STOP_VOLTAGE, GREATER_THAN));

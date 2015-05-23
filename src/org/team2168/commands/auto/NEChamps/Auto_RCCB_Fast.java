@@ -35,7 +35,7 @@ public class Auto_RCCB_Fast extends CommandGroup {
     	addSequential(new DriveXDistance(-8, 1, 0.2), 0.38); //hight setpoint for full speed drive
     	addSequential(new Sleep(),0.1);
     	addSequential(new DeployRCCB());
-    	addSequential(new Sleep(), 0.3);
+    	addSequential(new Sleep(), 0.7);
     	addSequential(new DriveXDistance(8, 1,0.5),2);
     	
    	

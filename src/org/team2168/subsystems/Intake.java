@@ -166,7 +166,7 @@ public class Intake extends Subsystem {
 	}
 	
 	public double getAveragedRawRCBinAutoDistance() {
-		averagedRCBinAutoDistance = Util.runningAverage(getAveragedRawToteDistance(),
+		averagedRCBinAutoDistance = Util.runningAverage(getRawRCBinChassisDistance(),
 				averagedRCBinAutoDistance, IR_SENSOR_AVG_GAIN);
 		return averagedRCBinAutoDistance;
 	}

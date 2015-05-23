@@ -25,7 +25,7 @@ public class WaitForBinToPassChassis extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return Robot.intake.getAveragedRawRCBinAutoDistance() > RobotMap.INTAKE_TOTE_STOP_VOLTAGE;
+		return Robot.intake.getAveragedRawRCBinAutoDistance() > RobotMap.INTAKE_BIN_PASS_CHASSIS_VOLTAGE;
 	}
 
 	// Called once after isFinished returns true
