@@ -283,15 +283,15 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("No Tote _ Do Nothing", new Auto_NoTote_DoNothing());
 		autoChooser.addObject("Drive Forward" , new Auto_NoTote_DriveForward());
 		autoChooser.addDefault("One Tote _ Rotate Push Fwd", new Auto_OneTote_Rotate90Push());
-		autoChooser.addObject("Two Tote", new Auto_TwoToteStack());
+		//autoChooser.addObject("Two Tote", new Auto_TwoToteStack());
 		autoChooser.addObject("Three Tote Three Bin Rolling", new Auto_ThreeToteStackRollingBins());
 		autoChooser.addObject("Three Tote No Bins", new Auto_ThreeToteNoBin());
 		autoChooser.addObject("One Bin Rotate", new Auto_OneBin_DriveForward());
-		autoChooser.addObject("Three Tote First Bin Rotate", new Auto_ThreeToteFirstBin());
-		autoChooser.addObject("Three Tote Second Bin Rotate", new Auto_ThreeToteSecondBin());
+		//autoChooser.addObject("Three Tote First Bin Rotate", new Auto_ThreeToteFirstBin());
+		//autoChooser.addObject("Three Tote Second Bin Rotate", new Auto_ThreeToteSecondBin());
 		autoChooser.addObject("RCCB Slow", new Auto_RCCB_Slow());
 		autoChooser.addObject("RCCB Fast", new Auto_RCCB_Fast());
-		autoChooser.addObject("RCCB On Bump", new Auto_RCCB_On_Bump());
+		//autoChooser.addObject("RCCB On Bump", new Auto_RCCB_On_Bump());
 	}
 
 	/**
