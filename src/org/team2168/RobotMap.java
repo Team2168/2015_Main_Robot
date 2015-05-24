@@ -56,7 +56,7 @@ public class RobotMap {
 	//Relay Channels///////////////////////////////////////////////////////////
 	public final static int BIN_RETAINER_RELAY = 0;
 	public final static int ARCB_RELAY = 1;
-	
+
 
 	//Digital IO Channels//////////////////////////////////////////////////////
 	//Channels 0-9 on RoboRio
@@ -82,8 +82,8 @@ public class RobotMap {
 	public final static int LIFT_LOWER_STALL_SENSOR = 0;
 	public final static int RC_DISTANCE_SENSOR = 1;
 	public final static int INTAKE_SENSOR = 2;
-	public final static int RC_BIN_AUTO_SENSOR = 3; 
-	
+	public final static int RC_BIN_AUTO_SENSOR = 3;
+
 	//Channels 4-7 on MXP
 	public final static int DRIVE_GYRO = 4;
 	public final static int SYSTEM_PRESSURE = 5;
@@ -181,7 +181,7 @@ public class RobotMap {
 
 	public final static double INTAKE_WHEEL_SPEED = 1.0;
 	public final static double INTAKE_TOTE_ENGAGE_VOLTAGE = 0.85;
-	public final static double INTAKE_TOTE_STOP_VOLTAGE = 2.45;
+	public final static double INTAKE_TOTE_STOP_VOLTAGE = 2.28;
 	public final static double INTAKE_RC_PRESENT_VOLTAGE = 1.0;
 	public final static double INTAKE_BIN_PASS_CHASSIS_VOLTAGE = 1.5;
 
