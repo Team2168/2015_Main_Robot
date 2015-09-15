@@ -81,7 +81,9 @@ public class OI {
 		//OPERATOR JOYSTICK BUTTON MAP/////////////////////////////////////////////
 		operatorJoystick.ButtonRightDPad().whenPressed(new EngageGripper());
 		operatorJoystick.ButtonLeftDPad().whenPressed(new ReleaseGripper());
-
+		operatorJoystick.ButtonUpDPad().whenPressed(new ARCBDeploy());
+		operatorJoystick.ButtonDownDPad().whenPressed(new ARCBRetract());
+		
 		operatorJoystick.ButtonRightBumper().whenPressed(new EngageIntake());
 		operatorJoystick.ButtonLeftBumper().whenPressed(new DisengageIntake());
 		operatorJoystick.ButtonX().whenPressed(new DisengageBinRetainer());
