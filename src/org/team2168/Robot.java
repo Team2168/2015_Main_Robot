@@ -122,6 +122,7 @@ public class Robot extends IterativeRobot {
 		arcb = ARCB.getInstance();
 		binRetainer = BinRetainer.getInstance();
 		rccb = RCCB.getInstance();
+		rcfingers = RCFingers.getInstance();
 		
 		pathPlanner();
 		autoSelectInit();

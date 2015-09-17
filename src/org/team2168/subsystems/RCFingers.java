@@ -2,109 +2,64 @@ package org.team2168.subsystems;
 
 import org.team2168.RobotMap;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- * The RCFingers subsystem
- * Grabs a sideways bin in order to right it
+ * The RC Fingers subsystem. Extends and retracts the RC Finger
  */
 public class RCFingers extends Subsystem {
 
 	private static RCFingers instance = null;
-	private Relay rcfingers;
-
-	/**
-	 * This method instantiates the double solenoid.
-	 * Private to prevent creating more than one instance of this subsystem.
-	 */
-	private RCFingers(){
-		rcfingers = new Relay(RobotMap.RCFINGERS_RELAY);
-	}
+	private static Relay solenoids;
 	
-	/**
-	 * @return an instance of the RCFingers
-	 */
+
+	private RCFingers() {
+		solenoids = new Relay(RobotMap.RCFINGERS_RELAY);
+		
+	}
+
 	public static RCFingers getInstance() {
-		if (instance==null) {
+		if(instance == null) {
 			instance = new RCFingers();
 		}
 		return instance;
 	}
-	
+
 	/**
-	 * @return True when the left finger is retracted
+	 * Retracts both fingers
 	 */
-	public boolean isLeftRetracted() {
-		return rcfingers.get() == Relay.Value.kOff || rcfingers.get() == Relay.Value.kForward;
+	public void retractRCFingers() {
+			solenoids.set(Relay.Value.kOff);
 	}
 
 	/**
-	 * @return True when the left finger is extended
+	 * Extends both fingers
 	 */
-	public boolean isLeftExtended() {
-		return !isLeftRetracted();
-	}
-
-	/**
-	 * @return True when the right finger is retracted
-	 */
-	public boolean isRightRetracted() {
-		return rcfingers.get() == Relay.Value.kOff || rcfingers.get() == Relay.Value.kReverse;
-	}
-
-	/**
-	 * @return True when the right finger is extended
-	 */
-	public boolean isRightExtended() {
-		return !isRightRetracted();
+	public void engageRCFingers() {
+			solenoids.set(Relay.Value.kForward);
+		
 	}
 	
 	/**
-	 * Retracts the left finger
+	 * @return True when the fingers are retracted
 	 */
-	public void retractLeft() {
-		if(isRightRetracted()) {
-			rcfingers.set(Relay.Value.kOff);
-		} else {
-			rcfingers.set(Relay.Value.kForward);
-		}
+	public boolean isRetracted() {
+		return solenoids.get() == Relay.Value.kOff;
 	}
 
 	/**
-	 * Extends the left finger
+	 * @return True when the fingers are extended
 	 */
-	public void extendLeft() {
-		if(isRightRetracted()) {
-			rcfingers.set(Relay.Value.kReverse);
-		} else {
-			rcfingers.set(Relay.Value.kOn);
-		}
+	public boolean isExtended() {
+		return solenoids.get() == Relay.Value.kForward;
 	}
 
-	/**
-	 * Retracts the right finger
-	 */
-	public void retractRight() {
-		if(isLeftRetracted()) {
-			rcfingers.set(Relay.Value.kOff);
-		} else {
-			rcfingers.set(Relay.Value.kReverse);
-		}
-	}
 
-	/**
-	 * Extends the right finger
-	 */
-	public void extendRight() {
-		if(isLeftRetracted()) {
-			rcfingers.set(Relay.Value.kForward);
-		} else {
-			rcfingers.set(Relay.Value.kOn);
-		}
-	}
+
 
 	public void initDefaultCommand() {
 	}
-	
+
 }

@@ -2,8 +2,8 @@ package org.team2168;
 import org.team2168.commands.OpenAll;
 import org.team2168.commands.StopAndOpenIntake;
 import org.team2168.commands.TransportConfig;
-import org.team2168.commands.RCFingers.RCFingersExtend;
-import org.team2168.commands.RCFingers.RCFingersRetract;
+import org.team2168.commands.RCFingers.DisengageRCFingers;
+import org.team2168.commands.RCFingers.EngageRCFingers;
 import org.team2168.commands.arcb.ARCBDeploy;
 import org.team2168.commands.arcb.ARCBDeployLeft;
 import org.team2168.commands.arcb.ARCBDeployRight;
@@ -83,8 +83,8 @@ public class OI {
 		//OPERATOR JOYSTICK BUTTON MAP/////////////////////////////////////////////
 		operatorJoystick.ButtonRightDPad().whenPressed(new EngageGripper());
 		operatorJoystick.ButtonLeftDPad().whenPressed(new ReleaseGripper());
-		operatorJoystick.ButtonUpDPad().whenPressed(new RCFingersExtend());
-		operatorJoystick.ButtonDownDPad().whenPressed(new RCFingersRetract());
+		operatorJoystick.ButtonUpDPad().whenPressed(new EngageRCFingers());
+		operatorJoystick.ButtonDownDPad().whenPressed(new DisengageRCFingers());
 		
 		operatorJoystick.ButtonRightBumper().whenPressed(new EngageIntake());
 		operatorJoystick.ButtonLeftBumper().whenPressed(new DisengageIntake());
