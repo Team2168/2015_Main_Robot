@@ -52,11 +52,11 @@ public class RobotMap {
 	public final static int LIFT_BRAKE_DOUBLE_SOLENOID_REVERSE = 5;
 	public final static int RCCBB_DOUBLE_SOLENOID_FORWARD = 6;
 	public final static int RCCB_BRAKE_DOUBLE_SOLENOID_REVERSE = 7;
-	
 
 	//Relay Channels///////////////////////////////////////////////////////////
 	public final static int BIN_RETAINER_RELAY = 0;
 	public final static int ARCB_RELAY = 1;
+	public final static int RCFINGERS_RELAY = 2;
 
 
 	//Digital IO Channels//////////////////////////////////////////////////////

@@ -28,6 +28,7 @@ import org.team2168.subsystems.Intake;
 import org.team2168.subsystems.Lift;
 import org.team2168.subsystems.Pneumatics;
 import org.team2168.subsystems.RCCB;
+import org.team2168.subsystems.RCFingers;
 import org.team2168.subsystems.Winch;
 import org.team2168.utils.ConsolePrinter;
 import org.team2168.utils.Debouncer;
@@ -62,6 +63,7 @@ public class Robot extends IterativeRobot {
 	public static ARCB arcb;
 	public static BinRetainer binRetainer;
 	public static RCCB rccb;
+	public static RCFingers rcfingers;
 	
 	public static PowerDistribution pdp; // Power Monitor
 	ConsolePrinter printer; // SmartDash printer
