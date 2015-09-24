@@ -13,6 +13,8 @@ import org.team2168.commands.auto.NEChamps.Auto_RCCB_On_Bump;
 import org.team2168.commands.auto.NEChamps.Auto_RCCB_Slow;
 import org.team2168.commands.auto.NEChamps.Auto_ThreeToteNoBin;
 import org.team2168.commands.auto.NEChamps.Auto_ThreeToteSecondBin;
+import org.team2168.commands.calibration.CalibrateQuicrun1060;
+import org.team2168.commands.drivetrain.CalibrateDrivetrainMotor;
 import org.team2168.commands.auto.Auto_ThreeToteRollingBinRide;
 import org.team2168.commands.auto.Auto_ThreeToteStackRollingBins;
 import org.team2168.commands.auto.Auto_ThreeToteThreeBin;
@@ -94,6 +96,8 @@ public class Robot extends IterativeRobot {
 	private boolean lastGyroCalibrating = false;
 	private double curAngle = 0.0;
 	private static boolean autoMode = false;
+	
+	private boolean IsCalibrated =false;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -186,6 +190,13 @@ public class Robot extends IterativeRobot {
 	 * This method initializes the autonomous commands
 	 */
 	public void autonomousInit() {
+		
+		// Check to see if Motor controllers have been calibrated, and if not, calibrates them
+		if(!IsCalibrated){
+			new CalibrateQuicrun1060();
+			IsCalibrated = true;
+		}
+		
 		matchStarted = true;
 		drivetrain.stopGyroCalibrating();
 		drivetrain.gyroSPI.reset();
@@ -215,6 +226,12 @@ public class Robot extends IterativeRobot {
 	public void teleopInit() {
 		matchStarted = true;
 		drivetrain.stopGyroCalibrating();
+		
+		// Check to see if Motor controllers have been calibrated, and if not, calibrates them
+				if(!IsCalibrated){
+					new CalibrateQuicrun1060();
+					IsCalibrated = true;
+				}
 
 		//Kill the auto command if it's still running.
 		if (autonomousCommand != null) {
