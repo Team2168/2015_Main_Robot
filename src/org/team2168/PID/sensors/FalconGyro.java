@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.AccumulatorResult;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.SensorBase;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.communication.UsageReporting;
@@ -56,7 +57,7 @@ public class FalconGyro extends SensorBase implements PIDSensorInterface, PIDSou
 	int m_center;
 	boolean m_channelAllocated;
 	AccumulatorResult result;
-	private PIDSourceParameter m_pidSource;
+	PIDSourceType m_pidSource;
 
 	/**
 	 * Initialize the gyro. Calibrate the gyro by running for a number of
@@ -82,7 +83,7 @@ public class FalconGyro extends SensorBase implements PIDSensorInterface, PIDSou
 		
 		reInitGyro();
 		
-		setPIDSourceParameter(PIDSourceParameter.kAngle);
+//		setPIDSourceParameter(PIDSourceParameter.kAngle);
 
 		UsageReporting.report(tResourceType.kResourceType_Gyro, m_analog.getChannel());
 		LiveWindow.addSensor("Gyro", m_analog.getChannel(), this);
@@ -252,24 +253,32 @@ public class FalconGyro extends SensorBase implements PIDSensorInterface, PIDSou
 	 * Set which parameter of the encoder you are using as a process control
 	 * variable. The Gyro class supports the rate and angle parameters
 	 * 
-	 * @param pidSource
-	 *            An enum to select the parameter.
+	 * @param type the type of output to provide to the PID controller (rate/displacement).
 	 */
-	public void setPIDSourceParameter(PIDSourceParameter pidSource) {
-		BoundaryException.assertWithinBounds(pidSource.value, 1, 2);
-		m_pidSource = pidSource;
+	public void setPIDSourceType(PIDSourceType type) {
+		BoundaryException.assertWithinBounds(type.value, 1, 2);
+		m_pidSource = type;
 	}
 
+	/**
+	 * Get the PID source type.
+	 * @param test
+	 * @return the PID source type (rate/displacement)
+	 */
+	public PIDSourceType getPIDSourceType() {
+		return m_pidSource;
+	}
+	
 	/**
 	 * Get the angle of the gyro for use with PIDControllers
 	 * 
 	 * @return the current angle according to the gyro
 	 */
 	public double pidGet() {
-		switch (m_pidSource.value) {
-		case 1:// PIDSourceParameter.kRate_val:
+		switch (m_pidSource) {
+		case kRate:
 			return getRate();
-		case 2:// PIDSourceParameter.kAngle_val:
+		case kDisplacement:
 			return getAngle();
 		default:
 			return 0.0;
