@@ -30,7 +30,7 @@ public class PowerDistribution {
 	
 	public PowerDistribution(long period) {
 		this.period = period;
-		pdp = new PowerDistributionPanel();
+		pdp = new PowerDistributionPanel(RobotMap.PDP_CAN_ID);
 
 		channelCurrent = new double[NUM_OF_PDP_CHANNELS];
 		channelVoltage = new double[NUM_OF_PDP_CHANNELS];

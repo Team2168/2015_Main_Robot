@@ -1,5 +1,7 @@
 package org.team2168.subsystems;
 
+import java.text.DecimalFormat;
+
 import org.team2168.OI;
 import org.team2168.Robot;
 import org.team2168.RobotMap;
@@ -9,6 +11,7 @@ import org.team2168.PID.sensors.ADXRS453Gyro;
 import org.team2168.PID.sensors.AverageEncoder;
 import org.team2168.PID.sensors.IMU;
 import org.team2168.commands.drivetrain.DriveWithJoysticks;
+import org.team2168.utils.BNO055;
 import org.team2168.utils.TCPSocketSender;
 import org.team2168.utils.Util;
 
@@ -33,6 +36,8 @@ public class Drivetrain extends Subsystem {
 	public AverageEncoder drivetrainRightEncoder;
 	public ADXRS453Gyro gyroSPI;
 	public IMU imu;
+	
+	public BNO055 bno;
 
 	private static final boolean LEFT_INVERTED = false;
 	private static final boolean RIGHT_INVERTED = true;
@@ -121,7 +126,9 @@ public class Drivetrain extends Subsystem {
 				RobotMap.drivePosReturnType, RobotMap.driveAvgEncoderVal);
 
 		imu = new IMU(drivetrainLeftEncoder,drivetrainRightEncoder,RobotMap.wheelbase);
-
+		bno = BNO055.getInstance(BNO055.opmode_t.OPERATION_MODE_IMUPLUS,
+				BNO055.vector_type_t.VECTOR_EULER);
+		
 		//DriveStraight Controller
 		rotateController = new PIDPosition(
 				"RotationController",
